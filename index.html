@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="CrUfQJ4XaT5chsevGXYYyEDR75KMLDF-12WrYOjALg4" />
+
+<meta name="google-site-verification" content="CrUfQJ4XaT5chsevGXYYyEDR75KMLDF-12WrYOjALg4" />
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="Online Quick Tools - Free, fast and mobile-friendly online tools.">
+
+<meta name="description" content="Online Quick Tools - Free, fast and mobile-friendly online tools including word counter, calculator, text tools, random picker, PIN generator and stopwatch.">
+
 <meta name="theme-color" content="#4f46e5">
-<title>Online Quick Tools - Free Online Tools</title>
+
 <meta name="robots" content="index, follow">
+
 <meta name="author" content="Online Quick Tools">
-<meta name="keywords" content="free online tools, word counter, calculator, text tools, random picker, PIN generator, stopwatch">
+
+<meta name="keywords" content="free online tools, word counter, calculator, text tools, random picker, PIN generator, stopwatch, character counter, slug generator">
+
 <link rel="canonical" href="https://dawsonrumey.github.io/Online-Quick-Tools-/">
-  
+
+<title>Online Quick Tools - Free Online Tools</title>
+
 <style>
+
 *{
 box-sizing:border-box;
 margin:0;
@@ -27,7 +37,13 @@ body{
 font-family:Arial,Helvetica,sans-serif;
 background:#f4f7ff;
 color:#172033;
-line-height:1.5
+line-height:1.5;
+transition:background .25s,color .25s
+}
+
+body.dark{
+background:#0f172a;
+color:#e5e7eb
 }
 
 header{
@@ -78,6 +94,24 @@ font-size:15px;
 opacity:.92
 }
 
+.headerActions{
+position:relative;
+z-index:2;
+margin-top:18px
+}
+
+.themeBtn{
+border:1px solid rgba(255,255,255,.35);
+background:rgba(255,255,255,.15);
+color:white;
+padding:9px 15px;
+border-radius:20px;
+font-size:13px;
+font-weight:700;
+cursor:pointer;
+backdrop-filter:blur(5px)
+}
+
 .container{
 width:100%;
 max-width:1000px;
@@ -100,7 +134,14 @@ border-radius:18px;
 padding:0 20px;
 font-size:16px;
 background:white;
+color:#172033;
 box-shadow:0 10px 30px rgba(31,41,55,.15)
+}
+
+body.dark .search{
+background:#1e293b;
+color:#f8fafc;
+box-shadow:0 10px 30px rgba(0,0,0,.25)
 }
 
 .categories{
@@ -124,7 +165,13 @@ border-radius:25px;
 white-space:nowrap;
 font-size:14px;
 font-weight:600;
-box-shadow:0 3px 12px rgba(0,0,0,.06)
+box-shadow:0 3px 12px rgba(0,0,0,.06);
+cursor:pointer
+}
+
+body.dark .categories button{
+background:#1e293b;
+color:#cbd5e1
 }
 
 .categories button.active{
@@ -151,7 +198,13 @@ border:1px solid #e9ecf5;
 border-radius:20px;
 padding:18px;
 box-shadow:0 8px 25px rgba(31,41,55,.07);
-transition:transform .18s,box-shadow .18s
+transition:transform .18s,box-shadow .18s,background .25s
+}
+
+body.dark .card{
+background:#1e293b;
+border-color:#334155;
+box-shadow:0 8px 25px rgba(0,0,0,.18)
 }
 
 .card:active{
@@ -170,6 +223,10 @@ background:#eef2ff;
 margin-bottom:12px
 }
 
+body.dark .icon{
+background:#312e81
+}
+
 .card h2{
 font-size:18px;
 margin-bottom:5px
@@ -181,18 +238,31 @@ color:#667085;
 margin-bottom:11px
 }
 
+body.dark .card p{
+color:#94a3b8
+}
+
 input,
 textarea,
 select{
 width:100%;
 border:1px solid #dfe3ec;
 background:#fafbff;
+color:#172033;
 outline:none;
 border-radius:12px;
 padding:12px;
 font-size:15px;
 font-family:inherit;
 margin:4px 0 8px
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select{
+background:#0f172a;
+border-color:#475569;
+color:#f8fafc
 }
 
 input:focus,
@@ -215,7 +285,17 @@ margin:3px 2px;
 font-weight:700;
 font-size:13px;
 background:#4f46e5;
-color:white
+color:white;
+cursor:pointer;
+transition:opacity .15s,transform .1s
+}
+
+.btn:hover{
+opacity:.9
+}
+
+.btn:active{
+transform:scale(.97)
 }
 
 .btn.green{
@@ -233,12 +313,20 @@ background:#64748b
 .result{
 background:#f3f5fa;
 border:1px solid #e7eaf1;
+color:#172033;
 border-radius:11px;
 padding:11px;
 margin-top:7px;
 font-size:14px;
 font-weight:700;
-word-break:break-word
+word-break:break-word;
+min-height:42px
+}
+
+body.dark .result{
+background:#0f172a;
+border-color:#334155;
+color:#e2e8f0
 }
 
 .timer{
@@ -263,12 +351,23 @@ margin:18px 0;
 background:#fafbff
 }
 
+body.dark .ad{
+background:#111827;
+border-color:#475569;
+color:#94a3b8
+}
+
 .info{
 background:white;
 border-radius:20px;
 padding:20px;
 margin-top:18px;
 box-shadow:0 7px 22px rgba(31,41,55,.06)
+}
+
+body.dark .info{
+background:#1e293b;
+box-shadow:0 7px 22px rgba(0,0,0,.18)
 }
 
 .info h2{
@@ -282,6 +381,10 @@ color:#596579;
 margin:8px 0
 }
 
+body.dark .info p{
+color:#aab6c8
+}
+
 .noResult{
 display:none;
 text-align:center;
@@ -289,6 +392,11 @@ padding:35px 15px;
 color:#667085;
 background:white;
 border-radius:18px
+}
+
+body.dark .noResult{
+background:#1e293b;
+color:#94a3b8
 }
 
 footer{
@@ -339,8 +447,17 @@ border-radius:20px;
 line-height:1.7
 }
 
+body.dark .modalBox{
+background:#1e293b;
+color:#e5e7eb
+}
+
 .modalBox h2{
 margin-bottom:12px
+}
+
+.modalBox p{
+margin:10px 0
 }
 
 .close{
@@ -350,7 +467,8 @@ top:8px;
 border:0;
 background:none;
 font-size:28px;
-cursor:pointer
+cursor:pointer;
+color:inherit
 }
 
 .topButton{
@@ -365,16 +483,33 @@ background:#4f46e5;
 color:white;
 font-size:20px;
 box-shadow:0 8px 20px rgba(0,0,0,.2);
-z-index:20
+z-index:20;
+cursor:pointer
+}
+
+.resetAll{
+display:block;
+margin:5px 0 18px auto;
+background:#64748b;
+color:white;
+border:0;
+padding:9px 14px;
+border-radius:10px;
+font-size:12px;
+font-weight:700;
+cursor:pointer
 }
 
 @media(max-width:800px){
+
 .tools{
 grid-template-columns:repeat(2,1fr)
 }
+
 }
 
 @media(max-width:560px){
+
 header{
 padding:35px 15px 50px
 }
@@ -395,218 +530,442 @@ padding:16px
 .sectionTitle{
 font-size:20px
 }
+
 }
 
 @media(min-width:561px){
+
 .card:hover{
 transform:translateY(-3px);
 box-shadow:0 13px 30px rgba(31,41,55,.11)
 }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header id="home">
+
 <div class="logo">⚡ Online Quick Tools</div>
-<div class="tagline">Simple • Fast • Free • Mobile Friendly</div>
+
+<div class="tagline">
+Simple • Fast • Free • Mobile Friendly
+</div>
+
+<div class="headerActions">
+<button class="themeBtn" onclick="toggleTheme()" id="themeButton">
+🌙 Dark Mode
+</button>
+</div>
+
 </header>
+
 
 <main class="container">
 
 <div class="searchBox">
+
 <input
 id="search"
 class="search"
 type="search"
 placeholder="🔍 Search a tool..."
 oninput="searchTools()">
+
 </div>
 
+
 <div class="categories">
-<button class="active" onclick="filterTools('all',this)">✨ All</button>
-<button onclick="filterTools('text',this)">📝 Text</button>
-<button onclick="filterTools('generator',this)">🎲 Generator</button>
-<button onclick="filterTools('utility',this)">🛠️ Utility</button>
+
+<button class="active" onclick="filterTools('all',this)">
+✨ All
+</button>
+
+<button onclick="filterTools('text',this)">
+📝 Text
+</button>
+
+<button onclick="filterTools('generator',this)">
+🎲 Generator
+</button>
+
+<button onclick="filterTools('utility',this)">
+🛠️ Utility
+</button>
+
 </div>
+
 
 <div class="ad">
 📢 Advertisement Space
 </div>
 
-<h2 class="sectionTitle">🧰 Quick Tools</h2>
+
+<h2 class="sectionTitle">
+🧰 Quick Tools
+</h2>
+
+<button class="resetAll" onclick="resetAllTools()">
+↻ Reset All Tools
+</button>
+
 
 <div id="tools" class="tools">
 
-<div class="card tool" data-cat="text" data-name="Word Counter">
+
+<!-- WORD COUNTER -->
+
+<div class="card tool"
+data-cat="text"
+data-name="Word Counter">
+
 <div class="icon">📝</div>
+
 <h2>Word Counter</h2>
-<p>Count words and characters instantly.</p>
+
+<p>
+Count words and characters instantly.
+</p>
 
 <textarea
 id="wcText"
 placeholder="Type or paste text..."
 oninput="wordCount()"></textarea>
 
+<button class="btn red" onclick="clearWordCounter()">
+Clear
+</button>
+
 <div id="wcResult" class="result">
 Words: 0 | Characters: 0
 </div>
+
 </div>
 
 
-<div class="card tool" data-cat="text" data-name="Text Case Converter">
+<!-- CASE CONVERTER -->
+
+<div class="card tool"
+data-cat="text"
+data-name="Text Case Converter">
+
 <div class="icon">🔠</div>
+
 <h2>Case Converter</h2>
-<p>Convert your text into different cases.</p>
+
+<p>
+Convert your text into different cases.
+</p>
 
 <textarea
 id="caseText"
 placeholder="Enter your text..."></textarea>
 
-<button class="btn" onclick="caseUpper()">UPPERCASE</button>
-<button class="btn" onclick="caseLower()">lowercase</button>
-<button class="btn" onclick="caseTitle()">Title Case</button>
+<button class="btn" onclick="caseUpper()">
+UPPERCASE
+</button>
+
+<button class="btn" onclick="caseLower()">
+lowercase
+</button>
+
+<button class="btn" onclick="caseTitle()">
+Title Case
+</button>
+
+<button class="btn green" onclick="copyResult('caseResult')">
+Copy
+</button>
+
+<button class="btn red" onclick="clearCase()">
+Clear
+</button>
 
 <div id="caseResult" class="result">
 Result will appear here.
 </div>
+
 </div>
 
 
-<div class="card tool" data-cat="text" data-name="Slug Generator">
+<!-- SLUG GENERATOR -->
+
+<div class="card tool"
+data-cat="text"
+data-name="Slug Generator">
+
 <div class="icon">🔗</div>
+
 <h2>Slug Generator</h2>
-<p>Create clean SEO-friendly URL slugs.</p>
+
+<p>
+Create clean SEO-friendly URL slugs.
+</p>
 
 <input
 id="slugInput"
 placeholder="My Awesome Website">
 
-<button class="btn" onclick="makeSlug()">Generate</button>
-<button class="btn green" onclick="copyResult('slugResult')">Copy</button>
+<button class="btn" onclick="makeSlug()">
+Generate
+</button>
+
+<button class="btn green"
+onclick="copyResult('slugResult')">
+Copy
+</button>
+
+<button class="btn red"
+onclick="clearSlug()">
+Clear
+</button>
 
 <div id="slugResult" class="result">
 your-slug
 </div>
+
 </div>
 
 
-<div class="card tool" data-cat="utility" data-name="Calculator">
+<!-- CALCULATOR -->
+
+<div class="card tool"
+data-cat="utility"
+data-name="Calculator">
+
 <div class="icon">🧮</div>
+
 <h2>Calculator</h2>
-<p>Perform simple calculations quickly.</p>
+
+<p>
+Perform simple calculations quickly.
+</p>
 
 <input
 id="calc"
 inputmode="decimal"
 placeholder="Example: 25+15*2">
 
-<button class="btn" onclick="calculate()">Calculate</button>
-<button class="btn red" onclick="clearCalc()">Clear</button>
+<button class="btn"
+onclick="calculate()">
+Calculate
+</button>
+
+<button class="btn red"
+onclick="clearCalc()">
+Clear
+</button>
 
 <div id="calcResult" class="result">
 Result
 </div>
+
 </div>
 
 
-<div class="card tool" data-cat="generator" data-name="PIN Generator">
+<!-- PIN GENERATOR -->
+
+<div class="card tool"
+data-cat="generator"
+data-name="PIN Generator">
+
 <div class="icon">🔢</div>
+
 <h2>PIN Generator</h2>
-<p>Generate a random numeric PIN.</p>
+
+<p>
+Generate a random numeric PIN.
+</p>
 
 <select id="pinLength">
-<option value="4">4 digits</option>
-<option value="6" selected>6 digits</option>
-<option value="8">8 digits</option>
-<option value="10">10 digits</option>
+
+<option value="4">
+4 digits
+</option>
+
+<option value="6" selected>
+6 digits
+</option>
+
+<option value="8">
+8 digits
+</option>
+
+<option value="10">
+10 digits
+</option>
+
 </select>
 
-<button class="btn" onclick="generatePin()">Generate</button>
-<button class="btn green" onclick="copyResult('pinResult')">Copy</button>
+<button class="btn"
+onclick="generatePin()">
+Generate
+</button>
+
+<button class="btn green"
+onclick="copyResult('pinResult')">
+Copy
+</button>
 
 <div id="pinResult" class="result">
 000000
 </div>
+
 </div>
 
 
-<div class="card tool" data-cat="generator" data-name="Random Picker">
+<!-- RANDOM PICKER -->
+
+<div class="card tool"
+data-cat="generator"
+data-name="Random Picker">
+
 <div class="icon">🎯</div>
+
 <h2>Random Picker</h2>
-<p>Pick one random option from your list.</p>
+
+<p>
+Pick one random option from your list.
+</p>
 
 <textarea
 id="pickInput"
 placeholder="Apple&#10;Banana&#10;Orange"></textarea>
 
-<button class="btn" onclick="pickRandom()">Pick One</button>
+<button class="btn"
+onclick="pickRandom()">
+Pick One
+</button>
+
+<button class="btn red"
+onclick="clearPicker()">
+Clear
+</button>
 
 <div id="pickResult" class="result">
 Your result
 </div>
+
 </div>
 
 
-<div class="card tool" data-cat="utility" data-name="Stopwatch">
+<!-- STOPWATCH -->
+
+<div class="card tool"
+data-cat="utility"
+data-name="Stopwatch">
+
 <div class="icon">⏱️</div>
+
 <h2>Stopwatch</h2>
-<p>Simple start, pause and reset stopwatch.</p>
+
+<p>
+Simple start, pause and reset stopwatch.
+</p>
 
 <div id="watch" class="timer">
 00:00:00.0
 </div>
 
-<button class="btn" onclick="startWatch()">Start</button>
-<button class="btn gray" onclick="pauseWatch()">Pause</button>
-<button class="btn red" onclick="resetWatch()">Reset</button>
+<button class="btn"
+onclick="startWatch()">
+Start
+</button>
+
+<button class="btn gray"
+onclick="pauseWatch()">
+Pause
+</button>
+
+<button class="btn red"
+onclick="resetWatch()">
+Reset
+</button>
+
 </div>
 
 
-<div class="card tool" data-cat="text" data-name="Character Counter">
+<!-- CHARACTER COUNTER -->
+
+<div class="card tool"
+data-cat="text"
+data-name="Character Counter">
+
 <div class="icon">🔤</div>
+
 <h2>Character Counter</h2>
-<p>Count every character in your text.</p>
+
+<p>
+Count every character in your text.
+</p>
 
 <textarea
 id="charText"
 placeholder="Enter text..."
 oninput="charCount()"></textarea>
 
+<button class="btn red"
+onclick="clearCharCounter()">
+Clear
+</button>
+
 <div id="charResult" class="result">
 Characters: 0
 </div>
-</div>
 
 </div>
+
+
+</div>
+
 
 <div id="noResult" class="noResult">
-🔍 No tools found.<br>
+
+🔍 No tools found.
+<br>
 Try another search.
+
 </div>
+
 
 <div class="ad">
 📢 Advertisement Space
 </div>
 
 
+<!-- ABOUT -->
+
 <section class="info" id="about">
-<h2>ℹ️ About Online Quick Tools</h2>
+
+<h2>
+ℹ️ About Online Quick Tools
+</h2>
 
 <p>
-Online Quick Tools is a simple collection of free browser-based utilities.
-The tools are designed to be fast, lightweight and easy to use on mobile devices.
+Online Quick Tools is a simple collection of free
+browser-based utilities.
+The tools are designed to be fast, lightweight
+and easy to use on mobile devices.
 </p>
 
 <p>
 No account is required for the basic tools.
 </p>
+
 </section>
 
 
+<!-- FAQ -->
+
 <section class="info" id="faq">
-<h2>❓ Frequently Asked Questions</h2>
+
+<h2>
+❓ Frequently Asked Questions
+</h2>
 
 <p>
 <b>Are these tools free?</b><br>
@@ -622,27 +981,59 @@ No. The basic tools work directly in your browser.
 <b>Does the website work on mobile?</b><br>
 Yes. The design is responsive and optimized for mobile screens.
 </p>
+
+<p>
+<b>Is my text uploaded to a server?</b><br>
+No. These basic tools process your text directly in your browser.
+</p>
+
 </section>
 
 </main>
 
 
+<!-- FOOTER -->
+
 <footer>
 
-<strong>⚡ Online Quick Tools</strong>
+<strong>
+⚡ Online Quick Tools
+</strong>
 
 <p style="margin-top:8px;font-size:13px">
 Simple • Fast • Free
 </p>
 
 <div class="footerLinks">
-<button onclick="goHome()">Home</button>
-<button onclick="goTools()">Tools</button>
-<button onclick="goAbout()">About</button>
-<button onclick="goFAQ()">FAQ</button>
-<button onclick="openModal('privacy')">Privacy</button>
-<button onclick="openModal('terms')">Terms</button>
-<button onclick="openModal('contact')">Contact</button>
+
+<button onclick="goHome()">
+Home
+</button>
+
+<button onclick="goTools()">
+Tools
+</button>
+
+<button onclick="goAbout()">
+About
+</button>
+
+<button onclick="goFAQ()">
+FAQ
+</button>
+
+<button onclick="openModal('privacy')">
+Privacy
+</button>
+
+<button onclick="openModal('terms')">
+Terms
+</button>
+
+<button onclick="openModal('contact')">
+Contact
+</button>
+
 </div>
 
 <p style="margin-top:18px;font-size:12px">
@@ -652,19 +1043,34 @@ Simple • Fast • Free
 </footer>
 
 
-<button class="topButton" onclick="goHome()" aria-label="Back to top">
+<button
+class="topButton"
+onclick="goHome()"
+aria-label="Back to top">
+
 ↑
+
 </button>
 
 
-<div id="privacy" class="modal" onclick="outside(event,this)">
+<!-- PRIVACY -->
+
+<div
+id="privacy"
+class="modal"
+onclick="outside(event,this)">
+
 <div class="modalBox">
 
-<button class="close" onclick="closeModal('privacy')">
+<button
+class="close"
+onclick="closeModal('privacy')">
 ×
 </button>
 
-<h2>Privacy Policy</h2>
+<h2>
+Privacy Policy
+</h2>
 
 <p>
 Online Quick Tools provides browser-based utilities.
@@ -672,23 +1078,34 @@ The basic tools do not require an account.
 </p>
 
 <p>
-Some browser preferences may be stored locally on your device.
-If advertising or analytics services are added, this policy should be updated
-with the appropriate information.
+The tools process basic input directly in your browser.
+If advertising or analytics services are added,
+this policy should be updated with the appropriate information.
 </p>
 
 </div>
+
 </div>
 
 
-<div id="terms" class="modal" onclick="outside(event,this)">
+<!-- TERMS -->
+
+<div
+id="terms"
+class="modal"
+onclick="outside(event,this)">
+
 <div class="modalBox">
 
-<button class="close" onclick="closeModal('terms')">
+<button
+class="close"
+onclick="closeModal('terms')">
 ×
 </button>
 
-<h2>Terms of Use</h2>
+<h2>
+Terms of Use
+</h2>
 
 <p>
 Online Quick Tools is provided for general utility purposes.
@@ -700,50 +1117,115 @@ Do not use this website for unlawful activity.
 </p>
 
 </div>
+
 </div>
 
 
-<div id="contact" class="modal" onclick="outside(event,this)">
+<!-- CONTACT -->
+
+<div
+id="contact"
+class="modal"
+onclick="outside(event,this)">
+
 <div class="modalBox">
 
-<button class="close" onclick="closeModal('contact')">
+<button
+class="close"
+onclick="closeModal('contact')">
 ×
 </button>
 
-<h2>Contact</h2>
+<h2>
+Contact
+</h2>
 
 <p>
-Replace the email below with your real public email before publishing.
+Replace the email below with your real public email
+before publishing.
 </p>
 
 <p>
-<b>Email:</b> your-email@example.com
+<b>Email:</b>
+your-email@example.com
 </p>
 
 </div>
+
 </div>
 
 
 <script>
 
+
+/* =========================
+   THEME
+========================= */
+
+function toggleTheme(){
+
+document.body.classList.toggle("dark");
+
+let dark=
+document.body.classList.contains("dark");
+
+localStorage.setItem("quickToolsTheme",
+dark ? "dark" : "light");
+
+document.getElementById("themeButton").textContent=
+dark ? "☀️ Light Mode" : "🌙 Dark Mode";
+
+}
+
+
+function loadTheme(){
+
+let saved=
+localStorage.getItem("quickToolsTheme");
+
+if(saved==="dark"){
+
+document.body.classList.add("dark");
+
+document.getElementById("themeButton").textContent=
+"☀️ Light Mode";
+
+}
+
+}
+
+loadTheme();
+
+
+
+/* =========================
+   SEARCH
+========================= */
+
 function searchTools(){
 
-let query=document
-.getElementById("search")
+let query=
+document.getElementById("search")
 .value
 .toLowerCase()
 .trim();
 
-let cards=document.querySelectorAll(".tool");
+let cards=
+document.querySelectorAll(".tool");
+
 let count=0;
 
 cards.forEach(function(card){
 
-let name=(card.dataset.name+" "+card.innerText).toLowerCase();
+let name=
+(card.dataset.name+" "+card.innerText)
+.toLowerCase();
 
-let show=!query||name.includes(query);
+let show=
+!query || name.includes(query);
 
-card.style.display=show?"":"none";
+card.style.display=
+show ? "" : "none";
 
 if(show){
 count++;
@@ -752,32 +1234,43 @@ count++;
 });
 
 document.getElementById("noResult").style.display=
-count?"none":"block";
+count ? "none" : "block";
+
 }
 
+
+
+/* =========================
+   CATEGORY FILTER
+========================= */
 
 function filterTools(category,button){
 
 document
 .querySelectorAll(".categories button")
 .forEach(function(btn){
+
 btn.classList.remove("active");
+
 });
 
 button.classList.add("active");
 
 document.getElementById("search").value="";
 
-let cards=document.querySelectorAll(".tool");
+let cards=
+document.querySelectorAll(".tool");
+
 let count=0;
 
 cards.forEach(function(card){
 
 let show=
-category==="all"||
+category==="all" ||
 card.dataset.cat===category;
 
-card.style.display=show?"":"none";
+card.style.display=
+show ? "" : "none";
 
 if(show){
 count++;
@@ -786,34 +1279,66 @@ count++;
 });
 
 document.getElementById("noResult").style.display=
-count?"none":"block";
+count ? "none" : "block";
+
 }
 
+
+
+/* =========================
+   WORD COUNTER
+========================= */
 
 function wordCount(){
 
-let text=document.getElementById("wcText").value;
+let text=
+document.getElementById("wcText").value;
 
-let words=text.trim()
-?text.trim().split(/\s+/).length
-:0;
+let words=
+text.trim()
+? text.trim().split(/\s+/).length
+: 0;
 
 document.getElementById("wcResult").textContent=
-"Words: "+words+" | Characters: "+text.length;
+"Words: "+words+
+" | Characters: "+text.length;
+
 }
 
 
+function clearWordCounter(){
+
+document.getElementById("wcText").value="";
+
+wordCount();
+
+}
+
+
+
+/* =========================
+   CASE CONVERTER
+========================= */
+
 function caseUpper(){
 
+let text=
+document.getElementById("caseText").value;
+
 document.getElementById("caseResult").textContent=
-document.getElementById("caseText").value.toUpperCase();
+text.toUpperCase();
+
 }
 
 
 function caseLower(){
 
+let text=
+document.getElementById("caseText").value;
+
 document.getElementById("caseResult").textContent=
-document.getElementById("caseText").value.toLowerCase();
+text.toLowerCase();
+
 }
 
 
@@ -824,16 +1349,34 @@ document.getElementById("caseText")
 .value
 .toLowerCase();
 
-value=value.replace(
+value=
+value.replace(
 /\b\w/g,
 function(letter){
 return letter.toUpperCase();
 }
 );
 
-document.getElementById("caseResult").textContent=value;
+document.getElementById("caseResult").textContent=
+value;
+
 }
 
+
+function clearCase(){
+
+document.getElementById("caseText").value="";
+
+document.getElementById("caseResult").textContent=
+"Result will appear here.";
+
+}
+
+
+
+/* =========================
+   SLUG GENERATOR
+========================= */
 
 function makeSlug(){
 
@@ -845,21 +1388,39 @@ document.getElementById("slugInput")
 
 try{
 
-value=value
+value=
+value
 .normalize("NFKD")
 .replace(/[\u0300-\u036f]/g,"");
 
 }catch(error){}
 
-value=value
+value=
+value
 .replace(/[^a-z0-9\s-]/g,"")
 .replace(/\s+/g,"-")
 .replace(/-+/g,"-");
 
 document.getElementById("slugResult").textContent=
-value||"please-enter-text";
+value || "please-enter-text";
+
 }
 
+
+function clearSlug(){
+
+document.getElementById("slugInput").value="";
+
+document.getElementById("slugResult").textContent=
+"your-slug";
+
+}
+
+
+
+/* =========================
+   CALCULATOR
+========================= */
 
 function calculate(){
 
@@ -873,40 +1434,64 @@ document.getElementById("calcResult");
 
 if(!value){
 
-output.textContent="Enter a calculation.";
+output.textContent=
+"Enter a calculation.";
+
 return;
+
 }
 
 if(!/^[0-9+\-*/().%\s]+$/.test(value)){
 
-output.textContent="Invalid calculation.";
+output.textContent=
+"Invalid calculation.";
+
 return;
+
 }
 
 try{
 
 let result=
-Function('"use strict";return ('+value+')')();
+Function(
+'"use strict";return ('+
+value+
+')'
+)();
 
 if(!Number.isFinite(result)){
+
 throw new Error();
+
 }
 
-output.textContent=String(result);
+output.textContent=
+String(result);
 
 }catch(error){
 
-output.textContent="Invalid calculation.";
+output.textContent=
+"Invalid calculation.";
+
 }
+
 }
 
 
 function clearCalc(){
 
 document.getElementById("calc").value="";
-document.getElementById("calcResult").textContent="Result";
+
+document.getElementById("calcResult").textContent=
+"Result";
+
 }
 
+
+
+/* =========================
+   PIN GENERATOR
+========================= */
 
 function generatePin(){
 
@@ -917,15 +1502,42 @@ document.getElementById("pinLength").value
 
 let pin="";
 
+if(window.crypto &&
+window.crypto.getRandomValues){
+
+let numbers=
+new Uint32Array(length);
+
+window.crypto.getRandomValues(numbers);
+
 for(let i=0;i<length;i++){
 
-pin+=Math.floor(Math.random()*10);
+pin+=
+(numbers[i]%10).toString();
 
 }
 
-document.getElementById("pinResult").textContent=pin;
+}else{
+
+for(let i=0;i<length;i++){
+
+pin+=
+Math.floor(Math.random()*10);
+
 }
 
+}
+
+document.getElementById("pinResult").textContent=
+pin;
+
+}
+
+
+
+/* =========================
+   RANDOM PICKER
+========================= */
 
 function pickRandom(){
 
@@ -934,7 +1546,9 @@ document.getElementById("pickInput")
 .value
 .split(/\r?\n/)
 .map(function(item){
+
 return item.trim();
+
 })
 .filter(Boolean);
 
@@ -943,17 +1557,40 @@ document.getElementById("pickResult");
 
 if(!items.length){
 
-output.textContent="Enter at least one option.";
+output.textContent=
+"Enter at least one option.";
+
 return;
+
 }
 
 let selected=
-items[Math.floor(Math.random()*items.length)];
+items[
+Math.floor(
+Math.random()*items.length
+)
+];
 
 output.textContent=
 "Selected: "+selected;
+
 }
 
+
+function clearPicker(){
+
+document.getElementById("pickInput").value="";
+
+document.getElementById("pickResult").textContent=
+"Your result";
+
+}
+
+
+
+/* =========================
+   CHARACTER COUNTER
+========================= */
 
 function charCount(){
 
@@ -962,23 +1599,55 @@ document.getElementById("charText").value;
 
 document.getElementById("charResult").textContent=
 "Characters: "+text.length;
+
 }
 
 
+function clearCharCounter(){
+
+document.getElementById("charText").value="";
+
+charCount();
+
+}
+
+
+
+/* =========================
+   COPY
+========================= */
+
 function copyResult(id){
 
+let element=
+document.getElementById(id);
+
 let text=
-document.getElementById(id).textContent;
+element.textContent;
+
+if(!text ||
+text==="Result will appear here." ||
+text==="your-slug"){
+
+alert("Nothing to copy.");
+
+return;
+
+}
 
 if(navigator.clipboard){
 
 navigator.clipboard
 .writeText(text)
 .then(function(){
+
 alert("Copied!");
+
 })
 .catch(function(){
+
 fallbackCopy(text);
+
 });
 
 }else{
@@ -986,14 +1655,20 @@ fallbackCopy(text);
 fallbackCopy(text);
 
 }
+
 }
 
 
 function fallbackCopy(text){
 
-let area=document.createElement("textarea");
+let area=
+document.createElement("textarea");
 
 area.value=text;
+
+area.style.position="fixed";
+
+area.style.left="-9999px";
 
 document.body.appendChild(area);
 
@@ -1007,16 +1682,26 @@ alert("Copied!");
 
 }catch(error){
 
-alert("Copy failed. Please copy manually.");
+alert(
+"Copy failed. Please copy manually."
+);
 
 }
 
 area.remove();
+
 }
 
 
+
+/* =========================
+   STOPWATCH
+========================= */
+
 let watchTimer=null;
+
 let watchElapsed=0;
+
 let watchStart=0;
 
 
@@ -1025,7 +1710,8 @@ function formatTime(milliseconds){
 let ticks=
 Math.floor(milliseconds/100);
 
-let d=ticks%10;
+let d=
+ticks%10;
 
 let s=
 Math.floor(ticks/10)%60;
@@ -1043,21 +1729,26 @@ String(m).padStart(2,"0")+
 String(s).padStart(2,"0")+
 "."+
 d;
+
 }
 
 
 function updateWatch(){
 
-let elapsed=watchElapsed;
+let elapsed=
+watchElapsed;
 
 if(watchTimer){
 
-elapsed+=Date.now()-watchStart;
+elapsed+=
+Date.now()-watchStart;
 
 }
 
-document.getElementById("watch").textContent=
+document.getElementById("watch")
+.textContent=
 formatTime(elapsed);
+
 }
 
 
@@ -1067,10 +1758,15 @@ if(watchTimer){
 return;
 }
 
-watchStart=Date.now();
+watchStart=
+Date.now();
 
 watchTimer=
-setInterval(updateWatch,100);
+setInterval(
+updateWatch,
+100
+);
+
 }
 
 
@@ -1080,13 +1776,15 @@ if(!watchTimer){
 return;
 }
 
-watchElapsed+=Date.now()-watchStart;
+watchElapsed+=
+Date.now()-watchStart;
 
 clearInterval(watchTimer);
 
 watchTimer=null;
 
 updateWatch();
+
 }
 
 
@@ -1099,19 +1797,72 @@ clearInterval(watchTimer);
 }
 
 watchTimer=null;
+
 watchElapsed=0;
+
 watchStart=0;
 
 updateWatch();
+
 }
 
 
+
+/* =========================
+   RESET ALL
+========================= */
+
+function resetAllTools(){
+
+clearWordCounter();
+
+clearCase();
+
+clearSlug();
+
+clearCalc();
+
+clearPicker();
+
+clearCharCounter();
+
+resetWatch();
+
+document.getElementById("pinResult")
+.textContent="000000";
+
+document.getElementById("pinLength")
+.value="6";
+
+document.getElementById("search")
+.value="";
+
+filterTools(
+"all",
+document.querySelector(
+".categories button"
+)
+);
+
+}
+
+
+
+/* =========================
+   MODALS
+========================= */
+
 function openModal(id){
 
-let modal=document.getElementById(id);
+let modal=
+document.getElementById(id);
 
 if(modal){
+
 modal.style.display="block";
+
+document.body.style.overflow="hidden";
+
 }
 
 }
@@ -1119,10 +1870,15 @@ modal.style.display="block";
 
 function closeModal(id){
 
-let modal=document.getElementById(id);
+let modal=
+document.getElementById(id);
 
 if(modal){
+
 modal.style.display="none";
+
+document.body.style.overflow="";
+
 }
 
 }
@@ -1134,16 +1890,26 @@ if(event.target===element){
 
 element.style.display="none";
 
-}
+document.body.style.overflow="";
 
 }
 
+}
+
+
+
+/* =========================
+   NAVIGATION
+========================= */
 
 function goHome(){
 
 window.scrollTo({
+
 top:0,
+
 behavior:"smooth"
+
 });
 
 }
@@ -1151,13 +1917,17 @@ behavior:"smooth"
 
 function goTools(){
 
-let tools=document.getElementById("tools");
+let tools=
+document.getElementById("tools");
 
 if(tools){
 
 tools.scrollIntoView({
+
 behavior:"smooth",
+
 block:"start"
+
 });
 
 }
@@ -1167,12 +1937,15 @@ block:"start"
 
 function goAbout(){
 
-let about=document.getElementById("about");
+let about=
+document.getElementById("about");
 
 if(about){
 
 about.scrollIntoView({
+
 behavior:"smooth"
+
 });
 
 }
@@ -1182,18 +1955,26 @@ behavior:"smooth"
 
 function goFAQ(){
 
-let faq=document.getElementById("faq");
+let faq=
+document.getElementById("faq");
 
 if(faq){
 
 faq.scrollIntoView({
+
 behavior:"smooth"
+
 });
 
 }
 
 }
 
+
+
+/* =========================
+   KEYBOARD
+========================= */
 
 document.addEventListener(
 "keydown",
@@ -1209,10 +1990,53 @@ modal.style.display="none";
 
 });
 
-}
+document.body.style.overflow="";
 
 }
-);
+
+});
+
+
+
+/* =========================
+   CALCULATOR ENTER KEY
+========================= */
+
+document
+.getElementById("calc")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter"){
+
+calculate();
+
+}
+
+});
+
+
+
+/* =========================
+   SEARCH ESCAPE
+========================= */
+
+document
+.getElementById("search")
+.addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Escape"){
+
+this.value="";
+
+searchTools();
+
+}
+
+});
 
 </script>
 
