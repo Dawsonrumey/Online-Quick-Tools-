@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dawsonrumey.github.io/Online-Quick-Tools-/sitemap.xml
