@@ -1,1 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Feed - Online Quick Tools</title>
 
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#222;
+}
+.header{
+    background:#4f46e5;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+.container{
+    max-width:700px;
+    margin:20px auto;
+    padding:15px;
+}
+.card{
+    background:white;
+    margin-bottom:20px;
+    padding:18px;
+    border-radius:14px;
+    box-shadow:0 3px 12px #0001;
+}
+.video{
+    width:100%;
+    aspect-ratio:16/9;
+    border:0;
+    border-radius:10px;
+}
+h2{
+    margin-top:10px;
+}
+.platform{
+    font-size:13px;
+    color:#666;
+}
+.empty{
+    text-align:center;
+    padding:40px 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🎬 Video Share</h1>
+    <p>Discover videos shared by our community</p>
+</div>
+
+<div class="container" id="feed">
+    <div class="empty">Loading videos...</div>
+</div>
+
+<script>
+const SUPABASE_URL="https://etkqkptoxkfhxcysaadi.supabase.co";
+const SUPABASE_KEY="sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+async function loadVideos(){
+
+    const feed=document.getElementById("feed");
+
+    try{
+
+        const response=await fetch(
+            SUPABASE_URL+
+            "/rest/v1/Videos?select=id,title,platform,videos_url,status&status=eq.approved&order=created_at.desc",
+            {
+                headers:{
+                    "apikey":SUPABASE_KEY,
+                    "Authorization":"Bearer "+SUPABASE_KEY
+                }
+            }
+        );
+
+        if(!response.ok){
+            throw new Error(await response.text());
+        }
+
+        const videos=await response.json();
+
+        if(videos.length===0){
+            feed.innerHTML=
+            '<div class="card empty">🎬 No approved videos yet.</div>';
+            return;
+        }
+
+        feed.innerHTML="";
+
+        videos.forEach(video=>{
+
+            const card=document.createElement("div");
+            card.className="card";
+
+            card.innerHTML=`
+                <div class="platform">${escapeHTML(video.platform)}</div>
+                <h2>${escapeHTML(video.title)}</h2>
+                ${getEmbed(video.videos_url)}
+            `;
+
+            feed.appendChild(card);
+        });
+
+    }catch(error){
+
+        console.error(error);
+
+        feed.innerHTML=
+        '<div class="card empty">❌ Could not load videos.</div>';
+    }
+}
+
+function getEmbed(url){
+
+    if(!url) return "";
+
+    try{
+
+        const u=new URL(url);
+
+        if(u.hostname.includes("youtube.com")){
+            const id=u.searchParams.get("v");
+
+            if(id){
+                return `<iframe class="video"
+                src="https://www.youtube.com/embed/${encodeURIComponent(id)}"
+                allowfullscreen></iframe>`;
+            }
+        }
+
+        if(u.hostname.includes("youtu.be")){
+            const id=u.pathname.substring(1);
+
+            return `<iframe class="video"
+            src="https://www.youtube.com/embed/${encodeURIComponent(id)}"
+            allowfullscreen></iframe>`;
+        }
+
+    }catch(e){}
+
+    return `
+        <p>
+        <a href="${escapeHTML(url)}" target="_blank" rel="noopener">
+        ▶️ Watch original video
+        </a>
+        </p>
+    `;
+}
+
+function escapeHTML(text){
+    return String(text||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+loadVideos();
+</script>
+
+</body>
+</html>
