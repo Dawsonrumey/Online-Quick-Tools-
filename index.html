@@ -635,7 +635,37 @@ oninput="searchTools()">
 <div class="ad">
 📢 Advertisement Space
 </div>
+   
+<section id="videoHub" style="display:none; padding:20px 12px;">
 
+<h2 style="text-align:center;">🎬 Video Hub</h2>
+
+<div class="categories">
+
+<button class="active" onclick="showVideoTab('all',this)">
+🎬 All
+</button>
+
+<button onclick="showVideoTab('YouTube',this)">
+▶️ YouTube
+</button>
+
+<button onclick="showVideoTab('Facebook',this)">
+📘 Facebook
+</button>
+
+<button onclick="showVideoTab('TikTok',this)">
+🎵 TikTok
+</button>
+
+</div>
+
+<div id="videoFeed">
+<p style="text-align:center;">Loading videos...</p>
+</div>
+
+</section>
+   
 <h1 class="sectionTitle">⚡ Free Online Quick Tools</h1>
 
 <button class="resetAll" onclick="resetAllTools()">
