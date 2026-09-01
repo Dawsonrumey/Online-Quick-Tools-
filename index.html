@@ -1213,7 +1213,6 @@ before publishing.
 
 </div>
 
-<section id="videoHub" style="display:none; padding:20px 12px;">
 
 <h2 style="text-align:center;">🎬 Video Hub</h2>
 
@@ -1335,9 +1334,8 @@ count ? "none" : "block";
 function filterTools(category,button){
 
 document
-.querySelectorAll(".categories button")
+.querySelectorAll(".categories:not(.video-menu) button")
 .forEach(function(btn){
-
 btn.classList.remove("active");
 
 });
@@ -2174,11 +2172,11 @@ function showVideoTab(platform, button){
 
     videoHub.style.display = "block";
 
-    const tools = document.getElementById("tools");
-
-    if(tools){
-        tools.style.display = "none";
-    }
+    document
+    .querySelectorAll(".video-menu button")
+    .forEach(function(btn){
+        btn.classList.remove("active");
+    });
 
     document
     .querySelectorAll("#videoHub .categories button")
@@ -2197,7 +2195,6 @@ function showVideoTab(platform, button){
         block:"start"
     });
 }
-
 
 function renderSiteVideos(platform){
 
