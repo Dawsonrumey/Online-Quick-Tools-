@@ -2366,15 +2366,36 @@ function getYouTubeID(url){
 
         const u = new URL(url);
 
-        if(u.hostname.includes("youtu.be")){
-            return u.pathname.substring(1).split("/")[0];
+        // YouTube Shorts
+        if(
+            u.hostname.includes("youtube.com") &&
+            u.pathname.startsWith("/shorts/")
+        ){
+            return u.pathname
+                .split("/shorts/")[1]
+                .split("/")[0];
         }
 
-        if(u.hostname.includes("youtube.com")){
+        // YouTube watch URL
+        if(
+            u.hostname.includes("youtube.com") &&
+            u.searchParams.get("v")
+        ){
             return u.searchParams.get("v");
         }
 
-    }catch(e){}
+        // YouTube short URL
+        if(u.hostname.includes("youtu.be")){
+            return u.pathname
+                .substring(1)
+                .split("/")[0];
+        }
+
+    }catch(error){
+
+        console.error("YouTube URL error:", error);
+
+    }
 
     return null;
 }
