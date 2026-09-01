@@ -4,42 +4,98 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Video Feed - Online Quick Tools</title>
+<title>Video Hub - Online Quick Tools</title>
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
     font-family:Arial,sans-serif;
-    background:#f5f7fb;
+    background:#f4f6fb;
     color:#222;
 }
 
-.header{
+/* HEADER */
+header{
     background:#4f46e5;
     color:white;
-    padding:20px;
+    padding:16px;
     text-align:center;
 }
 
+header h1{
+    margin:0;
+    font-size:24px;
+}
+
+/* MENU */
+.menu{
+    background:white;
+    display:flex;
+    overflow-x:auto;
+    position:sticky;
+    top:0;
+    z-index:10;
+    box-shadow:0 2px 8px #0002;
+}
+
+.menu button{
+    border:0;
+    background:white;
+    padding:14px 18px;
+    font-size:14px;
+    white-space:nowrap;
+    cursor:pointer;
+}
+
+.menu button.active{
+    color:#4f46e5;
+    font-weight:bold;
+    border-bottom:3px solid #4f46e5;
+}
+
+/* CONTENT */
 .container{
-    max-width:700px;
-    margin:20px auto;
+    max-width:750px;
+    margin:auto;
     padding:15px;
 }
 
+.section-title{
+    margin:10px 0 15px;
+}
+
+/* VIDEO CARD */
 .card{
     background:white;
-    margin-bottom:20px;
-    padding:18px;
-    border-radius:14px;
+    margin-bottom:22px;
+    padding:15px;
+    border-radius:15px;
     box-shadow:0 3px 12px #0001;
 }
 
+.platform{
+    font-size:13px;
+    color:#666;
+    margin-bottom:5px;
+}
+
+.title{
+    font-size:19px;
+    font-weight:bold;
+    margin:8px 0 14px;
+}
+
+/* PLAYER */
 .player{
+    position:relative;
     width:100%;
     aspect-ratio:16/9;
-    border:0;
-    border-radius:10px;
+    background:#111;
+    border-radius:12px;
     overflow:hidden;
 }
 
@@ -49,55 +105,118 @@ body{
     border:0;
 }
 
-.tiktok-player{
+/* YOUTUBE THUMBNAIL */
+.thumbnail{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.play-button{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:70px;
+    height:50px;
+    border:0;
+    border-radius:14px;
+    background:#ff0000;
+    color:white;
+    font-size:25px;
+    cursor:pointer;
+    box-shadow:0 3px 12px #0006;
+}
+
+.play-button:hover{
+    transform:translate(-50%,-50%) scale(1.05);
+}
+
+/* TIKTOK */
+.tiktok-frame{
     width:100%;
     height:650px;
     border:0;
-    border-radius:10px;
+    border-radius:12px;
 }
 
-.facebook-player{
+/* FACEBOOK */
+.facebook-frame{
     width:100%;
-    min-height:400px;
+    min-height:420px;
     border:0;
+    border-radius:12px;
 }
 
-h2{
-    margin:10px 0;
-}
-
-.platform{
-    font-size:13px;
-    color:#666;
-    margin-bottom:5px;
-}
-
+/* ORIGINAL LINK */
 .watch{
     display:inline-block;
-    margin-top:10px;
-    padding:10px 15px;
+    margin-top:12px;
+    padding:10px 14px;
     background:#4f46e5;
     color:white;
     text-decoration:none;
     border-radius:8px;
 }
 
+/* EMPTY */
 .empty{
+    background:white;
+    padding:45px 15px;
     text-align:center;
-    padding:40px 10px;
+    border-radius:15px;
+}
+
+.loading{
+    text-align:center;
+    padding:40px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
-    <h1>🎬 Video Share</h1>
-    <p>Videos shared by our community</p>
-</div>
+<header>
+    <h1>🎬 Video Hub</h1>
+</header>
 
-<div class="container" id="feed">
-    <div class="card empty">Loading videos...</div>
+<nav class="menu">
+
+    <button class="active" onclick="showTab('all',this)">
+        🏠 All
+    </button>
+
+    <button onclick="showTab('YouTube',this)">
+        ▶️ YouTube
+    </button>
+
+    <button onclick="showTab('Facebook',this)">
+        📘 Facebook
+    </button>
+
+    <button onclick="showTab('TikTok',this)">
+        🎵 TikTok
+    </button>
+
+    <button onclick="openSubmit()">
+        📤 Submit
+    </button>
+
+</nav>
+
+<div class="container">
+
+    <h2 class="section-title" id="pageTitle">
+        Latest Videos
+    </h2>
+
+    <div id="feed">
+        <div class="loading">
+            Loading videos...
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -108,6 +227,10 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
+let allVideos = [];
+
+
+/* LOAD VIDEOS */
 
 async function loadVideos(){
 
@@ -117,7 +240,7 @@ async function loadVideos(){
 
         const response = await fetch(
             SUPABASE_URL +
-            "/rest/v1/Videos?select=id,title,platform,videos_url,status&status=eq.approved&order=created_at.desc",
+            "/rest/v1/Videos?select=id,title,platform,videos_url,status,created_at&status=eq.approved&order=created_at.desc",
             {
                 headers:{
                     "apikey":SUPABASE_KEY,
@@ -130,56 +253,97 @@ async function loadVideos(){
             throw new Error(await response.text());
         }
 
-        const videos = await response.json();
+        allVideos = await response.json();
 
-        if(videos.length === 0){
-
-            feed.innerHTML =
-            '<div class="card empty">🎬 No approved videos yet.</div>';
-
-            return;
-        }
-
-        feed.innerHTML = "";
-
-        videos.forEach(video => {
-
-            const card = document.createElement("div");
-
-            card.className = "card";
-
-            card.innerHTML = `
-                <div class="platform">
-                    ${escapeHTML(video.platform)}
-                </div>
-
-                <h2>
-                    ${escapeHTML(video.title)}
-                </h2>
-
-                ${createPlayer(
-                    video.platform,
-                    video.videos_url
-                )}
-            `;
-
-            feed.appendChild(card);
-
-        });
+        renderVideos("all");
 
     }catch(error){
 
         console.error(error);
 
         feed.innerHTML =
-        '<div class="card empty">❌ Could not load videos.</div>';
+        `<div class="empty">
+            ❌ Could not load videos.
+        </div>`;
     }
 }
 
 
-/* =========================
-   VIDEO PLAYER
-========================= */
+/* TAB */
+
+function showTab(platform,button){
+
+    document.querySelectorAll(".menu button")
+    .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    if(platform === "all"){
+        document.getElementById("pageTitle").textContent =
+        "Latest Videos";
+    }else{
+        document.getElementById("pageTitle").textContent =
+        platform + " Videos";
+    }
+
+    renderVideos(platform);
+}
+
+
+/* RENDER */
+
+function renderVideos(platform){
+
+    const feed = document.getElementById("feed");
+
+    let videos = allVideos;
+
+    if(platform !== "all"){
+        videos = allVideos.filter(
+            video => video.platform === platform
+        );
+    }
+
+    if(videos.length === 0){
+
+        feed.innerHTML =
+        `<div class="empty">
+            🎬 No ${platform === "all" ? "" : platform + " "}approved videos yet.
+        </div>`;
+
+        return;
+    }
+
+    feed.innerHTML = "";
+
+    videos.forEach(video => {
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+            <div class="platform">
+                ${escapeHTML(video.platform)}
+            </div>
+
+            <div class="title">
+                ${escapeHTML(video.title)}
+            </div>
+
+            ${createPlayer(
+                video.platform,
+                video.videos_url
+            )}
+        `;
+
+        feed.appendChild(card);
+
+    });
+}
+
+
+/* PLAYER */
 
 function createPlayer(platform,url){
 
@@ -187,24 +351,41 @@ function createPlayer(platform,url){
         return "";
     }
 
+
+    /* YOUTUBE */
+
     if(platform === "YouTube"){
 
         const id = getYouTubeID(url);
 
         if(id){
 
+            const thumbnail =
+            "https://img.youtube.com/vi/" +
+            encodeURIComponent(id) +
+            "/hqdefault.jpg";
+
             return `
-            <div class="player">
-                <iframe
-                    src="https://www.youtube.com/embed/${encodeURIComponent(id)}"
-                    title="YouTube video"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
+            <div class="player"
+                 id="yt-${encodeURIComponent(id)}">
+
+                <img
+                    class="thumbnail"
+                    src="${thumbnail}"
+                    alt="YouTube thumbnail">
+
+                <button
+                    class="play-button"
+                    onclick="playYouTube('${encodeURIComponent(id)}',this)">
+                    ▶
+                </button>
+
             </div>`;
         }
     }
 
+
+    /* TIKTOK */
 
     if(platform === "TikTok"){
 
@@ -214,27 +395,31 @@ function createPlayer(platform,url){
 
             return `
             <iframe
-                class="tiktok-player"
-                src="https://www.tiktok.com/player/v1/${encodeURIComponent(id)}?controls=1&description=1"
-                title="TikTok video"
-                allow="fullscreen">
+                class="tiktok-frame"
+                src="https://www.tiktok.com/player/v1/${encodeURIComponent(id)}?controls=1"
+                allow="fullscreen"
+                title="TikTok video">
             </iframe>`;
         }
     }
 
 
+    /* FACEBOOK */
+
     if(platform === "Facebook"){
 
         return `
         <div class="player">
+
             <iframe
-                class="facebook-player"
+                class="facebook-frame"
                 src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false&width=500"
                 scrolling="no"
                 frameborder="0"
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                 allowfullscreen>
             </iframe>
+
         </div>`;
     }
 
@@ -251,9 +436,24 @@ function createPlayer(platform,url){
 }
 
 
-/* =========================
-   YOUTUBE ID
-========================= */
+/* YOUTUBE PLAY */
+
+function playYouTube(id,button){
+
+    const player = button.parentElement;
+
+    player.innerHTML = `
+        <iframe
+            src="https://www.youtube.com/embed/${id}?autoplay=1"
+            title="YouTube video"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    `;
+}
+
+
+/* YOUTUBE ID */
 
 function getYouTubeID(url){
 
@@ -263,7 +463,9 @@ function getYouTubeID(url){
 
         if(u.hostname.includes("youtu.be")){
 
-            return u.pathname.substring(1).split("/")[0];
+            return u.pathname
+                .substring(1)
+                .split("/")[0];
         }
 
         if(u.hostname.includes("youtube.com")){
@@ -277,31 +479,27 @@ function getYouTubeID(url){
 }
 
 
-/* =========================
-   TIKTOK ID
-========================= */
+/* TIKTOK ID */
 
 function getTikTokID(url){
 
-    try{
+    const match =
+        String(url).match(/\/video\/(\d+)/);
 
-        const match =
-        url.match(/\/video\/(\d+)/);
-
-        if(match){
-
-            return match[1];
-        }
-
-    }catch(e){}
-
-    return null;
+    return match ? match[1] : null;
 }
 
 
-/* =========================
-   SECURITY
-========================= */
+/* SUBMIT */
+
+function openSubmit(){
+
+    window.location.href =
+    "video-submit.html";
+}
+
+
+/* SECURITY */
 
 function escapeHTML(text){
 
