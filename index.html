@@ -2130,21 +2130,22 @@ const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 let siteVideos = [];
-
 async function loadSiteVideos(){
 
     const feed = document.getElementById("videoFeed");
 
     if(!feed) return;
 
-    feed.innerHTML =
-        "<p style='text-align:center;'>⏳ Loading videos...</p>";
+    feed.innerHTML = `
+        <div style="padding:20px;text-align:center;">
+            ⏳ Checking video database...
+        </div>
+    `;
 
     try{
 
         const response = await fetch(
-            SUPABASE_URL +
-            "/rest/v1/Videos?select=*",
+            SUPABASE_URL + "/rest/v1/Videos?select=*",
             {
                 method:"GET",
                 headers:{
@@ -2156,28 +2157,63 @@ async function loadSiteVideos(){
 
         const text = await response.text();
 
-        console.log("Supabase response:", text);
-
         if(!response.ok){
-            throw new Error(text);
+
+            feed.innerHTML = `
+                <div style="padding:20px;color:red;text-align:center;">
+                    ❌ Supabase Error<br><br>
+                    ${escapeVideoText(text)}
+                </div>
+            `;
+
+            return;
         }
 
         siteVideos = JSON.parse(text);
 
-        console.log("Videos loaded:", siteVideos);
+        if(!Array.isArray(siteVideos)){
+
+            feed.innerHTML = `
+                <div style="padding:20px;color:red;text-align:center;">
+                    ❌ Database response is not valid.
+                </div>
+            `;
+
+            return;
+        }
+
+        if(siteVideos.length === 0){
+
+            feed.innerHTML = `
+                <div style="padding:20px;text-align:center;">
+                    ⚠️ Supabase connected, but 0 videos returned.
+                    <br><br>
+                    Check Videos table and RLS SELECT policy.
+                </div>
+            `;
+
+            return;
+        }
+
+        feed.innerHTML = `
+            <div style="padding:12px;text-align:center;">
+                ✅ ${siteVideos.length} video(s) loaded from Supabase.
+            </div>
+        `;
 
         renderSiteVideos("all");
 
     }catch(error){
 
-        console.error("Video loading error:", error);
-
-        feed.innerHTML =
-            "<p style='text-align:center;color:red;'>❌ Video loading failed.<br>" +
-            escapeVideoText(error.message) +
-            "</p>";
+        feed.innerHTML = `
+            <div style="padding:20px;color:red;text-align:center;">
+                ❌ JavaScript Error<br><br>
+                ${escapeVideoText(error.message)}
+            </div>
+        `;
     }
 }
+
 
 
 function showVideoTab(platform, button){
