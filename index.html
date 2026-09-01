@@ -2166,27 +2166,36 @@ async function loadSiteVideos(){
 }
 
 
-function showVideoTab(platform,button){
+function showVideoTab(platform, button){
 
-   document.getElementById("videoHub").style.display = "block";
+    const videoHub = document.getElementById("videoHub");
 
-document.getElementById("videoHub").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-});
-   document.getElementById("videoHub").style.display = "block";
+    if(!videoHub) return;
 
-document.getElementById("tools").style.display = "none";
-   
+    videoHub.style.display = "block";
+
+    const tools = document.getElementById("tools");
+
+    if(tools){
+        tools.style.display = "none";
+    }
+
     document
     .querySelectorAll("#videoHub .categories button")
     .forEach(function(btn){
         btn.classList.remove("active");
     });
 
-    button.classList.add("active");
+    if(button){
+        button.classList.add("active");
+    }
 
     renderSiteVideos(platform);
+
+    videoHub.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
 }
 
 
