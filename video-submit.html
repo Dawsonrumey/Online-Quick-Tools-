@@ -477,21 +477,19 @@ form.addEventListener("submit", async function(e){
         */
 
         const dbResult =
-        await supabaseClient
-        .from("Videos")
-        .insert({
+await supabaseClient
+.from("Videos")
+.insert({
 
-            title:title,
+    title: title,
 
-            description:description,
+    platform: "Direct",
 
-            platform:"Direct",
+    videos_url: publicURL,
 
-            videos_url:publicURL,
+    status: "pending"
 
-            status:"pending"
-
-        });
+});
 
 
         if(dbResult.error){
