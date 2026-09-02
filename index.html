@@ -1,706 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta name="google-site-verification" content="CrUfQJ4XaT5chsevGXYYyEDR75KMLDF-12WrYOjALg4" />
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<meta name="description" content="Online Quick Tools - Free, fast and mobile-friendly online tools including word counter, calculator, text tools, random picker, PIN generator and stopwatch.">
+<meta name="description" content="Online Quick Tools - free useful online tools and video hub">
 
-<meta name="theme-color" content="#4f46e5">
-
-<meta name="robots" content="index, follow">
-
-<meta name="author" content="Online Quick Tools">
-
-<meta name="keywords" content="free online tools, word counter, calculator, text tools, random picker, PIN generator, stopwatch, character counter, slug generator">
-
-<link rel="canonical" href="https://dawsonrumey.github.io/Online-Quick-Tools-/">
-
-   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-<title>Online Quick Tools - Free Online Tools</title>
-   
-   <meta property="og:type" content="website">
-<meta property="og:title" content="Online Quick Tools - Free Online Tools">
-<meta property="og:description" content="Free, fast and mobile-friendly online tools for text, calculations, generators and everyday tasks.">
-<meta property="og:url" content="https://dawsonrumey.github.io/Online-Quick-Tools-/">
-
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Online Quick Tools - Free Online Tools">
-<meta name="twitter:description" content="Free and easy online tools for everyday tasks.">
+<title>Online Quick Tools</title>
 
 <style>
-
 *{
-box-sizing:border-box;
-margin:0;
-padding:0
+    box-sizing:border-box;
 }
 
 html{
-scroll-behavior:smooth
+    scroll-behavior:smooth;
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f7ff;
-color:#172033;
-line-height:1.5;
-transition:background .25s,color .25s
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#172033;
 }
 
-body.dark{
-background:#0f172a;
-color:#e5e7eb
-}
-
+/* HEADER */
 header{
-position:relative;
-overflow:hidden;
-background:linear-gradient(135deg,#4f46e5,#7c3aed,#2563eb);
-color:white;
-padding:42px 18px 55px;
-text-align:center;
-border-radius:0 0 30px 30px
+    background:linear-gradient(135deg,#111827,#2563eb);
+    color:white;
+    padding:28px 15px;
+    text-align:center;
 }
 
-header:before,
-header:after{
-content:"";
-position:absolute;
-border-radius:50%;
-background:rgba(255,255,255,.10)
+header h1{
+    margin:0 0 8px;
+    font-size:30px;
 }
 
-header:before{
-width:180px;
-height:180px;
-left:-70px;
-top:-70px
+header p{
+    margin:0;
+    opacity:.9;
 }
 
-header:after{
-width:220px;
-height:220px;
-right:-100px;
-bottom:-120px
+/* NAV */
+nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:white;
+    box-shadow:0 2px 10px #0001;
+    padding:10px;
+    text-align:center;
 }
 
-.logo{
-position:relative;
-z-index:1;
-font-size:32px;
-font-weight:800;
-letter-spacing:.3px
-}
-
-.tagline{
-position:relative;
-z-index:1;
-margin-top:8px;
-font-size:15px;
-opacity:.92
-}
-
-.headerActions{
-position:relative;
-z-index:2;
-margin-top:18px
-}
-
-.themeBtn{
-border:1px solid rgba(255,255,255,.35);
-background:rgba(255,255,255,.15);
-color:white;
-padding:9px 15px;
-border-radius:20px;
-font-size:13px;
-font-weight:700;
-cursor:pointer;
-backdrop-filter:blur(5px)
-}
-
-.container{
-width:100%;
-max-width:1000px;
-margin:auto;
-padding:18px 14px 80px
-}
-
-.searchBox{
-position:relative;
-margin-top:-35px;
-z-index:5
-}
-
-.search{
-width:100%;
-height:58px;
-border:0;
-outline:none;
-border-radius:18px;
-padding:0 20px;
-font-size:16px;
-background:white;
-color:#172033;
-box-shadow:0 10px 30px rgba(31,41,55,.15)
-}
-
-body.dark .search{
-background:#1e293b;
-color:#f8fafc;
-box-shadow:0 10px 30px rgba(0,0,0,.25)
-}
-
-.categories{
-display:flex;
-gap:9px;
-overflow-x:auto;
-padding:18px 2px 12px;
-scrollbar-width:none
-}
-
-.categories::-webkit-scrollbar{
-display:none
-}
-
+nav button,
 .categories button{
-border:0;
-background:white;
-color:#475467;
-padding:10px 17px;
-border-radius:25px;
-white-space:nowrap;
-font-size:14px;
-font-weight:600;
-box-shadow:0 3px 12px rgba(0,0,0,.06);
-cursor:pointer
+    border:0;
+    border-radius:10px;
+    padding:10px 14px;
+    margin:4px;
+    background:#eef2ff;
+    color:#243b7a;
+    font-weight:700;
+    cursor:pointer;
 }
 
-body.dark .categories button{
-background:#1e293b;
-color:#cbd5e1
+nav button:hover,
+.categories button:hover{
+    background:#dbeafe;
+}
+
+/* CONTAINER */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:18px 12px;
+}
+
+/* SEARCH */
+.search{
+    width:100%;
+    padding:14px;
+    border:1px solid #d5dbea;
+    border-radius:12px;
+    font-size:16px;
+    margin-bottom:12px;
+}
+
+/* CATEGORY */
+.categories{
+    text-align:center;
+    margin-bottom:18px;
 }
 
 .categories button.active{
-background:#4f46e5;
-color:white;
-box-shadow:0 5px 15px rgba(79,70,229,.25)
+    background:#2563eb;
+    color:white;
 }
 
-.sectionTitle{
-font-size:22px;
-font-weight:800;
-margin:12px 0 14px
+/* TOOL GRID */
+.tool-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
 }
 
-.tools{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px
+.tool{
+    background:white;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 3px 14px #0001;
 }
 
-.card{
-background:rgba(255,255,255,.95);
-border:1px solid #e9ecf5;
-border-radius:20px;
-padding:18px;
-box-shadow:0 8px 25px rgba(31,41,55,.07);
-transition:transform .18s,box-shadow .18s,background .25s
+.tool h3{
+    margin-top:0;
 }
 
-body.dark .card{
-background:#1e293b;
-border-color:#334155;
-box-shadow:0 8px 25px rgba(0,0,0,.18)
+.tool input,
+.tool textarea,
+.tool select{
+    width:100%;
+    padding:11px;
+    margin:6px 0;
+    border:1px solid #d4d9e5;
+    border-radius:9px;
+    font-size:15px;
 }
 
-.card:active{
-transform:scale(.985)
-}
-
-.icon{
-width:52px;
-height:52px;
-border-radius:15px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:27px;
-background:#eef2ff;
-margin-bottom:12px
-}
-
-body.dark .icon{
-background:#312e81
-}
-
-.card h2{
-font-size:18px;
-margin-bottom:5px
-}
-
-.card p{
-font-size:13px;
-color:#667085;
-margin-bottom:11px
-}
-
-body.dark .card p{
-color:#94a3b8
-}
-
-input,
-textarea,
-select{
-width:100%;
-border:1px solid #dfe3ec;
-background:#fafbff;
-color:#172033;
-outline:none;
-border-radius:12px;
-padding:12px;
-font-size:15px;
-font-family:inherit;
-margin:4px 0 8px
-}
-
-body.dark input,
-body.dark textarea,
-body.dark select{
-background:#0f172a;
-border-color:#475569;
-color:#f8fafc
-}
-
-input:focus,
-textarea:focus,
-select:focus{
-border-color:#6366f1;
-box-shadow:0 0 0 3px rgba(99,102,241,.10)
-}
-
-textarea{
-min-height:100px;
-resize:vertical
+.tool textarea{
+    min-height:110px;
+    resize:vertical;
 }
 
 .btn{
-border:0;
-border-radius:11px;
-padding:10px 13px;
-margin:3px 2px;
-font-weight:700;
-font-size:13px;
-background:#4f46e5;
-color:white;
-cursor:pointer;
-transition:opacity .15s,transform .1s
+    border:0;
+    border-radius:9px;
+    background:#2563eb;
+    color:white;
+    padding:10px 14px;
+    cursor:pointer;
+    font-weight:700;
+    margin:3px;
 }
 
-.btn:hover{
-opacity:.9
-}
-
-.btn:active{
-transform:scale(.97)
-}
-
-.btn.green{
-background:#16a34a
-}
-
-.btn.red{
-background:#dc2626
-}
-
-.btn.gray{
-background:#64748b
+.btn.secondary{
+    background:#64748b;
 }
 
 .result{
-background:#f3f5fa;
-border:1px solid #e7eaf1;
-color:#172033;
-border-radius:11px;
-padding:11px;
-margin-top:7px;
-font-size:14px;
-font-weight:700;
-word-break:break-word;
-min-height:42px
+    margin-top:10px;
+    background:#f1f5f9;
+    padding:10px;
+    border-radius:9px;
+    word-break:break-word;
 }
 
-body.dark .result{
-background:#0f172a;
-border-color:#334155;
-color:#e2e8f0
+#noResult{
+    text-align:center;
+    display:none;
+    padding:30px;
 }
 
-.timer{
-font-size:30px;
-font-weight:800;
-text-align:center;
-padding:17px 4px;
-font-variant-numeric:tabular-nums
+/* VIDEO HUB */
+#videoHub{
+    display:none;
 }
 
-.ad{
-min-height:80px;
-border:2px dashed #d5d9e5;
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:#7a8495;
-font-size:13px;
-margin:18px 0;
-background:#fafbff
+.video-card{
+    background:white;
+    padding:15px;
+    margin:15px 0;
+    border-radius:15px;
+    box-shadow:0 3px 12px #0002;
 }
 
-body.dark .ad{
-background:#111827;
-border-color:#475569;
-color:#94a3b8
+.video-player{
+    width:100%;
+    max-width:100%;
+    border-radius:12px;
+    display:block;
 }
 
-.info{
-background:white;
-border-radius:20px;
-padding:20px;
-margin-top:18px;
-box-shadow:0 7px 22px rgba(31,41,55,.06)
-}
-
-body.dark .info{
-background:#1e293b;
-box-shadow:0 7px 22px rgba(0,0,0,.18)
-}
-
-.info h2{
-font-size:20px;
-margin-bottom:10px
-}
-
-.info p{
-font-size:14px;
-color:#596579;
-margin:8px 0
-}
-
-body.dark .info p{
-color:#aab6c8
-}
-
-.noResult{
-display:none;
-text-align:center;
-padding:35px 15px;
-color:#667085;
-background:white;
-border-radius:18px
-}
-
-body.dark .noResult{
-background:#1e293b;
-color:#94a3b8
-}
-
+/* FOOTER */
 footer{
-background:#111827;
-color:#dbe2ef;
-text-align:center;
-padding:30px 15px 45px;
-border-radius:30px 30px 0 0
+    text-align:center;
+    background:#111827;
+    color:white;
+    padding:25px;
+    margin-top:35px;
 }
 
-footer strong{
-color:white;
-font-size:19px
-}
-
-.footerLinks{
-margin-top:14px
-}
-
-.footerLinks button{
-background:none;
-border:0;
-color:#dbe2ef;
-margin:5px 7px;
-text-decoration:underline;
-cursor:pointer;
-font-size:13px
-}
-
+/* MODAL */
 .modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-z-index:100;
-padding:20px;
-overflow:auto
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    z-index:100;
+    padding:20px;
 }
 
-.modalBox{
-position:relative;
-max-width:600px;
-background:white;
-color:#172033;
-margin:8vh auto;
-padding:25px;
-border-radius:20px;
-line-height:1.7
-}
-
-body.dark .modalBox{
-background:#1e293b;
-color:#e5e7eb
-}
-
-.modalBox h2{
-margin-bottom:12px
-}
-
-.modalBox p{
-margin:10px 0
+.modal-box{
+    background:white;
+    max-width:500px;
+    margin:60px auto;
+    padding:20px;
+    border-radius:16px;
 }
 
 .close{
-position:absolute;
-right:12px;
-top:8px;
-border:0;
-background:none;
-font-size:28px;
-cursor:pointer;
-color:inherit
+    float:right;
+    border:0;
+    background:#ef4444;
+    color:white;
+    border-radius:7px;
+    padding:5px 9px;
+    cursor:pointer;
 }
 
-.topButton{
-position:fixed;
-right:16px;
-bottom:18px;
-width:48px;
-height:48px;
-border:0;
-border-radius:50%;
-background:#4f46e5;
-color:white;
-font-size:20px;
-box-shadow:0 8px 20px rgba(0,0,0,.2);
-z-index:20;
-cursor:pointer
-}
+/* MOBILE */
+@media(max-width:600px){
 
-.resetAll{
-display:block;
-margin:5px 0 18px auto;
-background:#64748b;
-color:white;
-border:0;
-padding:9px 14px;
-border-radius:10px;
-font-size:12px;
-font-weight:700;
-cursor:pointer
-}
+    header h1{
+        font-size:25px;
+    }
 
-@media(max-width:800px){
-
-.tools{
-grid-template-columns:repeat(2,1fr)
-}
+    .tool-grid{
+        grid-template-columns:1fr;
+    }
 
 }
-
-@media(max-width:560px){
-
-header{
-padding:35px 15px 50px
-}
-
-.logo{
-font-size:27px
-}
-
-.tools{
-grid-template-columns:1fr;
-gap:13px
-}
-
-.card{
-padding:16px
-}
-
-.sectionTitle{
-font-size:20px
-}
-
-}
-
-@media(min-width:561px){
-
-.card:hover{
-transform:translateY(-3px);
-box-shadow:0 13px 30px rgba(31,41,55,.11)
-}
-
-}
-
 </style>
-
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header id="home">
 
-<div class="logo">⚡ Online Quick Tools</div>
+<h1>🛠️ Online Quick Tools</h1>
 
-<div class="tagline">
-Simple • Fast • Free • Mobile Friendly
-</div>
-
-<div class="headerActions">
-<button class="themeBtn" onclick="toggleTheme()" id="themeButton">
-🌙 Dark Mode
-</button>
-</div>
+<p>
+Free, simple and useful online tools
+</p>
 
 </header>
 
 
+<!-- NAVIGATION -->
+<nav>
+
+<button onclick="showTools()">
+🛠️ Tools
+</button>
+
+<button onclick="showVideoTab('all',null)">
+🎬 Videos
+</button>
+
+<button onclick="openContact()">
+📩 Contact
+</button>
+
+</nav>
+
+
 <main class="container">
 
-<div class="searchBox">
+
+<!-- ================= TOOLS ================= -->
+
+<section id="tools">
 
 <input
 id="search"
 class="search"
 type="search"
-placeholder="🔍 Search a tool..."
-oninput="searchTools()">
+placeholder="🔎 Search tools..."
+oninput="searchTools()"
+>
 
-</div>
 
+<!-- TOOL CATEGORIES -->
 
-<div class="categories">
+<div class="categories" id="toolCategories">
 
-<button class="active" onclick="filterTools('all',this)">
-✨ All
+<button
+class="active"
+onclick="filterTools('all',this)">
+All
 </button>
 
-<button onclick="filterTools('text',this)">
-📝 Text
+<button
+onclick="filterTools('text',this)">
+Text
 </button>
 
-<button onclick="filterTools('generator',this)">
-🎲 Generator
+<button
+onclick="filterTools('image',this)">
+Image
 </button>
 
-<button onclick="filterTools('utility',this)">
-🛠️ Utility
+<button
+onclick="filterTools('calculator',this)">
+Calculator
 </button>
 
-</div>
-<div class="categories video-menu">
-
-<button onclick="showVideoTab('all',this)">
-🎬 Videos
-</button>
-
-<button onclick="showVideoTab('YouTube',this)">
-▶️ YouTube
-</button>
-
-<button onclick="showVideoTab('Facebook',this)">
-📘 Facebook
-</button>
-
-<button onclick="showVideoTab('TikTok',this)">
-🎵 TikTok
-</button>
-
-<button onclick="window.location.href='video-submit.html'">
-📤 Submit
+<button
+onclick="filterTools('utility',this)">
+Utility
 </button>
 
 </div>
 
-<div class="ad">
-📢 Advertisement Space
-</div>
-   
-<section id="videoHub" style="display:none; padding:20px 12px;">
 
-<h2 style="text-align:center;">🎬 Video Hub</h2>
-
-<div class="categories">
-
-<button class="active" onclick="showVideoTab('all',this)">
-🎬 All
-</button>
-
-<button onclick="showVideoTab('YouTube',this)">
-▶️ YouTube
-</button>
-
-<button onclick="showVideoTab('Facebook',this)">
-📘 Facebook
-</button>
-
-<button onclick="showVideoTab('TikTok',this)">
-🎵 TikTok
-</button>
-
-</div>
-
-<div id="videoFeed">
-<p style="text-align:center;">Loading videos...</p>
-</div>
-
-</section>
-   
-<h1 class="sectionTitle">⚡ Free Online Quick Tools</h1>
-
-<button class="resetAll" onclick="resetAllTools()">
-↻ Reset All Tools
-</button>
-
-
-<div id="tools" class="tools">
+<div class="tool-grid">
 
 
 <!-- WORD COUNTER -->
 
-<div class="card tool"
+<div
+class="tool"
 data-cat="text"
-data-name="Word Counter">
+data-name="word counter character counter text">
 
-<div class="icon">📝</div>
-
-<h2>Word Counter</h2>
-
-<p>
-Count words and characters instantly.
-</p>
+<h3>📝 Word & Character Counter</h3>
 
 <textarea
 id="wcText"
 placeholder="Type or paste text..."
-oninput="wordCount()"></textarea>
+oninput="countText()">
+</textarea>
 
-<button class="btn red" onclick="clearWordCounter()">
-Clear
-</button>
+<div
+class="result"
+id="wcResult">
 
-<div id="wcResult" class="result">
 Words: 0 | Characters: 0
+
 </div>
 
 </div>
@@ -708,83 +345,95 @@ Words: 0 | Characters: 0
 
 <!-- CASE CONVERTER -->
 
-<div class="card tool"
+<div
+class="tool"
 data-cat="text"
-data-name="Text Case Converter">
+data-name="uppercase lowercase text converter">
 
-<div class="icon">🔠</div>
-
-<h2>Case Converter</h2>
-
-<p>
-Convert your text into different cases.
-</p>
+<h3>🔤 Text Case Converter</h3>
 
 <textarea
 id="caseText"
-placeholder="Enter your text..."></textarea>
+placeholder="Enter text...">
+</textarea>
 
-<button class="btn" onclick="caseUpper()">
-UPPERCASE
+<button
+class="btn"
+onclick="makeUpper()">
+
+UPPER
+
 </button>
 
-<button class="btn" onclick="caseLower()">
-lowercase
-</button>
+<button
+class="btn secondary"
+onclick="makeLower()">
 
-<button class="btn" onclick="caseTitle()">
-Title Case
-</button>
+lower
 
-<button class="btn green" onclick="copyResult('caseResult')">
-Copy
 </button>
-
-<button class="btn red" onclick="clearCase()">
-Clear
-</button>
-
-<div id="caseResult" class="result">
-Result will appear here.
-</div>
 
 </div>
 
 
-<!-- SLUG GENERATOR -->
+<!-- REMOVE SPACES -->
 
-<div class="card tool"
+<div
+class="tool"
 data-cat="text"
-data-name="Slug Generator">
+data-name="remove spaces text">
 
-<div class="icon">🔗</div>
+<h3>🧹 Remove Extra Spaces</h3>
 
-<h2>Slug Generator</h2>
+<textarea
+id="spaceText"
+placeholder="Enter text...">
+</textarea>
 
-<p>
-Create clean SEO-friendly URL slugs.
-</p>
+<button
+class="btn"
+onclick="cleanSpaces()">
+
+Clean Text
+
+</button>
+
+</div>
+
+
+<!-- PERCENTAGE -->
+
+<div
+class="tool"
+data-cat="calculator"
+data-name="percentage calculator">
+
+<h3>📊 Percentage Calculator</h3>
 
 <input
-id="slugInput"
-placeholder="My Awesome Website">
+id="pctA"
+type="number"
+placeholder="Number">
 
-<button class="btn" onclick="makeSlug()">
-Generate
+<input
+id="pctB"
+type="number"
+placeholder="Percent">
+
+<button
+class="btn"
+onclick="calcPct()">
+
+Calculate
+
 </button>
 
-<button class="btn green"
-onclick="copyResult('slugResult')">
-Copy
-</button>
+<div
+class="result"
+id="pctResult">
 
-<button class="btn red"
-onclick="clearSlug()">
-Clear
-</button>
+Result: —
 
-<div id="slugResult" class="result">
-your-slug
 </div>
 
 </div>
@@ -792,188 +441,290 @@ your-slug
 
 <!-- CALCULATOR -->
 
-<div class="card tool"
-data-cat="utility"
-data-name="Calculator">
+<div
+class="tool"
+data-cat="calculator"
+data-name="simple calculator">
 
-<div class="icon">🧮</div>
-
-<h2>Calculator</h2>
-
-<p>
-Perform simple calculations quickly.
-</p>
+<h3>🧮 Calculator</h3>
 
 <input
-id="calc"
-inputmode="decimal"
-placeholder="Example: 25+15*2">
+id="calcInput"
+placeholder="Example: 25*4+10">
 
-<button class="btn"
-onclick="calculate()">
+<button
+class="btn"
+onclick="simpleCalc()">
+
 Calculate
+
 </button>
 
-<button class="btn red"
-onclick="clearCalc()">
-Clear
-</button>
+<div
+class="result"
+id="calcResult">
 
-<div id="calcResult" class="result">
-Result
+Result: —
+
 </div>
 
 </div>
 
 
-<!-- PIN GENERATOR -->
+<!-- BMI -->
 
-<div class="card tool"
-data-cat="generator"
-data-name="PIN Generator">
+<div
+class="tool"
+data-cat="calculator"
+data-name="bmi calculator">
 
-<div class="icon">🔢</div>
+<h3>⚖️ BMI Calculator</h3>
 
-<h2>PIN Generator</h2>
+<input
+id="bmiWeight"
+type="number"
+placeholder="Weight (kg)">
 
-<p>
-Generate a random numeric PIN.
-</p>
+<input
+id="bmiHeight"
+type="number"
+placeholder="Height (cm)">
 
-<select id="pinLength">
+<button
+class="btn"
+onclick="calcBMI()">
 
-<option value="4">
-4 digits
-</option>
+Calculate
 
-<option value="6" selected>
-6 digits
-</option>
-
-<option value="8">
-8 digits
-</option>
-
-<option value="10">
-10 digits
-</option>
-
-</select>
-
-<button class="btn"
-onclick="generatePin()">
-Generate
 </button>
 
-<button class="btn green"
-onclick="copyResult('pinResult')">
-Copy
-</button>
+<div
+class="result"
+id="bmiResult">
 
-<div id="pinResult" class="result">
-000000
+Result: —
+
 </div>
 
 </div>
 
 
-<!-- RANDOM PICKER -->
+<!-- AGE -->
 
-<div class="card tool"
-data-cat="generator"
-data-name="Random Picker">
-
-<div class="icon">🎯</div>
-
-<h2>Random Picker</h2>
-
-<p>
-Pick one random option from your list.
-</p>
-
-<textarea
-id="pickInput"
-placeholder="Apple&#10;Banana&#10;Orange"></textarea>
-
-<button class="btn"
-onclick="pickRandom()">
-Pick One
-</button>
-
-<button class="btn red"
-onclick="clearPicker()">
-Clear
-</button>
-
-<div id="pickResult" class="result">
-Your result
-</div>
-
-</div>
-
-
-<!-- STOPWATCH -->
-
-<div class="card tool"
+<div
+class="tool"
 data-cat="utility"
-data-name="Stopwatch">
+data-name="age calculator">
 
-<div class="icon">⏱️</div>
+<h3>🎂 Age Calculator</h3>
 
-<h2>Stopwatch</h2>
+<input
+id="birthDate"
+type="date">
 
-<p>
-Simple start, pause and reset stopwatch.
-</p>
+<button
+class="btn"
+onclick="calcAge()">
 
-<div id="watch" class="timer">
-00:00:00.0
+Calculate Age
+
+</button>
+
+<div
+class="result"
+id="ageResult">
+
+Result: —
+
 </div>
-
-<button class="btn"
-onclick="startWatch()">
-Start
-</button>
-
-<button class="btn gray"
-onclick="pauseWatch()">
-Pause
-</button>
-
-<button class="btn red"
-onclick="resetWatch()">
-Reset
-</button>
 
 </div>
 
 
-<!-- CHARACTER COUNTER -->
+<!-- DATE DIFFERENCE -->
 
-<div class="card tool"
-data-cat="text"
-data-name="Character Counter">
+<div
+class="tool"
+data-cat="utility"
+data-name="date difference">
 
-<div class="icon">🔤</div>
+<h3>📅 Days Between Dates</h3>
 
-<h2>Character Counter</h2>
+<input
+id="date1"
+type="date">
 
-<p>
-Count every character in your text.
-</p>
+<input
+id="date2"
+type="date">
+
+<button
+class="btn"
+onclick="dateDiff()">
+
+Calculate
+
+</button>
+
+<div
+class="result"
+id="dateResult">
+
+Result: —
+
+</div>
+
+</div>
+
+
+<!-- URL TOOL -->
+
+<div
+class="tool"
+data-cat="utility"
+data-name="url encoder decoder">
+
+<h3>🔗 URL Encoder / Decoder</h3>
 
 <textarea
-id="charText"
-placeholder="Enter text..."
-oninput="charCount()"></textarea>
+id="urlText"
+placeholder="Enter URL or text...">
+</textarea>
 
-<button class="btn red"
-onclick="clearCharCounter()">
-Clear
+<button
+class="btn"
+onclick="encodeURL()">
+
+Encode
+
 </button>
 
-<div id="charResult" class="result">
-Characters: 0
+<button
+class="btn secondary"
+onclick="decodeURL()">
+
+Decode
+
+</button>
+
+</div>
+
+
+<!-- JSON -->
+
+<div
+class="tool"
+data-cat="utility"
+data-name="json formatter">
+
+<h3>🧩 JSON Formatter</h3>
+
+<textarea
+id="jsonText"
+placeholder='{"name":"example"}'>
+</textarea>
+
+<button
+class="btn"
+onclick="formatJSON()">
+
+Format JSON
+
+</button>
+
+<div
+class="result"
+id="jsonResult">
+</div>
+
+</div>
+
+
+<!-- IMAGE PREVIEW -->
+
+<div
+class="tool"
+data-cat="image"
+data-name="image preview">
+
+<h3>🖼️ Image Preview</h3>
+
+<input
+type="file"
+id="imageFile"
+accept="image/*"
+onchange="previewImage(event)">
+
+<img
+id="imagePreview"
+style="
+width:100%;
+margin-top:10px;
+border-radius:10px;
+display:none;
+">
+
+</div>
+
+
+<!-- TEXT TO SPEECH -->
+
+<div
+class="tool"
+data-cat="utility"
+data-name="text to speech">
+
+<h3>🔊 Text to Speech</h3>
+
+<textarea
+id="speechText"
+placeholder="Enter text...">
+</textarea>
+
+<button
+class="btn"
+onclick="speakText()">
+
+Speak
+
+</button>
+
+<button
+class="btn secondary"
+onclick="speechSynthesis.cancel()">
+
+Stop
+
+</button>
+
+</div>
+
+
+<!-- COPY -->
+
+<div
+class="tool"
+data-cat="utility"
+data-name="copy text">
+
+<h3>📋 Quick Copy</h3>
+
+<textarea
+id="copyText"
+placeholder="Enter text...">
+</textarea>
+
+<button
+class="btn"
+onclick="copyTextValue()">
+
+Copy
+
+</button>
+
+<div
+class="result"
+id="copyResult">
 </div>
 
 </div>
@@ -982,164 +733,123 @@ Characters: 0
 </div>
 
 
-<div id="noResult" class="noResult">
+<div id="noResult">
 
-🔍 No tools found.
-<br>
-Try another search.
+❌ No tool found.
 
 </div>
-
-
-<div class="ad">
-📢 Advertisement Space
-</div>
-
-
-<!-- ABOUT -->
-
-<section class="info" id="about">
-
-<h2>
-ℹ️ About Online Quick Tools
-</h2>
-
-<p>
-Online Quick Tools is a free collection of fast and easy online tools.
-Use our Word Counter, Character Counter, Calculator, Text Case Converter,
-Slug Generator, PIN Generator, Random Picker and Stopwatch directly in your browser.
-Our tools are designed to be simple, lightweight and mobile-friendly.
-</p>
-
-<p>
-No account is required for the basic tools.
-</p>
 
 </section>
 
 
-<!-- FAQ -->
 
-<section class="info" id="faq">
+<!-- ================= VIDEO HUB ================= -->
 
-<h2>
-❓ Frequently Asked Questions
+<section id="videoHub">
+
+<h2 style="text-align:center">
+
+🎬 Video Hub
+
 </h2>
 
-<p>
-<b>Are these tools free?</b><br>
-Yes. The basic tools are free to use.
+
+<div class="categories video-menu">
+
+<button
+class="active"
+onclick="showVideoTab('all',this)">
+
+🎬 All
+
+</button>
+
+<button
+onclick="showVideoTab('YouTube',this)">
+
+▶️ YouTube
+
+</button>
+
+<button
+onclick="showVideoTab('Facebook',this)">
+
+📘 Facebook
+
+</button>
+
+<button
+onclick="showVideoTab('TikTok',this)">
+
+🎵 TikTok
+
+</button>
+
+<button
+onclick="window.location.href='video-submit.html'">
+
+📤 Submit
+
+</button>
+
+</div>
+
+
+<div id="videoFeed">
+
+<p style="text-align:center">
+
+Loading videos...
+
 </p>
 
-<p>
-<b>Do I need to create an account?</b><br>
-No. The basic tools work directly in your browser.
-</p>
-
-<p>
-<b>Does the website work on mobile?</b><br>
-Yes. The design is responsive and optimized for mobile screens.
-</p>
-
-<p>
-<b>Is my text uploaded to a server?</b><br>
-No. These basic tools process your text directly in your browser.
-</p>
+</div>
 
 </section>
 
 </main>
 
 
+
 <!-- FOOTER -->
 
 <footer>
 
-<strong>
-⚡ Online Quick Tools
-</strong>
-
-<p style="margin-top:8px;font-size:13px">
-Simple • Fast • Free
+<p>
+© 2026 Online Quick Tools
 </p>
 
-<div class="footerLinks">
-
-<button onclick="goHome()">
-Home
-</button>
-
-<button onclick="goTools()">
-Tools
-</button>
-
-<button onclick="goAbout()">
-About
-</button>
-
-<button onclick="goFAQ()">
-FAQ
-</button>
-
-<button onclick="openModal('privacy')">
-Privacy
-</button>
-
-<button onclick="openModal('terms')">
-Terms
-</button>
-
-<button onclick="openModal('contact')">
-Contact
-</button>
-
-</div>
-
-<p style="margin-top:18px;font-size:12px">
-© 2026 Online Quick Tools. All rights reserved.
+<p>
+Free tools • Video Hub
 </p>
 
 </footer>
 
 
-<button
-class="topButton"
-onclick="goHome()"
-aria-label="Back to top">
 
-↑
-
-</button>
-
-
-<!-- PRIVACY -->
+<!-- CONTACT MODAL -->
 
 <div
-id="privacy"
+id="contactModal"
 class="modal"
-onclick="outside(event,this)">
+onclick="if(event.target===this)closeContact()">
 
-<div class="modalBox">
+<div class="modal-box">
 
 <button
 class="close"
-onclick="closeModal('privacy')">
-×
+onclick="closeContact()">
+
+✕
+
 </button>
 
 <h2>
-Privacy Policy
+📩 Contact
 </h2>
 
 <p>
-Online Quick Tools provides browser-based utilities.
-The basic tools do not require an account.
-</p>
-
-<p>
-The tools process basic input directly in your browser.
-If advertising or analytics services are added,
-this policy should be updated with the appropriate information.
+For questions or suggestions, contact the site owner.
 </p>
 
 </div>
@@ -1147,1287 +857,864 @@ this policy should be updated with the appropriate information.
 </div>
 
 
-<!-- TERMS -->
 
-<div
-id="terms"
-class="modal"
-onclick="outside(event,this)">
+<!-- SUPABASE -->
 
-<div class="modalBox">
-
-<button
-class="close"
-onclick="closeModal('terms')">
-×
-</button>
-
-<h2>
-Terms of Use
-</h2>
-
-<p>
-Online Quick Tools is provided for general utility purposes.
-Always check important results before relying on them.
-</p>
-
-<p>
-Do not use this website for unlawful activity.
-</p>
-
-</div>
-
-</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-<!-- CONTACT -->
-
-<div
-id="contact"
-class="modal"
-onclick="outside(event,this)">
-
-<div class="modalBox">
-
-<button
-class="close"
-onclick="closeModal('contact')">
-×
-</button>
-
-<h2>
-Contact
-</h2>
-
-<p>
-Replace the email below with your real public email
-before publishing.
-</p>
-<p> What's up : 01953511826 </p>
-<p>
-<b>Email:</b>
-   dawson.rumey1996@gmail.com
-</p>
-
-</div>
-
-</div>
-
-
-<h2 style="text-align:center;">🎬 Video Hub</h2>
-
-<div class="categories">
-
-<button class="active" onclick="showVideoTab('all',this)">
-🎬 All
-</button>
-
-<button onclick="showVideoTab('YouTube',this)">
-▶️ YouTube
-</button>
-
-<button onclick="showVideoTab('Facebook',this)">
-📘 Facebook
-</button>
-
-<button onclick="showVideoTab('TikTok',this)">
-🎵 TikTok
-</button>
-
-</div>
-
-<div id="videoFeed">
-<p style="text-align:center;">Loading videos...</p>
-</div>
-
-</section>
-   
 <script>
 
+"use strict";
 
-/* =========================
-   THEME
-========================= */
 
-function toggleTheme(){
+/* ================= SUPABASE ================= */
 
-document.body.classList.toggle("dark");
-
-let dark=
-document.body.classList.contains("dark");
-
-localStorage.setItem("quickToolsTheme",
-dark ? "dark" : "light");
-
-document.getElementById("themeButton").textContent=
-dark ? "☀️ Light Mode" : "🌙 Dark Mode";
-
-}
-
-
-function loadTheme(){
-
-let saved=
-localStorage.getItem("quickToolsTheme");
-
-if(saved==="dark"){
-
-document.body.classList.add("dark");
-
-document.getElementById("themeButton").textContent=
-"☀️ Light Mode";
-
-}
-
-}
-
-loadTheme();
-
-
-
-/* =========================
-   SEARCH
-========================= */
-
-function searchTools(){
-
-let query=
-document.getElementById("search")
-.value
-.toLowerCase()
-.trim();
-
-let cards=
-document.querySelectorAll(".tool");
-
-let count=0;
-
-cards.forEach(function(card){
-
-let name=
-(card.dataset.name+" "+card.innerText)
-.toLowerCase();
-
-let show=
-!query || name.includes(query);
-
-card.style.display=
-show ? "" : "none";
-
-if(show){
-count++;
-}
-
-});
-
-document.getElementById("noResult").style.display=
-count ? "none" : "block";
-
-}
-
-
-
-/* =========================
-   CATEGORY FILTER
-========================= */
-
-function filterTools(category,button){
-
-document
-.querySelectorAll(".categories:not(.video-menu) button")
-.forEach(function(btn){
-btn.classList.remove("active");
-
-});
-
-button.classList.add("active");
-
-document.getElementById("search").value="";
-
-let cards=
-document.querySelectorAll(".tool");
-
-let count=0;
-
-cards.forEach(function(card){
-
-let show=
-category==="all" ||
-card.dataset.cat===category;
-
-card.style.display=
-show ? "" : "none";
-
-if(show){
-count++;
-}
-
-});
-
-document.getElementById("noResult").style.display=
-count ? "none" : "block";
-
-}
-
-
-
-/* =========================
-   WORD COUNTER
-========================= */
-
-function wordCount(){
-
-let text=
-document.getElementById("wcText").value;
-
-let words=
-text.trim()
-? text.trim().split(/\s+/).length
-: 0;
-
-document.getElementById("wcResult").textContent=
-"Words: "+words+
-" | Characters: "+text.length;
-
-}
-
-
-function clearWordCounter(){
-
-document.getElementById("wcText").value="";
-
-wordCount();
-
-}
-
-
-
-/* =========================
-   CASE CONVERTER
-========================= */
-
-function caseUpper(){
-
-let text=
-document.getElementById("caseText").value;
-
-document.getElementById("caseResult").textContent=
-text.toUpperCase();
-
-}
-
-
-function caseLower(){
-
-let text=
-document.getElementById("caseText").value;
-
-document.getElementById("caseResult").textContent=
-text.toLowerCase();
-
-}
-
-
-function caseTitle(){
-
-let value=
-document.getElementById("caseText")
-.value
-.toLowerCase();
-
-value=
-value.replace(
-/\b\w/g,
-function(letter){
-return letter.toUpperCase();
-}
-);
-
-document.getElementById("caseResult").textContent=
-value;
-
-}
-
-
-function clearCase(){
-
-document.getElementById("caseText").value="";
-
-document.getElementById("caseResult").textContent=
-"Result will appear here.";
-
-}
-
-
-
-/* =========================
-   SLUG GENERATOR
-========================= */
-
-function makeSlug(){
-
-let value=
-document.getElementById("slugInput")
-.value
-.toLowerCase()
-.trim();
-
-try{
-
-value=
-value
-.normalize("NFKD")
-.replace(/[\u0300-\u036f]/g,"");
-
-}catch(error){}
-
-value=
-value
-.replace(/[^a-z0-9\s-]/g,"")
-.replace(/\s+/g,"-")
-.replace(/-+/g,"-");
-
-document.getElementById("slugResult").textContent=
-value || "please-enter-text";
-
-}
-
-
-function clearSlug(){
-
-document.getElementById("slugInput").value="";
-
-document.getElementById("slugResult").textContent=
-"your-slug";
-
-}
-
-
-
-/* =========================
-   CALCULATOR
-========================= */
-
-function calculate(){
-
-let value=
-document.getElementById("calc")
-.value
-.trim();
-
-let output=
-document.getElementById("calcResult");
-
-if(!value){
-
-output.textContent=
-"Enter a calculation.";
-
-return;
-
-}
-
-if(!/^[0-9+\-*/().%\s]+$/.test(value)){
-
-output.textContent=
-"Invalid calculation.";
-
-return;
-
-}
-
-try{
-
-let result=
-Function(
-'"use strict";return ('+
-value+
-')'
-)();
-
-if(!Number.isFinite(result)){
-
-throw new Error();
-
-}
-
-output.textContent=
-String(result);
-
-}catch(error){
-
-output.textContent=
-"Invalid calculation.";
-
-}
-
-}
-
-
-function clearCalc(){
-
-document.getElementById("calc").value="";
-
-document.getElementById("calcResult").textContent=
-"Result";
-
-}
-
-
-
-/* =========================
-   PIN GENERATOR
-========================= */
-
-function generatePin(){
-
-let length=
-parseInt(
-document.getElementById("pinLength").value
-)||6;
-
-let pin="";
-
-if(window.crypto &&
-window.crypto.getRandomValues){
-
-let numbers=
-new Uint32Array(length);
-
-window.crypto.getRandomValues(numbers);
-
-for(let i=0;i<length;i++){
-
-pin+=
-(numbers[i]%10).toString();
-
-}
-
-}else{
-
-for(let i=0;i<length;i++){
-
-pin+=
-Math.floor(Math.random()*10);
-
-}
-
-}
-
-document.getElementById("pinResult").textContent=
-pin;
-
-}
-
-
-
-/* =========================
-   RANDOM PICKER
-========================= */
-
-function pickRandom(){
-
-let items=
-document.getElementById("pickInput")
-.value
-.split(/\r?\n/)
-.map(function(item){
-
-return item.trim();
-
-})
-.filter(Boolean);
-
-let output=
-document.getElementById("pickResult");
-
-if(!items.length){
-
-output.textContent=
-"Enter at least one option.";
-
-return;
-
-}
-
-let selected=
-items[
-Math.floor(
-Math.random()*items.length
-)
-];
-
-output.textContent=
-"Selected: "+selected;
-
-}
-
-
-function clearPicker(){
-
-document.getElementById("pickInput").value="";
-
-document.getElementById("pickResult").textContent=
-"Your result";
-
-}
-
-
-
-/* =========================
-   CHARACTER COUNTER
-========================= */
-
-function charCount(){
-
-let text=
-document.getElementById("charText").value;
-
-document.getElementById("charResult").textContent=
-"Characters: "+text.length;
-
-}
-
-
-function clearCharCounter(){
-
-document.getElementById("charText").value="";
-
-charCount();
-
-}
-
-
-
-/* =========================
-   COPY
-========================= */
-
-function copyResult(id){
-
-let element=
-document.getElementById(id);
-
-let text=
-element.textContent;
-
-if(!text ||
-text==="Result will appear here." ||
-text==="your-slug"){
-
-alert("Nothing to copy.");
-
-return;
-
-}
-
-if(navigator.clipboard){
-
-navigator.clipboard
-.writeText(text)
-.then(function(){
-
-alert("Copied!");
-
-})
-.catch(function(){
-
-fallbackCopy(text);
-
-});
-
-}else{
-
-fallbackCopy(text);
-
-}
-
-}
-
-
-function fallbackCopy(text){
-
-let area=
-document.createElement("textarea");
-
-area.value=text;
-
-area.style.position="fixed";
-
-area.style.left="-9999px";
-
-document.body.appendChild(area);
-
-area.select();
-
-try{
-
-document.execCommand("copy");
-
-alert("Copied!");
-
-}catch(error){
-
-alert(
-"Copy failed. Please copy manually."
-);
-
-}
-
-area.remove();
-
-}
-
-
-
-/* =========================
-   STOPWATCH
-========================= */
-
-let watchTimer=null;
-
-let watchElapsed=0;
-
-let watchStart=0;
-
-
-function formatTime(milliseconds){
-
-let ticks=
-Math.floor(milliseconds/100);
-
-let d=
-ticks%10;
-
-let s=
-Math.floor(ticks/10)%60;
-
-let m=
-Math.floor(ticks/600)%60;
-
-let h=
-Math.floor(ticks/36000);
-
-return String(h).padStart(2,"0")+
-":"+
-String(m).padStart(2,"0")+
-":"+
-String(s).padStart(2,"0")+
-"."+
-d;
-
-}
-
-
-function updateWatch(){
-
-let elapsed=
-watchElapsed;
-
-if(watchTimer){
-
-elapsed+=
-Date.now()-watchStart;
-
-}
-
-document.getElementById("watch")
-.textContent=
-formatTime(elapsed);
-
-}
-
-
-function startWatch(){
-
-if(watchTimer){
-return;
-}
-
-watchStart=
-Date.now();
-
-watchTimer=
-setInterval(
-updateWatch,
-100
-);
-
-}
-
-
-function pauseWatch(){
-
-if(!watchTimer){
-return;
-}
-
-watchElapsed+=
-Date.now()-watchStart;
-
-clearInterval(watchTimer);
-
-watchTimer=null;
-
-updateWatch();
-
-}
-
-
-function resetWatch(){
-
-if(watchTimer){
-
-clearInterval(watchTimer);
-
-}
-
-watchTimer=null;
-
-watchElapsed=0;
-
-watchStart=0;
-
-updateWatch();
-
-}
-
-
-
-/* =========================
-   RESET ALL
-========================= */
-
-function resetAllTools(){
-
-clearWordCounter();
-
-clearCase();
-
-clearSlug();
-
-clearCalc();
-
-clearPicker();
-
-clearCharCounter();
-
-resetWatch();
-
-document.getElementById("pinResult")
-.textContent="000000";
-
-document.getElementById("pinLength")
-.value="6";
-
-document.getElementById("search")
-.value="";
-
-filterTools(
-"all",
-document.querySelector(
-".categories button"
-)
-);
-
-}
-
-
-
-/* =========================
-   MODALS
-========================= */
-
-function openModal(id){
-
-let modal=
-document.getElementById(id);
-
-if(modal){
-
-modal.style.display="block";
-
-document.body.style.overflow="hidden";
-
-}
-
-}
-
-
-function closeModal(id){
-
-let modal=
-document.getElementById(id);
-
-if(modal){
-
-modal.style.display="none";
-
-document.body.style.overflow="";
-
-}
-
-}
-
-
-function outside(event,element){
-
-if(event.target===element){
-
-element.style.display="none";
-
-document.body.style.overflow="";
-
-}
-
-}
-
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function goHome(){
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-}
-
-
-function goTools(){
-
-let tools=
-document.getElementById("tools");
-
-if(tools){
-
-tools.scrollIntoView({
-
-behavior:"smooth",
-
-block:"start"
-
-});
-
-}
-
-}
-
-
-function goAbout(){
-
-let about=
-document.getElementById("about");
-
-if(about){
-
-about.scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-}
-
-}
-
-
-function goFAQ(){
-
-let faq=
-document.getElementById("faq");
-
-if(faq){
-
-faq.scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-}
-
-}
-
-
-
-/* =========================
-   KEYBOARD
-========================= */
-
-document.addEventListener(
-"keydown",
-function(event){
-
-if(event.key==="Escape"){
-
-document
-.querySelectorAll(".modal")
-.forEach(function(modal){
-
-modal.style.display="none";
-
-});
-
-document.body.style.overflow="";
-
-}
-
-});
-
-
-
-/* =========================
-   CALCULATOR ENTER KEY
-========================= */
-
-document
-.getElementById("calc")
-.addEventListener(
-"keydown",
-function(event){
-
-if(event.key==="Enter"){
-
-calculate();
-
-}
-
-});
-
-
-
-/* =========================
-   SEARCH ESCAPE
-========================= */
-
-document
-.getElementById("search")
-.addEventListener(
-"keydown",
-function(event){
-
-if(event.key==="Escape"){
-
-this.value="";
-
-searchTools();
-
-}
-
-});
 const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+
 let siteVideos = [];
-async function loadSiteVideos(){
 
-    const feed = document.getElementById("videoFeed");
 
-    if(!feed) return;
 
-    feed.innerHTML = `
-        <div style="padding:20px;text-align:center;">
-            ⏳ Checking video database...
-        </div>
-    `;
+/* ================= NAVIGATION ================= */
 
-    try{
+function showTools(){
 
-        const response = await fetch(
-            SUPABASE_URL + "/rest/v1/Videos?select=*",
-            {
-                method:"GET",
-                headers:{
-                    "apikey":SUPABASE_KEY,
-                    "Authorization":"Bearer " + SUPABASE_KEY
-                }
-            }
-        );
+    const tools =
+    document.getElementById("tools");
 
-        const text = await response.text();
+    const hub =
+    document.getElementById("videoHub");
 
-        if(!response.ok){
+    tools.style.display = "block";
 
-            feed.innerHTML = `
-                <div style="padding:20px;color:red;text-align:center;">
-                    ❌ Supabase Error<br><br>
-                    ${escapeVideoText(text)}
-                </div>
-            `;
+    hub.style.display = "none";
 
-            return;
-        }
+    window.scrollTo({
+        top:tools.offsetTop - 60,
+        behavior:"smooth"
+    });
 
-        siteVideos = JSON.parse(text);
-
-        if(!Array.isArray(siteVideos)){
-
-            feed.innerHTML = `
-                <div style="padding:20px;color:red;text-align:center;">
-                    ❌ Database response is not valid.
-                </div>
-            `;
-
-            return;
-        }
-
-        if(siteVideos.length === 0){
-
-            feed.innerHTML = `
-                <div style="padding:20px;text-align:center;">
-                    ⚠️ Supabase connected, but 0 videos returned.
-                    <br><br>
-                    Check Videos table and RLS SELECT policy.
-                </div>
-            `;
-
-            return;
-        }
-
-        feed.innerHTML = `
-            <div style="padding:12px;text-align:center;">
-                ✅ ${siteVideos.length} video(s) loaded from Supabase.
-            </div>
-        `;
-
-        renderSiteVideos("all");
-
-    }catch(error){
-
-        feed.innerHTML = `
-            <div style="padding:20px;color:red;text-align:center;">
-                ❌ JavaScript Error<br><br>
-                ${escapeVideoText(error.message)}
-            </div>
-        `;
-    }
 }
 
 
 
-function showVideoTab(platform, button){
+/* ================= SEARCH ================= */
 
-    const videoHub = document.getElementById("videoHub");
+function searchTools(){
 
-    if(!videoHub) return;
+    const q =
+    document
+    .getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
 
-    videoHub.style.display = "block";
+    let count = 0;
+
+
+    document
+    .querySelectorAll(".tool")
+    .forEach(function(card){
+
+        const text =
+        (
+            card.dataset.name +
+            " " +
+            card.innerText
+        ).toLowerCase();
+
+
+        const show =
+        !q || text.includes(q);
+
+
+        card.style.display =
+        show ? "" : "none";
+
+
+        if(show){
+            count++;
+        }
+
+    });
+
+
+    document
+    .getElementById("noResult")
+    .style.display =
+    count ? "none" : "block";
+
+
+    document
+    .querySelectorAll("#toolCategories button")
+    .forEach(function(button){
+
+        button.classList.remove("active");
+
+    });
+
+}
+
+
+
+/* ================= FILTER ================= */
+
+function filterTools(category,button){
+
+    document
+    .querySelectorAll("#toolCategories button")
+    .forEach(function(btn){
+
+        btn.classList.remove("active");
+
+    });
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+
+    document
+    .getElementById("search")
+    .value = "";
+
+
+    let count = 0;
+
+
+    document
+    .querySelectorAll(".tool")
+    .forEach(function(card){
+
+        const show =
+        category === "all" ||
+        card.dataset.cat === category;
+
+
+        card.style.display =
+        show ? "" : "none";
+
+
+        if(show){
+
+            count++;
+
+        }
+
+    });
+
+
+    document
+    .getElementById("noResult")
+    .style.display =
+    count ? "none" : "block";
+
+}
+
+
+
+/* ================= TEXT ================= */
+
+function countText(){
+
+    const text =
+    document.getElementById("wcText").value;
+
+
+    const words =
+    text.trim()
+    ? text.trim().split(/\s+/).length
+    : 0;
+
+
+    document
+    .getElementById("wcResult")
+    .textContent =
+    "Words: " +
+    words +
+    " | Characters: " +
+    text.length;
+
+}
+
+
+function makeUpper(){
+
+    const box =
+    document.getElementById("caseText");
+
+    box.value =
+    box.value.toUpperCase();
+
+}
+
+
+function makeLower(){
+
+    const box =
+    document.getElementById("caseText");
+
+    box.value =
+    box.value.toLowerCase();
+
+}
+
+
+function cleanSpaces(){
+
+    const box =
+    document.getElementById("spaceText");
+
+    box.value =
+    box.value
+    .replace(/\s+/g," ")
+    .trim();
+
+}
+
+
+
+/* ================= CALCULATORS ================= */
+
+function calcPct(){
+
+    const a =
+    Number(
+        document.getElementById("pctA").value
+    );
+
+
+    const b =
+    Number(
+        document.getElementById("pctB").value
+    );
+
+
+    if(!Number.isFinite(a) ||
+       !Number.isFinite(b)){
+
+        document.getElementById("pctResult")
+        .textContent =
+        "Result: Enter valid numbers";
+
+        return;
+
+    }
+
+
+    document.getElementById("pctResult")
+    .textContent =
+    "Result: " +
+    (a * b / 100);
+
+}
+
+
+
+function simpleCalc(){
+
+    const exp =
+    document
+    .getElementById("calcInput")
+    .value
+    .trim();
+
+
+    if(
+        !/^[0-9+\-*/().%\s]+$/.test(exp)
+    ){
+
+        document.getElementById("calcResult")
+        .textContent =
+        "Result: Invalid expression";
+
+        return;
+
+    }
+
+
+    try{
+
+        const result =
+        Function(
+            '"use strict";return (' +
+            exp +
+            ')'
+        )();
+
+
+        document.getElementById("calcResult")
+        .textContent =
+        "Result: " + result;
+
+    }
+
+    catch(error){
+
+        document.getElementById("calcResult")
+        .textContent =
+        "Result: Error";
+
+    }
+
+}
+
+
+
+function calcBMI(){
+
+    const weight =
+    Number(
+        document.getElementById("bmiWeight").value
+    );
+
+
+    const height =
+    Number(
+        document.getElementById("bmiHeight").value
+    ) / 100;
+
+
+    if(
+        !weight ||
+        !height
+    ){
+
+        document.getElementById("bmiResult")
+        .textContent =
+        "Result: Enter valid values";
+
+        return;
+
+    }
+
+
+    const bmi =
+    weight / (height * height);
+
+
+    document.getElementById("bmiResult")
+    .textContent =
+    "BMI: " +
+    bmi.toFixed(1);
+
+}
+
+
+
+function calcAge(){
+
+    const value =
+    document
+    .getElementById("birthDate")
+    .value;
+
+
+    if(!value){
+
+        document.getElementById("ageResult")
+        .textContent =
+        "Result: Select date";
+
+        return;
+
+    }
+
+
+    const birth =
+    new Date(value);
+
+
+    const now =
+    new Date();
+
+
+    let age =
+    now.getFullYear() -
+    birth.getFullYear();
+
+
+    const month =
+    now.getMonth() -
+    birth.getMonth();
+
+
+    if(
+        month < 0 ||
+        (
+            month === 0 &&
+            now.getDate() < birth.getDate()
+        )
+    ){
+
+        age--;
+
+    }
+
+
+    document.getElementById("ageResult")
+    .textContent =
+    "Age: " + age + " years";
+
+}
+
+
+
+function dateDiff(){
+
+    const first =
+    new Date(
+        document.getElementById("date1").value
+    );
+
+
+    const second =
+    new Date(
+        document.getElementById("date2").value
+    );
+
+
+    if(
+        isNaN(first) ||
+        isNaN(second)
+    ){
+
+        document.getElementById("dateResult")
+        .textContent =
+        "Result: Select both dates";
+
+        return;
+
+    }
+
+
+    const difference =
+    Math.abs(
+        Math.round(
+            (second - first) /
+            86400000
+        )
+    );
+
+
+    document.getElementById("dateResult")
+    .textContent =
+    "Difference: " +
+    difference +
+    " days";
+
+}
+
+
+
+/* ================= URL ================= */
+
+function encodeURL(){
+
+    const box =
+    document.getElementById("urlText");
+
+    box.value =
+    encodeURIComponent(box.value);
+
+}
+
+
+function decodeURL(){
+
+    const box =
+    document.getElementById("urlText");
+
+
+    try{
+
+        box.value =
+        decodeURIComponent(box.value);
+
+    }
+
+    catch(error){
+
+        alert("Invalid encoded URL");
+
+    }
+
+}
+
+
+
+/* ================= JSON ================= */
+
+function formatJSON(){
+
+    const box =
+    document.getElementById("jsonText");
+
+
+    try{
+
+        const object =
+        JSON.parse(box.value);
+
+
+        box.value =
+        JSON.stringify(
+            object,
+            null,
+            2
+        );
+
+
+        document
+        .getElementById("jsonResult")
+        .textContent =
+        "✅ Valid JSON";
+
+    }
+
+    catch(error){
+
+        document
+        .getElementById("jsonResult")
+        .textContent =
+        "❌ Invalid JSON";
+
+    }
+
+}
+
+
+
+/* ================= IMAGE ================= */
+
+function previewImage(event){
+
+    const file =
+    event.target.files[0];
+
+
+    const image =
+    document.getElementById("imagePreview");
+
+
+    if(!file){
+
+        image.style.display =
+        "none";
+
+        return;
+
+    }
+
+
+    image.src =
+    URL.createObjectURL(file);
+
+
+    image.style.display =
+    "block";
+
+}
+
+
+
+/* ================= SPEECH ================= */
+
+function speakText(){
+
+    const text =
+    document
+    .getElementById("speechText")
+    .value
+    .trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    const speech =
+    new SpeechSynthesisUtterance(text);
+
+
+    speechSynthesis.speak(speech);
+
+}
+
+
+
+/* ================= COPY ================= */
+
+async function copyTextValue(){
+
+    const text =
+    document
+    .getElementById("copyText")
+    .value;
+
+
+    try{
+
+        await navigator.clipboard.writeText(text);
+
+
+        document
+        .getElementById("copyResult")
+        .textContent =
+        "✅ Copied";
+
+    }
+
+    catch(error){
+
+        document
+        .getElementById("copyResult")
+        .textContent =
+        "⚠️ Copy permission unavailable";
+
+    }
+
+}
+
+
+
+/* ================= CONTACT ================= */
+
+function openContact(){
+
+    document
+    .getElementById("contactModal")
+    .style.display =
+    "block";
+
+}
+
+
+function closeContact(){
+
+    document
+    .getElementById("contactModal")
+    .style.display =
+    "none";
+
+}
+
+
+
+/* =================================================
+VIDEO HUB
+================================================= */
+
+function showVideoTab(platform,button){
+
+    const hub =
+    document.getElementById("videoHub");
+
+
+    const tools =
+    document.getElementById("tools");
+
+
+    if(!hub){
+
+        return;
+
+    }
+
+
+    tools.style.display =
+    "none";
+
+
+    hub.style.display =
+    "block";
+
 
     document
     .querySelectorAll(".video-menu button")
     .forEach(function(btn){
+
         btn.classList.remove("active");
+
     });
 
-    document
-    .querySelectorAll("#videoHub .categories button")
-    .forEach(function(btn){
-        btn.classList.remove("active");
-    });
 
     if(button){
+
         button.classList.add("active");
+
     }
+
 
     renderSiteVideos(platform);
 
-    videoHub.scrollIntoView({
+
+    hub.scrollIntoView({
+
         behavior:"smooth",
+
         block:"start"
+
     });
+
 }
+
+
+
+/* ================= VIDEO RENDER ================= */
 
 function renderSiteVideos(platform){
 
     const feed =
     document.getElementById("videoFeed");
 
-    let videos = siteVideos;
 
-    if(platform !== "all"){
+    if(!feed){
 
-        videos = siteVideos.filter(function(video){
-            return video.platform === platform;
-        });
+        return;
 
     }
+
+
+    let videos =
+    siteVideos.filter(function(video){
+
+        return (
+            platform === "all" ||
+            video.platform === platform
+        );
+
+    });
+
 
     if(videos.length === 0){
 
         feed.innerHTML =
-        "<p style='text-align:center;'>🎬 No approved videos yet.</p>";
+        `
+        <p style="
+            text-align:center;
+            padding:30px;
+        ">
+            🎬 No approved videos yet.
+        </p>
+        `;
 
         return;
+
     }
 
+
     feed.innerHTML = "";
+
 
     videos.forEach(function(video){
 
         const card =
         document.createElement("div");
 
-        card.style.cssText =
-        "background:white;padding:15px;margin:15px 0;border-radius:15px;box-shadow:0 3px 12px #0002;";
+
+        card.className =
+        "video-card";
+
 
         card.innerHTML =
-        "<small>"+escapeVideoText(video.platform)+"</small>" +
-        "<h3>"+escapeVideoText(video.title)+"</h3>" +
-        createSitePlayer(video.platform,video.videos_url);
+
+        "<small>" +
+        escapeVideoText(
+            video.platform
+        ) +
+        "</small>" +
+
+        "<h3>" +
+        escapeVideoText(
+            video.title
+        ) +
+        "</h3>" +
+
+        createSitePlayer(
+            video.platform,
+            video.videos_url
+        );
+
 
         feed.appendChild(card);
 
     });
+
 }
 
+
+
+/* =================================================
+VIDEO PLAYER
+================================================= */
 
 function createSitePlayer(platform,url){
 
-    if(platform === "YouTube"){
 
-        const id = getYouTubeID(url);
+    /* DIRECT MP4 */
 
-        if(id){
-
-            return `
-            <div style="position:relative;aspect-ratio:16/9;background:#111;border-radius:12px;overflow:hidden;">
-
-                <img
-                src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
-                style="width:100%;height:100%;object-fit:cover;">
-
-                <button
-                onclick="playSiteYouTube('${id}',this)"
-                style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:red;color:white;border:0;border-radius:12px;padding:14px 22px;font-size:24px;">
-                ▶
-                </button>
-
-            </div>`;
-        }
-    }
-
-    if(platform === "TikTok"){
-
-        const id = getTikTokID(url);
-
-        if(id){
-
-            return `
-            <iframe
-            src="https://www.tiktok.com/player/v1/${id}?controls=1"
-            style="width:100%;height:650px;border:0;border-radius:12px;"
-            allow="fullscreen">
-            </iframe>`;
-        }
-    }
-
-    if(platform === "Facebook"){
-
-        return `
-        <iframe
-        src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false"
-        style="width:100%;height:420px;border:0;border-radius:12px;"
-        allowfullscreen>
-        </iframe>`;
-    }
-
-    return "";
-}
-
-
-function playSiteYouTube(id,button){
-
-    const box = button.parentElement;
-
-    box.innerHTML =
-    `<iframe
-    src="https://www.youtube.com/embed/${id}?autoplay=1"
-    style="width:100%;height:100%;border:0;"
-    allow="autoplay;encrypted-media;picture-in-picture"
-    allowfullscreen>
-    </iframe>`;
-}
-
-
-function createSitePlayer(platform,url){
-
-    // DIRECT VIDEO
     if(platform === "Direct"){
 
         return `
+        
         <video
+            class="video-player"
             controls
             playsinline
             preload="metadata"
             style="
-                width:100%;
-                max-width:100%;
-                height:auto;
                 min-height:220px;
                 background:#000;
-                border-radius:12px;
-                display:block;
             "
         >
-            <source src="${url}" type="video/mp4">
-            Your browser does not support video playback.
-        </video>`;
+
+            <source
+                src="${escapeAttribute(url)}"
+                type="video/mp4"
+            >
+
+            Your browser does not
+            support video playback.
+
+        </video>
+
+        `;
+
     }
 
 
-    // YOUTUBE
+
+    /* YOUTUBE */
+
     if(platform === "YouTube"){
 
-        const id = getYouTubeID(url);
-function createSitePlayer(platform,url){
+        const id =
+        getYouTubeID(url);
 
-    // DIRECT VIDEO
-    if(platform === "Direct"){
-function createSitePlayer(platform,url){
-
-    // DIRECT MP4 VIDEO
-    if(platform === "Direct"){
-
-        return `
-        <video
-            controls
-            playsinline
-            preload="metadata"
-            style="
-                width:100%;
-                max-width:100%;
-                height:auto;
-                min-height:220px;
-                background:#000;
-                border-radius:12px;
-                display:block;
-            "
-        >
-            <source src="${url}" type="video/mp4">
-            Your browser does not support video playback.
-        </video>`;
-    }
-
-
-    // YOUTUBE
-    if(platform === "YouTube"){
-
-        const id = getYouTubeID(url);
 
         if(id){
 
             return `
+
             <div style="
                 position:relative;
                 aspect-ratio:16/9;
@@ -2445,6 +1732,7 @@ function createSitePlayer(platform,url){
                     "
                 >
 
+
                 <button
                     onclick="playSiteYouTube('${id}',this)"
                     style="
@@ -2461,27 +1749,40 @@ function createSitePlayer(platform,url){
                         cursor:pointer;
                     "
                 >
+
                     ▶
+
                 </button>
 
-            </div>`;
+            </div>
+
+            `;
+
         }
 
+
         return `
-        <p style="text-align:center;">
+        <p>
             ⚠️ YouTube video unavailable.
-        </p>`;
+        </p>
+        `;
+
     }
 
 
-    // TIKTOK
+
+    /* TIKTOK */
+
     if(platform === "TikTok"){
 
-        const id = getTikTokID(url);
+        const id =
+        getTikTokID(url);
+
 
         if(id){
 
             return `
+
             <iframe
                 src="https://www.tiktok.com/player/v1/${id}?controls=1"
                 style="
@@ -2492,132 +1793,340 @@ function createSitePlayer(platform,url){
                 "
                 allow="fullscreen"
                 allowfullscreen>
-            </iframe>`;
+            </iframe>
+
+            `;
+
         }
 
+
         return `
-        <p style="text-align:center;">
+        <p>
             ⚠️ TikTok video unavailable.
-        </p>`;
+        </p>
+        `;
+
     }
 
 
-    // FACEBOOK
+
+    /* FACEBOOK */
+
     if(platform === "Facebook"){
 
         return `
+
         <iframe
-            src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false"
+
+            src="
+            https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false
+            "
+
             style="
                 width:100%;
                 height:420px;
                 border:0;
                 border-radius:12px;
             "
+
+            allow="
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                picture-in-picture;
+                web-share
+            "
+
             allowfullscreen>
-        </iframe>`;
+
+        </iframe>
+
+        `;
+
     }
 
 
+
     return `
-    <p style="text-align:center;">
+
+    <p>
         ⚠️ Unsupported video platform.
-    </p>`;
+    </p>
+
+    `;
+
 }
 
 
 
+/* ================= YOUTUBE PLAY ================= */
+
 function playSiteYouTube(id,button){
 
-    const box = button.parentElement;
+    const box =
+    button.parentElement;
+
 
     box.innerHTML = `
+
         <iframe
-            src="https://www.youtube.com/embed/${id}?autoplay=1"
+
+            src="
+            https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1
+            "
+
             style="
                 width:100%;
                 height:100%;
                 border:0;
             "
-            allow="autoplay; encrypted-media; picture-in-picture"
+
+            allow="
+                autoplay;
+                encrypted-media;
+                picture-in-picture
+            "
+
             allowfullscreen>
+
         </iframe>
+
     `;
+
 }
 
 
+
+/* ================= YOUTUBE ID ================= */
 
 function getYouTubeID(url){
 
     try{
 
-        const u = new URL(url);
+        const u =
+        new URL(url);
 
-        // YouTube Shorts
+
+        /* Shorts */
+
         if(
             u.hostname.includes("youtube.com") &&
             u.pathname.startsWith("/shorts/")
         ){
 
             return u.pathname
-                .split("/shorts/")[1]
-                .split("/")[0];
+            .split("/shorts/")[1]
+            .split("/")[0];
+
         }
 
 
-        // YouTube Watch
+        /* Normal YouTube */
+
         if(
             u.hostname.includes("youtube.com") &&
             u.searchParams.get("v")
         ){
 
             return u.searchParams.get("v");
+
         }
 
 
-        // youtu.be
-        if(u.hostname.includes("youtu.be")){
+        /* youtu.be */
+
+        if(
+            u.hostname.includes("youtu.be")
+        ){
 
             return u.pathname
-                .substring(1)
-                .split("/")[0];
+            .substring(1)
+            .split("/")[0];
+
         }
-
-    }catch(error){
-
-        console.error("YouTube URL error:",error);
 
     }
 
+    catch(error){
+
+        console.error(
+            "YouTube URL error:",
+            error
+        );
+
+    }
+
+
     return null;
+
 }
 
 
+
+/* ================= TIKTOK ID ================= */
 
 function getTikTokID(url){
 
     const match =
-        String(url).match(/\/video\/(\d+)/);
+    String(url)
+    .match(/\/video\/(\d+)/);
 
-    return match ? match[1] : null;
+
+    return match
+    ? match[1]
+    : null;
+
 }
 
 
+
+/* ================= ESCAPE TEXT ================= */
 
 function escapeVideoText(text){
 
     return String(text || "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
 }
 
 
 
+/* ================= ESCAPE URL ================= */
+
+function escapeAttribute(text){
+
+    return String(text || "")
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;");
+
+}
+
+
+
+/* =================================================
+LOAD APPROVED VIDEOS FROM SUPABASE
+================================================= */
+
+async function loadSiteVideos(){
+
+    const feed =
+    document.getElementById("videoFeed");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+
+            .from("Videos")
+
+            .select(
+                "id,title,platform,videos_url,status,created_at"
+            )
+
+            .eq(
+                "status",
+                "approved"
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Videos load error:",
+                error
+            );
+
+
+            if(feed){
+
+                feed.innerHTML = `
+
+                <p style="
+                    text-align:center;
+                    padding:30px;
+                ">
+
+                    ⚠️ Could not load videos.
+
+                </p>
+
+                `;
+
+            }
+
+
+            return;
+
+        }
+
+
+        siteVideos =
+        Array.isArray(data)
+        ? data
+        : [];
+
+
+        renderSiteVideos("all");
+
+    }
+
+
+    catch(error){
+
+        console.error(error);
+
+
+        if(feed){
+
+            feed.innerHTML = `
+
+            <p style="
+                text-align:center;
+                padding:30px;
+            ">
+
+                ⚠️ Could not load videos.
+
+            </p>
+
+            `;
+
+        }
+
+    }
+
+}
+
+
+
+/* START */
+
 loadSiteVideos();
-}             
 
 </script>
 
