@@ -2360,68 +2360,153 @@ function playSiteYouTube(id,button){
 }
 
 
-function getYouTubeID(url){
+function createSitePlayer(platform,url){
 
-    try{
+    // DIRECT VIDEO
+    if(platform === "Direct"){
 
-        const u = new URL(url);
-
-        // YouTube Shorts
-        if(
-            u.hostname.includes("youtube.com") &&
-            u.pathname.startsWith("/shorts/")
-        ){
-            return u.pathname
-                .split("/shorts/")[1]
-                .split("/")[0];
-        }
-
-        // YouTube watch URL
-        if(
-            u.hostname.includes("youtube.com") &&
-            u.searchParams.get("v")
-        ){
-            return u.searchParams.get("v");
-        }
-
-        // YouTube short URL
-        if(u.hostname.includes("youtu.be")){
-            return u.pathname
-                .substring(1)
-                .split("/")[0];
-        }
-
-    }catch(error){
-
-        console.error("YouTube URL error:", error);
-
+        return `
+        <video
+            controls
+            playsinline
+            preload="metadata"
+            style="
+                width:100%;
+                max-width:100%;
+                height:auto;
+                min-height:220px;
+                background:#000;
+                border-radius:12px;
+                display:block;
+            "
+        >
+            <source src="${url}" type="video/mp4">
+            Your browser does not support video playback.
+        </video>`;
     }
 
-    return null;
+
+    // YOUTUBE
+    if(platform === "YouTube"){
+
+        const id = getYouTubeID(url);
+function createSitePlayer(platform,url){
+
+    // DIRECT VIDEO
+    if(platform === "Direct"){
+
+        return `
+        <video
+            controls
+            playsinline
+            preload="metadata"
+            style="
+                width:100%;
+                max-width:100%;
+                height:auto;
+                min-height:220px;
+                background:#000;
+                border-radius:12px;
+                display:block;
+            "
+        >
+            <source src="${url}" type="video/mp4">
+            Your browser does not support video playback.
+        </video>`;
+    }
+
+
+    // YOUTUBE
+    if(platform === "YouTube"){
+
+        const id = getYouTubeID(url);
+
+        if(id){
+
+            return `
+            <div style="
+                position:relative;
+                aspect-ratio:16/9;
+                background:#111;
+                border-radius:12px;
+                overflow:hidden;
+            ">
+
+                <img
+                    src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
+                    style="width:100%;height:100%;object-fit:cover;"
+                >
+
+                <button
+                    onclick="playSiteYouTube('${id}',this)"
+                    style="
+                        position:absolute;
+                        left:50%;
+                        top:50%;
+                        transform:translate(-50%,-50%);
+                        background:red;
+                        color:white;
+                        border:0;
+                        border-radius:12px;
+                        padding:14px 22px;
+                        font-size:24px;
+                        cursor:pointer;
+                    "
+                >
+                    ▶
+                </button>
+
+            </div>`;
+        }
+    }
+
+
+    // TIKTOK
+    if(platform === "TikTok"){
+
+        const id = getTikTokID(url);
+
+        if(id){
+
+            return `
+            <iframe
+                src="https://www.tiktok.com/player/v1/${id}?controls=1"
+                style="
+                    width:100%;
+                    height:650px;
+                    border:0;
+                    border-radius:12px;
+                "
+                allow="fullscreen"
+            >
+            </iframe>`;
+        }
+    }
+
+
+    // FACEBOOK
+    if(platform === "Facebook"){
+
+        return `
+        <iframe
+            src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false"
+            style="
+                width:100%;
+                height:420px;
+                border:0;
+                border-radius:12px;
+            "
+            allowfullscreen>
+        </iframe>`;
+    }
+
+
+    return "";
 }
 
-
-function getTikTokID(url){
-
-    const match =
-    String(url).match(/\/video\/(\d+)/);
-
-    return match ? match[1] : null;
+                    
+                    
 }
-
-
-function escapeVideoText(text){
-
-    return String(text || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-loadSiteVideos();
    
 </script>
 
