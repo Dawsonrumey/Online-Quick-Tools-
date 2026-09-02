@@ -45,8 +45,7 @@ h1{
 label{
     display:block;
     font-weight:bold;
-    margin-top:18px;
-    margin-bottom:7px;
+    margin:18px 0 7px;
 }
 
 input,
@@ -77,12 +76,10 @@ button{
     color:white;
     font-size:16px;
     font-weight:bold;
-    cursor:pointer;
 }
 
 button:disabled{
     background:#999;
-    cursor:not-allowed;
 }
 
 #preview{
@@ -122,7 +119,7 @@ button:disabled{
     border-radius:9px;
     font-size:13px;
     color:#555;
-    line-height:1.5;
+    line-height:1.6;
 }
 </style>
 </head>
@@ -136,23 +133,23 @@ button:disabled{
 <h1>🎬 Submit Your Video</h1>
 
 <p class="subtitle">
-Upload your own video and submit it to Online Quick Tools.
+Upload your video to Online Quick Tools.
 </p>
 
 <form id="videoForm">
 
-<label for="title">Video Title</label>
+<label>Video Title</label>
 
 <input
     id="title"
     type="text"
-    placeholder="Enter video title"
     maxlength="150"
+    placeholder="Enter video title"
     required
 >
 
 
-<label for="description">Description</label>
+<label>Description</label>
 
 <textarea
     id="description"
@@ -162,7 +159,7 @@ Upload your own video and submit it to Online Quick Tools.
 ></textarea>
 
 
-<label for="videoFile">Select Video</label>
+<label>Select Video</label>
 
 <input
     id="videoFile"
@@ -183,7 +180,7 @@ Upload your own video and submit it to Online Quick Tools.
     id="submitBtn"
     type="submit"
 >
-    ⬆️ Upload & Submit Video
+⬆️ Upload & Submit Video
 </button>
 
 </form>
@@ -191,11 +188,11 @@ Upload your own video and submit it to Online Quick Tools.
 <div id="msg"></div>
 
 <div class="note">
-<b>Important:</b><br>
-• Maximum recommended file size: 100 MB<br>
-• Use MP4 for best compatibility.<br>
-• Your video will first be submitted as <b>pending</b>.<br>
-• After approval, it can appear in the Video Hub.
+<b>Upload information:</b><br>
+• MP4 is recommended<br>
+• Maximum size: 100 MB<br>
+• Video will be submitted as <b>pending</b><br>
+• Admin approval is required before it appears publicly
 </div>
 
 </div>
@@ -203,7 +200,7 @@ Upload your own video and submit it to Online Quick Tools.
 </div>
 
 
-<!-- Supabase JavaScript -->
+<!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -215,9 +212,9 @@ const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 
-/* Create Supabase client */
+/* Supabase client */
 
-const supabaseClient =
+const client =
 window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
@@ -251,41 +248,36 @@ const submitBtn =
 document.getElementById("submitBtn");
 
 
-/* Video preview */
+/* Preview */
 
 videoInput.addEventListener("change", function(){
 
     const file = this.files[0];
 
     if(!file){
-
-        preview.style.display = "none";
-        fileInfo.textContent = "";
-
+        preview.style.display="none";
+        fileInfo.textContent="";
         return;
     }
 
-
     const sizeMB =
-    (file.size / 1024 / 1024).toFixed(2);
-
+    file.size / 1024 / 1024;
 
     fileInfo.textContent =
     "Selected: " +
     file.name +
-    " (" +
-    sizeMB +
-    " MB)";
+    " — " +
+    sizeMB.toFixed(2) +
+    " MB";
 
 
     if(!file.type.startsWith("video/")){
 
-        msg.className = "error";
-
-        msg.textContent =
+        msg.className="error";
+        msg.textContent=
         "❌ Please select a video file.";
 
-        preview.style.display = "none";
+        preview.style.display="none";
 
         return;
     }
@@ -293,26 +285,25 @@ videoInput.addEventListener("change", function(){
 
     if(file.size > 100 * 1024 * 1024){
 
-        msg.className = "error";
+        msg.className="error";
+        msg.textContent=
+        "❌ Maximum file size is 100 MB.";
 
-        msg.textContent =
-        "❌ Video is larger than 100 MB.";
-
-        preview.style.display = "none";
+        preview.style.display="none";
 
         return;
     }
 
 
-    msg.textContent = "";
+    msg.textContent="";
 
 
-    const videoURL =
+    const objectURL =
     URL.createObjectURL(file);
 
-    preview.src = videoURL;
+    preview.src=objectURL;
 
-    preview.style.display = "block";
+    preview.style.display="block";
 
 });
 
@@ -323,10 +314,8 @@ form.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-
-    msg.className = "";
-    msg.textContent = "";
-
+    msg.className="";
+    msg.textContent="";
 
     const title =
     titleInput.value.trim();
@@ -338,13 +327,11 @@ form.addEventListener("submit", async function(e){
     videoInput.files[0];
 
 
-    /* Validation */
-
     if(!title){
 
-        msg.className = "error";
-        msg.textContent =
-        "❌ Please enter a video title.";
+        msg.className="error";
+        msg.textContent=
+        "❌ Enter a video title.";
 
         return;
     }
@@ -352,9 +339,9 @@ form.addEventListener("submit", async function(e){
 
     if(!file){
 
-        msg.className = "error";
-        msg.textContent =
-        "❌ Please select a video.";
+        msg.className="error";
+        msg.textContent=
+        "❌ Select a video.";
 
         return;
     }
@@ -362,9 +349,9 @@ form.addEventListener("submit", async function(e){
 
     if(!file.type.startsWith("video/")){
 
-        msg.className = "error";
-        msg.textContent =
-        "❌ Selected file is not a video.";
+        msg.className="error";
+        msg.textContent=
+        "❌ The selected file is not a video.";
 
         return;
     }
@@ -372,9 +359,9 @@ form.addEventListener("submit", async function(e){
 
     if(file.size > 100 * 1024 * 1024){
 
-        msg.className = "error";
-        msg.textContent =
-        "❌ Maximum file size is 100 MB.";
+        msg.className="error";
+        msg.textContent=
+        "❌ Video must be 100 MB or smaller.";
 
         return;
     }
@@ -382,19 +369,16 @@ form.addEventListener("submit", async function(e){
 
     try{
 
-        submitBtn.disabled = true;
+        submitBtn.disabled=true;
 
-        submitBtn.textContent =
-        "⏳ Uploading video...";
+        submitBtn.textContent=
+        "⏳ Uploading...";
+
+        msg.textContent=
+        "Uploading video...";
 
 
-        msg.textContent =
-        "Uploading video to Supabase...";
-
-
-        /*
-        Generate unique filename
-        */
+        /* Unique file name */
 
         const extension =
         file.name.includes(".")
@@ -402,7 +386,11 @@ form.addEventListener("submit", async function(e){
         : "mp4";
 
 
-        const uniqueName =
+        const safeExtension =
+        extension.replace(/[^a-z0-9]/g,"");
+
+
+        const fileName =
         "video_" +
         Date.now() +
         "_" +
@@ -410,19 +398,17 @@ form.addEventListener("submit", async function(e){
         .toString(36)
         .substring(2,10) +
         "." +
-        extension;
+        safeExtension;
 
 
         const filePath =
-        "uploads/" + uniqueName;
+        "uploads/" + fileName;
 
 
-        /*
-        Upload to Supabase Storage
-        */
+        /* Upload */
 
-        const uploadResult =
-        await supabaseClient
+        const upload =
+        await client
         .storage
         .from("videos")
         .upload(
@@ -436,86 +422,72 @@ form.addEventListener("submit", async function(e){
         );
 
 
-        if(uploadResult.error){
+        if(upload.error){
 
             throw new Error(
                 "Storage: " +
-                uploadResult.error.message
+                upload.error.message
             );
         }
 
 
-        /*
-        Get public URL
-        */
-
-        const publicResult =
-        supabaseClient
-        .storage
-        .from("videos")
-        .getPublicUrl(filePath);
-
+        /* Public URL */
 
         const publicURL =
-        publicResult.data.publicUrl;
+        client
+        .storage
+        .from("videos")
+        .getPublicUrl(filePath)
+        .data
+        .publicUrl;
 
 
         if(!publicURL){
 
             throw new Error(
-                "Could not create public video URL."
+                "Could not create public URL."
             );
         }
 
 
-        msg.textContent =
-        "✅ Upload complete. Saving video...";
+        msg.textContent=
+        "✅ Video uploaded. Saving information...";
 
 
-        /*
-        Save video information
-        */
+        /* Save to Videos table */
 
-        const dbResult =
-await supabaseClient
-.from("Videos")
-.insert({
+        const database =
+        await client
+        .from("Videos")
+        .insert({
 
-    title: title,
+            title:title,
 
-    platform: "Direct",
+            platform:"Direct",
 
-    videos_url: publicURL,
+            videos_url:publicURL,
 
-    status: "pending"
+            status:"pending"
 
-});
+        });
 
 
-        if(dbResult.error){
-
-            /*
-            If database insert fails,
-            show the actual error.
-            */
+        if(database.error){
 
             throw new Error(
                 "Database: " +
-                dbResult.error.message
+                database.error.message
             );
         }
 
 
-        /*
-        Success
-        */
+        /* Success */
 
-        msg.className =
-        "success";
+        msg.className="success";
 
-        msg.textContent =
-        "✅ Video uploaded successfully! " +
-        "Your video is now pending approval.";
+        msg.textContent=
+        "✅ Video submitted successfully! " +
+        "Waiting for approval.";
 
 
         form.reset();
@@ -526,33 +498,30 @@ await supabaseClient
 
         preview.load();
 
-        preview.style.display =
-        "none";
+        preview.style.display="none";
 
-        fileInfo.textContent = "";
+        fileInfo.textContent="";
 
 
     }catch(error){
 
         console.error(
-            "VIDEO UPLOAD ERROR:",
+            "VIDEO SUBMIT ERROR:",
             error
         );
 
+        msg.className="error";
 
-        msg.className =
-        "error";
-
-        msg.textContent =
+        msg.textContent=
         "❌ Upload failed: " +
         error.message;
 
 
     }finally{
 
-        submitBtn.disabled = false;
+        submitBtn.disabled=false;
 
-        submitBtn.textContent =
+        submitBtn.textContent=
         "⬆️ Upload & Submit Video";
 
     }
