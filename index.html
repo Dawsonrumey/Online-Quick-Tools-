@@ -2394,6 +2394,10 @@ function createSitePlayer(platform,url){
 
     // DIRECT VIDEO
     if(platform === "Direct"){
+function createSitePlayer(platform,url){
+
+    // DIRECT MP4 VIDEO
+    if(platform === "Direct"){
 
         return `
         <video
@@ -2434,7 +2438,11 @@ function createSitePlayer(platform,url){
 
                 <img
                     src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
-                    style="width:100%;height:100%;object-fit:cover;"
+                    style="
+                        width:100%;
+                        height:100%;
+                        object-fit:cover;
+                    "
                 >
 
                 <button
@@ -2458,6 +2466,11 @@ function createSitePlayer(platform,url){
 
             </div>`;
         }
+
+        return `
+        <p style="text-align:center;">
+            ⚠️ YouTube video unavailable.
+        </p>`;
     }
 
 
@@ -2478,9 +2491,14 @@ function createSitePlayer(platform,url){
                     border-radius:12px;
                 "
                 allow="fullscreen"
-            >
+                allowfullscreen>
             </iframe>`;
         }
+
+        return `
+        <p style="text-align:center;">
+            ⚠️ TikTok video unavailable.
+        </p>`;
     }
 
 
@@ -2501,7 +2519,104 @@ function createSitePlayer(platform,url){
     }
 
 
-    return "";
+    return `
+    <p style="text-align:center;">
+        ⚠️ Unsupported video platform.
+    </p>`;
+}
+
+
+
+function playSiteYouTube(id,button){
+
+    const box = button.parentElement;
+
+    box.innerHTML = `
+        <iframe
+            src="https://www.youtube.com/embed/${id}?autoplay=1"
+            style="
+                width:100%;
+                height:100%;
+                border:0;
+            "
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    `;
+}
+
+
+
+function getYouTubeID(url){
+
+    try{
+
+        const u = new URL(url);
+
+        // YouTube Shorts
+        if(
+            u.hostname.includes("youtube.com") &&
+            u.pathname.startsWith("/shorts/")
+        ){
+
+            return u.pathname
+                .split("/shorts/")[1]
+                .split("/")[0];
+        }
+
+
+        // YouTube Watch
+        if(
+            u.hostname.includes("youtube.com") &&
+            u.searchParams.get("v")
+        ){
+
+            return u.searchParams.get("v");
+        }
+
+
+        // youtu.be
+        if(u.hostname.includes("youtu.be")){
+
+            return u.pathname
+                .substring(1)
+                .split("/")[0];
+        }
+
+    }catch(error){
+
+        console.error("YouTube URL error:",error);
+
+    }
+
+    return null;
+}
+
+
+
+function getTikTokID(url){
+
+    const match =
+        String(url).match(/\/video\/(\d+)/);
+
+    return match ? match[1] : null;
+}
+
+
+
+function escapeVideoText(text){
+
+    return String(text || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+
+loadSiteVideos();
 }             
 
 </script>
