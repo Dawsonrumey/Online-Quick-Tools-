@@ -7,7 +7,6 @@
 <title>Admin Panel - Online Quick Tools</title>
 
 <style>
-
 *{
     box-sizing:border-box;
 }
@@ -60,6 +59,11 @@ button{
     font-size:14px;
 }
 
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
 .login-btn{
     width:100%;
     background:#4f46e5;
@@ -90,11 +94,6 @@ button{
 .delete{
     background:#dc2626;
     color:white;
-}
-
-button:disabled{
-    opacity:.6;
-    cursor:not-allowed;
 }
 
 .hidden{
@@ -237,14 +236,6 @@ button:disabled{
     margin-top:15px;
 }
 
-.test-box{
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    padding:15px;
-    border-radius:10px;
-    margin-top:15px;
-}
-
 @media(max-width:600px){
 
     .stats{
@@ -261,14 +252,12 @@ button:disabled{
     }
 
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
-
 
 <!-- ================= LOGIN ================= -->
 
@@ -316,9 +305,6 @@ Login
     class="hidden"
 >
 
-
-<!-- TOP -->
-
 <div class="card">
 
 <div class="topbar">
@@ -358,7 +344,7 @@ Logout
 ></div>
 
 
-<!-- STATS -->
+<!-- ================= STATS ================= -->
 
 <div class="stats">
 
@@ -414,7 +400,7 @@ Approved
 </div>
 
 
-<!-- PENDING -->
+<!-- ================= PENDING ================= -->
 
 <div class="card">
 
@@ -431,7 +417,7 @@ Loading...
 </div>
 
 
-<!-- DEBUG -->
+<!-- ================= DATABASE TEST ================= -->
 
 <div class="card">
 
@@ -455,7 +441,7 @@ Waiting for database test...
 </div>
 
 
-<!-- SUPABASE JS -->
+<!-- ================= SUPABASE ================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -535,20 +521,21 @@ document.getElementById("debugBox");
 ================================================== */
 
 loginBtn.addEventListener(
-"click",
-loginAdmin
+    "click",
+    loginAdmin
 );
 
 
 passwordInput.addEventListener(
-"keydown",
-function(e){
+    "keydown",
+    function(e){
 
-    if(e.key === "Enter"){
-        loginAdmin();
+        if(e.key === "Enter"){
+            loginAdmin();
+        }
+
     }
-
-});
+);
 
 
 async function loginAdmin(){
@@ -581,42 +568,59 @@ async function loginAdmin(){
     "⏳ Logging in...";
 
 
-    const result =
-    await client.auth.signInWithPassword({
+    try{
 
-        email:email,
+        const result =
+        await client.auth.signInWithPassword({
 
-        password:password
+            email:email,
 
-    });
+            password:password
+
+        });
 
 
-    if(result.error){
+        if(result.error){
+
+            loginMessage.className =
+            "message error";
+
+            loginMessage.textContent =
+            "❌ Login failed: " +
+            result.error.message;
+
+            loginBtn.disabled = false;
+
+            return;
+        }
+
+
+        loginMessage.className =
+        "message success";
+
+        loginMessage.textContent =
+        "✅ Login successful.";
+
+
+        loginBtn.disabled = false;
+
+
+        await showAdmin();
+
+    }
+
+    catch(error){
 
         loginMessage.className =
         "message error";
 
         loginMessage.textContent =
-        "❌ Login failed: " +
-        result.error.message;
+        "❌ Login error: " +
+        error.message;
 
         loginBtn.disabled = false;
 
-        return;
     }
-
-
-    loginMessage.className =
-    "message success";
-
-    loginMessage.textContent =
-    "✅ Login successful.";
-
-
-    loginBtn.disabled = false;
-
-
-    await showAdmin();
 
 }
 
@@ -627,9 +631,13 @@ async function loginAdmin(){
 
 async function showAdmin(){
 
-    loginBox.classList.add("hidden");
+    loginBox.classList.add(
+        "hidden"
+    );
 
-    adminPanel.classList.remove("hidden");
+    adminPanel.classList.remove(
+        "hidden"
+    );
 
 
     const sessionResult =
@@ -647,10 +655,15 @@ async function showAdmin(){
 
         userInfo.innerHTML =
         "<b>Logged in as:</b><br>" +
-        escapeHTML(user.email || "Unknown") +
+        escapeHTML(
+            user.email ||
+            "Unknown"
+        ) +
         "<br><br>" +
         "<b>User ID:</b><br>" +
-        escapeHTML(user.id);
+        escapeHTML(
+            user.id
+        );
 
     }
 
@@ -667,18 +680,24 @@ async function showAdmin(){
 async function loadVideos(){
 
     pendingVideos.innerHTML =
-    '<div class="empty">⏳ Loading videos...</div>';
+    '<div class="empty">' +
+    '⏳ Loading videos...' +
+    '</div>';
 
 
     debugBox.textContent =
     "Running database query...";
 
 
+    mainMessage.textContent =
+    "";
+
+
     const result =
     await client
     .from("Videos")
     .select(
-        "id,title,description,platform,videos_url,status,created_at"
+        "id,title,platform,videos_url,status,created_at"
     )
     .order(
         "created_at",
@@ -720,11 +739,14 @@ async function loadVideos(){
         (error.hint || "N/A");
 
 
-        totalCount.textContent = "ERROR";
+        totalCount.textContent =
+        "ERROR";
 
-        pendingCount.textContent = "ERROR";
+        pendingCount.textContent =
+        "ERROR";
 
-        approvedCount.textContent = "ERROR";
+        approvedCount.textContent =
+        "ERROR";
 
 
         mainMessage.className =
@@ -732,7 +754,6 @@ async function loadVideos(){
 
         mainMessage.textContent =
         "❌ Videos table could not be read.";
-
 
         return;
     }
@@ -745,8 +766,6 @@ async function loadVideos(){
     ? data
     : [];
 
-
-    /* DEBUG INFORMATION */
 
     debugBox.textContent =
     "DATABASE QUERY SUCCESS\n\n" +
@@ -763,29 +782,33 @@ async function loadVideos(){
     /* STATS */
 
     const pending =
-    videos.filter(function(video){
+    videos.filter(
+        function(video){
 
-        return String(
-            video.status || ""
-        )
-        .trim()
-        .toLowerCase()
-        === "pending";
+            return String(
+                video.status || ""
+            )
+            .trim()
+            .toLowerCase()
+            === "pending";
 
-    });
+        }
+    );
 
 
     const approved =
-    videos.filter(function(video){
+    videos.filter(
+        function(video){
 
-        return String(
-            video.status || ""
-        )
-        .trim()
-        .toLowerCase()
-        === "approved";
+            return String(
+                video.status || ""
+            )
+            .trim()
+            .toLowerCase()
+            === "approved";
 
-    });
+        }
+    );
 
 
     totalCount.textContent =
@@ -798,9 +821,11 @@ async function loadVideos(){
     approved.length;
 
 
-    /* PENDING */
+    /* PENDING EMPTY */
 
-    if(pending.length === 0){
+    if(
+        pending.length === 0
+    ){
 
         pendingVideos.innerHTML =
         '<div class="empty">' +
@@ -814,23 +839,27 @@ async function loadVideos(){
     }
 
 
-    pendingVideos.innerHTML = "";
+    /* SHOW PENDING */
+
+    pendingVideos.innerHTML =
+    "";
 
 
-    pending.forEach(function(video){
+    pending.forEach(
+        function(video){
 
-        const card =
-        createVideoCard(video);
+            pendingVideos.appendChild(
+                createVideoCard(video)
+            );
 
-        pendingVideos.appendChild(card);
-
-    });
+        }
+    );
 
 }
 
 
 /* ==================================================
-   VIDEO CARD
+   CREATE VIDEO CARD
 ================================================== */
 
 function createVideoCard(video){
@@ -846,13 +875,6 @@ function createVideoCard(video){
     escapeHTML(
         video.title ||
         "Untitled"
-    );
-
-
-    const description =
-    escapeHTML(
-        video.description ||
-        ""
     );
 
 
@@ -884,11 +906,13 @@ function createVideoCard(video){
         </div>
 
         <div class="meta">
-            <b>ID:</b> ${video.id}
+            <b>ID:</b>
+            ${escapeHTML(video.id)}
         </div>
 
         <div class="meta">
-            <b>Platform:</b> ${platform}
+            <b>Platform:</b>
+            ${platform}
         </div>
 
         <div class="meta">
@@ -897,21 +921,9 @@ function createVideoCard(video){
             </span>
         </div>
 
-        ${
-            description
-            ?
-            `
-            <div class="meta">
-                <b>Description:</b><br>
-                ${description}
-            </div>
-            `
-            :
-            ""
-        }
-
         <div class="meta">
-            <b>Created:</b> ${created}
+            <b>Created:</b>
+            ${created}
         </div>
 
         <div class="meta">
@@ -923,25 +935,20 @@ function createVideoCard(video){
 
         <div class="actions">
 
-            <button
-                class="approve"
-            >
+            <button class="approve">
                 ✅ Approve
             </button>
 
-            <button
-                class="reject"
-            >
+            <button class="reject">
                 ❌ Reject
             </button>
 
-            <button
-                class="delete"
-            >
+            <button class="delete">
                 🗑️ Delete
             </button>
 
         </div>
+
     `;
 
 
@@ -961,16 +968,22 @@ function createVideoCard(video){
         const videoElement =
         document.createElement("video");
 
+
         videoElement.className =
         "video-preview";
 
-        videoElement.controls = true;
+
+        videoElement.controls =
+        true;
+
 
         videoElement.preload =
         "metadata";
 
+
         videoElement.src =
         video.videos_url;
+
 
         previewContainer.appendChild(
             videoElement
@@ -979,23 +992,65 @@ function createVideoCard(video){
     }
 
 
-    /* YOUTUBE */
+    /* EXTERNAL VIDEO */
 
     else if(
-        video.platform === "YouTube" &&
         video.videos_url
     ){
 
         const link =
         document.createElement("a");
 
+
         link.href =
         video.videos_url;
 
-        link.target = "_blank";
 
-        link.textContent =
-        "▶️ Open YouTube Video";
+        link.target =
+        "_blank";
+
+
+        link.rel =
+        "noopener noreferrer";
+
+
+        if(
+            video.platform ===
+            "YouTube"
+        ){
+
+            link.textContent =
+            "▶️ Open YouTube Video";
+
+        }
+
+        else if(
+            video.platform ===
+            "Facebook"
+        ){
+
+            link.textContent =
+            "📘 Open Facebook Video";
+
+        }
+
+        else if(
+            video.platform ===
+            "TikTok"
+        ){
+
+            link.textContent =
+            "🎵 Open TikTok Video";
+
+        }
+
+        else{
+
+            link.textContent =
+            "🔗 Open Video";
+
+        }
+
 
         previewContainer.appendChild(
             link
@@ -1004,96 +1059,55 @@ function createVideoCard(video){
     }
 
 
-    /* FACEBOOK */
-
-    else if(
-        video.platform === "Facebook" &&
-        video.videos_url
-    ){
-
-        const link =
-        document.createElement("a");
-
-        link.href =
-        video.videos_url;
-
-        link.target = "_blank";
-
-        link.textContent =
-        "📘 Open Facebook Video";
-
-        previewContainer.appendChild(
-        link
-        );
-
-    }
-
-
-    /* TIKTOK */
-
-    else if(
-        video.platform === "TikTok" &&
-        video.videos_url
-    ){
-
-        const link =
-        document.createElement("a");
-
-        link.href =
-        video.videos_url;
-
-        link.target = "_blank";
-
-        link.textContent =
-        "🎵 Open TikTok Video";
-
-        previewContainer.appendChild(
-        link
-        );
-
-    }
-
-
     /* APPROVE */
 
-    card.querySelector(".approve")
+    card.querySelector(
+        ".approve"
+    )
     .addEventListener(
-    "click",
-    function(){
+        "click",
+        function(){
 
-        updateStatus(
-            video.id,
-            "approved"
-        );
+            updateStatus(
+                video.id,
+                "approved"
+            );
 
-    });
+        }
+    );
 
 
     /* REJECT */
 
-    card.querySelector(".reject")
+    card.querySelector(
+        ".reject"
+    )
     .addEventListener(
-    "click",
-    function(){
+        "click",
+        function(){
 
-        updateStatus(
-            video.id,
-            "rejected"
-        );
+            updateStatus(
+                video.id,
+                "rejected"
+            );
 
-    });
+        }
+    );
 
 
     /* DELETE */
 
-    card.querySelector(".delete")
+    card.querySelector(
+        ".delete"
+    )
     .addEventListener(
-    "click",
-    function(){
+        "click",
+        function(){
 
-        deleteVideo(video);
+            deleteVideo(video);
 
-    });
+        }
+    );
 
 
     return card;
@@ -1145,6 +1159,7 @@ async function updateStatus(
     mainMessage.className =
     "message success";
 
+
     mainMessage.textContent =
     newStatus === "approved"
     ?
@@ -1182,7 +1197,7 @@ async function deleteVideo(video){
     "⏳ Deleting video...";
 
 
-    /* Delete database row */
+    /* DATABASE DELETE */
 
     const result =
     await client
@@ -1207,7 +1222,7 @@ async function deleteVideo(video){
     }
 
 
-    /* Delete Storage file */
+    /* STORAGE DELETE */
 
     if(
         video.platform === "Direct" &&
@@ -1242,7 +1257,9 @@ async function deleteVideo(video){
             ]);
 
 
-            if(storageResult.error){
+            if(
+                storageResult.error
+            ){
 
                 console.warn(
                     "Storage delete error:",
@@ -1273,29 +1290,39 @@ async function deleteVideo(video){
 ================================================== */
 
 logoutBtn.addEventListener(
-"click",
-async function(){
+    "click",
+    async function(){
 
-    await client.auth.signOut();
-
-
-    adminPanel.classList.add(
-        "hidden"
-    );
-
-    loginBox.classList.remove(
-        "hidden"
-    );
+        await client.auth.signOut();
 
 
-    passwordInput.value = "";
+        adminPanel.classList.add(
+            "hidden"
+        );
 
-    loginMessage.textContent = "";
 
-    debugBox.textContent =
-    "Logged out.";
+        loginBox.classList.remove(
+            "hidden"
+        );
 
-});
+
+        passwordInput.value =
+        "";
+
+
+        loginMessage.textContent =
+        "";
+
+
+        mainMessage.textContent =
+        "";
+
+
+        debugBox.textContent =
+        "Logged out.";
+
+    }
+);
 
 
 /* ==================================================
@@ -1303,12 +1330,13 @@ async function(){
 ================================================== */
 
 refreshBtn.addEventListener(
-"click",
-async function(){
+    "click",
+    async function(){
 
-    await loadVideos();
+        await loadVideos();
 
-});
+    }
+);
 
 
 /* ==================================================
