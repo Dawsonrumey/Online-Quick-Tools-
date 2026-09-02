@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel - Online Quick Tools</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#222;
+}
+
+.container{
+    max-width:1000px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin:7px 0 12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+button{
+    border:0;
+    border-radius:8px;
+    padding:11px 15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.login-btn{
+    width:100%;
+    background:#4f46e5;
+    color:white;
+    font-size:16px;
+}
+
+.logout{
+    background:#333;
+    color:white;
+}
+
+.refresh{
+    background:#2563eb;
+    color:white;
+}
+
+.approve{
+    background:#16a34a;
+    color:white;
+}
+
+.reject{
+    background:#f59e0b;
+    color:white;
+}
+
+.delete{
+    background:#dc2626;
+    color:white;
+}
+
+.hidden{
+    display:none;
+}
+
+#message{
+    text-align:center;
+    margin:15px 0;
+    font-weight:bold;
+}
+
+.video-card{
+    background:#fafafa;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:15px;
+    margin:15px 0;
+}
+
+.video-card video{
+    width:100%;
+    max-height:400px;
+    background:#000;
+    border-radius:10px;
+    margin:10px 0;
+}
+
+.video-title{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.meta{
+    color:#666;
+    font-size:14px;
+    margin:6px 0;
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.actions button{
+    flex:1;
+    min-width:100px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#fff3cd;
+    color:#856404;
+    font-size:13px;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:30px 10px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LOGIN -->
+
+<div id="loginBox" class="card">
+
+<h1>🔐 Admin Login</h1>
+
+<p>
+Login with your Supabase admin account.
+</p>
+
+<input
+    id="email"
+    type="email"
+    placeholder="Admin email"
+    autocomplete="username"
+>
+
+<input
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+>
+
+<button
+    class="login-btn"
+    id="loginBtn"
+>
+Login
+</button>
+
+<div id="loginMessage"></div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div id="adminPanel" class="hidden">
+
+<div class="card">
+
+<div class="topbar">
+
+<h1>🎬 Video Admin Panel</h1>
+
+<div>
+<button
+    class="refresh"
+    id="refreshBtn"
+>
+🔄 Refresh
+</button>
+
+<button
+    class="logout"
+    id="logoutBtn"
+>
+Logout
+</button>
+</div>
+
+</div>
+
+<div id="message"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>⏳ Pending Videos</h2>
+
+<div id="pendingVideos">
+
+<div class="empty">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+
+const client =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* Elements */
+
+const loginBox =
+document.getElementById("loginBox");
+
+const adminPanel =
+document.getElementById("adminPanel");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+const refreshBtn =
+document.getElementById("refreshBtn");
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+const loginMessage =
+document.getElementById("loginMessage");
+
+const message =
+document.getElementById("message");
+
+const pendingVideos =
+document.getElementById("pendingVideos");
+
+
+/* Login */
+
+loginBtn.addEventListener(
+"click",
+async function(){
+
+    const email =
+    emailInput.value.trim();
+
+    const password =
+    passwordInput.value;
+
+
+    if(!email || !password){
+
+        loginMessage.textContent =
+        "❌ Enter email and password.";
+
+        return;
+    }
+
+
+    loginMessage.textContent =
+    "Logging in...";
+
+
+    const { data, error } =
+    await client.auth.signInWithPassword({
+        email:email,
+        password:password
+    });
+
+
+    if(error){
+
+        loginMessage.textContent =
+        "❌ Login failed: " +
+        error.message;
+
+        return;
+    }
+
+
+    loginMessage.textContent =
+    "✅ Login successful.";
+
+    showAdmin();
+
+});
+
+
+/* Show Admin */
+
+async function showAdmin(){
+
+    loginBox.classList.add("hidden");
+
+    adminPanel.classList.remove("hidden");
+
+    await loadPendingVideos();
+
+}
+
+
+/* Load pending videos */
+
+async function loadPendingVideos(){
+
+    pendingVideos.innerHTML =
+    '<div class="empty">Loading videos...</div>';
+
+
+    const { data, error } =
+    await client
+    .from("Videos")
+    .select("*")
+    .order("created_at", {
+        ascending:false
+    });
+
+
+    if(error){
+
+        pendingVideos.innerHTML =
+        '<div class="empty">❌ ' +
+        escapeHTML(error.message) +
+        '</div>';
+
+        return;
+    }
+
+
+    const videos =
+    (data || []).filter(function(video){
+
+        return String(video.status || "")
+        .trim()
+        .toLowerCase() === "pending";
+
+    });
+
+
+    if(videos.length === 0){
+
+        pendingVideos.innerHTML =
+        '<div class="empty">🎉 No pending videos.</div>';
+
+        return;
+    }
+
+
+    pendingVideos.innerHTML = "";
+
+
+    videos.forEach(function(video){
+
+        pendingVideos.appendChild(
+            createVideoCard(video)
+        );
+
+    });
+
+}
+
+
+/* Create video card */
+
+function createVideoCard(video){
+
+    const card =
+    document.createElement("div");
+
+    card.className =
+    "video-card";
+
+
+    const title =
+    escapeHTML(video.title || "Untitled");
+
+    const description =
+    escapeHTML(video.description || "");
+
+    const platform =
+    escapeHTML(video.platform || "Direct");
+
+    const url =
+    escapeHTML(video.videos_url || "");
+
+
+    card.innerHTML = `
+
+        <div class="video-title">
+            ${title}
+        </div>
+
+        <div class="meta">
+            Platform: ${platform}
+        </div>
+
+        <div class="meta">
+            <span class="status">
+                PENDING
+            </span>
+        </div>
+
+        ${
+            description
+            ?
+            `<div class="meta">
+                ${description}
+            </div>`
+            :
+            ""
+        }
+
+        <div class="meta">
+            Video URL:<br>
+            ${url}
+        </div>
+
+        <div class="preview-area"></div>
+
+        <div class="actions">
+
+            <button
+                class="approve"
+                data-id="${video.id}"
+            >
+                ✅ Approve
+            </button>
+
+            <button
+                class="reject"
+                data-id="${video.id}"
+            >
+                ❌ Reject
+            </button>
+
+            <button
+                class="delete"
+                data-id="${video.id}"
+            >
+                🗑️ Delete
+            </button>
+
+        </div>
+    `;
+
+
+    const previewArea =
+    card.querySelector(".preview-area");
+
+
+    /* Direct video preview */
+
+    if(
+        video.platform === "Direct" &&
+        video.videos_url
+    ){
+
+        const videoElement =
+        document.createElement("video");
+
+        videoElement.controls = true;
+
+        videoElement.preload = "metadata";
+
+        videoElement.src =
+        video.videos_url;
+
+        previewArea.appendChild(
+            videoElement
+        );
+
+    }
+
+
+    /* Approve */
+
+    card.querySelector(".approve")
+    .addEventListener(
+    "click",
+    function(){
+
+        updateStatus(
+            video.id,
+            "approved"
+        );
+
+    });
+
+
+    /* Reject */
+
+    card.querySelector(".reject")
+    .addEventListener(
+    "click",
+    function(){
+
+        updateStatus(
+            video.id,
+            "rejected"
+        );
+
+    });
+
+
+    /* Delete */
+
+    card.querySelector(".delete")
+    .addEventListener(
+    "click",
+    function(){
+
+        deleteVideo(video);
+
+    });
+
+
+    return card;
+
+}
+
+
+/* Update status */
+
+async function updateStatus(
+    id,
+    newStatus
+){
+
+    message.textContent =
+    "Updating...";
+
+
+    const { error } =
+    await client
+    .from("Videos")
+    .update({
+        status:newStatus
+    })
+    .eq("id",id);
+
+
+    if(error){
+
+        message.textContent =
+        "❌ " +
+        error.message;
+
+        return;
+    }
+
+
+    message.textContent =
+    newStatus === "approved"
+    ? "✅ Video approved."
+    : "❌ Video rejected.";
+
+
+    await loadPendingVideos();
+
+}
+
+
+/* Delete */
+
+async function deleteVideo(video){
+
+    const confirmed =
+    confirm(
+        "Delete this video permanently?"
+    );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    message.textContent =
+    "Deleting...";
+
+
+    /*
+    Delete database row
+    */
+
+    const { error } =
+    await client
+    .from("Videos")
+    .delete()
+    .eq("id",video.id);
+
+
+    if(error){
+
+        message.textContent =
+        "❌ Delete failed: " +
+        error.message;
+
+        return;
+    }
+
+
+    /*
+    Delete Storage file for Direct videos
+    */
+
+    if(
+        video.platform === "Direct" &&
+        video.videos_url
+    ){
+
+        const marker =
+        "/storage/v1/object/public/videos/";
+
+        const index =
+        video.videos_url.indexOf(marker);
+
+
+        if(index !== -1){
+
+            const filePath =
+            video.videos_url.substring(
+                index + marker.length
+            );
+
+
+            await client
+            .storage
+            .from("videos")
+            .remove([
+                filePath
+            ]);
+
+        }
+
+    }
+
+
+    message.textContent =
+    "🗑️ Video deleted.";
+
+
+    await loadPendingVideos();
+
+}
+
+
+/* Logout */
+
+logoutBtn.addEventListener(
+"click",
+async function(){
+
+    await client.auth.signOut();
+
+    adminPanel.classList.add("hidden");
+
+    loginBox.classList.remove("hidden");
+
+    passwordInput.value = "";
+
+    loginMessage.textContent = "";
+
+});
+
+
+/* Refresh */
+
+refreshBtn.addEventListener(
+"click",
+loadPendingVideos
+);
+
+
+/* Check existing session */
+
+async function checkSession(){
+
+    const { data } =
+    await client.auth.getSession();
+
+
+    if(
+        data &&
+        data.session
+    ){
+
+        showAdmin();
+
+    }
+
+}
+
+
+checkSession();
+
+
+/* HTML safety */
+
+function escapeHTML(value){
+
+    return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
