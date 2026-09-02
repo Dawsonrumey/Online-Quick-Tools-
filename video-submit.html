@@ -1,220 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<meta
-name="description"
-content="Upload your video to Online Quick Tools">
-
-<title>Upload Video - Online Quick Tools</title>
+<title>Submit Video - Online Quick Tools</title>
 
 <style>
-
 *{
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing:border-box;
 }
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:#f4f7ff;
-color:#172033;
-padding:20px;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    color:#222;
 }
 
 .container{
-width:100%;
-max-width:600px;
-margin:25px auto;
+    max-width:650px;
+    margin:30px auto;
+    padding:15px;
 }
 
 .card{
-background:#fff;
-border-radius:20px;
-padding:25px;
-box-shadow:0 8px 30px rgba(0,0,0,.08);
+    background:#fff;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
 
-.logo{
-text-align:center;
-font-size:24px;
-font-weight:800;
-margin-bottom:8px;
+h1{
+    text-align:center;
+    margin-top:0;
 }
 
 .subtitle{
-text-align:center;
-font-size:14px;
-color:#667085;
-margin-bottom:25px;
-line-height:1.5;
+    text-align:center;
+    color:#666;
+    line-height:1.5;
 }
 
 label{
-display:block;
-font-size:14px;
-font-weight:700;
-margin:14px 0 7px;
+    display:block;
+    font-weight:bold;
+    margin-top:18px;
+    margin-bottom:7px;
 }
 
 input,
 textarea{
-width:100%;
-padding:13px;
-border:1px solid #dfe3ec;
-border-radius:12px;
-background:#fafbff;
-color:#172033;
-font-size:15px;
-font-family:inherit;
-outline:none;
-}
-
-input:focus,
-textarea:focus{
-border-color:#4f46e5;
-box-shadow:0 0 0 3px rgba(79,70,229,.1);
+    width:100%;
+    padding:13px;
+    border:1px solid #ddd;
+    border-radius:9px;
+    font-size:15px;
 }
 
 textarea{
-min-height:100px;
-resize:vertical;
+    resize:vertical;
 }
 
-.fileBox{
-border:2px dashed #cbd2e1;
-border-radius:15px;
-padding:20px;
-text-align:center;
-background:#fafbff;
+input[type="file"]{
+    padding:10px;
+    background:#fafafa;
 }
 
-.fileBox input{
-border:0;
-padding:5px;
-background:transparent;
+button{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:0;
+    border-radius:9px;
+    background:#4f46e5;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-.fileInfo{
-font-size:12px;
-color:#667085;
-margin-top:8px;
-line-height:1.5;
+button:disabled{
+    background:#999;
+    cursor:not-allowed;
 }
 
-.preview{
-display:none;
-margin-top:15px;
-border-radius:14px;
-overflow:hidden;
-background:#000;
+#preview{
+    display:none;
+    width:100%;
+    max-height:350px;
+    margin-top:15px;
+    border-radius:10px;
+    background:#000;
 }
 
-.preview video{
-display:block;
-width:100%;
-max-height:350px;
+#fileInfo{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
 }
 
-.uploadBtn{
-width:100%;
-padding:14px;
-margin-top:20px;
-border:0;
-border-radius:12px;
-background:#4f46e5;
-color:#fff;
-font-size:15px;
-font-weight:700;
-cursor:pointer;
-}
-
-.uploadBtn:disabled{
-opacity:.6;
-cursor:not-allowed;
-}
-
-.progress{
-display:none;
-margin-top:18px;
-}
-
-.progressText{
-font-size:13px;
-font-weight:700;
-margin-bottom:7px;
-text-align:center;
-}
-
-.progressBar{
-width:100%;
-height:10px;
-background:#e5e7eb;
-border-radius:20px;
-overflow:hidden;
-}
-
-.progressFill{
-width:0%;
-height:100%;
-background:#4f46e5;
-transition:width .2s ease;
-}
-
-.message{
-margin-top:18px;
-padding:12px;
-border-radius:12px;
-text-align:center;
-font-size:14px;
-font-weight:700;
-line-height:1.5;
+#msg{
+    text-align:center;
+    margin-top:18px;
+    font-weight:bold;
+    line-height:1.5;
 }
 
 .success{
-background:#dcfce7;
-color:#166534;
+    color:green;
 }
 
 .error{
-background:#fee2e2;
-color:#991b1b;
-}
-
-.info{
-background:#eef2ff;
-color:#3730a3;
-}
-
-.back{
-display:block;
-text-align:center;
-margin-top:20px;
-color:#4f46e5;
-text-decoration:none;
-font-size:14px;
-font-weight:700;
+    color:red;
 }
 
 .note{
-margin-top:18px;
-padding:12px;
-border-radius:12px;
-background:#f8fafc;
-color:#64748b;
-font-size:12px;
-line-height:1.6;
+    margin-top:20px;
+    padding:12px;
+    background:#f1f5ff;
+    border-radius:9px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
 }
-
 </style>
-
 </head>
 
 <body>
@@ -223,147 +133,80 @@ line-height:1.6;
 
 <div class="card">
 
-<div class="logo">
-🎬 Upload Your Video
-</div>
+<h1>🎬 Submit Your Video</h1>
 
-<div class="subtitle">
-Upload your own video directly to Online Quick Tools.
-</div>
-
+<p class="subtitle">
+Upload your own video and submit it to Online Quick Tools.
+</p>
 
 <form id="videoForm">
 
-
-<label for="title">
-Video Title
-</label>
+<label for="title">Video Title</label>
 
 <input
-id="title"
-type="text"
-placeholder="Enter video title"
-maxlength="150"
-required>
+    id="title"
+    type="text"
+    placeholder="Enter video title"
+    maxlength="150"
+    required
+>
 
 
-<label for="description">
-Description
-</label>
+<label for="description">Description</label>
 
 <textarea
-id="description"
-placeholder="Write a short description..."
-maxlength="1000"></textarea>
+    id="description"
+    rows="4"
+    maxlength="1000"
+    placeholder="Write a short description"
+></textarea>
 
 
-<label>
-Select Video
-</label>
-
-<div class="fileBox">
+<label for="videoFile">Select Video</label>
 
 <input
-id="videoFile"
-type="file"
-accept="video/*"
-required>
+    id="videoFile"
+    type="file"
+    accept="video/*"
+    required
+>
 
-<div class="fileInfo">
-Maximum file size: 100 MB
-</div>
-
-</div>
-
-
-<div
-id="preview"
-class="preview">
+<div id="fileInfo"></div>
 
 <video
-id="previewVideo"
-controls
-playsinline>
-</video>
-
-</div>
+    id="preview"
+    controls
+></video>
 
 
 <button
-id="uploadBtn"
-class="uploadBtn"
-type="submit">
-
-📤 Upload Video
-
+    id="submitBtn"
+    type="submit"
+>
+    ⬆️ Upload & Submit Video
 </button>
-
-
-<div
-id="progress"
-class="progress">
-
-<div
-id="progressText"
-class="progressText">
-
-Uploading...
-
-</div>
-
-<div class="progressBar">
-
-<div
-id="progressFill"
-class="progressFill">
-</div>
-
-</div>
-
-</div>
-
-
-<div
-id="message"
-style="display:none;">
-</div>
-
 
 </form>
 
+<div id="msg"></div>
 
 <div class="note">
-
-<strong>ℹ️ Note:</strong><br>
-
-Your uploaded video will first be marked as
-<strong>pending</strong>.
-
-After approval, it can appear on the main
-Video Hub.
-
+<b>Important:</b><br>
+• Maximum recommended file size: 100 MB<br>
+• Use MP4 for best compatibility.<br>
+• Your video will first be submitted as <b>pending</b>.<br>
+• After approval, it can appear in the Video Hub.
 </div>
-
-
-<a
-href="index.html"
-class="back">
-
-← Back to Online Quick Tools
-
-</a>
-
 
 </div>
 
 </div>
 
+
+<!-- Supabase JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-/* =====================================
-   SUPABASE CONFIG
-===================================== */
 
 const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
@@ -372,9 +215,16 @@ const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 
-/* =====================================
-   ELEMENTS
-===================================== */
+/* Create Supabase client */
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* Elements */
 
 const form =
 document.getElementById("videoForm");
@@ -388,429 +238,326 @@ document.getElementById("description");
 const videoInput =
 document.getElementById("videoFile");
 
-const uploadBtn =
-document.getElementById("uploadBtn");
-
-const progress =
-document.getElementById("progress");
-
-const progressFill =
-document.getElementById("progressFill");
-
-const progressText =
-document.getElementById("progressText");
-
-const message =
-document.getElementById("message");
-
 const preview =
 document.getElementById("preview");
 
-const previewVideo =
-document.getElementById("previewVideo");
+const fileInfo =
+document.getElementById("fileInfo");
+
+const msg =
+document.getElementById("msg");
+
+const submitBtn =
+document.getElementById("submitBtn");
 
 
-/* =====================================
-   MESSAGE
-===================================== */
+/* Video preview */
 
-function showMessage(text,type){
+videoInput.addEventListener("change", function(){
 
-message.style.display="block";
+    const file = this.files[0];
 
-message.className="message "+type;
+    if(!file){
 
-message.textContent=text;
+        preview.style.display = "none";
+        fileInfo.textContent = "";
 
-}
-
-
-/* =====================================
-   VIDEO PREVIEW
-===================================== */
-
-videoInput.addEventListener(
-"change",
-function(){
-
-const file =
-this.files[0];
-
-if(!file){
-
-preview.style.display="none";
-
-previewVideo.removeAttribute("src");
-
-return;
-
-}
+        return;
+    }
 
 
-/* Check video */
-
-if(!file.type.startsWith("video/")){
-
-showMessage(
-"❌ Please select a valid video file.",
-"error"
-);
-
-this.value="";
-
-preview.style.display="none";
-
-return;
-
-}
+    const sizeMB =
+    (file.size / 1024 / 1024).toFixed(2);
 
 
-/* Check size */
-
-const maxSize =
-100 * 1024 * 1024;
-
-if(file.size > maxSize){
-
-showMessage(
-"❌ Video must be 100 MB or smaller.",
-"error"
-);
-
-this.value="";
-
-preview.style.display="none";
-
-return;
-
-}
+    fileInfo.textContent =
+    "Selected: " +
+    file.name +
+    " (" +
+    sizeMB +
+    " MB)";
 
 
-/* Preview */
+    if(!file.type.startsWith("video/")){
 
-const objectURL =
-URL.createObjectURL(file);
+        msg.className = "error";
 
-previewVideo.src =
-objectURL;
+        msg.textContent =
+        "❌ Please select a video file.";
 
-preview.style.display =
-"block";
+        preview.style.display = "none";
 
-message.style.display =
-"none";
+        return;
+    }
+
+
+    if(file.size > 100 * 1024 * 1024){
+
+        msg.className = "error";
+
+        msg.textContent =
+        "❌ Video is larger than 100 MB.";
+
+        preview.style.display = "none";
+
+        return;
+    }
+
+
+    msg.textContent = "";
+
+
+    const videoURL =
+    URL.createObjectURL(file);
+
+    preview.src = videoURL;
+
+    preview.style.display = "block";
 
 });
 
 
-/* =====================================
-   UPLOAD
-===================================== */
+/* Submit */
 
-form.addEventListener(
-"submit",
-async function(event){
+form.addEventListener("submit", async function(e){
 
-event.preventDefault();
+    e.preventDefault();
 
 
-const title =
-titleInput.value.trim();
+    msg.className = "";
+    msg.textContent = "";
 
-const description =
-descriptionInput.value.trim();
 
-const file =
-videoInput.files[0];
+    const title =
+    titleInput.value.trim();
 
+    const description =
+    descriptionInput.value.trim();
 
-if(!title){
+    const file =
+    videoInput.files[0];
 
-showMessage(
-"❌ Please enter a video title.",
-"error"
-);
 
-return;
+    /* Validation */
 
-}
+    if(!title){
 
+        msg.className = "error";
+        msg.textContent =
+        "❌ Please enter a video title.";
 
-if(!file){
+        return;
+    }
 
-showMessage(
-"❌ Please select a video.",
-"error"
-);
 
-return;
+    if(!file){
 
-}
+        msg.className = "error";
+        msg.textContent =
+        "❌ Please select a video.";
 
+        return;
+    }
 
-/* File type */
 
-if(!file.type.startsWith("video/")){
+    if(!file.type.startsWith("video/")){
 
-showMessage(
-"❌ Please select a valid video file.",
-"error"
-);
+        msg.className = "error";
+        msg.textContent =
+        "❌ Selected file is not a video.";
 
-return;
+        return;
+    }
 
-}
 
+    if(file.size > 100 * 1024 * 1024){
 
-/* File size */
+        msg.className = "error";
+        msg.textContent =
+        "❌ Maximum file size is 100 MB.";
 
-const maxSize =
-100 * 1024 * 1024;
+        return;
+    }
 
-if(file.size > maxSize){
 
-showMessage(
-"❌ Video must be 100 MB or smaller.",
-"error"
-);
+    try{
 
-return;
+        submitBtn.disabled = true;
 
-}
+        submitBtn.textContent =
+        "⏳ Uploading video...";
 
 
-/* Disable */
+        msg.textContent =
+        "Uploading video to Supabase...";
 
-uploadBtn.disabled=true;
 
-progress.style.display="block";
+        /*
+        Generate unique filename
+        */
 
-progressFill.style.width="10%";
+        const extension =
+        file.name.includes(".")
+        ? file.name.split(".").pop().toLowerCase()
+        : "mp4";
 
-progressText.textContent=
-"Preparing upload...";
 
-showMessage(
-"⏳ Please wait...",
-"info"
-);
+        const uniqueName =
+        "video_" +
+        Date.now() +
+        "_" +
+        Math.random()
+        .toString(36)
+        .substring(2,10) +
+        "." +
+        extension;
 
 
-try{
+        const filePath =
+        "uploads/" + uniqueName;
 
 
-/* =====================================
-   CREATE UNIQUE FILE NAME
-===================================== */
+        /*
+        Upload to Supabase Storage
+        */
 
-const extension =
-file.name
-.split(".")
-.pop()
-.toLowerCase()
-.replace(/[^a-z0-9]/g,"");
+        const uploadResult =
+        await supabaseClient
+        .storage
+        .from("videos")
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl:"3600",
+                contentType:file.type,
+                upsert:false
+            }
+        );
 
 
-const randomPart =
-Math.random()
-.toString(36)
-.substring(2,10);
+        if(uploadResult.error){
 
+            throw new Error(
+                "Storage: " +
+                uploadResult.error.message
+            );
+        }
 
-const fileName =
-Date.now() +
-"-" +
-randomPart +
-"." +
-extension;
 
+        /*
+        Get public URL
+        */
 
-const filePath =
-"uploads/" +
-fileName;
+        const publicResult =
+        supabaseClient
+        .storage
+        .from("videos")
+        .getPublicUrl(filePath);
 
 
-progressFill.style.width="20%";
+        const publicURL =
+        publicResult.data.publicUrl;
 
-progressText.textContent=
-"Uploading video...";
 
+        if(!publicURL){
 
-/* =====================================
-   UPLOAD TO STORAGE
-===================================== */
+            throw new Error(
+                "Could not create public video URL."
+            );
+        }
 
-const uploadURL =
-SUPABASE_URL +
-"/storage/v1/object/videos/" +
-filePath;
 
+        msg.textContent =
+        "✅ Upload complete. Saving video...";
 
-const uploadResponse =
-await fetch(
-uploadURL,
-{
-method:"POST",
 
-headers:{
-"apikey":
-SUPABASE_KEY,
+        /*
+        Save video information
+        */
 
-"Authorization":
-"Bearer " +
-SUPABASE_KEY,
+        const dbResult =
+        await supabaseClient
+        .from("Videos")
+        .insert({
 
-"Content-Type":
-file.type,
+            title:title,
 
-"x-upsert":
-"false"
-},
+            description:description,
 
-body:file
-}
-);
+            platform:"Direct",
 
+            videos_url:publicURL,
 
-if(!uploadResponse.ok){
+            status:"pending"
 
-const errorText =
-await uploadResponse.text();
+        });
 
-throw new Error(
-"Storage upload failed: " +
-errorText
-);
 
-}
+        if(dbResult.error){
 
+            /*
+            If database insert fails,
+            show the actual error.
+            */
 
-progressFill.style.width="70%";
+            throw new Error(
+                "Database: " +
+                dbResult.error.message
+            );
+        }
 
-progressText.textContent=
-"Saving video information...";
 
+        /*
+        Success
+        */
 
-/* =====================================
-   PUBLIC VIDEO URL
-===================================== */
+        msg.className =
+        "success";
 
-const videoURL =
-SUPABASE_URL +
-"/storage/v1/object/public/videos/" +
-filePath;
+        msg.textContent =
+        "✅ Video uploaded successfully! " +
+        "Your video is now pending approval.";
 
 
-/* =====================================
-   SAVE TO VIDEOS TABLE
-===================================== */
+        form.reset();
 
-const dbURL =
-SUPABASE_URL +
-"/rest/v1/Videos";
+        preview.pause();
 
+        preview.removeAttribute("src");
 
-const dbResponse =
-await fetch(
-dbURL,
-{
-method:"POST",
+        preview.load();
 
-headers:{
+        preview.style.display =
+        "none";
 
-"apikey":
-SUPABASE_KEY,
+        fileInfo.textContent = "";
 
-"Authorization":
-"Bearer " +
-SUPABASE_KEY,
 
-"Content-Type":
-"application/json",
+    }catch(error){
 
-"Prefer":
-"return=minimal"
+        console.error(
+            "VIDEO UPLOAD ERROR:",
+            error
+        );
 
-},
 
-body:JSON.stringify({
+        msg.className =
+        "error";
 
-title:title,
+        msg.textContent =
+        "❌ Upload failed: " +
+        error.message;
 
-description:description,
 
-platform:"Direct",
+    }finally{
 
-videos_url:videoURL,
+        submitBtn.disabled = false;
 
-status:"pending"
+        submitBtn.textContent =
+        "⬆️ Upload & Submit Video";
 
-})
-}
-);
-
-
-if(!dbResponse.ok){
-
-const dbError =
-await dbResponse.text();
-
-throw new Error(
-"Database error: " +
-dbError
-);
-
-}
-
-
-progressFill.style.width="100%";
-
-progressText.textContent=
-"Upload complete!";
-
-
-showMessage(
-"✅ Video uploaded successfully! It is now waiting for approval.",
-"success"
-);
-
-
-/* Reset form */
-
-form.reset();
-
-preview.style.display="none";
-
-previewVideo.removeAttribute("src");
-
-
-}
-catch(error){
-
-console.error(
-"VIDEO UPLOAD ERROR:",
-error
-);
-
-
-progressFill.style.width="0%";
-
-progressText.textContent=
-"Upload failed";
-
-
-showMessage(
-"❌ Upload failed. " +
-error.message,
-"error"
-);
-
-}
-finally{
-
-uploadBtn.disabled=false;
-
-}
+    }
 
 });
 
