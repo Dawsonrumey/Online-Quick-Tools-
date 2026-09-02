@@ -377,12 +377,12 @@ async function loadPendingVideos(){
 
 
     const { data, error } =
-    await client
-    .from("Videos")
-    .select("*")
-    .order("created_at", {
-        ascending:false
-    });
+await client
+.from("Videos")
+.select("id,title,description,platform,videos_url,status,created_at")
+.order("created_at", {
+    ascending: false
+});
 
 
     if(error){
@@ -396,14 +396,13 @@ async function loadPendingVideos(){
     }
 
 
-    const videos =
-    (data || []).filter(function(video){
+const videos = (data || []).filter(function(video){
 
-        return String(video.status || "")
+    return String(video.status || "")
         .trim()
         .toLowerCase() === "pending";
 
-    });
+});
 
 
     if(videos.length === 0){
