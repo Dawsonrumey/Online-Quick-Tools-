@@ -1845,7 +1845,7 @@ function playYouTubeInline(button,id){
    RENDER APPROVED VIDEOS
 ========================= */
 
-        async function renderSiteVideos(platform = "all") {
+    async function renderSiteVideos(platform = "all") {
 
     const feed = document.getElementById("videoFeed");
     const status = document.getElementById("videoStatus");
@@ -1872,17 +1872,18 @@ function playYouTubeInline(button,id){
             });
 
         if (error) {
-            console.error("Video loading error:", error);
+
+            console.error("Supabase video error:", error);
 
             feed.innerHTML = `
                 <div class="empty-video">
-                    ❌ Unable to load videos.
+                    ❌ Videos could not be loaded.
                 </div>
             `;
 
             if (status) {
                 status.textContent =
-                    "Could not connect to video database.";
+                    "Video database error.";
             }
 
             return;
@@ -1890,8 +1891,399 @@ function playYouTubeInline(button,id){
 
         let videos = data || [];
 
-        console.log("Approved videos:", videos);
-        console.log("Selected platform:", platform);
+        /* CATEGORY FILTER */
+
+        if (platform !== "all") {
+
+            videos = videos.filter(video => {
+
+                const p =
+                    String(video.platform || "")
+                        .trim()
+                        .toLowerCase();
+
+                return p ===
+                    String(platform)
+                        .trim()
+                        .toLowerCase();
+
+            });
+        }
+
+        /* NO VIDEOS */
+
+        if (videos.length === 0) {
+
+            feed.innerHTML = `
+                <div class="empty-video">
+                    🎬 No approved videos found.
+                </div>
+            `;
+
+            if (status) {
+                status.textContent =
+                    "No videos available in this category.";
+            }
+
+            return;
+        }
+
+        /* CREATE VIDEO CARDS */
+
+        feed.innerHTML = "";
+
+        videos.forEach(video => {
+
+            const title =
+                video.title || "Untitled Video";
+
+            const videoPlatform =
+                String(video.platform || "")
+                    .trim();
+
+            const url =
+                String(video.videos_url || "")
+                    .trim();
+
+            if (!url) return;
+
+            const card =
+                document.createElement("div");
+
+            card.className = "video-card";
+
+            card.innerHTML = `
+                <div class="video-player"></div>
+
+                <div class="video-info">
+
+                    <h3>
+                        ${escapeHtml(title)}
+                    </h3>
+
+                    <div class="video-meta">
+                        ${escapeHtml(videoPlatform)}
+                    </div>
+
+                </div>
+            `;
+
+            feed.appendChild(card);
+
+            const player =
+                card.querySelector(".video-player");
+
+            createVideoPlayer(
+                player,
+                url,
+                videoPlatform
+            );
+
+        });
+
+        if (status) {
+
+            status.textContent =
+                `${videos.length} video${videos.length === 1 ? "" : "s"} available.`;
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected video error:",
+            error
+        );
+
+        feed.innerHTML = `
+            <div class="empty-video">
+                ❌ Something went wrong.
+            </div>
+        `;
+
+        if (status) {
+            status.textContent =
+                "Video loading failed.";
+        }
+    }
+}
+
+
+/* =========================
+   CREATE VIDEO PLAYER
+========================= */
+
+function createVideoPlayer(
+    player,
+    url,
+    platform
+) {
+
+    if (!player || !url) return;
+
+    const p =
+        String(platform || "")
+            .trim()
+            .toLowerCase();
+
+    /* =========================
+       YOUTUBE
+    ========================= */
+
+    if (
+        p === "youtube" ||
+        /youtube\.com|youtu\.be/i.test(url)
+    ) {
+
+        const videoId =
+            getYouTubeId(url);
+
+        if (!videoId) {
+
+            player.innerHTML = `
+                <div class="empty-video">
+                    ❌ Invalid YouTube URL
+                </div>
+            `;
+
+            return;
+        }
+
+        const thumbnail =
+            `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+        player.innerHTML = `
+            <div
+                class="youtube-preview"
+                onclick="playYouTubeVideo(this, '${videoId}')"
+            >
+
+                <img
+                    src="${thumbnail}"
+                    alt="YouTube video"
+                    loading="lazy"
+                >
+
+                <div class="play-button">
+                    ▶
+                </div>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    /* =========================
+       FACEBOOK
+    ========================= */
+
+    if (
+        p === "facebook" ||
+        /facebook\.com/i.test(url)
+    ) {
+
+        player.innerHTML = `
+            <iframe
+                src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false"
+                style="
+                    width:100%;
+                    height:100%;
+                    border:0;
+                    overflow:hidden;
+                "
+                scrolling="no"
+                frameborder="0"
+                allowfullscreen
+                allow="
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    picture-in-picture;
+                    web-share
+                ">
+            </iframe>
+        `;
+
+        return;
+    }
+
+
+    /* =========================
+       TIKTOK
+    ========================= */
+
+    if (
+        p === "tiktok" ||
+        /tiktok\.com/i.test(url)
+    ) {
+
+        const tiktokId =
+            getTikTokId(url);
+
+        if (!tiktokId) {
+
+            player.innerHTML = `
+                <div class="empty-video">
+                    ❌ Invalid TikTok URL
+                </div>
+            `;
+
+            return;
+        }
+
+        player.innerHTML = `
+            <iframe
+                src="https://www.tiktok.com/player/v1/${tiktokId}"
+                style="
+                    width:100%;
+                    height:100%;
+                    border:0;
+                "
+                scrolling="no"
+                allow="
+                    autoplay;
+                    encrypted-media;
+                ">
+            </iframe>
+        `;
+
+        return;
+    }
+
+
+    /* =========================
+       DIRECT VIDEO
+    ========================= */
+
+    if (
+        /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)
+    ) {
+
+        player.innerHTML = `
+            <video
+                controls
+                playsinline
+                preload="metadata"
+                style="
+                    width:100%;
+                    height:100%;
+                    object-fit:contain;
+                "
+            >
+
+                <source
+                    src="${escapeHtml(url)}"
+                >
+
+                Your browser does not support video.
+
+            </video>
+        `;
+
+        return;
+    }
+
+
+    /* =========================
+       OTHER VIDEO URL
+    ========================= */
+
+    player.innerHTML = `
+        <div class="video-placeholder">
+
+            <a
+                href="${escapeHtml(url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                ▶️ Open Video
+            </a>
+
+        </div>
+    `;
+}
+
+
+/* =========================
+   YOUTUBE ID
+========================= */
+
+function getYouTubeId(url) {
+
+    const match =
+        String(url).match(
+            /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([^&?/]+)/i
+        );
+
+    return match
+        ? match[1]
+        : null;
+}
+
+
+/* =========================
+   TIKTOK ID
+========================= */
+
+function getTikTokId(url) {
+
+    const match =
+        String(url).match(
+            /video\/(\d+)/i
+        );
+
+    return match
+        ? match[1]
+        : null;
+}
+
+
+/* =========================
+   PLAY YOUTUBE
+========================= */
+
+function playYouTubeVideo(
+    element,
+    videoId
+) {
+
+    if (!element || !videoId) return;
+
+    element.innerHTML = `
+        <iframe
+            src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+            title="YouTube video"
+            style="
+                width:100%;
+                height:100%;
+                border:0;
+            "
+            allow="
+                autoplay;
+                encrypted-media;
+                picture-in-picture;
+            "
+            allowfullscreen>
+        </iframe>
+    `;
+}
+
+
+/* =========================
+   HTML ESCAPE
+========================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}    
     
 
 
