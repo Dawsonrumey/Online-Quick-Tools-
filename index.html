@@ -1860,6 +1860,13 @@ async function renderSiteVideos(platform = "all") {
     }
 
     try {
+        const { data: testVideos, error: testError } =
+    await supabaseClient
+        .from("Videos")
+        .select("*");
+
+console.log("VIDEO TEST DATA:", testVideos);
+console.log("VIDEO TEST ERROR:", testError);
 
         const { data, error } = await supabaseClient
             .from("Videos")
