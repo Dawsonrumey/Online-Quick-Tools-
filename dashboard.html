@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>My Dashboard - Online Quick Tools</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#222;
+}
+
+header{
+    background:#2563eb;
+    color:white;
+    padding:16px 20px;
+}
+
+.header-inner{
+    max-width:900px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.logo{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.logout{
+    border:0;
+    background:white;
+    color:#2563eb;
+    padding:9px 14px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.container{
+    max-width:900px;
+    margin:30px auto;
+    padding:0 20px;
+}
+
+.welcome{
+    margin-bottom:22px;
+}
+
+.welcome h1{
+    margin:0 0 8px;
+}
+
+.welcome p{
+    margin:0;
+    color:#666;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,.07);
+}
+
+.card-title{
+    color:#666;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.points{
+    font-size:36px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.actions{
+    margin-top:25px;
+    display:grid;
+    gap:12px;
+}
+
+.action{
+    display:block;
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-decoration:none;
+    color:#222;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+    font-weight:bold;
+}
+
+.action span{
+    display:block;
+    color:#777;
+    font-size:13px;
+    font-weight:normal;
+    margin-top:5px;
+}
+
+.status{
+    text-align:center;
+    padding:30px;
+}
+
+@media(max-width:600px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .logout{
+        width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+Online Quick Tools
+</div>
+
+<button
+class="logout"
+id="logoutButton"
+>
+Logout
+</button>
+
+</div>
+
+</header>
+
+
+<div
+id="loading"
+class="status"
+>
+Loading your dashboard...
+</div>
+
+
+<main
+id="dashboard"
+class="container"
+style="display:none;"
+>
+
+<div class="welcome">
+
+<h1>
+Welcome, <span id="username">User</span> 👋
+</h1>
+
+<p>
+Your rewards dashboard
+</p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-title">
+Available Points
+</div>
+
+<div
+class="points"
+id="points"
+>
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-title">
+Account Email
+</div>
+
+<div id="email">
+-
+</div>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<a
+class="action"
+href="index.html"
+>
+🛠️ Use Online Tools
+
+<span>
+Go back to the main website
+</span>
+
+</a>
+
+
+<a
+class="action"
+href="#"
+>
+🎁 Earn Rewards
+
+<span>
+Rewards system will be available soon
+</span>
+
+</a>
+
+
+<a
+class="action"
+href="#"
+>
+📜 Transaction History
+
+<span>
+Your reward history will appear here
+</span>
+
+</a>
+
+
+<a
+class="action"
+href="#"
+>
+💸 Withdraw
+
+<span>
+Withdrawal system will be added later
+</span>
+
+</a>
+
+</div>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+async function loadDashboard(){
+
+    const {
+        data:{
+            user
+        },
+        error:sessionError
+    } =
+    await supabaseClient.auth.getUser();
+
+
+    if(sessionError || !user){
+
+        window.location.href =
+            "login.html";
+
+        return;
+
+    }
+
+
+    const {
+        data:profile,
+        error:profileError
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "username,points"
+        )
+        .eq("id",user.id)
+        .single();
+
+
+    if(profileError){
+
+        console.error(profileError);
+
+        document.getElementById("loading")
+            .textContent =
+            "Unable to load your profile.";
+
+        return;
+
+    }
+
+
+    document.getElementById("username")
+        .textContent =
+        profile.username || "User";
+
+
+    document.getElementById("points")
+        .textContent =
+        Number(profile.points || 0).toLocaleString();
+
+
+    document.getElementById("email")
+        .textContent =
+        user.email || "-";
+
+
+    document.getElementById("loading")
+        .style.display =
+        "none";
+
+
+    document.getElementById("dashboard")
+        .style.display =
+        "block";
+
+}
+
+
+document.getElementById("logoutButton")
+.addEventListener(
+"click",
+async function(){
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+        "login.html";
+
+});
+
+
+loadDashboard();
+
+</script>
+
+</body>
+
+</html>
