@@ -516,6 +516,12 @@ footer{
         </div>
 
         <div class="nav">
+            <button
+    id="accountButton"
+    onclick="openAccount()"
+>
+    👤 Login
+            </button>
 
             <button onclick="showTools()">
                 🛠️ Tools
@@ -2058,7 +2064,72 @@ document.addEventListener(
 
     }
 );
+async function openAccount(){
 
+    const {
+        data:{
+            user
+        }
+    } = await supabaseClient.auth.getUser();
+
+
+    if(user){
+
+        window.location.href =
+            "dashboard.html";
+
+    }else{
+
+        window.location.href =
+            "login.html";
+
+    }
+
+}
+
+
+async function updateAccountButton(){
+
+    const button =
+        document.getElementById(
+            "accountButton"
+        );
+
+    if(!button){
+        return;
+    }
+
+
+    const {
+        data:{
+            user
+        }
+    } = await supabaseClient.auth.getUser();
+
+
+    if(user){
+
+        button.textContent =
+            "👤 Dashboard";
+
+    }else{
+
+        button.textContent =
+            "👤 Login";
+
+    }
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        updateAccountButton();
+
+    }
+);
 </script>
 
 </body>
