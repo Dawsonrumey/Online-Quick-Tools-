@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-<url>
-<loc>https://dawsonrumey.github.io/Online-Quick-Tools-/</loc>
-<changefreq>weekly</changefreq>
-<priority>1.0</priority>
-</url>
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/</loc>
+  </url>
+
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/login.html</loc>
+  </url>
+
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/register.html</loc>
+  </url>
+
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/video-feed.html</loc>
+  </url>
+
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/video-submit.html</loc>
+  </url>
+
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/tasks.html</loc>
+  </url>
+
+  <url>
+    <loc>https://dawsonrumey.github.io/Online-Quick-Tools-/reward-history.html</loc>
+  </url>
 
 </urlset>
