@@ -198,12 +198,51 @@ button:disabled{
     font-weight:bold;
 }
 
+/* ================= VIDEO PREVIEW ================= */
+
+.preview-container{
+    width:100%;
+    margin:15px 0;
+}
+
 .video-preview{
     width:100%;
-    max-height:420px;
+    max-height:500px;
+    min-height:220px;
     background:#000;
     border-radius:10px;
-    margin:12px 0;
+    display:block;
+}
+
+.video-iframe{
+    width:100%;
+    height:500px;
+    border:0;
+    border-radius:10px;
+    background:#000;
+    display:block;
+}
+
+.preview-title{
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:8px;
+    color:#444;
+}
+
+.preview-fallback{
+    padding:15px;
+    background:#f1f5f9;
+    border-radius:10px;
+    text-align:center;
+}
+
+.preview-fallback a{
+    display:inline-block;
+    margin-top:8px;
+    text-decoration:none;
+    font-weight:bold;
+    color:#2563eb;
 }
 
 .actions{
@@ -238,6 +277,16 @@ button:disabled{
 
 @media(max-width:600px){
 
+    .container{
+        margin:10px auto;
+        padding:10px;
+    }
+
+    .card{
+        padding:15px;
+        border-radius:12px;
+    }
+
     .stats{
         grid-template-columns:1fr;
     }
@@ -246,11 +295,26 @@ button:disabled{
         align-items:stretch;
     }
 
+    .topbar > div{
+        width:100%;
+    }
+
     .topbar button{
         width:100%;
         margin-top:5px;
     }
 
+    .video-iframe{
+        height:400px;
+    }
+
+    .video-preview{
+        max-height:400px;
+    }
+
+    .actions button{
+        min-width:100%;
+    }
 }
 </style>
 </head>
@@ -445,7 +509,6 @@ Waiting for database test...
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script>
 
 /* ==================================================
@@ -457,7 +520,6 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
-
 
 const client =
 window.supabase.createClient(
@@ -601,9 +663,7 @@ async function loginAdmin(){
         loginMessage.textContent =
         "✅ Login successful.";
 
-
         loginBtn.disabled = false;
-
 
         await showAdmin();
 
@@ -958,108 +1018,19 @@ function createVideoCard(video){
     );
 
 
-    /* DIRECT VIDEO */
+    /* ==================================================
+       VIDEO PREVIEW
+    ================================================== */
 
-    if(
-        video.platform === "Direct" &&
-        video.videos_url
-    ){
-
-        const videoElement =
-        document.createElement("video");
-
-
-        videoElement.className =
-        "video-preview";
+    createVideoPreview(
+        video,
+        previewContainer
+    );
 
 
-        videoElement.controls =
-        true;
-
-
-        videoElement.preload =
-        "metadata";
-
-
-        videoElement.src =
-        video.videos_url;
-
-
-        previewContainer.appendChild(
-            videoElement
-        );
-
-    }
-
-
-    /* EXTERNAL VIDEO */
-
-    else if(
-        video.videos_url
-    ){
-
-        const link =
-        document.createElement("a");
-
-
-        link.href =
-        video.videos_url;
-
-
-        link.target =
-        "_blank";
-
-
-        link.rel =
-        "noopener noreferrer";
-
-
-        if(
-            video.platform ===
-            "YouTube"
-        ){
-
-            link.textContent =
-            "▶️ Open YouTube Video";
-
-        }
-
-        else if(
-            video.platform ===
-            "Facebook"
-        ){
-
-            link.textContent =
-            "📘 Open Facebook Video";
-
-        }
-
-        else if(
-            video.platform ===
-            "TikTok"
-        ){
-
-            link.textContent =
-            "🎵 Open TikTok Video";
-
-        }
-
-        else{
-
-            link.textContent =
-            "🔗 Open Video";
-
-        }
-
-
-        previewContainer.appendChild(
-            link
-        );
-
-    }
-
-
-    /* APPROVE */
+    /* ==================================================
+       APPROVE
+    ================================================== */
 
     card.querySelector(
         ".approve"
@@ -1077,7 +1048,9 @@ function createVideoCard(video){
     );
 
 
-    /* REJECT */
+    /* ==================================================
+       REJECT
+    ================================================== */
 
     card.querySelector(
         ".reject"
@@ -1095,7 +1068,9 @@ function createVideoCard(video){
     );
 
 
-    /* DELETE */
+    /* ==================================================
+       DELETE
+    ================================================== */
 
     card.querySelector(
         ".delete"
@@ -1111,6 +1086,539 @@ function createVideoCard(video){
 
 
     return card;
+
+}
+
+
+/* ==================================================
+   CREATE VIDEO PREVIEW
+================================================== */
+
+function createVideoPreview(
+    video,
+    container
+){
+
+    const platform =
+    String(
+        video.platform || ""
+    )
+    .trim()
+    .toLowerCase();
+
+    const url =
+    String(
+        video.videos_url || ""
+    )
+    .trim();
+
+
+    if(!url){
+
+        container.innerHTML =
+        '<div class="preview-fallback">' +
+        '⚠️ No video URL available.' +
+        '</div>';
+
+        return;
+    }
+
+
+    /* ==================================================
+       DIRECT UPLOAD
+    ================================================== */
+
+    if(
+        platform === "direct" ||
+        platform === "upload" ||
+        platform === "direct upload"
+    ){
+
+        const videoElement =
+        document.createElement("video");
+
+        videoElement.className =
+        "video-preview";
+
+        videoElement.controls =
+        true;
+
+        videoElement.preload =
+        "metadata";
+
+        videoElement.playsInline =
+        true;
+
+        videoElement.src =
+        url;
+
+        container.appendChild(
+            videoElement
+        );
+
+        return;
+    }
+
+
+    /* ==================================================
+       YOUTUBE
+    ================================================== */
+
+    if(platform === "youtube"){
+
+        const youtubeID =
+        getYouTubeID(url);
+
+
+        if(youtubeID){
+
+            const label =
+            document.createElement("div");
+
+            label.className =
+            "preview-title";
+
+            label.textContent =
+            "▶️ YouTube Preview";
+
+            container.appendChild(
+                label
+            );
+
+
+            const iframe =
+            document.createElement("iframe");
+
+            iframe.className =
+            "video-iframe";
+
+            iframe.src =
+            "https://www.youtube.com/embed/" +
+            encodeURIComponent(youtubeID) +
+            "?rel=0";
+
+            iframe.title =
+            "YouTube Video Preview";
+
+            iframe.allow =
+            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+            iframe.allowFullscreen =
+            true;
+
+            iframe.loading =
+            "lazy";
+
+            container.appendChild(
+                iframe
+            );
+
+            return;
+        }
+
+
+        showFallback(
+            container,
+            url,
+            "▶️ Open YouTube Video"
+        );
+
+        return;
+    }
+
+
+    /* ==================================================
+       FACEBOOK
+    ================================================== */
+
+    if(platform === "facebook"){
+
+        const encodedURL =
+        encodeURIComponent(url);
+
+        const label =
+        document.createElement("div");
+
+        label.className =
+        "preview-title";
+
+        label.textContent =
+        "📘 Facebook Preview";
+
+        container.appendChild(
+            label
+        );
+
+
+        const iframe =
+        document.createElement("iframe");
+
+        iframe.className =
+        "video-iframe";
+
+        iframe.src =
+        "https://www.facebook.com/plugins/video.php?href=" +
+        encodedURL +
+        "&show_text=false&width=560";
+
+        iframe.title =
+        "Facebook Video Preview";
+
+        iframe.allow =
+        "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+
+        iframe.allowFullscreen =
+        true;
+
+        iframe.loading =
+        "lazy";
+
+        container.appendChild(
+            iframe
+        );
+
+
+        const fallback =
+        document.createElement("div");
+
+        fallback.className =
+        "preview-fallback";
+
+        fallback.style.marginTop =
+        "8px";
+
+        fallback.innerHTML =
+        'If the Facebook preview does not load, ' +
+        '<a href="' +
+        escapeHTML(url) +
+        '" target="_blank" rel="noopener noreferrer">' +
+        'Open Facebook Video ↗' +
+        '</a>';
+
+        container.appendChild(
+            fallback
+        );
+
+        return;
+    }
+
+
+    /* ==================================================
+       TIKTOK
+    ================================================== */
+
+    if(platform === "tiktok"){
+
+        const tiktokID =
+        getTikTokID(url);
+
+
+        if(tiktokID){
+
+            const label =
+            document.createElement("div");
+
+            label.className =
+            "preview-title";
+
+            label.textContent =
+            "🎵 TikTok Preview";
+
+            container.appendChild(
+                label
+            );
+
+
+            const iframe =
+            document.createElement("iframe");
+
+            iframe.className =
+            "video-iframe";
+
+            iframe.style.height =
+            "650px";
+
+            iframe.src =
+            "https://www.tiktok.com/player/v1/" +
+            encodeURIComponent(tiktokID);
+
+            iframe.title =
+            "TikTok Video Preview";
+
+            iframe.allow =
+            "fullscreen";
+
+            iframe.allowFullscreen =
+            true;
+
+            iframe.loading =
+            "lazy";
+
+            container.appendChild(
+                iframe
+            );
+
+            return;
+        }
+
+
+        showFallback(
+            container,
+            url,
+            "🎵 Open TikTok Video"
+        );
+
+        return;
+    }
+
+
+    /* ==================================================
+       UNKNOWN PLATFORM
+    ================================================== */
+
+    showFallback(
+        container,
+        url,
+        "🔗 Open Video"
+    );
+
+}
+
+
+/* ==================================================
+   YOUTUBE ID
+================================================== */
+
+function getYouTubeID(url){
+
+    try{
+
+        const parsed =
+        new URL(url);
+
+        const host =
+        parsed.hostname
+        .toLowerCase()
+        .replace(
+            "www.",
+            ""
+        );
+
+
+        /* youtu.be/VIDEO_ID */
+
+        if(
+            host === "youtu.be"
+        ){
+
+            return cleanVideoID(
+                parsed.pathname
+                .replace(
+                    /^\/+/,
+                    ""
+                )
+                .split("/")[0]
+            );
+
+        }
+
+
+        /* youtube.com */
+
+        if(
+            host === "youtube.com" ||
+            host === "m.youtube.com"
+        ){
+
+            /* /watch?v= */
+
+            const watchID =
+            parsed.searchParams.get("v");
+
+            if(watchID){
+
+                return cleanVideoID(
+                    watchID
+                );
+
+            }
+
+
+            /* /shorts/VIDEO_ID */
+
+            const shortsMatch =
+            parsed.pathname.match(
+                /\/shorts\/([^/?#]+)/
+            );
+
+            if(shortsMatch){
+
+                return cleanVideoID(
+                    shortsMatch[1]
+                );
+
+            }
+
+
+            /* /embed/VIDEO_ID */
+
+            const embedMatch =
+            parsed.pathname.match(
+                /\/embed\/([^/?#]+)/
+            );
+
+            if(embedMatch){
+
+                return cleanVideoID(
+                    embedMatch[1]
+                );
+
+            }
+
+
+            /* /live/VIDEO_ID */
+
+            const liveMatch =
+            parsed.pathname.match(
+                /\/live\/([^/?#]+)/
+            );
+
+            if(liveMatch){
+
+                return cleanVideoID(
+                    liveMatch[1]
+                );
+
+            }
+
+        }
+
+    }
+
+    catch(error){
+
+        console.warn(
+            "YouTube URL parse error:",
+            error
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ==================================================
+   CLEAN VIDEO ID
+================================================== */
+
+function cleanVideoID(id){
+
+    if(!id){
+        return null;
+    }
+
+    const cleaned =
+    String(id)
+    .trim()
+    .replace(
+        /[^a-zA-Z0-9_-]/g,
+        ""
+    );
+
+    return cleaned || null;
+
+}
+
+
+/* ==================================================
+   TIKTOK ID
+================================================== */
+
+function getTikTokID(url){
+
+    try{
+
+        const parsed =
+        new URL(url);
+
+        const match =
+        parsed.pathname.match(
+            /\/video\/(\d+)/
+        );
+
+        if(match){
+
+            return match[1];
+
+        }
+
+    }
+
+    catch(error){
+
+        console.warn(
+            "TikTok URL parse error:",
+            error
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ==================================================
+   FALLBACK LINK
+================================================== */
+
+function showFallback(
+    container,
+    url,
+    text
+){
+
+    const box =
+    document.createElement("div");
+
+    box.className =
+    "preview-fallback";
+
+    box.innerHTML =
+    "⚠️ Preview unavailable.";
+
+
+    const link =
+    document.createElement("a");
+
+    link.href =
+    url;
+
+    link.target =
+    "_blank";
+
+    link.rel =
+    "noopener noreferrer";
+
+    link.textContent =
+    text + " ↗";
+
+
+    box.appendChild(
+        document.createElement("br")
+    );
+
+    box.appendChild(
+        link
+    );
+
+    container.appendChild(
+        box
+    );
 
 }
 
@@ -1225,7 +1733,9 @@ async function deleteVideo(video){
     /* STORAGE DELETE */
 
     if(
-        video.platform === "Direct" &&
+        String(
+            video.platform || ""
+        ).toLowerCase() === "direct" &&
         video.videos_url
     ){
 
