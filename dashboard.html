@@ -245,7 +245,18 @@ Go back to the main website
 </span>
 
 </a>
+    
+<button
+    class="action"
+    id="dailyRewardButton"
+    type="button"
+>
+    🎁 Claim Daily Reward
 
+    <span id="dailyRewardText">
+        Get 10 points once per day
+    </span>
+</button>
 
 <a
 class="action"
@@ -395,7 +406,117 @@ async function(){
 
 });
 
+const dailyRewardButton =
+    document.getElementById("dailyRewardButton");
 
+const dailyRewardText =
+    document.getElementById("dailyRewardText");
+
+
+async function claimDailyReward(){
+
+    dailyRewardButton.disabled = true;
+
+    dailyRewardText.textContent =
+        "Claiming...";
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.rpc(
+            "claim_daily_login_reward"
+        );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(data === 10){
+
+            showRewardMessage(
+                "🎉 You received 10 points today!"
+            );
+
+            await loadDashboard();
+
+            dailyRewardButton.disabled = true;
+
+            dailyRewardText.textContent =
+                "Already claimed today";
+
+        }else{
+
+            showRewardMessage(
+                "You already claimed today's reward."
+            );
+
+            dailyRewardButton.disabled = true;
+
+            dailyRewardText.textContent =
+                "Already claimed today";
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showRewardMessage(
+            error.message ||
+            "Unable to claim reward."
+        );
+
+        dailyRewardButton.disabled = false;
+
+        dailyRewardText.textContent =
+            "Get 10 points once per day";
+
+    }
+
+}
+
+
+function showRewardMessage(text){
+
+    const message =
+        document.getElementById("rewardMessage");
+
+    if(message){
+
+        message.textContent = text;
+
+        message.style.display = "block";
+
+    }
+
+}
+
+
+dailyRewardButton.addEventListener(
+    "click",
+    claimDailyReward
+);
+    <div
+    id="rewardMessage"
+    style="
+        display:none;
+        margin-top:12px;
+        padding:12px;
+        border-radius:10px;
+        background:#dcfce7;
+        color:#166534;
+    "
+></div>
+    
 loadDashboard();
 
 </script>
