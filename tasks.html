@@ -71,10 +71,46 @@ header{
     margin-top:10px;
 }
 
+.complete-btn{
+    width:100%;
+    border:0;
+    background:#16a34a;
+    color:white;
+    padding:12px;
+    border-radius:9px;
+    margin-top:12px;
+    font-size:15px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.complete-btn:disabled{
+    background:#9ca3af;
+    cursor:not-allowed;
+}
+
 .message{
     text-align:center;
     padding:20px;
     color:#6b7280;
+}
+
+.success{
+    background:#dcfce7;
+    color:#166534;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+    display:none;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+    display:none;
 }
 </style>
 </head>
@@ -90,6 +126,10 @@ header{
 <a href="dashboard.html" class="back">
     ← Back to Dashboard
 </a>
+
+<div id="success" class="success"></div>
+
+<div id="error" class="error"></div>
 
 <div class="card">
 
@@ -175,26 +215,70 @@ async function loadTasks(){
         }
 
 
+        const {
+            data:completedTasks,
+            error:completedError
+        } =
+        await supabaseClient
+        .from("completed_tasks")
+        .select("task_id")
+        .eq("user_id",user.id);
+
+
+        if(completedError){
+            throw completedError;
+        }
+
+
+        const completedIds =
+            new Set(
+                (completedTasks || [])
+                .map(item => item.task_id)
+            );
+
+
         taskList.innerHTML =
-        tasks.map(task => `
+        tasks.map(task => {
+
+            const completed =
+                completedIds.has(task.id);
+
+
+            return `
 
             <div class="task">
 
                 <h3>
-                    ${task.title}
+                    ${escapeHtml(task.title)}
                 </h3>
 
                 <div class="description">
-                    ${task.description || ""}
+                    ${escapeHtml(
+                        task.description || ""
+                    )}
                 </div>
 
                 <div class="reward">
                     🎁 +${task.reward_points} Points
                 </div>
 
+                <button
+                    class="complete-btn"
+                    onclick="completeTask(${task.id}, this)"
+                    ${completed ? "disabled" : ""}
+                >
+                    ${
+                        completed
+                        ? "✅ Completed"
+                        : "Complete Task"
+                    }
+                </button>
+
             </div>
 
-        `).join("");
+            `;
+
+        }).join("");
 
 
     }catch(error){
@@ -205,6 +289,141 @@ async function loadTasks(){
         "Unable to load tasks.";
 
     }
+
+}
+
+
+async function completeTask(
+    taskId,
+    button
+){
+
+    button.disabled = true;
+
+    button.textContent =
+        "Completing...";
+
+
+    hideMessages();
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.rpc(
+            "complete_reward_task",
+            {
+                target_task_id:taskId
+            }
+        );
+
+
+        if(error){
+            throw error;
+        }
+
+
+        showSuccess(
+            "🎉 Task completed! +" +
+            data +
+            " points added."
+        );
+
+
+        button.textContent =
+            "✅ Completed";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        if(
+            error.message &&
+            error.message.includes(
+                "duplicate key"
+            )
+        ){
+
+            showError(
+                "You have already completed this task."
+            );
+
+            button.textContent =
+                "✅ Completed";
+
+        }else{
+
+            showError(
+                error.message ||
+                "Unable to complete task."
+            );
+
+            button.disabled = false;
+
+            button.textContent =
+                "Complete Task";
+
+        }
+
+    }
+
+}
+
+
+function showSuccess(message){
+
+    const box =
+        document.getElementById("success");
+
+    box.textContent =
+        message;
+
+    box.style.display =
+        "block";
+
+}
+
+
+function showError(message){
+
+    const box =
+        document.getElementById("error");
+
+    box.textContent =
+        message;
+
+    box.style.display =
+        "block";
+
+}
+
+
+function hideMessages(){
+
+    document.getElementById(
+        "success"
+    ).style.display = "none";
+
+    document.getElementById(
+        "error"
+    ).style.display = "none";
+
+}
+
+
+function escapeHtml(text){
+
+    return String(text)
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
 }
 
