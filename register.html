@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Account - Online Quick Tools</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.card{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 35px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    margin:0 0 8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin-bottom:18px;
+    border:1px solid #d5dbe3;
+    border-radius:10px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.6;
+}
+
+.message{
+    display:none;
+    margin-top:18px;
+    padding:12px;
+    border-radius:10px;
+    line-height:1.5;
+}
+
+.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.links{
+    text-align:center;
+    margin-top:20px;
+}
+
+.links a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.home{
+    margin-top:12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Online Quick Tools</h1>
+
+<div class="subtitle">
+Create your free account
+</div>
+
+<form id="registerForm">
+
+<label>Username</label>
+
+<input
+    id="username"
+    type="text"
+    minlength="3"
+    maxlength="30"
+    placeholder="Enter username"
+    required
+>
+
+<label>Email</label>
+
+<input
+    id="email"
+    type="email"
+    placeholder="Enter email"
+    required
+>
+
+<label>Password</label>
+
+<input
+    id="password"
+    type="password"
+    minlength="6"
+    placeholder="Minimum 6 characters"
+    required
+>
+
+<label>Confirm Password</label>
+
+<input
+    id="confirmPassword"
+    type="password"
+    minlength="6"
+    placeholder="Confirm password"
+    required
+>
+
+<button id="registerButton" type="submit">
+Create Account
+</button>
+
+</form>
+
+<div id="message" class="message"></div>
+
+<div class="links">
+
+Already have an account?
+
+<a href="login.html">
+Login
+</a>
+
+<div class="home">
+
+<a href="index.html">
+← Back to Website
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+
+const SUPABASE_KEY =
+"YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+const form =
+document.getElementById("registerForm");
+
+const message =
+document.getElementById("message");
+
+const button =
+document.getElementById("registerButton");
+
+
+function showMessage(text,type){
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+}
+
+
+form.addEventListener(
+"submit",
+async function(e){
+
+    e.preventDefault();
+
+    const username =
+        document.getElementById("username")
+        .value
+        .trim();
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword")
+        .value;
+
+
+    if(password !== confirmPassword){
+
+        showMessage(
+            "Passwords do not match.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Creating Account...";
+
+
+    try{
+
+        const { data, error } =
+            await supabaseClient.auth.signUp({
+
+                email:email,
+
+                password:password,
+
+                options:{
+                    data:{
+                        username:username
+                    },
+
+                    emailRedirectTo:
+                    "https://dawsonrumey.github.io/Online-Quick-Tools-/login.html"
+                }
+
+            });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        showMessage(
+            "Account created successfully! Please check your email and confirm your account.",
+            "success"
+        );
+
+
+        form.reset();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Registration failed.",
+            "error"
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+        button.textContent =
+            "Create Account";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
