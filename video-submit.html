@@ -428,30 +428,61 @@ window.supabase.createClient(
 
 let currentPlatform = "YouTube";
 
-function changePlatform(platform){
+function validateURL(platform, url){
 
-    currentPlatform = platform;
+    try{
 
-    const urlBox =
-        document.getElementById("urlBox");
+        const parsed = new URL(url);
 
-    const uploadBox =
-        document.getElementById("uploadBox");
+        // Only allow HTTPS
+        if(parsed.protocol !== "https:"){
+            return false;
+        }
 
-    const videoURL =
-        document.getElementById("videoURL");
+        const host = parsed.hostname
+            .toLowerCase()
+            .replace(/^www\./, "");
 
-    const urlHelp =
-        document.getElementById("urlHelp");
+        if(platform === "YouTube"){
 
-    document
-        .querySelectorAll(".platform-option")
-        .forEach(function(option){
+            return (
+                host === "youtube.com" ||
+                host === "youtu.be" ||
+                host.endsWith(".youtube.com")
+            );
 
-            option.classList.remove("active");
+        }
 
-        });
+        if(platform === "Facebook"){
 
+            return (
+                host === "facebook.com" ||
+                host.endsWith(".facebook.com") ||
+                host === "fb.watch"
+            );
+
+        }
+
+        if(platform === "TikTok"){
+
+            return (
+                host === "tiktok.com" ||
+                host.endsWith(".tiktok.com")
+            );
+
+        }
+
+        return false;
+
+    }
+
+    catch(error){
+
+        return false;
+
+    }
+
+    }
     document
         .getElementById(
             "option" + platform
