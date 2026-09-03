@@ -1845,89 +1845,74 @@ function playYouTubeInline(button,id){
    RENDER APPROVED VIDEOS
 ========================= */
 
-async function renderSiteVideos(platform){
+async function renderSiteVideos(platform = "all") {
 
-    const feed =
-        document.getElementById("videoFeed");
+    const feed = document.getElementById("videoFeed");
+    const status = document.getElementById("videoStatus");
 
-    const status =
-        document.getElementById("videoStatus");
-
-    if(!feed){
-        return;
-    }
+    if (!feed) return;
 
     feed.innerHTML =
         '<div class="empty-video">⏳ Loading videos...</div>';
 
-    status.textContent =
-        "Loading approved videos...";
+    if (status) {
+        status.textContent = "Loading approved videos...";
+    }
 
+    try {
 
-    try{
+        const { data, error } = await supabaseClient
+            .from("Videos")
+            .select(
+                "id,title,platform,videos_url,status,created_at"
+            )
+            .eq("status", "approved")
+            .order("created_at", {
+                ascending: false
+            });
 
-        const response =
-            await supabaseClient
-                .from("Videos")
-                .select(
-                    "id,title,platform,videos_url,status,created_at"
-                )
-                .eq("status","approved")
-                .order(
-                    "created_at",
-                    {
-                        ascending:false
-                    }
-                );
-
-
-        if(response.error){
-
-            console.error(
-                "Supabase video error:",
-                response.error
-            );
+        if (error) {
+            console.error("Video loading error:", error);
 
             feed.innerHTML = `
                 <div class="empty-video">
-                    ❌ Videos could not be loaded right now.
+                    ❌ Unable to load videos.
                 </div>
             `;
 
-            status.textContent =
-                "Video service is temporarily unavailable.";
+            if (status) {
+                status.textContent =
+                    "Could not connect to video database.";
+            }
 
             return;
         }
 
+        let videos = data || [];
 
-        let videos =
-            response.data || [];
-        
         console.log("Approved videos:", videos);
-console.log("Selected platform:", platform);
+        console.log("Selected platform:", platform);
 
+        /* PLATFORM FILTER */
 
-        /* FILTER */
+        if (platform !== "all") {
 
-        if(
-            platform &&
-            platform !== "all"
-        ){
+            videos = videos.filter(video => {
 
-            videos =
-                videos.filter(function(video){
+                const p =
+                    String(video.platform || "")
+                    .trim()
+                    .toLowerCase();
 
-                    return video.platform === platform;
+                return p === platform.toLowerCase();
 
-                });
+            });
 
         }
 
+        /* NO VIDEOS */
 
-        /* EMPTY */
-
-        if(!videos.length){
+        if (videos.length === 0) {
 
             feed.innerHTML = `
                 <div class="empty-video">
@@ -1935,124 +1920,324 @@ console.log("Selected platform:", platform);
                 </div>
             `;
 
-            status.textContent =
-                "No videos available in this category.";
+            if (status) {
+                status.textContent =
+                    "No videos available in this category.";
+            }
 
             return;
         }
 
+        /* CREATE VIDEO CARDS */
 
-        /* RENDER */
+        feed.innerHTML = "";
 
-        feed.innerHTML =
-            videos.map(function(video){
+        videos.forEach(video => {
 
-                const title =
-                    escapeHTML(
-                        video.title ||
-                        "Untitled Video"
-                    );
+            const card =
+                document.createElement("div");
 
-                const platformName =
-                    escapeHTML(
-                        video.platform ||
-                        "Unknown"
-                    );
+            card.className = "video-card";
 
+            const title =
+                video.title ||
+                "Untitled Video";
 
-                return `
-                    <article class="video-card">
+            const platformName =
+                String(video.platform || "video")
+                .trim();
 
-                        <div class="video-card-header">
+            const url =
+                String(video.videos_url || "")
+                .trim();
 
-                            <h3>
-                                ${title}
-                            </h3>
+            const date =
+                video.created_at
+                ? new Date(video.created_at)
+                    .toLocaleDateString()
+                : "";
 
-                            <span class="platform">
-                                ${platformName}
-                            </span>
+            if (!url) {
+                return;
+            }
 
-                        </div>
+            card.innerHTML = `
+                <div class="video-player"
+                     data-url="${escapeHtml(url)}"
+                     data-platform="${escapeHtml(platformName)}">
 
-                        ${createSitePlayer(video)}
+                    <div class="video-placeholder">
+                        ▶️
+                    </div>
 
-                    </article>
-                `;
+                </div>
 
-            }).join("");
+                <div class="video-info">
 
+                    <h3>
+                        ${escapeHtml(title)}
+                    </h3>
 
-        status.textContent =
-            videos.length +
-            " approved video" +
-            (videos.length === 1 ? "" : "s") +
-            " available.";
+                    <div class="video-meta">
+                        ${escapeHtml(platformName)}
+                        ${date ? " • " + date : ""}
+                    </div>
 
-    }catch(error){
+                </div>
+            `;
+
+            feed.appendChild(card);
+
+            const player =
+                card.querySelector(".video-player");
+
+            setupVideoPlayer(
+                player,
+                url,
+                platformName
+            );
+
+        });
+
+        if (status) {
+
+            status.textContent =
+                `${videos.length} approved video` +
+                `${videos.length === 1 ? "" : "s"} available.`;
+
+        }
+
+    } catch (err) {
 
         console.error(
-            "Video loading error:",
-            error
+            "Unexpected video error:",
+            err
         );
 
         feed.innerHTML = `
             <div class="empty-video">
-                ❌ Could not connect to the video service.
+                ❌ Something went wrong while loading videos.
             </div>
         `;
 
-        status.textContent =
-            "Connection error.";
+        if (status) {
+            status.textContent =
+                "Video loading failed.";
+        }
+
     }
 }
 
 
 /* =========================
-   MODALS
+   VIDEO PLAYER
 ========================= */
 
-function openModal(id){
+function setupVideoPlayer(
+    container,
+    url,
+    platform
+) {
 
-    const modal =
-        document.getElementById(id);
+    if (!container || !url) return;
 
-    if(modal){
-        modal.style.display = "block";
+    const p =
+        String(platform || "")
+        .toLowerCase();
+
+    const videoUrl =
+        String(url).trim();
+
+    /* YOUTUBE */
+
+    if (
+        p.includes("youtube") ||
+        /youtu\.be|youtube\.com/i.test(videoUrl)
+    ) {
+
+        const videoId =
+            getYouTubeId(videoUrl);
+
+        if (!videoId) {
+            container.innerHTML =
+                "❌ Invalid YouTube URL";
+            return;
+        }
+
+        const thumbnail =
+            `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+        container.innerHTML = `
+            <div class="youtube-preview"
+                 onclick="playYouTube(this,'${videoId}')">
+
+                <img
+                    src="${thumbnail}"
+                    alt="YouTube video thumbnail"
+                    loading="lazy"
+                >
+
+                <div class="play-button">
+                    ▶
+                </div>
+
+            </div>
+        `;
+
+        return;
     }
+
+
+    /* FACEBOOK */
+
+    if (
+        p.includes("facebook") ||
+        /facebook\.com/i.test(videoUrl)
+    ) {
+
+        container.innerHTML = `
+            <iframe
+                src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(videoUrl)}&show_text=false"
+                style="width:100%;height:100%;border:none;overflow:hidden"
+                scrolling="no"
+                frameborder="0"
+                allowfullscreen="true"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+            </iframe>
+        `;
+
+        return;
+    }
+
+
+    /* TIKTOK */
+
+    if (
+        p.includes("tiktok") ||
+        /tiktok\.com/i.test(videoUrl)
+    ) {
+
+        container.innerHTML = `
+            <iframe
+                src="https://www.tiktok.com/player/v1/${getTikTokId(videoUrl)}"
+                style="width:100%;height:100%;border:none"
+                scrolling="no"
+                allow="autoplay; encrypted-media;">
+            </iframe>
+        `;
+
+        return;
+    }
+
+
+    /* DIRECT VIDEO */
+
+    if (
+        /\.(mp4|webm|ogg)(\?.*)?$/i.test(videoUrl)
+    ) {
+
+        container.innerHTML = `
+            <video
+                controls
+                preload="metadata"
+                playsinline
+                style="width:100%;height:100%;object-fit:contain">
+
+                <source
+                    src="${escapeHtml(videoUrl)}">
+
+                Your browser does not support video.
+            </video>
+        `;
+
+        return;
+    }
+
+
+    /* UNKNOWN */
+
+    container.innerHTML = `
+        <div class="video-placeholder">
+            <a
+                href="${escapeHtml(videoUrl)}"
+                target="_blank"
+                rel="noopener">
+                ▶️ Open Video
+            </a>
+        </div>
+    `;
 }
 
 
-function closeModal(id){
+/* =========================
+   YOUTUBE ID
+========================= */
 
-    const modal =
-        document.getElementById(id);
+function getYouTubeId(url) {
 
-    if(modal){
-        modal.style.display = "none";
-    }
+    const match =
+        String(url).match(
+            /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([^&?/]+)/i
+        );
+
+    return match
+        ? match[1]
+        : null;
 }
 
 
-window.addEventListener(
-    "click",
-    function(event){
+/* =========================
+   TIKTOK ID
+========================= */
 
-        document
-            .querySelectorAll(".modal")
-            .forEach(function(modal){
+function getTikTokId(url) {
 
-                if(event.target === modal){
+    const match =
+        String(url).match(
+            /video\/(\d+)/i
+        );
 
-                    modal.style.display =
-                        "none";
+    return match
+        ? match[1]
+        : "";
+}
 
-                }
 
-            });
+/* =========================
+   PLAY YOUTUBE
+========================= */
 
-    }
-);
+function playYouTube(element, videoId) {
+
+    if (!element || !videoId) return;
+
+    element.innerHTML = `
+        <iframe
+            src="https://www.youtube.com/embed/${videoId}?autoplay=1"
+            title="YouTube video"
+            style="width:100%;height:100%;border:0"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    `;
+
+}
+
+
+/* =========================
+   HTML ESCAPE
+========================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+    
 
 
 /* =========================
