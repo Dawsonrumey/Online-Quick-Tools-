@@ -269,6 +269,8 @@ header{
     padding:30px;
 }
 
+/* VIDEO HUB */
+
 #videoHub{
     max-width:1200px;
     margin:40px auto;
@@ -332,6 +334,7 @@ header{
 .video-card-header h3{
     margin:0 0 8px;
     font-size:17px;
+    word-break:break-word;
 }
 
 .platform{
@@ -395,6 +398,11 @@ header{
     color:white;
     font-size:25px;
     cursor:pointer;
+    box-shadow:0 3px 15px rgba(0,0,0,.4);
+}
+
+.youtube-play:hover{
+    transform:translate(-50%,-50%) scale(1.05);
 }
 
 .video-error{
@@ -470,6 +478,7 @@ footer{
 }
 
 @media(max-width:600px){
+
     .header-inner{
         flex-direction:column;
     }
@@ -520,11 +529,15 @@ footer{
                 📤 Submit
             </button>
 
-            <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+            <button
+                class="theme-btn"
+                onclick="toggleTheme()"
+                title="Toggle theme">
                 🌙
             </button>
 
         </div>
+
     </div>
 </header>
 
@@ -554,7 +567,9 @@ footer{
 
 <div class="categories">
 
-    <button class="active" onclick="filterTools('all',this)">
+    <button
+        class="active"
+        onclick="filterTools('all',this)">
         All
     </button>
 
@@ -585,53 +600,73 @@ footer{
 
 <div class="tool-grid">
 
-
 <!-- TEXT TOOLS -->
 
 <div class="tool" data-cat="text">
+
     <h3>🔠 Text Uppercase</h3>
+
     <p>Convert text to uppercase.</p>
 
-    <textarea id="upperText" rows="4"
+    <textarea
+        id="upperText"
+        rows="4"
         placeholder="Enter text..."></textarea>
 
-    <button onclick="makeUppercase()">Convert</button>
+    <button onclick="makeUppercase()">
+        Convert
+    </button>
 
     <div id="upperResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="text">
+
     <h3>🔡 Text Lowercase</h3>
+
     <p>Convert text to lowercase.</p>
 
-    <textarea id="lowerText" rows="4"
+    <textarea
+        id="lowerText"
+        rows="4"
         placeholder="Enter text..."></textarea>
 
-    <button onclick="makeLowercase()">Convert</button>
+    <button onclick="makeLowercase()">
+        Convert
+    </button>
 
     <div id="lowerResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="text">
+
     <h3>🔢 Word Counter</h3>
+
     <p>Count words and characters.</p>
 
-    <textarea id="wordText" rows="4"
+    <textarea
+        id="wordText"
+        rows="4"
         placeholder="Enter text..."
         oninput="countWords()"></textarea>
 
     <div id="wordResult" class="result">
         Words: 0 | Characters: 0
     </div>
+
 </div>
 
 
 <!-- GENERATOR -->
 
 <div class="tool" data-cat="generator">
+
     <h3>🔐 Password Generator</h3>
+
     <p>Generate a random password.</p>
 
     <input
@@ -639,80 +674,110 @@ footer{
         type="number"
         min="4"
         max="50"
-        value="12"
-    >
+        value="12">
 
     <button onclick="generatePassword()">
         Generate
     </button>
 
     <div id="passwordResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="generator">
-    <h3>🔗 Random Number</h3>
+
+    <h3>🔢 Random Number</h3>
+
     <p>Generate a random number.</p>
 
-    <input id="minNumber" type="number" value="1">
-    <input id="maxNumber" type="number" value="100">
+    <input
+        id="minNumber"
+        type="number"
+        value="1">
+
+    <input
+        id="maxNumber"
+        type="number"
+        value="100">
 
     <button onclick="randomNumber()">
         Generate
     </button>
 
     <div id="randomResult" class="result"></div>
+
 </div>
 
 
 <!-- CONVERTER -->
 
 <div class="tool" data-cat="converter">
+
     <h3>📏 CM → Inch</h3>
+
     <p>Convert centimeters to inches.</p>
 
-    <input id="cmValue" type="number" placeholder="CM">
+    <input
+        id="cmValue"
+        type="number"
+        placeholder="CM">
 
     <button onclick="cmToInch()">
         Convert
     </button>
 
     <div id="cmResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="converter">
+
     <h3>📏 Inch → CM</h3>
+
     <p>Convert inches to centimeters.</p>
 
-    <input id="inchValue" type="number" placeholder="Inch">
+    <input
+        id="inchValue"
+        type="number"
+        placeholder="Inch">
 
     <button onclick="inchToCm()">
         Convert
     </button>
 
     <div id="inchResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="converter">
+
     <h3>⚖️ KG → Pound</h3>
+
     <p>Convert kilograms to pounds.</p>
 
-    <input id="kgValue" type="number" placeholder="KG">
+    <input
+        id="kgValue"
+        type="number"
+        placeholder="KG">
 
     <button onclick="kgToLb()">
         Convert
     </button>
 
     <div id="kgResult" class="result"></div>
+
 </div>
 
 
 <!-- UTILITY -->
 
 <div class="tool" data-cat="utility">
+
     <h3>📅 Current Date</h3>
+
     <p>Show today's date.</p>
 
     <button onclick="showDate()">
@@ -720,11 +785,14 @@ footer{
     </button>
 
     <div id="dateResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="utility">
+
     <h3>🕐 Current Time</h3>
+
     <p>Show current local time.</p>
 
     <button onclick="showTime()">
@@ -732,14 +800,19 @@ footer{
     </button>
 
     <div id="timeResult" class="result"></div>
+
 </div>
 
 
 <div class="tool" data-cat="utility">
+
     <h3>📋 Text Copy</h3>
+
     <p>Write and copy text quickly.</p>
 
-    <textarea id="copyText" rows="4"
+    <textarea
+        id="copyText"
+        rows="4"
         placeholder="Write something..."></textarea>
 
     <button onclick="copyText()">
@@ -747,23 +820,26 @@ footer{
     </button>
 
     <div id="copyResult" class="result"></div>
+
 </div>
 
 
 <!-- IMAGE -->
 
 <div class="tool" data-cat="image">
+
     <h3>🖼️ Image Preview</h3>
+
     <p>Preview an image from your device.</p>
 
     <input
         type="file"
         id="imageInput"
         accept="image/*"
-        onchange="previewImage(event)"
-    >
+        onchange="previewImage(event)">
 
     <div id="imageResult" class="result"></div>
+
 </div>
 
 
@@ -776,7 +852,9 @@ footer{
 </section>
 
 
-<!-- VIDEO HUB -->
+<!-- =========================
+     VIDEO HUB
+========================= -->
 
 <section id="videoHub">
 
@@ -791,7 +869,8 @@ footer{
 
     <div class="categories video-menu">
 
-        <button class="active"
+        <button
+            class="active"
             onclick="showVideoTab('all',this)">
             🎬 All
         </button>
@@ -871,7 +950,8 @@ footer{
 
     <div class="modal-box">
 
-        <span class="close"
+        <span
+            class="close"
             onclick="closeModal('aboutModal')">
             ×
         </span>
@@ -899,7 +979,8 @@ footer{
 
     <div class="modal-box">
 
-        <span class="close"
+        <span
+            class="close"
             onclick="closeModal('privacyModal')">
             ×
         </span>
@@ -927,7 +1008,8 @@ footer{
 
     <div class="modal-box">
 
-        <span class="close"
+        <span
+            class="close"
             onclick="closeModal('contactModal')">
             ×
         </span>
@@ -947,7 +1029,6 @@ footer{
 <!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script>
 
@@ -986,7 +1067,10 @@ function toggleTheme(){
 }
 
 
-if(localStorage.getItem("quickToolsTheme") === "dark"){
+if(
+    localStorage.getItem("quickToolsTheme")
+    === "dark"
+){
     document.body.classList.add("dark");
 }
 
@@ -1395,7 +1479,7 @@ function showVideoTab(platform,button){
 
 
 /* =========================
-   VIDEO ID HELPERS
+   YOUTUBE ID
 ========================= */
 
 function getYouTubeID(url){
@@ -1409,50 +1493,103 @@ function getYouTubeID(url){
         const parsed =
             new URL(url);
 
-        if(parsed.hostname.includes("youtu.be")){
+        const host =
+            parsed.hostname.toLowerCase();
+
+
+        /* youtu.be */
+
+        if(host === "youtu.be"){
 
             return parsed.pathname
-                .replace("/","")
-                .split("/")[0] || null;
+                .split("/")
+                .filter(Boolean)[0] || null;
         }
 
-        if(parsed.hostname.includes("youtube.com")){
 
-            const v =
+        /* youtube.com */
+
+        if(
+            host === "youtube.com" ||
+            host === "www.youtube.com" ||
+            host === "m.youtube.com"
+        ){
+
+            /* Normal watch URL */
+
+            const watchID =
                 parsed.searchParams.get("v");
 
-            if(v){
-                return v;
+            if(watchID){
+                return watchID;
             }
 
+
             const parts =
-                parsed.pathname.split("/");
+                parsed.pathname
+                .split("/")
+                .filter(Boolean);
+
+
+            /* Shorts */
 
             const shortsIndex =
                 parts.indexOf("shorts");
 
-            if(shortsIndex !== -1 &&
-                parts[shortsIndex + 1]){
+            if(
+                shortsIndex !== -1 &&
+                parts[shortsIndex + 1]
+            ){
 
                 return parts[shortsIndex + 1];
             }
 
+
+            /* Embed */
+
             const embedIndex =
                 parts.indexOf("embed");
 
-            if(embedIndex !== -1 &&
-                parts[embedIndex + 1]){
+            if(
+                embedIndex !== -1 &&
+                parts[embedIndex + 1]
+            ){
 
                 return parts[embedIndex + 1];
             }
 
+
+            /* Live */
+
+            const liveIndex =
+                parts.indexOf("live");
+
+            if(
+                liveIndex !== -1 &&
+                parts[liveIndex + 1]
+            ){
+
+                return parts[liveIndex + 1];
+            }
+
         }
 
-    }catch(error){}
+    }catch(error){
+
+        console.error(
+            "YouTube URL error:",
+            error
+        );
+
+    }
 
     return null;
 }
 
+
+/* =========================
+   TIKTOK ID
+========================= */
 
 function getTikTokID(url){
 
@@ -1461,7 +1598,7 @@ function getTikTokID(url){
     }
 
     const match =
-        url.match(/\/video\/(\d+)/);
+        String(url).match(/\/video\/(\d+)/);
 
     return match
         ? match[1]
@@ -1496,12 +1633,15 @@ function createSitePlayer(video){
     const url =
         video.videos_url || "";
 
-    const safeURL =
-        escapeHTML(url);
-
     const title =
-        escapeHTML(video.title || "Untitled Video");
+        escapeHTML(
+            video.title || "Untitled Video"
+        );
 
+
+    /* =====================
+       YOUTUBE
+    ===================== */
 
     if(platform === "YouTube"){
 
@@ -1512,10 +1652,9 @@ function createSitePlayer(video){
 
             return `
                 <div class="video-error">
-                    Unable to read YouTube video.
+                    ⚠️ Unable to read YouTube video.
                 </div>
             `;
-
         }
 
         const safeID =
@@ -1526,19 +1665,25 @@ function createSitePlayer(video){
             safeID +
             "/hqdefault.jpg";
 
+
         return `
-            <div class="youtube-preview">
+            <div
+                class="youtube-preview"
+                data-youtube-id="${safeID}">
 
                 <img
                     src="${thumb}"
                     alt="${title}"
-                    loading="lazy"
-                >
+                    loading="lazy">
 
                 <button
                     class="youtube-play"
-                    onclick="openYouTube('${safeID}')">
+                    type="button"
+                    onclick="playYouTubeInline(this,'${safeID}')"
+                    aria-label="Play YouTube video">
+
                     ▶
+
                 </button>
 
             </div>
@@ -1546,7 +1691,20 @@ function createSitePlayer(video){
     }
 
 
+    /* =====================
+       FACEBOOK
+    ===================== */
+
     if(platform === "Facebook"){
+
+        if(!url){
+
+            return `
+                <div class="video-error">
+                    ⚠️ Invalid Facebook video URL.
+                </div>
+            `;
+        }
 
         const facebookURL =
             encodeURIComponent(url);
@@ -1567,6 +1725,10 @@ function createSitePlayer(video){
     }
 
 
+    /* =====================
+       TIKTOK
+    ===================== */
+
     if(platform === "TikTok"){
 
         const id =
@@ -1576,18 +1738,20 @@ function createSitePlayer(video){
 
             return `
                 <div class="video-error">
-                    Unable to read TikTok video.
+                    ⚠️ Unable to read TikTok video.
                 </div>
             `;
-
         }
 
         return `
             <div class="video-frame">
 
                 <iframe
-                    src="https://www.tiktok.com/player/v1/${id}"
-                    allow="fullscreen">
+                    src="https://www.tiktok.com/player/v1/${id}?description=1&music_info=1"
+                    title="${title}"
+                    allow="autoplay; fullscreen"
+                    scrolling="no"
+                    allowfullscreen>
                 </iframe>
 
             </div>
@@ -1595,7 +1759,23 @@ function createSitePlayer(video){
     }
 
 
+    /* =====================
+       DIRECT VIDEO
+    ===================== */
+
     if(platform === "Direct"){
+
+        const safeURL =
+            escapeHTML(url);
+
+        if(!url){
+
+            return `
+                <div class="video-error">
+                    ⚠️ Video file unavailable.
+                </div>
+            `;
+        }
 
         return `
             <div class="video-frame">
@@ -1609,7 +1789,8 @@ function createSitePlayer(video){
                         src="${safeURL}"
                         type="video/mp4">
 
-                    Your browser does not support video playback.
+                    Your browser does not support
+                    video playback.
 
                 </video>
 
@@ -1620,33 +1801,42 @@ function createSitePlayer(video){
 
     return `
         <div class="video-error">
-            Unsupported video platform.
+            ⚠️ Unsupported video platform.
         </div>
     `;
 }
 
 
 /* =========================
-   YOUTUBE OPEN
+   YOUTUBE INLINE PLAY
 ========================= */
 
-function openYouTube(id){
+function playYouTubeInline(button,id){
 
-    if(!id){
+    if(!button || !id){
         return;
     }
 
-    window.open(
-        "https://www.youtube.com/watch?v=" +
-        encodeURIComponent(id),
-        "_blank",
-        "noopener,noreferrer"
-    );
+    const player =
+        button.closest(".youtube-preview");
+
+    if(!player){
+        return;
+    }
+
+    player.innerHTML = `
+        <iframe
+            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
+            title="YouTube video player"
+            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+            allowfullscreen>
+        </iframe>
+    `;
 }
 
 
 /* =========================
-   RENDER VIDEOS
+   RENDER APPROVED VIDEOS
 ========================= */
 
 async function renderSiteVideos(platform){
@@ -1679,7 +1869,9 @@ async function renderSiteVideos(platform){
                 .eq("status","approved")
                 .order(
                     "created_at",
-                    {ascending:false}
+                    {
+                        ascending:false
+                    }
                 );
 
 
@@ -1690,12 +1882,11 @@ async function renderSiteVideos(platform){
                 response.error
             );
 
-            feed.innerHTML =
-                `
+            feed.innerHTML = `
                 <div class="empty-video">
                     ❌ Videos could not be loaded right now.
                 </div>
-                `;
+            `;
 
             status.textContent =
                 "Video service is temporarily unavailable.";
@@ -1708,7 +1899,12 @@ async function renderSiteVideos(platform){
             response.data || [];
 
 
-        if(platform && platform !== "all"){
+        /* FILTER */
+
+        if(
+            platform &&
+            platform !== "all"
+        ){
 
             videos =
                 videos.filter(function(video){
@@ -1720,14 +1916,15 @@ async function renderSiteVideos(platform){
         }
 
 
+        /* EMPTY */
+
         if(!videos.length){
 
-            feed.innerHTML =
-                `
+            feed.innerHTML = `
                 <div class="empty-video">
                     🎬 No approved videos found.
                 </div>
-                `;
+            `;
 
             status.textContent =
                 "No videos available in this category.";
@@ -1736,17 +1933,21 @@ async function renderSiteVideos(platform){
         }
 
 
+        /* RENDER */
+
         feed.innerHTML =
             videos.map(function(video){
 
                 const title =
                     escapeHTML(
-                        video.title || "Untitled Video"
+                        video.title ||
+                        "Untitled Video"
                     );
 
                 const platformName =
                     escapeHTML(
-                        video.platform || "Unknown"
+                        video.platform ||
+                        "Unknown"
                     );
 
 
@@ -1755,7 +1956,9 @@ async function renderSiteVideos(platform){
 
                         <div class="video-card-header">
 
-                            <h3>${title}</h3>
+                            <h3>
+                                ${title}
+                            </h3>
 
                             <span class="platform">
                                 ${platformName}
@@ -1784,12 +1987,11 @@ async function renderSiteVideos(platform){
             error
         );
 
-        feed.innerHTML =
-            `
+        feed.innerHTML = `
             <div class="empty-video">
                 ❌ Could not connect to the video service.
             </div>
-            `;
+        `;
 
         status.textContent =
             "Connection error.";
@@ -1833,7 +2035,8 @@ window.addEventListener(
 
                 if(event.target === modal){
 
-                    modal.style.display = "none";
+                    modal.style.display =
+                        "none";
 
                 }
 
