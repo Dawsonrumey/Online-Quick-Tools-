@@ -239,9 +239,6 @@ button.submit-btn:disabled{
 Upload or submit your video to Online Quick Tools.
 </div>
 
-
-<!-- VIDEO TITLE -->
-
 <label for="title">Video Title</label>
 
 <input
@@ -250,9 +247,6 @@ Upload or submit your video to Online Quick Tools.
     placeholder="Enter video title"
     maxlength="150"
 >
-
-
-<!-- PLATFORM -->
 
 <label>Select Video Platform</label>
 
@@ -273,7 +267,6 @@ YouTube
 
 </label>
 
-
 <label class="platform-option" id="optionFacebook">
 
 <input
@@ -288,7 +281,6 @@ Facebook
 
 </label>
 
-
 <label class="platform-option" id="optionTikTok">
 
 <input
@@ -302,7 +294,6 @@ Facebook
 TikTok
 
 </label>
-
 
 <label class="platform-option" id="optionDirect">
 
@@ -319,9 +310,6 @@ Direct Upload
 </label>
 
 </div>
-
-
-<!-- URL INPUT -->
 
 <div id="urlBox" class="input-box">
 
@@ -341,9 +329,6 @@ Example: https://youtube.com/shorts/xxxxxxxx
 
 </div>
 
-
-<!-- DIRECT UPLOAD -->
-
 <div id="uploadBox" class="input-box" style="display:none;">
 
 <label for="videoFile">
@@ -360,15 +345,12 @@ Select Video
 >
 
 <div class="file-info" id="fileInfo">
-MP4 recommended • Maximum 100 MB
+MP4 recommended • Maximum 50 MB
 </div>
 
 </div>
 
 </div>
-
-
-<!-- PROGRESS -->
 
 <div class="progress" id="progress">
 
@@ -382,9 +364,6 @@ Uploading...
 
 </div>
 
-
-<!-- SUBMIT -->
-
 <button
     class="submit-btn"
     id="submitBtn"
@@ -393,12 +372,10 @@ Uploading...
 ⬆️ Submit Video
 </button>
 
-
 <div
     id="message"
     class="message"
 ></div>
-
 
 <a
     href="index.html"
@@ -406,9 +383,6 @@ Uploading...
 >
 ← Back to Online Quick Tools
 </a>
-
-
-<!-- INFORMATION -->
 
 <div class="upload-info">
 
@@ -422,7 +396,7 @@ Uploading...
 
 • MP4 is recommended for Direct Upload.<br>
 
-• Maximum Direct Upload size: <strong>100 MB</strong>.<br>
+• Maximum Direct Upload size: <strong>50 MB</strong>.<br>
 
 • All videos are submitted as <strong>pending</strong>.<br>
 
@@ -436,16 +410,9 @@ Uploading...
 
 </div>
 
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
 
 const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
@@ -459,17 +426,7 @@ window.supabase.createClient(
     SUPABASE_KEY
 );
 
-
-/* =========================================
-   CURRENT PLATFORM
-========================================= */
-
 let currentPlatform = "YouTube";
-
-
-/* =========================================
-   CHANGE PLATFORM
-========================================= */
 
 function changePlatform(platform){
 
@@ -487,9 +444,6 @@ function changePlatform(platform){
     const urlHelp =
         document.getElementById("urlHelp");
 
-
-    /* Remove active */
-
     document
         .querySelectorAll(".platform-option")
         .forEach(function(option){
@@ -498,17 +452,11 @@ function changePlatform(platform){
 
         });
 
-
-    /* Active selected option */
-
     document
         .getElementById(
             "option" + platform
         )
         .classList.add("active");
-
-
-    /* Direct Upload */
 
     if(platform === "Direct"){
 
@@ -524,24 +472,17 @@ function changePlatform(platform){
         return;
     }
 
-
-    /* URL platforms */
-
     urlBox.style.display = "block";
 
     uploadBox.style.display = "none";
 
-
     document.getElementById("videoFile").value = "";
 
-
     document.getElementById("fileInfo").innerText =
-        "MP4 recommended • Maximum 100 MB";
-
+        "MP4 recommended • Maximum 50 MB";
 
     document.getElementById("submitBtn").innerText =
         "📤 Submit Video";
-
 
     if(platform === "YouTube"){
 
@@ -575,11 +516,6 @@ function changePlatform(platform){
 
 }
 
-
-/* =========================================
-   FILE CHECK
-========================================= */
-
 function checkFile(){
 
     const file =
@@ -588,34 +524,29 @@ function checkFile(){
     const fileInfo =
         document.getElementById("fileInfo");
 
-
     if(!file){
 
         fileInfo.innerText =
-            "MP4 recommended • Maximum 100 MB";
+            "MP4 recommended • Maximum 50 MB";
 
         return false;
     }
 
-
     const maxSize =
-        100 * 1024 * 1024;
-
+        50 * 1024 * 1024;
 
     if(file.size > maxSize){
 
         fileInfo.innerText =
-            "❌ File is larger than 100 MB.";
+            "❌ File is larger than 50 MB.";
 
         document.getElementById("videoFile").value = "";
 
         return false;
     }
 
-
     const sizeMB =
         (file.size / (1024 * 1024)).toFixed(2);
-
 
     fileInfo.innerText =
         "✅ " + file.name +
@@ -623,11 +554,6 @@ function checkFile(){
 
     return true;
 }
-
-
-/* =========================================
-   SHOW MESSAGE
-========================================= */
 
 function showMessage(text,type){
 
@@ -643,22 +569,12 @@ function showMessage(text,type){
 
 }
 
-
-/* =========================================
-   HIDE MESSAGE
-========================================= */
-
 function hideMessage(){
 
     document.getElementById("message")
         .style.display = "none";
 
 }
-
-
-/* =========================================
-   URL VALIDATION
-========================================= */
 
 function validateURL(platform,url){
 
@@ -670,7 +586,6 @@ function validateURL(platform,url){
         const host =
             parsed.hostname.toLowerCase();
 
-
         if(platform === "YouTube"){
 
             return (
@@ -679,7 +594,6 @@ function validateURL(platform,url){
             );
 
         }
-
 
         if(platform === "Facebook"){
 
@@ -690,13 +604,11 @@ function validateURL(platform,url){
 
         }
 
-
         if(platform === "TikTok"){
 
             return host.includes("tiktok.com");
 
         }
-
 
         return false;
 
@@ -710,26 +622,18 @@ function validateURL(platform,url){
 
 }
 
-
-/* =========================================
-   SUBMIT VIDEO
-========================================= */
-
 async function submitVideo(){
 
     hideMessage();
 
-
     const button =
         document.getElementById("submitBtn");
-
 
     const title =
         document
         .getElementById("title")
         .value
         .trim();
-
 
     if(!title){
 
@@ -741,18 +645,12 @@ async function submitVideo(){
         return;
     }
 
-
-    /* =====================================
-       DIRECT UPLOAD
-    ===================================== */
-
     if(currentPlatform === "Direct"){
 
         const file =
             document
             .getElementById("videoFile")
             .files[0];
-
 
         if(!file){
 
@@ -764,21 +662,18 @@ async function submitVideo(){
             return;
         }
 
-
         const maxSize =
-            100 * 1024 * 1024;
-
+            50 * 1024 * 1024;
 
         if(file.size > maxSize){
 
             showMessage(
-                "❌ Maximum file size is 100 MB.",
+                "❌ Maximum file size is 50 MB.",
                 "error"
             );
 
             return;
         }
-
 
         try{
 
@@ -787,18 +682,15 @@ async function submitVideo(){
             button.innerText =
                 "⏳ Uploading...";
 
-
             document
                 .getElementById("progress")
                 .style.display = "block";
-
 
             const extension =
                 file.name
                 .split(".")
                 .pop()
                 .toLowerCase();
-
 
             const fileName =
                 "video_" +
@@ -810,12 +702,8 @@ async function submitVideo(){
                 "." +
                 extension;
 
-
             const filePath =
                 "uploads/" + fileName;
-
-
-            /* Upload to Supabase Storage */
 
             const uploadResult =
                 await supabaseClient
@@ -831,22 +719,15 @@ async function submitVideo(){
                     }
                 );
 
-
             if(uploadResult.error){
 
                 throw uploadResult.error;
 
             }
 
-
-            /* Progress visual */
-
             document
                 .getElementById("progressBar")
                 .style.width = "70%";
-
-
-            /* Public URL */
 
             const publicURL =
                 supabaseClient
@@ -855,9 +736,6 @@ async function submitVideo(){
                 .getPublicUrl(filePath)
                 .data
                 .publicUrl;
-
-
-            /* Insert Database */
 
             const databaseResult =
                 await supabaseClient
@@ -874,26 +752,20 @@ async function submitVideo(){
 
                 });
 
-
             if(databaseResult.error){
 
                 throw databaseResult.error;
 
             }
 
-
             document
                 .getElementById("progressBar")
                 .style.width = "100%";
-
 
             showMessage(
                 "✅ Video submitted successfully! Waiting for admin approval.",
                 "success"
             );
-
-
-            /* Reset */
 
             document
                 .getElementById("title")
@@ -906,15 +778,13 @@ async function submitVideo(){
             document
                 .getElementById("fileInfo")
                 .innerText =
-                "MP4 recommended • Maximum 100 MB";
-
+                "MP4 recommended • Maximum 50 MB";
 
         }
 
         catch(error){
 
             console.error(error);
-
 
             showMessage(
                 "❌ Upload failed: " +
@@ -933,21 +803,14 @@ async function submitVideo(){
 
         }
 
-
         return;
     }
-
-
-    /* =====================================
-       URL SUBMISSION
-    ===================================== */
 
     const videoURL =
         document
         .getElementById("videoURL")
         .value
         .trim();
-
 
     if(!videoURL){
 
@@ -958,7 +821,6 @@ async function submitVideo(){
 
         return;
     }
-
 
     if(!validateURL(
         currentPlatform,
@@ -975,14 +837,12 @@ async function submitVideo(){
         return;
     }
 
-
     try{
 
         button.disabled = true;
 
         button.innerText =
             "⏳ Submitting...";
-
 
         const databaseResult =
             await supabaseClient
@@ -999,21 +859,16 @@ async function submitVideo(){
 
             });
 
-
         if(databaseResult.error){
 
             throw databaseResult.error;
 
         }
 
-
         showMessage(
             "✅ Video submitted successfully! Waiting for admin approval.",
             "success"
         );
-
-
-        /* Reset form */
 
         document
             .getElementById("title")
@@ -1023,13 +878,11 @@ async function submitVideo(){
             .getElementById("videoURL")
             .value = "";
 
-
     }
 
     catch(error){
 
         console.error(error);
-
 
         showMessage(
             "❌ Submission failed: " +
@@ -1049,11 +902,6 @@ async function submitVideo(){
     }
 
 }
-
-
-/* =========================================
-   INITIAL STATE
-========================================= */
 
 changePlatform("YouTube");
 
