@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Online Quick Tools - free useful online tools and video hub">
+<title>Online Quick Tools - Free Online Tools</title>
 
-<title>Online Quick Tools</title>
+<meta name="description" content="Free online quick tools for text, images, QR codes, video and more.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://dawsonrumey.github.io/Online-Quick-Tools-/">
 
 <style>
 *{
@@ -19,843 +21,927 @@ html{
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     background:#f5f7fb;
-    color:#172033;
+    color:#222;
+    transition:.25s;
 }
 
-/* HEADER */
+body.dark{
+    background:#111827;
+    color:#f3f4f6;
+}
+
 header{
-    background:linear-gradient(135deg,#111827,#2563eb);
-    color:white;
-    padding:28px 15px;
-    text-align:center;
-}
-
-header h1{
-    margin:0 0 8px;
-    font-size:30px;
-}
-
-header p{
-    margin:0;
-    opacity:.9;
-}
-
-/* NAV */
-nav{
+    background:#ffffff;
+    border-bottom:1px solid #ddd;
     position:sticky;
     top:0;
-    z-index:20;
-    background:white;
-    box-shadow:0 2px 10px #0001;
-    padding:10px;
-    text-align:center;
+    z-index:1000;
 }
 
-nav button,
-.categories button{
-    border:0;
-    border-radius:10px;
-    padding:10px 14px;
-    margin:4px;
-    background:#eef2ff;
-    color:#243b7a;
-    font-weight:700;
+.dark header{
+    background:#1f2937;
+    border-color:#374151;
+}
+
+.header-inner{
+    max-width:1200px;
+    margin:auto;
+    padding:14px 15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.logo{
+    font-size:21px;
+    font-weight:bold;
+    color:#e11d48;
     cursor:pointer;
 }
 
-nav button:hover,
-.categories button:hover{
-    background:#dbeafe;
+.nav{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
-/* CONTAINER */
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:18px 12px;
+.nav button{
+    border:0;
+    background:#f1f5f9;
+    padding:9px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
 }
 
-/* SEARCH */
-.search{
-    width:100%;
-    padding:14px;
-    border:1px solid #d5dbea;
-    border-radius:12px;
-    font-size:16px;
-    margin-bottom:12px;
-}
-
-/* CATEGORY */
-.categories{
-    text-align:center;
-    margin-bottom:18px;
-}
-
-.categories button.active{
-    background:#2563eb;
+.dark .nav button{
+    background:#374151;
     color:white;
 }
 
-/* TOOL GRID */
+.nav button:hover{
+    background:#e2e8f0;
+}
+
+.dark .nav button:hover{
+    background:#4b5563;
+}
+
+.theme-btn{
+    font-size:18px !important;
+    padding:7px 10px !important;
+}
+
+.hero{
+    max-width:1000px;
+    margin:25px auto 10px;
+    padding:20px 15px;
+    text-align:center;
+}
+
+.hero h1{
+    margin:0 0 10px;
+    font-size:32px;
+}
+
+.hero p{
+    margin:0;
+    color:#64748b;
+}
+
+.dark .hero p{
+    color:#cbd5e1;
+}
+
+.search-box{
+    max-width:650px;
+    margin:20px auto;
+    padding:0 15px;
+}
+
+.search-box input{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+    background:white;
+    color:#222;
+}
+
+.dark .search-box input{
+    background:#1f2937;
+    border-color:#4b5563;
+    color:white;
+}
+
+.categories{
+    max-width:1200px;
+    margin:15px auto;
+    padding:0 12px;
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.categories button{
+    border:0;
+    padding:10px 14px;
+    border-radius:9px;
+    background:#e2e8f0;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.dark .categories button{
+    background:#374151;
+    color:white;
+}
+
+.categories button.active{
+    background:#e11d48;
+    color:white;
+}
+
+.tools{
+    max-width:1200px;
+    margin:20px auto;
+    padding:0 12px;
+}
+
 .tool-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:14px;
+    gap:15px;
 }
 
 .tool{
     background:white;
-    border-radius:16px;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
     padding:18px;
-    box-shadow:0 3px 14px #0001;
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
+    transition:.2s;
+}
+
+.dark .tool{
+    background:#1f2937;
+    border-color:#374151;
+    box-shadow:none;
+}
+
+.tool:hover{
+    transform:translateY(-2px);
 }
 
 .tool h3{
     margin-top:0;
 }
 
+.tool p{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.dark .tool p{
+    color:#cbd5e1;
+}
+
 .tool input,
 .tool textarea,
 .tool select{
     width:100%;
-    padding:11px;
-    margin:6px 0;
-    border:1px solid #d4d9e5;
-    border-radius:9px;
-    font-size:15px;
+    padding:10px;
+    margin:5px 0;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    background:white;
+    color:#222;
 }
 
-.tool textarea{
-    min-height:110px;
-    resize:vertical;
-}
-
-.btn{
-    border:0;
-    border-radius:9px;
-    background:#2563eb;
+.dark .tool input,
+.dark .tool textarea,
+.dark .tool select{
+    background:#111827;
     color:white;
-    padding:10px 14px;
-    cursor:pointer;
-    font-weight:700;
-    margin:3px;
+    border-color:#4b5563;
 }
 
-.btn.secondary{
-    background:#64748b;
+.tool button,
+.primary-btn{
+    border:0;
+    padding:10px 14px;
+    border-radius:8px;
+    background:#e11d48;
+    color:white;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+.tool button:hover,
+.primary-btn:hover{
+    opacity:.9;
 }
 
 .result{
-    margin-top:10px;
+    margin-top:8px;
+    padding:8px;
+    border-radius:7px;
     background:#f1f5f9;
-    padding:10px;
-    border-radius:9px;
+    font-size:13px;
     word-break:break-word;
 }
 
+.dark .result{
+    background:#111827;
+}
+
 #noResult{
-    text-align:center;
     display:none;
+    text-align:center;
     padding:30px;
 }
 
-/* VIDEO HUB */
 #videoHub{
-    display:none;
+    max-width:1200px;
+    margin:40px auto;
+    padding:20px 12px;
+}
+
+.video-title{
+    text-align:center;
+    margin-bottom:8px;
+}
+
+.video-subtitle{
+    text-align:center;
+    color:#64748b;
+    margin-top:0;
+}
+
+.dark .video-subtitle{
+    color:#cbd5e1;
+}
+
+.video-status{
+    text-align:center;
+    margin:15px auto;
+    padding:12px;
+    border-radius:10px;
+    background:#eef2ff;
+    max-width:700px;
+    font-size:14px;
+}
+
+.dark .video-status{
+    background:#1e293b;
+}
+
+.video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:18px;
+    margin-top:20px;
 }
 
 .video-card{
     background:white;
-    padding:15px;
-    margin:15px 0;
-    border-radius:15px;
-    box-shadow:0 3px 12px #0002;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
-.video-player{
+.dark .video-card{
+    background:#1f2937;
+    border-color:#374151;
+    box-shadow:none;
+}
+
+.video-card-header{
+    padding:14px;
+}
+
+.video-card-header h3{
+    margin:0 0 8px;
+    font-size:17px;
+}
+
+.platform{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:6px;
+    font-size:12px;
+    background:#f1f5f9;
+}
+
+.dark .platform{
+    background:#374151;
+}
+
+.video-frame{
     width:100%;
-    max-width:100%;
-    border-radius:12px;
+    min-height:220px;
+    background:#000;
+    position:relative;
+}
+
+.video-frame iframe{
+    width:100%;
+    height:500px;
+    border:0;
     display:block;
 }
 
-/* FOOTER */
+.video-frame video{
+    width:100%;
+    display:block;
+    max-height:500px;
+    background:#000;
+}
+
+.youtube-preview{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+    overflow:hidden;
+}
+
+.youtube-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.youtube-play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    width:64px;
+    height:45px;
+    border:0;
+    border-radius:12px;
+    background:#e11d48;
+    color:white;
+    font-size:25px;
+    cursor:pointer;
+}
+
+.video-error{
+    padding:25px;
+    text-align:center;
+    color:#94a3b8;
+}
+
+.empty-video{
+    text-align:center;
+    padding:35px;
+    color:#64748b;
+}
+
+.dark .empty-video{
+    color:#cbd5e1;
+}
+
+.submit-box{
+    text-align:center;
+    margin:25px 0;
+}
+
 footer{
+    margin-top:50px;
+    padding:30px 15px;
     text-align:center;
     background:#111827;
     color:white;
-    padding:25px;
-    margin-top:35px;
 }
 
-/* MODAL */
+.footer-links{
+    margin-top:10px;
+}
+
+.footer-links button{
+    background:none;
+    border:0;
+    color:#cbd5e1;
+    cursor:pointer;
+    margin:4px;
+}
+
 .modal{
     display:none;
     position:fixed;
     inset:0;
-    background:#0008;
-    z-index:100;
+    background:rgba(0,0,0,.65);
+    z-index:3000;
     padding:20px;
 }
 
 .modal-box{
+    max-width:600px;
+    margin:80px auto;
     background:white;
-    max-width:500px;
-    margin:60px auto;
-    padding:20px;
-    border-radius:16px;
+    color:#222;
+    border-radius:14px;
+    padding:25px;
+    max-height:75vh;
+    overflow:auto;
+}
+
+.dark .modal-box{
+    background:#1f2937;
+    color:white;
 }
 
 .close{
     float:right;
-    border:0;
-    background:#ef4444;
-    color:white;
-    border-radius:7px;
-    padding:5px 9px;
+    font-size:25px;
     cursor:pointer;
 }
 
-/* MOBILE */
 @media(max-width:600px){
+    .header-inner{
+        flex-direction:column;
+    }
 
-    header h1{
-        font-size:25px;
+    .nav{
+        justify-content:center;
+    }
+
+    .hero h1{
+        font-size:26px;
     }
 
     .tool-grid{
         grid-template-columns:1fr;
     }
 
+    .video-grid{
+        grid-template-columns:1fr;
+    }
+
+    .video-frame iframe{
+        height:520px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header id="home">
+<header>
+    <div class="header-inner">
 
-<h1>🛠️ Online Quick Tools</h1>
+        <div class="logo" onclick="showTools()">
+            ⚡ Online Quick Tools
+        </div>
 
-<p>
-Free, simple and useful online tools
-</p>
+        <div class="nav">
 
+            <button onclick="showTools()">
+                🛠️ Tools
+            </button>
+
+            <button onclick="showVideoTab('all',this)">
+                🎬 Videos
+            </button>
+
+            <button onclick="window.location.href='video-submit.html'">
+                📤 Submit
+            </button>
+
+            <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+                🌙
+            </button>
+
+        </div>
+    </div>
 </header>
 
 
-<!-- NAVIGATION -->
-<nav>
+<section class="hero">
 
-<button onclick="showTools()">
-🛠️ Tools
-</button>
+    <h1>⚡ Free Online Quick Tools</h1>
 
-<button onclick="showVideoTab('all',null)">
-🎬 Videos
-</button>
+    <p>
+        Simple, fast and free tools for everyday tasks.
+    </p>
 
-<button onclick="openContact()">
-📩 Contact
-</button>
-
-</nav>
+</section>
 
 
-<main class="container">
+<div class="search-box">
 
-
-<!-- ================= TOOLS ================= -->
-
-<section id="tools">
-
-<input
-id="search"
-class="search"
-type="search"
-placeholder="🔎 Search tools..."
-oninput="searchTools()"
->
-
-
-<!-- TOOL CATEGORIES -->
-
-<div class="categories" id="toolCategories">
-
-<button
-class="active"
-onclick="filterTools('all',this)">
-All
-</button>
-
-<button
-onclick="filterTools('text',this)">
-Text
-</button>
-
-<button
-onclick="filterTools('image',this)">
-Image
-</button>
-
-<button
-onclick="filterTools('calculator',this)">
-Calculator
-</button>
-
-<button
-onclick="filterTools('utility',this)">
-Utility
-</button>
+    <input
+        id="search"
+        type="search"
+        placeholder="🔎 Search tools..."
+        oninput="searchTools()"
+    >
 
 </div>
 
+
+<div class="categories">
+
+    <button class="active" onclick="filterTools('all',this)">
+        All
+    </button>
+
+    <button onclick="filterTools('text',this)">
+        📝 Text
+    </button>
+
+    <button onclick="filterTools('image',this)">
+        🖼️ Image
+    </button>
+
+    <button onclick="filterTools('converter',this)">
+        🔄 Converter
+    </button>
+
+    <button onclick="filterTools('generator',this)">
+        ⚙️ Generator
+    </button>
+
+    <button onclick="filterTools('utility',this)">
+        🧰 Utility
+    </button>
+
+</div>
+
+
+<section id="tools" class="tools">
 
 <div class="tool-grid">
 
 
-<!-- WORD COUNTER -->
+<!-- TEXT TOOLS -->
 
-<div
-class="tool"
-data-cat="text"
-data-name="word counter character counter text">
+<div class="tool" data-cat="text">
+    <h3>🔠 Text Uppercase</h3>
+    <p>Convert text to uppercase.</p>
 
-<h3>📝 Word & Character Counter</h3>
+    <textarea id="upperText" rows="4"
+        placeholder="Enter text..."></textarea>
 
-<textarea
-id="wcText"
-placeholder="Type or paste text..."
-oninput="countText()">
-</textarea>
+    <button onclick="makeUppercase()">Convert</button>
 
-<div
-class="result"
-id="wcResult">
-
-Words: 0 | Characters: 0
-
-</div>
-
+    <div id="upperResult" class="result"></div>
 </div>
 
 
-<!-- CASE CONVERTER -->
+<div class="tool" data-cat="text">
+    <h3>🔡 Text Lowercase</h3>
+    <p>Convert text to lowercase.</p>
 
-<div
-class="tool"
-data-cat="text"
-data-name="uppercase lowercase text converter">
+    <textarea id="lowerText" rows="4"
+        placeholder="Enter text..."></textarea>
 
-<h3>🔤 Text Case Converter</h3>
+    <button onclick="makeLowercase()">Convert</button>
 
-<textarea
-id="caseText"
-placeholder="Enter text...">
-</textarea>
-
-<button
-class="btn"
-onclick="makeUpper()">
-
-UPPER
-
-</button>
-
-<button
-class="btn secondary"
-onclick="makeLower()">
-
-lower
-
-</button>
-
+    <div id="lowerResult" class="result"></div>
 </div>
 
 
-<!-- REMOVE SPACES -->
+<div class="tool" data-cat="text">
+    <h3>🔢 Word Counter</h3>
+    <p>Count words and characters.</p>
 
-<div
-class="tool"
-data-cat="text"
-data-name="remove spaces text">
+    <textarea id="wordText" rows="4"
+        placeholder="Enter text..."
+        oninput="countWords()"></textarea>
 
-<h3>🧹 Remove Extra Spaces</h3>
-
-<textarea
-id="spaceText"
-placeholder="Enter text...">
-</textarea>
-
-<button
-class="btn"
-onclick="cleanSpaces()">
-
-Clean Text
-
-</button>
-
+    <div id="wordResult" class="result">
+        Words: 0 | Characters: 0
+    </div>
 </div>
 
 
-<!-- PERCENTAGE -->
+<!-- GENERATOR -->
 
-<div
-class="tool"
-data-cat="calculator"
-data-name="percentage calculator">
+<div class="tool" data-cat="generator">
+    <h3>🔐 Password Generator</h3>
+    <p>Generate a random password.</p>
 
-<h3>📊 Percentage Calculator</h3>
+    <input
+        id="passwordLength"
+        type="number"
+        min="4"
+        max="50"
+        value="12"
+    >
 
-<input
-id="pctA"
-type="number"
-placeholder="Number">
+    <button onclick="generatePassword()">
+        Generate
+    </button>
 
-<input
-id="pctB"
-type="number"
-placeholder="Percent">
-
-<button
-class="btn"
-onclick="calcPct()">
-
-Calculate
-
-</button>
-
-<div
-class="result"
-id="pctResult">
-
-Result: —
-
-</div>
-
+    <div id="passwordResult" class="result"></div>
 </div>
 
 
-<!-- CALCULATOR -->
+<div class="tool" data-cat="generator">
+    <h3>🔗 Random Number</h3>
+    <p>Generate a random number.</p>
 
-<div
-class="tool"
-data-cat="calculator"
-data-name="simple calculator">
+    <input id="minNumber" type="number" value="1">
+    <input id="maxNumber" type="number" value="100">
 
-<h3>🧮 Calculator</h3>
+    <button onclick="randomNumber()">
+        Generate
+    </button>
 
-<input
-id="calcInput"
-placeholder="Example: 25*4+10">
-
-<button
-class="btn"
-onclick="simpleCalc()">
-
-Calculate
-
-</button>
-
-<div
-class="result"
-id="calcResult">
-
-Result: —
-
-</div>
-
+    <div id="randomResult" class="result"></div>
 </div>
 
 
-<!-- BMI -->
+<!-- CONVERTER -->
 
-<div
-class="tool"
-data-cat="calculator"
-data-name="bmi calculator">
+<div class="tool" data-cat="converter">
+    <h3>📏 CM → Inch</h3>
+    <p>Convert centimeters to inches.</p>
 
-<h3>⚖️ BMI Calculator</h3>
+    <input id="cmValue" type="number" placeholder="CM">
 
-<input
-id="bmiWeight"
-type="number"
-placeholder="Weight (kg)">
+    <button onclick="cmToInch()">
+        Convert
+    </button>
 
-<input
-id="bmiHeight"
-type="number"
-placeholder="Height (cm)">
-
-<button
-class="btn"
-onclick="calcBMI()">
-
-Calculate
-
-</button>
-
-<div
-class="result"
-id="bmiResult">
-
-Result: —
-
-</div>
-
+    <div id="cmResult" class="result"></div>
 </div>
 
 
-<!-- AGE -->
+<div class="tool" data-cat="converter">
+    <h3>📏 Inch → CM</h3>
+    <p>Convert inches to centimeters.</p>
 
-<div
-class="tool"
-data-cat="utility"
-data-name="age calculator">
+    <input id="inchValue" type="number" placeholder="Inch">
 
-<h3>🎂 Age Calculator</h3>
+    <button onclick="inchToCm()">
+        Convert
+    </button>
 
-<input
-id="birthDate"
-type="date">
-
-<button
-class="btn"
-onclick="calcAge()">
-
-Calculate Age
-
-</button>
-
-<div
-class="result"
-id="ageResult">
-
-Result: —
-
-</div>
-
+    <div id="inchResult" class="result"></div>
 </div>
 
 
-<!-- DATE DIFFERENCE -->
+<div class="tool" data-cat="converter">
+    <h3>⚖️ KG → Pound</h3>
+    <p>Convert kilograms to pounds.</p>
 
-<div
-class="tool"
-data-cat="utility"
-data-name="date difference">
+    <input id="kgValue" type="number" placeholder="KG">
 
-<h3>📅 Days Between Dates</h3>
+    <button onclick="kgToLb()">
+        Convert
+    </button>
 
-<input
-id="date1"
-type="date">
-
-<input
-id="date2"
-type="date">
-
-<button
-class="btn"
-onclick="dateDiff()">
-
-Calculate
-
-</button>
-
-<div
-class="result"
-id="dateResult">
-
-Result: —
-
-</div>
-
+    <div id="kgResult" class="result"></div>
 </div>
 
 
-<!-- URL TOOL -->
+<!-- UTILITY -->
 
-<div
-class="tool"
-data-cat="utility"
-data-name="url encoder decoder">
+<div class="tool" data-cat="utility">
+    <h3>📅 Current Date</h3>
+    <p>Show today's date.</p>
 
-<h3>🔗 URL Encoder / Decoder</h3>
+    <button onclick="showDate()">
+        Show Date
+    </button>
 
-<textarea
-id="urlText"
-placeholder="Enter URL or text...">
-</textarea>
-
-<button
-class="btn"
-onclick="encodeURL()">
-
-Encode
-
-</button>
-
-<button
-class="btn secondary"
-onclick="decodeURL()">
-
-Decode
-
-</button>
-
+    <div id="dateResult" class="result"></div>
 </div>
 
 
-<!-- JSON -->
+<div class="tool" data-cat="utility">
+    <h3>🕐 Current Time</h3>
+    <p>Show current local time.</p>
 
-<div
-class="tool"
-data-cat="utility"
-data-name="json formatter">
+    <button onclick="showTime()">
+        Show Time
+    </button>
 
-<h3>🧩 JSON Formatter</h3>
-
-<textarea
-id="jsonText"
-placeholder='{"name":"example"}'>
-</textarea>
-
-<button
-class="btn"
-onclick="formatJSON()">
-
-Format JSON
-
-</button>
-
-<div
-class="result"
-id="jsonResult">
-</div>
-
+    <div id="timeResult" class="result"></div>
 </div>
 
 
-<!-- IMAGE PREVIEW -->
+<div class="tool" data-cat="utility">
+    <h3>📋 Text Copy</h3>
+    <p>Write and copy text quickly.</p>
 
-<div
-class="tool"
-data-cat="image"
-data-name="image preview">
+    <textarea id="copyText" rows="4"
+        placeholder="Write something..."></textarea>
 
-<h3>🖼️ Image Preview</h3>
+    <button onclick="copyText()">
+        Copy
+    </button>
 
-<input
-type="file"
-id="imageFile"
-accept="image/*"
-onchange="previewImage(event)">
-
-<img
-id="imagePreview"
-style="
-width:100%;
-margin-top:10px;
-border-radius:10px;
-display:none;
-">
-
+    <div id="copyResult" class="result"></div>
 </div>
 
 
-<!-- TEXT TO SPEECH -->
+<!-- IMAGE -->
 
-<div
-class="tool"
-data-cat="utility"
-data-name="text to speech">
+<div class="tool" data-cat="image">
+    <h3>🖼️ Image Preview</h3>
+    <p>Preview an image from your device.</p>
 
-<h3>🔊 Text to Speech</h3>
+    <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        onchange="previewImage(event)"
+    >
 
-<textarea
-id="speechText"
-placeholder="Enter text...">
-</textarea>
-
-<button
-class="btn"
-onclick="speakText()">
-
-Speak
-
-</button>
-
-<button
-class="btn secondary"
-onclick="speechSynthesis.cancel()">
-
-Stop
-
-</button>
-
-</div>
-
-
-<!-- COPY -->
-
-<div
-class="tool"
-data-cat="utility"
-data-name="copy text">
-
-<h3>📋 Quick Copy</h3>
-
-<textarea
-id="copyText"
-placeholder="Enter text...">
-</textarea>
-
-<button
-class="btn"
-onclick="copyTextValue()">
-
-Copy
-
-</button>
-
-<div
-class="result"
-id="copyResult">
-</div>
-
+    <div id="imageResult" class="result"></div>
 </div>
 
 
 </div>
-
 
 <div id="noResult">
-
-❌ No tool found.
-
+    ❌ No tools found.
 </div>
 
 </section>
 
 
-
-<!-- ================= VIDEO HUB ================= -->
+<!-- VIDEO HUB -->
 
 <section id="videoHub">
 
-<h2 style="text-align:center">
+    <h2 class="video-title">
+        🎬 Video Hub
+    </h2>
 
-🎬 Video Hub
-
-</h2>
-
-
-<div class="categories video-menu">
-
-<button
-class="active"
-onclick="showVideoTab('all',this)">
-
-🎬 All
-
-</button>
-
-<button
-onclick="showVideoTab('YouTube',this)">
-
-▶️ YouTube
-
-</button>
-
-<button
-onclick="showVideoTab('Facebook',this)">
-
-📘 Facebook
-
-</button>
-
-<button
-onclick="showVideoTab('TikTok',this)">
-
-🎵 TikTok
-
-</button>
-
-<button
-onclick="window.location.href='video-submit.html'">
-
-📤 Submit
-
-</button>
-
-</div>
+    <p class="video-subtitle">
+        Watch approved videos from YouTube, Facebook, TikTok and direct uploads.
+    </p>
 
 
-<div id="videoFeed">
+    <div class="categories video-menu">
 
-<p style="text-align:center">
+        <button class="active"
+            onclick="showVideoTab('all',this)">
+            🎬 All
+        </button>
 
-Loading videos...
+        <button
+            onclick="showVideoTab('YouTube',this)">
+            ▶️ YouTube
+        </button>
 
-</p>
+        <button
+            onclick="showVideoTab('Facebook',this)">
+            📘 Facebook
+        </button>
 
-</div>
+        <button
+            onclick="showVideoTab('TikTok',this)">
+            🎵 TikTok
+        </button>
+
+        <button
+            onclick="showVideoTab('Direct',this)">
+            📁 Direct
+        </button>
+
+    </div>
+
+
+    <div id="videoStatus" class="video-status">
+        Loading approved videos...
+    </div>
+
+
+    <div id="videoFeed" class="video-grid"></div>
 
 </section>
 
-</main>
 
+<div class="submit-box">
 
+    <button
+        class="primary-btn"
+        onclick="window.location.href='video-submit.html'">
+        📤 Submit Your Video
+    </button>
 
-<!-- FOOTER -->
+</div>
+
 
 <footer>
 
-<p>
-© 2026 Online Quick Tools
-</p>
+    <div>
+        © 2026 Online Quick Tools
+    </div>
 
-<p>
-Free tools • Video Hub
-</p>
+    <div class="footer-links">
+
+        <button onclick="openModal('aboutModal')">
+            About
+        </button>
+
+        <button onclick="openModal('privacyModal')">
+            Privacy
+        </button>
+
+        <button onclick="openModal('contactModal')">
+            Contact
+        </button>
+
+    </div>
 
 </footer>
 
 
+<!-- ABOUT MODAL -->
+
+<div id="aboutModal" class="modal">
+
+    <div class="modal-box">
+
+        <span class="close"
+            onclick="closeModal('aboutModal')">
+            ×
+        </span>
+
+        <h2>About Online Quick Tools</h2>
+
+        <p>
+            Online Quick Tools is a collection of simple,
+            free and useful online tools.
+        </p>
+
+        <p>
+            We also provide a video hub for approved
+            YouTube, Facebook, TikTok and direct videos.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- PRIVACY MODAL -->
+
+<div id="privacyModal" class="modal">
+
+    <div class="modal-box">
+
+        <span class="close"
+            onclick="closeModal('privacyModal')">
+            ×
+        </span>
+
+        <h2>Privacy Policy</h2>
+
+        <p>
+            We respect your privacy.
+            Most tools work directly inside your browser.
+        </p>
+
+        <p>
+            Submitted videos may be stored and displayed
+            after approval.
+        </p>
+
+    </div>
+
+</div>
+
 
 <!-- CONTACT MODAL -->
 
-<div
-id="contactModal"
-class="modal"
-onclick="if(event.target===this)closeContact()">
+<div id="contactModal" class="modal">
 
-<div class="modal-box">
+    <div class="modal-box">
 
-<button
-class="close"
-onclick="closeContact()">
+        <span class="close"
+            onclick="closeModal('contactModal')">
+            ×
+        </span>
 
-✕
+        <h2>Contact</h2>
 
-</button>
+        <p>
+            For website-related questions, please use
+            the available contact method provided by the site owner.
+        </p>
 
-<h2>
-📩 Contact
-</h2>
-
-<p>
-For questions or suggestions, contact the site owner.
-</p>
+    </div>
 
 </div>
-
-</div>
-
 
 
 <!-- SUPABASE -->
@@ -865,1268 +951,910 @@ For questions or suggestions, contact the site owner.
 
 <script>
 
-"use strict";
-
-
-/* ================= SUPABASE ================= */
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
-"https://etkqkptoxkfhxcysaadi.supabase.co";
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-let siteVideos = [];
+/* =========================
+   THEME
+========================= */
+
+function toggleTheme(){
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "quickToolsTheme",
+        dark ? "dark" : "light"
+    );
+}
 
 
+if(localStorage.getItem("quickToolsTheme") === "dark"){
+    document.body.classList.add("dark");
+}
 
-/* ================= NAVIGATION ================= */
+
+/* =========================
+   TOOLS NAVIGATION
+========================= */
 
 function showTools(){
 
     const tools =
-    document.getElementById("tools");
+        document.getElementById("tools");
 
-    const hub =
-    document.getElementById("videoHub");
+    if(tools){
 
-    tools.style.display = "block";
+        tools.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
 
-    hub.style.display = "none";
-
-    window.scrollTo({
-        top:tools.offsetTop - 60,
-        behavior:"smooth"
-    });
+    }
 
 }
 
 
-
-/* ================= SEARCH ================= */
-
-function searchTools(){
-
-    const q =
-    document
-    .getElementById("search")
-    .value
-    .toLowerCase()
-    .trim();
-
-    let count = 0;
-
-
-    document
-    .querySelectorAll(".tool")
-    .forEach(function(card){
-
-        const text =
-        (
-            card.dataset.name +
-            " " +
-            card.innerText
-        ).toLowerCase();
-
-
-        const show =
-        !q || text.includes(q);
-
-
-        card.style.display =
-        show ? "" : "none";
-
-
-        if(show){
-            count++;
-        }
-
-    });
-
-
-    document
-    .getElementById("noResult")
-    .style.display =
-    count ? "none" : "block";
-
-
-    document
-    .querySelectorAll("#toolCategories button")
-    .forEach(function(button){
-
-        button.classList.remove("active");
-
-    });
-
-}
-
-
-
-/* ================= FILTER ================= */
+/* =========================
+   TOOL FILTER
+========================= */
 
 function filterTools(category,button){
 
     document
-    .querySelectorAll("#toolCategories button")
-    .forEach(function(btn){
+        .querySelectorAll(".categories:not(.video-menu) button")
+        .forEach(function(btn){
 
-        btn.classList.remove("active");
+            btn.classList.remove("active");
 
-    });
-
+        });
 
     if(button){
-
         button.classList.add("active");
-
     }
 
+    document.getElementById("search").value = "";
 
-    document
-    .getElementById("search")
-    .value = "";
-
+    const cards =
+        document.querySelectorAll(".tool");
 
     let count = 0;
 
-
-    document
-    .querySelectorAll(".tool")
-    .forEach(function(card){
+    cards.forEach(function(card){
 
         const show =
-        category === "all" ||
-        card.dataset.cat === category;
-
+            category === "all" ||
+            card.dataset.cat === category;
 
         card.style.display =
-        show ? "" : "none";
-
+            show ? "" : "none";
 
         if(show){
-
             count++;
-
         }
 
     });
 
+    document.getElementById("noResult").style.display =
+        count ? "none" : "block";
+}
+
+
+/* =========================
+   TOOL SEARCH
+========================= */
+
+function searchTools(){
+
+    const query =
+        document.getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
 
     document
-    .getElementById("noResult")
-    .style.display =
-    count ? "none" : "block";
+        .querySelectorAll(".categories:not(.video-menu) button")
+        .forEach(function(btn){
+            btn.classList.remove("active");
+        });
 
+    const cards =
+        document.querySelectorAll(".tool");
+
+    let count = 0;
+
+    cards.forEach(function(card){
+
+        const text =
+            card.innerText.toLowerCase();
+
+        const show =
+            !query || text.includes(query);
+
+        card.style.display =
+            show ? "" : "none";
+
+        if(show){
+            count++;
+        }
+
+    });
+
+    document.getElementById("noResult").style.display =
+        count ? "none" : "block";
 }
 
 
-
-/* ================= TEXT ================= */
-
-function countText(){
-
-    const text =
-    document.getElementById("wcText").value;
-
-
-    const words =
-    text.trim()
-    ? text.trim().split(/\s+/).length
-    : 0;
-
-
-    document
-    .getElementById("wcResult")
-    .textContent =
-    "Words: " +
-    words +
-    " | Characters: " +
-    text.length;
-
-}
-
-
-function makeUpper(){
-
-    const box =
-    document.getElementById("caseText");
-
-    box.value =
-    box.value.toUpperCase();
-
-}
-
-
-function makeLower(){
-
-    const box =
-    document.getElementById("caseText");
-
-    box.value =
-    box.value.toLowerCase();
-
-}
-
-
-function cleanSpaces(){
-
-    const box =
-    document.getElementById("spaceText");
-
-    box.value =
-    box.value
-    .replace(/\s+/g," ")
-    .trim();
-
-}
-
-
-
-/* ================= CALCULATORS ================= */
-
-function calcPct(){
-
-    const a =
-    Number(
-        document.getElementById("pctA").value
-    );
-
-
-    const b =
-    Number(
-        document.getElementById("pctB").value
-    );
-
-
-    if(!Number.isFinite(a) ||
-       !Number.isFinite(b)){
-
-        document.getElementById("pctResult")
-        .textContent =
-        "Result: Enter valid numbers";
-
-        return;
-
-    }
-
-
-    document.getElementById("pctResult")
-    .textContent =
-    "Result: " +
-    (a * b / 100);
-
-}
-
-
-
-function simpleCalc(){
-
-    const exp =
-    document
-    .getElementById("calcInput")
-    .value
-    .trim();
-
-
-    if(
-        !/^[0-9+\-*/().%\s]+$/.test(exp)
-    ){
-
-        document.getElementById("calcResult")
-        .textContent =
-        "Result: Invalid expression";
-
-        return;
-
-    }
-
-
-    try{
-
-        const result =
-        Function(
-            '"use strict";return (' +
-            exp +
-            ')'
-        )();
-
-
-        document.getElementById("calcResult")
-        .textContent =
-        "Result: " + result;
-
-    }
-
-    catch(error){
-
-        document.getElementById("calcResult")
-        .textContent =
-        "Result: Error";
-
-    }
-
-}
-
-
-
-function calcBMI(){
-
-    const weight =
-    Number(
-        document.getElementById("bmiWeight").value
-    );
-
-
-    const height =
-    Number(
-        document.getElementById("bmiHeight").value
-    ) / 100;
-
-
-    if(
-        !weight ||
-        !height
-    ){
-
-        document.getElementById("bmiResult")
-        .textContent =
-        "Result: Enter valid values";
-
-        return;
-
-    }
-
-
-    const bmi =
-    weight / (height * height);
-
-
-    document.getElementById("bmiResult")
-    .textContent =
-    "BMI: " +
-    bmi.toFixed(1);
-
-}
-
-
-
-function calcAge(){
+/* =========================
+   TEXT TOOLS
+========================= */
+
+function makeUppercase(){
 
     const value =
-    document
-    .getElementById("birthDate")
-    .value;
+        document.getElementById("upperText").value;
 
-
-    if(!value){
-
-        document.getElementById("ageResult")
-        .textContent =
-        "Result: Select date";
-
-        return;
-
-    }
-
-
-    const birth =
-    new Date(value);
-
-
-    const now =
-    new Date();
-
-
-    let age =
-    now.getFullYear() -
-    birth.getFullYear();
-
-
-    const month =
-    now.getMonth() -
-    birth.getMonth();
-
-
-    if(
-        month < 0 ||
-        (
-            month === 0 &&
-            now.getDate() < birth.getDate()
-        )
-    ){
-
-        age--;
-
-    }
-
-
-    document.getElementById("ageResult")
-    .textContent =
-    "Age: " + age + " years";
-
+    document.getElementById("upperResult").textContent =
+        value.toUpperCase();
 }
 
 
+function makeLowercase(){
 
-function dateDiff(){
+    const value =
+        document.getElementById("lowerText").value;
 
-    const first =
-    new Date(
-        document.getElementById("date1").value
-    );
-
-
-    const second =
-    new Date(
-        document.getElementById("date2").value
-    );
-
-
-    if(
-        isNaN(first) ||
-        isNaN(second)
-    ){
-
-        document.getElementById("dateResult")
-        .textContent =
-        "Result: Select both dates";
-
-        return;
-
-    }
-
-
-    const difference =
-    Math.abs(
-        Math.round(
-            (second - first) /
-            86400000
-        )
-    );
-
-
-    document.getElementById("dateResult")
-    .textContent =
-    "Difference: " +
-    difference +
-    " days";
-
+    document.getElementById("lowerResult").textContent =
+        value.toLowerCase();
 }
 
 
+function countWords(){
 
-/* ================= URL ================= */
+    const value =
+        document.getElementById("wordText").value;
 
-function encodeURL(){
+    const words =
+        value.trim()
+        ? value.trim().split(/\s+/).length
+        : 0;
 
-    const box =
-    document.getElementById("urlText");
+    const chars =
+        value.length;
 
-    box.value =
-    encodeURIComponent(box.value);
-
+    document.getElementById("wordResult").textContent =
+        "Words: " + words +
+        " | Characters: " + chars;
 }
 
 
-function decodeURL(){
+/* =========================
+   PASSWORD
+========================= */
 
-    const box =
-    document.getElementById("urlText");
+function generatePassword(){
 
-
-    try{
-
-        box.value =
-        decodeURIComponent(box.value);
-
-    }
-
-    catch(error){
-
-        alert("Invalid encoded URL");
-
-    }
-
-}
-
-
-
-/* ================= JSON ================= */
-
-function formatJSON(){
-
-    const box =
-    document.getElementById("jsonText");
-
-
-    try{
-
-        const object =
-        JSON.parse(box.value);
-
-
-        box.value =
-        JSON.stringify(
-            object,
-            null,
-            2
+    let length =
+        parseInt(
+            document.getElementById("passwordLength").value
         );
 
+    if(!length || length < 4){
+        length = 12;
+    }
 
-        document
-        .getElementById("jsonResult")
-        .textContent =
-        "✅ Valid JSON";
+    if(length > 50){
+        length = 50;
+    }
+
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+
+    let password = "";
+
+    for(let i=0;i<length;i++){
+
+        password +=
+            chars.charAt(
+                Math.floor(
+                    Math.random() * chars.length
+                )
+            );
 
     }
 
-    catch(error){
-
-        document
-        .getElementById("jsonResult")
-        .textContent =
-        "❌ Invalid JSON";
-
-    }
-
+    document.getElementById("passwordResult").textContent =
+        password;
 }
 
 
+/* =========================
+   RANDOM NUMBER
+========================= */
 
-/* ================= IMAGE ================= */
+function randomNumber(){
 
-function previewImage(event){
+    let min =
+        Number(
+            document.getElementById("minNumber").value
+        );
 
-    const file =
-    event.target.files[0];
+    let max =
+        Number(
+            document.getElementById("maxNumber").value
+        );
 
+    if(min > max){
 
-    const image =
-    document.getElementById("imagePreview");
-
-
-    if(!file){
-
-        image.style.display =
-        "none";
-
-        return;
+        const temp = min;
+        min = max;
+        max = temp;
 
     }
 
+    const result =
+        Math.floor(
+            Math.random() * (max - min + 1)
+        ) + min;
 
-    image.src =
-    URL.createObjectURL(file);
-
-
-    image.style.display =
-    "block";
-
+    document.getElementById("randomResult").textContent =
+        result;
 }
 
 
+/* =========================
+   CONVERTERS
+========================= */
 
-/* ================= SPEECH ================= */
+function cmToInch(){
 
-function speakText(){
+    const cm =
+        Number(
+            document.getElementById("cmValue").value
+        );
+
+    document.getElementById("cmResult").textContent =
+        isNaN(cm)
+        ? "Enter a number."
+        : (cm / 2.54).toFixed(4) + " inch";
+}
+
+
+function inchToCm(){
+
+    const inch =
+        Number(
+            document.getElementById("inchValue").value
+        );
+
+    document.getElementById("inchResult").textContent =
+        isNaN(inch)
+        ? "Enter a number."
+        : (inch * 2.54).toFixed(4) + " cm";
+}
+
+
+function kgToLb(){
+
+    const kg =
+        Number(
+            document.getElementById("kgValue").value
+        );
+
+    document.getElementById("kgResult").textContent =
+        isNaN(kg)
+        ? "Enter a number."
+        : (kg * 2.2046226218).toFixed(4) + " lb";
+}
+
+
+/* =========================
+   DATE / TIME
+========================= */
+
+function showDate(){
+
+    document.getElementById("dateResult").textContent =
+        new Date().toLocaleDateString();
+}
+
+
+function showTime(){
+
+    document.getElementById("timeResult").textContent =
+        new Date().toLocaleTimeString();
+}
+
+
+/* =========================
+   COPY
+========================= */
+
+async function copyText(){
 
     const text =
-    document
-    .getElementById("speechText")
-    .value
-    .trim();
-
+        document.getElementById("copyText").value;
 
     if(!text){
 
+        document.getElementById("copyResult").textContent =
+            "Nothing to copy.";
+
         return;
-
     }
-
-
-    const speech =
-    new SpeechSynthesisUtterance(text);
-
-
-    speechSynthesis.speak(speech);
-
-}
-
-
-
-/* ================= COPY ================= */
-
-async function copyTextValue(){
-
-    const text =
-    document
-    .getElementById("copyText")
-    .value;
-
 
     try{
 
         await navigator.clipboard.writeText(text);
 
+        document.getElementById("copyResult").textContent =
+            "✅ Copied!";
 
-        document
-        .getElementById("copyResult")
-        .textContent =
-        "✅ Copied";
+    }catch(error){
 
-    }
-
-    catch(error){
-
-        document
-        .getElementById("copyResult")
-        .textContent =
-        "⚠️ Copy permission unavailable";
+        document.getElementById("copyResult").textContent =
+            "Copy failed. Please copy manually.";
 
     }
-
 }
 
 
+/* =========================
+   IMAGE PREVIEW
+========================= */
 
-/* ================= CONTACT ================= */
+function previewImage(event){
 
-function openContact(){
+    const file =
+        event.target.files[0];
 
-    document
-    .getElementById("contactModal")
-    .style.display =
-    "block";
+    const result =
+        document.getElementById("imageResult");
 
+    if(!file){
+
+        result.innerHTML = "";
+
+        return;
+    }
+
+    if(!file.type.startsWith("image/")){
+
+        result.textContent =
+            "Please select an image.";
+
+        return;
+    }
+
+    const url =
+        URL.createObjectURL(file);
+
+    result.innerHTML =
+        '<img src="' + url + '" ' +
+        'style="max-width:100%;border-radius:8px;">';
 }
 
 
-function closeContact(){
+/* =========================
+   VIDEO TAB
+========================= */
 
-    document
-    .getElementById("contactModal")
-    .style.display =
-    "none";
+let currentVideoPlatform = "all";
 
-}
-
-
-
-/* =================================================
-VIDEO HUB
-================================================= */
 
 function showVideoTab(platform,button){
 
+    currentVideoPlatform =
+        platform || "all";
+
     const hub =
-    document.getElementById("videoHub");
-
-
-    const tools =
-    document.getElementById("tools");
-
+        document.getElementById("videoHub");
 
     if(!hub){
-
         return;
-
     }
 
-
-    tools.style.display =
-    "none";
-
-
-    hub.style.display =
-    "block";
-
+    hub.style.display = "block";
 
     document
-    .querySelectorAll(".video-menu button")
-    .forEach(function(btn){
+        .querySelectorAll(".video-menu button")
+        .forEach(function(btn){
 
-        btn.classList.remove("active");
+            btn.classList.remove("active");
 
-    });
-
+        });
 
     if(button){
-
         button.classList.add("active");
-
     }
 
-
-    renderSiteVideos(platform);
-
+    renderSiteVideos(currentVideoPlatform);
 
     hub.scrollIntoView({
-
         behavior:"smooth",
-
         block:"start"
-
     });
-
 }
 
 
+/* =========================
+   VIDEO ID HELPERS
+========================= */
 
-/* ================= VIDEO RENDER ================= */
+function getYouTubeID(url){
 
-function renderSiteVideos(platform){
-
-    const feed =
-    document.getElementById("videoFeed");
-
-
-    if(!feed){
-
-        return;
-
+    if(!url){
+        return null;
     }
 
+    try{
 
-    let videos =
-    siteVideos.filter(function(video){
+        const parsed =
+            new URL(url);
 
-        return (
-            platform === "all" ||
-            video.platform === platform
-        );
+        if(parsed.hostname.includes("youtu.be")){
 
-    });
+            return parsed.pathname
+                .replace("/","")
+                .split("/")[0] || null;
+        }
 
+        if(parsed.hostname.includes("youtube.com")){
 
-    if(videos.length === 0){
+            const v =
+                parsed.searchParams.get("v");
 
-        feed.innerHTML =
-        `
-        <p style="
-            text-align:center;
-            padding:30px;
-        ">
-            🎬 No approved videos yet.
-        </p>
-        `;
+            if(v){
+                return v;
+            }
 
-        return;
+            const parts =
+                parsed.pathname.split("/");
 
-    }
+            const shortsIndex =
+                parts.indexOf("shorts");
 
+            if(shortsIndex !== -1 &&
+                parts[shortsIndex + 1]){
 
-    feed.innerHTML = "";
+                return parts[shortsIndex + 1];
+            }
 
+            const embedIndex =
+                parts.indexOf("embed");
 
-    videos.forEach(function(video){
+            if(embedIndex !== -1 &&
+                parts[embedIndex + 1]){
 
-        const card =
-        document.createElement("div");
+                return parts[embedIndex + 1];
+            }
 
+        }
 
-        card.className =
-        "video-card";
+    }catch(error){}
 
-
-        card.innerHTML =
-
-        "<small>" +
-        escapeVideoText(
-            video.platform
-        ) +
-        "</small>" +
-
-        "<h3>" +
-        escapeVideoText(
-            video.title
-        ) +
-        "</h3>" +
-
-        createSitePlayer(
-            video.platform,
-            video.videos_url
-        );
-
-
-        feed.appendChild(card);
-
-    });
-
+    return null;
 }
 
 
+function getTikTokID(url){
 
-/* =================================================
-VIDEO PLAYER
-================================================= */
-
-function createSitePlayer(platform,url){
-
-
-    /* DIRECT MP4 */
-
-    if(platform === "Direct"){
-
-        return `
-        
-        <video
-            class="video-player"
-            controls
-            playsinline
-            preload="metadata"
-            style="
-                min-height:220px;
-                background:#000;
-            "
-        >
-
-            <source
-                src="${escapeAttribute(url)}"
-                type="video/mp4"
-            >
-
-            Your browser does not
-            support video playback.
-
-        </video>
-
-        `;
-
+    if(!url){
+        return null;
     }
 
+    const match =
+        url.match(/\/video\/(\d+)/);
+
+    return match
+        ? match[1]
+        : null;
+}
 
 
-    /* YOUTUBE */
+/* =========================
+   SAFE HTML
+========================= */
+
+function escapeHTML(value){
+
+    return String(value || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   VIDEO PLAYER
+========================= */
+
+function createSitePlayer(video){
+
+    const platform =
+        video.platform || "";
+
+    const url =
+        video.videos_url || "";
+
+    const safeURL =
+        escapeHTML(url);
+
+    const title =
+        escapeHTML(video.title || "Untitled Video");
+
 
     if(platform === "YouTube"){
 
         const id =
-        getYouTubeID(url);
+            getYouTubeID(url);
 
-
-        if(id){
+        if(!id){
 
             return `
-
-            <div style="
-                position:relative;
-                aspect-ratio:16/9;
-                background:#111;
-                border-radius:12px;
-                overflow:hidden;
-            ">
-
-                <img
-                    src="https://img.youtube.com/vi/${id}/hqdefault.jpg"
-                    style="
-                        width:100%;
-                        height:100%;
-                        object-fit:cover;
-                    "
-                >
-
-
-                <button
-                    onclick="playSiteYouTube('${id}',this)"
-                    style="
-                        position:absolute;
-                        left:50%;
-                        top:50%;
-                        transform:translate(-50%,-50%);
-                        background:red;
-                        color:white;
-                        border:0;
-                        border-radius:12px;
-                        padding:14px 22px;
-                        font-size:24px;
-                        cursor:pointer;
-                    "
-                >
-
-                    ▶
-
-                </button>
-
-            </div>
-
+                <div class="video-error">
+                    Unable to read YouTube video.
+                </div>
             `;
 
         }
 
+        const safeID =
+            encodeURIComponent(id);
+
+        const thumb =
+            "https://img.youtube.com/vi/" +
+            safeID +
+            "/hqdefault.jpg";
 
         return `
-        <p>
-            ⚠️ YouTube video unavailable.
-        </p>
-        `;
+            <div class="youtube-preview">
 
+                <img
+                    src="${thumb}"
+                    alt="${title}"
+                    loading="lazy"
+                >
+
+                <button
+                    class="youtube-play"
+                    onclick="openYouTube('${safeID}')">
+                    ▶
+                </button>
+
+            </div>
+        `;
     }
 
 
+    if(platform === "Facebook"){
 
-    /* TIKTOK */
+        const facebookURL =
+            encodeURIComponent(url);
+
+        return `
+            <div class="video-frame">
+
+                <iframe
+                    src="https://www.facebook.com/plugins/video.php?href=${facebookURL}&show_text=false"
+                    scrolling="no"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                </iframe>
+
+            </div>
+        `;
+    }
+
 
     if(platform === "TikTok"){
 
         const id =
-        getTikTokID(url);
+            getTikTokID(url);
 
-
-        if(id){
+        if(!id){
 
             return `
-
-            <iframe
-                src="https://www.tiktok.com/player/v1/${id}?controls=1"
-                style="
-                    width:100%;
-                    height:650px;
-                    border:0;
-                    border-radius:12px;
-                "
-                allow="fullscreen"
-                allowfullscreen>
-            </iframe>
-
+                <div class="video-error">
+                    Unable to read TikTok video.
+                </div>
             `;
 
         }
 
-
         return `
-        <p>
-            ⚠️ TikTok video unavailable.
-        </p>
-        `;
+            <div class="video-frame">
 
+                <iframe
+                    src="https://www.tiktok.com/player/v1/${id}"
+                    allow="fullscreen">
+                </iframe>
+
+            </div>
+        `;
     }
 
 
-
-    /* FACEBOOK */
-
-    if(platform === "Facebook"){
+    if(platform === "Direct"){
 
         return `
+            <div class="video-frame">
 
-        <iframe
+                <video
+                    controls
+                    preload="metadata"
+                    playsinline>
 
-            src="
-            https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false
-            "
+                    <source
+                        src="${safeURL}"
+                        type="video/mp4">
 
-            style="
-                width:100%;
-                height:420px;
-                border:0;
-                border-radius:12px;
-            "
+                    Your browser does not support video playback.
 
-            allow="
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                picture-in-picture;
-                web-share
-            "
+                </video>
 
-            allowfullscreen>
-
-        </iframe>
-
+            </div>
         `;
-
     }
-
 
 
     return `
-
-    <p>
-        ⚠️ Unsupported video platform.
-    </p>
-
+        <div class="video-error">
+            Unsupported video platform.
+        </div>
     `;
-
 }
 
 
+/* =========================
+   YOUTUBE OPEN
+========================= */
 
-/* ================= YOUTUBE PLAY ================= */
+function openYouTube(id){
 
-function playSiteYouTube(id,button){
+    if(!id){
+        return;
+    }
 
-    const box =
-    button.parentElement;
-
-
-    box.innerHTML = `
-
-        <iframe
-
-            src="
-            https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1
-            "
-
-            style="
-                width:100%;
-                height:100%;
-                border:0;
-            "
-
-            allow="
-                autoplay;
-                encrypted-media;
-                picture-in-picture
-            "
-
-            allowfullscreen>
-
-        </iframe>
-
-    `;
-
+    window.open(
+        "https://www.youtube.com/watch?v=" +
+        encodeURIComponent(id),
+        "_blank",
+        "noopener,noreferrer"
+    );
 }
 
 
+/* =========================
+   RENDER VIDEOS
+========================= */
 
-/* ================= YOUTUBE ID ================= */
+async function renderSiteVideos(platform){
 
-function getYouTubeID(url){
+    const feed =
+        document.getElementById("videoFeed");
+
+    const status =
+        document.getElementById("videoStatus");
+
+    if(!feed){
+        return;
+    }
+
+    feed.innerHTML =
+        '<div class="empty-video">⏳ Loading videos...</div>';
+
+    status.textContent =
+        "Loading approved videos...";
+
 
     try{
 
-        const u =
-        new URL(url);
+        const response =
+            await supabaseClient
+                .from("Videos")
+                .select(
+                    "id,title,platform,videos_url,status,created_at"
+                )
+                .eq("status","approved")
+                .order(
+                    "created_at",
+                    {ascending:false}
+                );
 
 
-        /* Shorts */
+        if(response.error){
 
-        if(
-            u.hostname.includes("youtube.com") &&
-            u.pathname.startsWith("/shorts/")
-        ){
+            console.error(
+                "Supabase video error:",
+                response.error
+            );
 
-            return u.pathname
-            .split("/shorts/")[1]
-            .split("/")[0];
+            feed.innerHTML =
+                `
+                <div class="empty-video">
+                    ❌ Videos could not be loaded right now.
+                </div>
+                `;
+
+            status.textContent =
+                "Video service is temporarily unavailable.";
+
+            return;
+        }
+
+
+        let videos =
+            response.data || [];
+
+
+        if(platform && platform !== "all"){
+
+            videos =
+                videos.filter(function(video){
+
+                    return video.platform === platform;
+
+                });
 
         }
 
 
-        /* Normal YouTube */
+        if(!videos.length){
 
-        if(
-            u.hostname.includes("youtube.com") &&
-            u.searchParams.get("v")
-        ){
+            feed.innerHTML =
+                `
+                <div class="empty-video">
+                    🎬 No approved videos found.
+                </div>
+                `;
 
-            return u.searchParams.get("v");
+            status.textContent =
+                "No videos available in this category.";
 
+            return;
         }
 
 
-        /* youtu.be */
+        feed.innerHTML =
+            videos.map(function(video){
 
-        if(
-            u.hostname.includes("youtu.be")
-        ){
+                const title =
+                    escapeHTML(
+                        video.title || "Untitled Video"
+                    );
 
-            return u.pathname
-            .substring(1)
-            .split("/")[0];
+                const platformName =
+                    escapeHTML(
+                        video.platform || "Unknown"
+                    );
 
-        }
 
-    }
+                return `
+                    <article class="video-card">
 
-    catch(error){
+                        <div class="video-card-header">
+
+                            <h3>${title}</h3>
+
+                            <span class="platform">
+                                ${platformName}
+                            </span>
+
+                        </div>
+
+                        ${createSitePlayer(video)}
+
+                    </article>
+                `;
+
+            }).join("");
+
+
+        status.textContent =
+            videos.length +
+            " approved video" +
+            (videos.length === 1 ? "" : "s") +
+            " available.";
+
+    }catch(error){
 
         console.error(
-            "YouTube URL error:",
+            "Video loading error:",
             error
         );
 
+        feed.innerHTML =
+            `
+            <div class="empty-video">
+                ❌ Could not connect to the video service.
+            </div>
+            `;
+
+        status.textContent =
+            "Connection error.";
     }
-
-
-    return null;
-
 }
 
 
+/* =========================
+   MODALS
+========================= */
 
-/* ================= TIKTOK ID ================= */
+function openModal(id){
 
-function getTikTokID(url){
+    const modal =
+        document.getElementById(id);
 
-    const match =
-    String(url)
-    .match(/\/video\/(\d+)/);
-
-
-    return match
-    ? match[1]
-    : null;
-
+    if(modal){
+        modal.style.display = "block";
+    }
 }
 
 
+function closeModal(id){
 
-/* ================= ESCAPE TEXT ================= */
+    const modal =
+        document.getElementById(id);
 
-function escapeVideoText(text){
-
-    return String(text || "")
-
-    .replace(/&/g,"&amp;")
-
-    .replace(/</g,"&lt;")
-
-    .replace(/>/g,"&gt;")
-
-    .replace(/"/g,"&quot;")
-
-    .replace(/'/g,"&#039;");
-
+    if(modal){
+        modal.style.display = "none";
+    }
 }
 
 
+window.addEventListener(
+    "click",
+    function(event){
 
-/* ================= ESCAPE URL ================= */
+        document
+            .querySelectorAll(".modal")
+            .forEach(function(modal){
 
-function escapeAttribute(text){
+                if(event.target === modal){
 
-    return String(text || "")
+                    modal.style.display = "none";
 
-    .replace(/&/g,"&amp;")
-
-    .replace(/"/g,"&quot;")
-
-    .replace(/</g,"&lt;")
-
-    .replace(/>/g,"&gt;");
-
-}
-
-
-
-/* =================================================
-LOAD APPROVED VIDEOS FROM SUPABASE
-================================================= */
-
-async function loadSiteVideos(){
-
-    const feed =
-    document.getElementById("videoFeed");
-
-
-    try{
-
-        const {
-            data,
-            error
-        } = await supabaseClient
-
-            .from("Videos")
-
-            .select(
-                "id,title,platform,videos_url,status,created_at"
-            )
-
-            .eq(
-                "status",
-                "approved"
-            )
-
-            .order(
-                "created_at",
-                {
-                    ascending:false
                 }
-            );
+
+            });
+
+    }
+);
 
 
-        if(error){
+/* =========================
+   INITIAL LOAD
+========================= */
 
-            console.error(
-                "Videos load error:",
-                error
-            );
-
-
-            if(feed){
-
-                feed.innerHTML = `
-
-                <p style="
-                    text-align:center;
-                    padding:30px;
-                ">
-
-                    ⚠️ Could not load videos.
-
-                </p>
-
-                `;
-
-            }
-
-
-            return;
-
-        }
-
-
-        siteVideos =
-        Array.isArray(data)
-        ? data
-        : [];
-
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
         renderSiteVideos("all");
 
     }
-
-
-    catch(error){
-
-        console.error(error);
-
-
-        if(feed){
-
-            feed.innerHTML = `
-
-            <p style="
-                text-align:center;
-                padding:30px;
-            ">
-
-                ⚠️ Could not load videos.
-
-            </p>
-
-            `;
-
-        }
-
-    }
-
-}
-
-
-
-/* START */
-
-loadSiteVideos();
+);
 
 </script>
 
