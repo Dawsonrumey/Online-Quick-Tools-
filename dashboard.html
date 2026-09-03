@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-<title>My Dashboard - Online Quick Tools</title>
+<title>Dashboard - Online Quick Tools</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
@@ -22,389 +20,241 @@ body{
     margin:0;
     font-family:Arial,sans-serif;
     background:#f4f7fb;
-    color:#222;
+    color:#111827;
 }
 
 header{
     background:#2563eb;
     color:white;
-    padding:16px 20px;
+    padding:18px;
+    text-align:center;
 }
 
-.header-inner{
-    max-width:900px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
-}
-
-.logo{
-    font-size:20px;
-    font-weight:bold;
+header h1{
+    margin:0 0 12px;
+    font-size:24px;
 }
 
 .logout{
-    border:0;
     background:white;
     color:#2563eb;
-    padding:9px 14px;
+    border:0;
+    padding:10px 18px;
     border-radius:8px;
     font-weight:bold;
     cursor:pointer;
 }
 
 .container{
-    max-width:900px;
+    max-width:600px;
     margin:30px auto;
-    padding:0 20px;
-}
-
-.welcome{
-    margin-bottom:22px;
-}
-
-.welcome h1{
-    margin:0 0 8px;
-}
-
-.welcome p{
-    margin:0;
-    color:#666;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
+    padding:20px;
 }
 
 .card{
     background:white;
-    padding:25px;
-    border-radius:16px;
-    box-shadow:0 6px 20px rgba(0,0,0,.07);
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
-.card-title{
-    color:#666;
-    font-size:14px;
-    margin-bottom:10px;
+.card h2{
+    margin-top:0;
 }
 
 .points{
-    font-size:36px;
+    font-size:38px;
     font-weight:bold;
     color:#2563eb;
+    margin:10px 0;
 }
 
-.actions{
-    margin-top:25px;
-    display:grid;
-    gap:12px;
+.label{
+    color:#6b7280;
+    font-size:14px;
 }
 
 .action{
-    display:block;
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    text-decoration:none;
-    color:#222;
-    box-shadow:0 4px 15px rgba(0,0,0,.06);
+    width:100%;
+    border:0;
+    background:#2563eb;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    margin-top:10px;
+    font-size:16px;
     font-weight:bold;
+    cursor:pointer;
 }
 
-.action span{
-    display:block;
-    color:#777;
-    font-size:13px;
-    font-weight:normal;
-    margin-top:5px;
+.action:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
-.status{
-    text-align:center;
-    padding:30px;
+#rewardMessage{
+    display:none;
+    margin-top:12px;
+    padding:12px;
+    border-radius:10px;
+    background:#dcfce7;
+    color:#166534;
 }
 
-@media(max-width:600px){
-
-    .cards{
-        grid-template-columns:1fr;
-    }
-
-    .header-inner{
-        flex-direction:column;
-        align-items:stretch;
-    }
-
-    .logout{
-        width:100%;
-    }
-
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:15px;
+    border-radius:10px;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
 
-<div class="header-inner">
-
-<div class="logo">
-Online Quick Tools
-</div>
+<h1>Online Quick Tools</h1>
 
 <button
-class="logout"
-id="logoutButton"
+    class="logout"
+    id="logoutButton"
+    type="button"
 >
-Logout
+    Logout
 </button>
-
-</div>
 
 </header>
 
 
-<div
-id="loading"
-class="status"
->
-Loading your dashboard...
+<div class="container">
+
+<div id="loading" class="card">
+    Loading your dashboard...
 </div>
 
 
-<main
-id="dashboard"
-class="container"
-style="display:none;"
->
+<div id="dashboard"
+     style="display:none;">
 
-<div class="welcome">
+    <div class="card">
 
-<h1>
-Welcome, <span id="username">User</span> 👋
-</h1>
+        <div class="label">
+            Welcome
+        </div>
 
-<p>
-Your rewards dashboard
-</p>
+        <h2 id="username">
+            User
+        </h2>
 
-</div>
+        <div class="label">
+            Available Points
+        </div>
 
+        <div class="points"
+             id="points">
+            0
+        </div>
 
-<div class="cards">
+        <div class="label">
+            Account Email
+        </div>
 
-<div class="card">
+        <div id="email">
+            -
+        </div>
 
-<div class="card-title">
-Available Points
-</div>
-
-<div
-class="points"
-id="points"
->
-0
-</div>
-
-</div>
+    </div>
 
 
-<div class="card">
+    <div class="card">
 
-<div class="card-title">
-Account Email
-</div>
+        <h2>🎁 Daily Reward</h2>
 
-<div id="email">
--
-</div>
+        <button
+            class="action"
+            id="dailyRewardButton"
+            type="button"
+        >
+            Claim Daily Reward
 
-</div>
+            <span id="dailyRewardText">
+                Get 10 points once per day
+            </span>
 
-</div>
-
-
-<div class="actions">
-
-<a
-class="action"
-href="index.html"
->
-🛠️ Use Online Tools
-
-<span>
-Go back to the main website
-</span>
-
-</a>
-    
-<button
-    class="action"
-    id="dailyRewardButton"
-    type="button"
->
-    🎁 Claim Daily Reward
-
-    <span id="dailyRewardText">
-        Get 10 points once per day
-    </span>
-</button>
-
-<a
-class="action"
-href="#"
->
-🎁 Earn Rewards
-
-<span>
-Rewards system will be available soon
-</span>
-
-</a>
+        </button>
 
 
-<a
-class="action"
-href="#"
->
-📜 Transaction History
+        <div
+            id="rewardMessage"
+        ></div>
 
-<span>
-Your reward history will appear here
-</span>
-
-</a>
+    </div>
 
 
-<a
-class="action"
-href="#"
->
-💸 Withdraw
+    <div class="card">
 
-<span>
-Withdrawal system will be added later
-</span>
+        <h2>Quick Links</h2>
 
-</a>
+        <button
+            class="action"
+            type="button"
+            onclick="location.href='index.html'"
+        >
+            🏠 Home
+        </button>
+
+    </div>
 
 </div>
 
-</main>
 
+<div id="errorBox"
+     style="display:none;"
+     class="error">
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</div>
+
 
 <script>
 
 const SUPABASE_URL =
-"https://etkqkptoxkfhxcysaadi.supabase.co";
-
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 
 const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-async function loadDashboard(){
+const loading =
+    document.getElementById("loading");
 
-    const {
-        data:{
-            user
-        },
-        error:sessionError
-    } =
-    await supabaseClient.auth.getUser();
+const dashboard =
+    document.getElementById("dashboard");
 
+const errorBox =
+    document.getElementById("errorBox");
 
-    if(sessionError || !user){
+const usernameElement =
+    document.getElementById("username");
 
-        window.location.href =
-            "login.html";
+const pointsElement =
+    document.getElementById("points");
 
-        return;
+const emailElement =
+    document.getElementById("email");
 
-    }
-
-
-    const {
-        data:profile,
-        error:profileError
-    } =
-    await supabaseClient
-        .from("profiles")
-        .select(
-            "username,points"
-        )
-        .eq("id",user.id)
-        .single();
-
-
-    if(profileError){
-
-        console.error(profileError);
-
-        document.getElementById("loading")
-            .textContent =
-            "Unable to load your profile.";
-
-        return;
-
-    }
-
-
-    document.getElementById("username")
-        .textContent =
-        profile.username || "User";
-
-
-    document.getElementById("points")
-        .textContent =
-        Number(profile.points || 0).toLocaleString();
-
-
-    document.getElementById("email")
-        .textContent =
-        user.email || "-";
-
-
-    document.getElementById("loading")
-        .style.display =
-        "none";
-
-
-    document.getElementById("dashboard")
-        .style.display =
-        "block";
-
-}
-
-
-document.getElementById("logoutButton")
-.addEventListener(
-"click",
-async function(){
-
-    await supabaseClient.auth.signOut();
-
-    window.location.href =
-        "login.html";
-
-});
+const logoutButton =
+    document.getElementById("logoutButton");
 
 const dailyRewardButton =
     document.getElementById("dailyRewardButton");
@@ -413,9 +263,108 @@ const dailyRewardText =
     document.getElementById("dailyRewardText");
 
 
+function showError(message){
+
+    loading.style.display = "none";
+
+    dashboard.style.display = "none";
+
+    errorBox.style.display = "block";
+
+    errorBox.textContent = message;
+
+}
+
+
+async function loadDashboard(){
+
+    try{
+
+        const {
+            data: {
+                user
+            },
+            error: userError
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(userError){
+
+            throw userError;
+
+        }
+
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        emailElement.textContent =
+            user.email || "-";
+
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select("username, points")
+            .eq("id", user.id)
+            .single();
+
+
+        if(profileError){
+
+            throw profileError;
+
+        }
+
+
+        usernameElement.textContent =
+            profile.username ||
+            user.email.split("@")[0];
+
+
+        pointsElement.textContent =
+            profile.points ?? 0;
+
+
+        loading.style.display =
+            "none";
+
+        dashboard.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(
+            "Dashboard error:",
+            error
+        );
+
+        showError(
+            error.message ||
+            "Unable to load dashboard."
+        );
+
+    }
+
+}
+
+
 async function claimDailyReward(){
 
-    dailyRewardButton.disabled = true;
+    dailyRewardButton.disabled =
+        true;
 
     dailyRewardText.textContent =
         "Claiming...";
@@ -445,37 +394,40 @@ async function claimDailyReward(){
                 "🎉 You received 10 points today!"
             );
 
-            await loadDashboard();
-
-            dailyRewardButton.disabled = true;
-
-            dailyRewardText.textContent =
-                "Already claimed today";
-
         }else{
 
             showRewardMessage(
                 "You already claimed today's reward."
             );
 
-            dailyRewardButton.disabled = true;
-
-            dailyRewardText.textContent =
-                "Already claimed today";
-
         }
+
+
+        await loadDashboard();
+
+
+        dailyRewardButton.disabled =
+            true;
+
+        dailyRewardText.textContent =
+            "Already claimed today";
 
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Reward error:",
+            error
+        );
 
         showRewardMessage(
             error.message ||
             "Unable to claim reward."
         );
 
-        dailyRewardButton.disabled = false;
+
+        dailyRewardButton.disabled =
+            false;
 
         dailyRewardText.textContent =
             "Get 10 points once per day";
@@ -488,39 +440,41 @@ async function claimDailyReward(){
 function showRewardMessage(text){
 
     const message =
-        document.getElementById("rewardMessage");
+        document.getElementById(
+            "rewardMessage"
+        );
 
-    if(message){
+    message.textContent =
+        text;
 
-        message.textContent = text;
-
-        message.style.display = "block";
-
-    }
+    message.style.display =
+        "block";
 
 }
+
+
+logoutButton.addEventListener(
+    "click",
+    async function(){
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+            "login.html";
+
+    }
+);
 
 
 dailyRewardButton.addEventListener(
     "click",
     claimDailyReward
 );
-    <div
-    id="rewardMessage"
-    style="
-        display:none;
-        margin-top:12px;
-        padding:12px;
-        border-radius:10px;
-        background:#dcfce7;
-        color:#166534;
-    "
-></div>
-    
+
+
 loadDashboard();
 
 </script>
 
 </body>
-
 </html>
