@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Earn Points - Online Quick Tools</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#111827;
+}
+
+header{
+    background:#2563eb;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
+
+.container{
+    max-width:650px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.back{
+    display:block;
+    text-align:center;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:18px;
+    font-weight:bold;
+}
+
+.task{
+    border:1px solid #e5e7eb;
+    padding:15px;
+    border-radius:10px;
+    margin-top:12px;
+}
+
+.task h3{
+    margin:0 0 8px;
+}
+
+.description{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.reward{
+    color:#16a34a;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.message{
+    text-align:center;
+    padding:20px;
+    color:#6b7280;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>💰 Earn Points</h1>
+</header>
+
+<div class="container">
+
+<a href="dashboard.html" class="back">
+    ← Back to Dashboard
+</a>
+
+<div class="card">
+
+    <h2>Available Tasks</h2>
+
+    <div id="taskList" class="message">
+        Loading tasks...
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_SUPABASE_PUBLISHABLE_KEY";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+async function loadTasks(){
+
+    const taskList =
+        document.getElementById("taskList");
+
+    try{
+
+        const {
+            data:{
+                user
+            },
+            error:userError
+        } =
+        await supabaseClient.auth.getUser();
+
+        if(userError){
+            throw userError;
+        }
+
+        if(!user){
+
+            window.location.href =
+            "login.html";
+
+            return;
+        }
+
+
+        const {
+            data:tasks,
+            error
+        } =
+        await supabaseClient
+        .from("reward_tasks")
+        .select(
+            "id,title,description,reward_points,task_type"
+        )
+        .eq("status","active")
+        .order("created_at",{
+            ascending:false
+        });
+
+
+        if(error){
+            throw error;
+        }
+
+
+        if(!tasks || tasks.length === 0){
+
+            taskList.innerHTML =
+            "No tasks available right now.";
+
+            return;
+        }
+
+
+        taskList.innerHTML =
+        tasks.map(task => `
+
+            <div class="task">
+
+                <h3>
+                    ${task.title}
+                </h3>
+
+                <div class="description">
+                    ${task.description || ""}
+                </div>
+
+                <div class="reward">
+                    🎁 +${task.reward_points} Points
+                </div>
+
+            </div>
+
+        `).join("");
+
+
+    }catch(error){
+
+        console.error(error);
+
+        taskList.innerHTML =
+        "Unable to load tasks.";
+
+    }
+
+}
+
+
+loadTasks();
+
+</script>
+
+</body>
+</html>
