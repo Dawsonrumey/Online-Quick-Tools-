@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>Login - Online Quick Tools</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.card{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 35px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    margin:0 0 8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin-bottom:18px;
+    border:1px solid #d5dbe3;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#2563eb;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+    margin-top:18px;
+    padding:12px;
+    border-radius:10px;
+    line-height:1.5;
+}
+
+.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.links{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+}
+
+.links a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.home{
+    margin-top:12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Online Quick Tools</h1>
+
+<div class="subtitle">
+Login to your account
+</div>
+
+
+<form id="loginForm">
+
+<label for="email">
+Email
+</label>
+
+<input
+    id="email"
+    type="email"
+    placeholder="Enter your email"
+    required
+>
+
+
+<label for="password">
+Password
+</label>
+
+<input
+    id="password"
+    type="password"
+    placeholder="Enter your password"
+    required
+>
+
+
+<button
+    id="loginButton"
+    type="submit"
+>
+Login
+</button>
+
+</form>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<div class="links">
+
+Don't have an account?
+
+<a href="register.html">
+Create Account
+</a>
+
+<div class="home">
+
+<a href="index.html">
+← Back to Website
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+const form =
+document.getElementById("loginForm");
+
+const message =
+document.getElementById("message");
+
+const button =
+document.getElementById("loginButton");
+
+
+function showMessage(text,type){
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+form.addEventListener(
+"submit",
+async function(e){
+
+    e.preventDefault();
+
+
+    const email =
+        document.getElementById("email")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value;
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Logging in...";
+
+
+    try{
+
+        const { data, error } =
+            await supabaseClient.auth
+            .signInWithPassword({
+
+                email:email,
+
+                password:password
+
+            });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        if(data.user){
+
+            showMessage(
+                "Login successful! Redirecting...",
+                "success"
+            );
+
+
+            setTimeout(
+            function(){
+
+                window.location.href =
+                    "index.html";
+
+            },
+            800
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(error);
+
+        showMessage(
+            error.message ||
+            "Login failed. Please check your email and password.",
+            "error"
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+        button.textContent =
+            "Login";
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
