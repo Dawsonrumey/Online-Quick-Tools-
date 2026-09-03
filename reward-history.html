@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Reward History - Online Quick Tools</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#111827;
+}
+
+header{
+    background:#2563eb;
+    color:white;
+    padding:18px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:23px;
+}
+
+.container{
+    max-width:650px;
+    margin:25px auto;
+    padding:15px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:15px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+
+.back{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    background:#2563eb;
+    color:white;
+    padding:13px;
+    border-radius:10px;
+    font-weight:bold;
+    margin-bottom:18px;
+}
+
+.summary{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.total{
+    font-size:30px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.transaction{
+    border-bottom:1px solid #e5e7eb;
+    padding:15px 0;
+}
+
+.transaction:last-child{
+    border-bottom:none;
+}
+
+.transaction-top{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.type{
+    font-weight:bold;
+}
+
+.amount{
+    font-weight:bold;
+    color:#16a34a;
+}
+
+.description{
+    color:#6b7280;
+    font-size:14px;
+    margin-top:6px;
+}
+
+.date{
+    color:#9ca3af;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.message{
+    text-align:center;
+    color:#6b7280;
+    padding:20px;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:15px;
+    border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>🎁 Reward History</h1>
+
+</header>
+
+
+<div class="container">
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+    ← Back to Dashboard
+</a>
+
+
+<div
+    id="loading"
+    class="card message"
+>
+    Loading reward history...
+</div>
+
+
+<div
+    id="content"
+    style="display:none;"
+>
+
+
+    <div class="card">
+
+        <div class="summary">
+
+            <div>
+                <div>
+                    Total Rewards
+                </div>
+
+                <div
+                    class="total"
+                    id="totalPoints"
+                >
+                    0
+                </div>
+            </div>
+
+            <div>
+                Transactions:
+                <strong id="transactionCount">
+                    0
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Reward Transactions</h2>
+
+        <div id="historyList"></div>
+
+    </div>
+
+
+</div>
+
+
+<div
+    id="errorBox"
+    style="display:none;"
+    class="error"
+></div>
+
+</div>
+
+
+<script>
+
+const SUPABASE_URL =
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+async function loadHistory(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const content =
+        document.getElementById("content");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data: {
+                user
+            },
+            error: userError
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if(userError){
+
+            throw userError;
+
+        }
+
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("reward_transactions")
+            .select(
+                "amount,type,description,created_at"
+            )
+            .eq(
+                "user_id",
+                user.id
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const transactions =
+            data || [];
+
+
+        let total = 0;
+
+
+        transactions.forEach(
+            transaction => {
+
+                total +=
+                    Number(
+                        transaction.amount
+                    );
+
+            }
+        );
+
+
+        document.getElementById(
+            "totalPoints"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "transactionCount"
+        ).textContent =
+            transactions.length;
+
+
+        const list =
+            document.getElementById(
+                "historyList"
+            );
+
+
+        if(transactions.length === 0){
+
+            list.innerHTML =
+                '<div class="message">' +
+                'No reward transactions yet.' +
+                '</div>';
+
+        }else{
+
+            list.innerHTML =
+                transactions.map(
+                    transaction => {
+
+                        const date =
+                            new Date(
+                                transaction.created_at
+                            ).toLocaleString();
+
+
+                        return `
+
+                        <div class="transaction">
+
+                            <div class="transaction-top">
+
+                                <div class="type">
+                                    🎁 ${
+                                        transaction.type ||
+                                        "Reward"
+                                    }
+                                </div>
+
+                                <div class="amount">
+                                    +${
+                                        transaction.amount
+                                    } points
+                                </div>
+
+                            </div>
+
+                            <div class="description">
+                                ${
+                                    transaction.description ||
+                                    "Reward received"
+                                }
+                            </div>
+
+                            <div class="date">
+                                ${date}
+                            </div>
+
+                        </div>
+
+                        `;
+
+                    }
+                ).join("");
+
+        }
+
+
+        loading.style.display =
+            "none";
+
+        content.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(
+            "History error:",
+            error
+        );
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.textContent =
+            error.message ||
+            "Unable to load reward history.";
+
+    }
+
+}
+
+
+loadHistory();
+
+</script>
+
+</body>
+</html>
