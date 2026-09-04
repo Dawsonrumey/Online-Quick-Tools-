@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Submit Your Video - Online Quick Tools</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -124,6 +126,7 @@ select:focus{
     margin-top:8px;
     font-size:13px;
     color:#666;
+    word-break:break-word;
 }
 
 button.submit-btn{
@@ -164,6 +167,8 @@ button.submit-btn:disabled{
     border-radius:10px;
     text-align:center;
     font-weight:bold;
+    line-height:1.5;
+    word-break:break-word;
 }
 
 .success{
@@ -212,6 +217,7 @@ button.submit-btn:disabled{
 }
 
 @media(max-width:450px){
+
     .card{
         padding:20px 15px;
     }
@@ -223,8 +229,11 @@ button.submit-btn:disabled{
     .platforms{
         grid-template-columns:1fr 1fr;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -239,7 +248,14 @@ button.submit-btn:disabled{
 Upload or submit your video to Online Quick Tools.
 </div>
 
-<label for="title">Video Title</label>
+
+<!-- =========================
+     VIDEO TITLE
+========================= -->
+
+<label for="title">
+Video Title
+</label>
 
 <input
     type="text"
@@ -248,11 +264,22 @@ Upload or submit your video to Online Quick Tools.
     maxlength="150"
 >
 
-<label>Select Video Platform</label>
+
+<!-- =========================
+     PLATFORM
+========================= -->
+
+<label>
+Select Video Platform
+</label>
 
 <div class="platforms">
 
-<label class="platform-option active" id="optionYouTube">
+
+<label
+    class="platform-option active"
+    id="optionYouTube"
+>
 
 <input
     type="radio"
@@ -262,12 +289,19 @@ Upload or submit your video to Online Quick Tools.
     onchange="changePlatform('YouTube')"
 >
 
-<span class="platform-icon">▶️</span>
+<span class="platform-icon">
+▶️
+</span>
+
 YouTube
 
 </label>
 
-<label class="platform-option" id="optionFacebook">
+
+<label
+    class="platform-option"
+    id="optionFacebook"
+>
 
 <input
     type="radio"
@@ -276,12 +310,19 @@ YouTube
     onchange="changePlatform('Facebook')"
 >
 
-<span class="platform-icon">📘</span>
+<span class="platform-icon">
+📘
+</span>
+
 Facebook
 
 </label>
 
-<label class="platform-option" id="optionTikTok">
+
+<label
+    class="platform-option"
+    id="optionTikTok"
+>
 
 <input
     type="radio"
@@ -290,12 +331,19 @@ Facebook
     onchange="changePlatform('TikTok')"
 >
 
-<span class="platform-icon">🎵</span>
+<span class="platform-icon">
+🎵
+</span>
+
 TikTok
 
 </label>
 
-<label class="platform-option" id="optionDirect">
+
+<label
+    class="platform-option"
+    id="optionDirect"
+>
 
 <input
     type="radio"
@@ -304,14 +352,25 @@ TikTok
     onchange="changePlatform('Direct')"
 >
 
-<span class="platform-icon">📤</span>
+<span class="platform-icon">
+📤
+</span>
+
 Direct Upload
 
 </label>
 
 </div>
 
-<div id="urlBox" class="input-box">
+
+<!-- =========================
+     URL BOX
+========================= -->
+
+<div
+    id="urlBox"
+    class="input-box"
+>
 
 <label for="videoURL">
 Video URL
@@ -323,13 +382,25 @@ Video URL
     placeholder="Paste YouTube video URL"
 >
 
-<div class="small" id="urlHelp">
+<div
+    class="small"
+    id="urlHelp"
+>
 Example: https://youtube.com/shorts/xxxxxxxx
 </div>
 
 </div>
 
-<div id="uploadBox" class="input-box" style="display:none;">
+
+<!-- =========================
+     DIRECT UPLOAD BOX
+========================= -->
+
+<div
+    id="uploadBox"
+    class="input-box"
+    style="display:none;"
+>
 
 <label for="videoFile">
 Select Video
@@ -344,7 +415,10 @@ Select Video
     onchange="checkFile()"
 >
 
-<div class="file-info" id="fileInfo">
+<div
+    class="file-info"
+    id="fileInfo"
+>
 MP4 recommended • Maximum 50 MB
 </div>
 
@@ -352,30 +426,59 @@ MP4 recommended • Maximum 50 MB
 
 </div>
 
-<div class="progress" id="progress">
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<div
+    class="progress"
+    id="progress"
+>
 
 <div style="font-size:13px;margin-bottom:6px;">
 Uploading...
 </div>
 
 <div class="progress-bg">
-<div class="progress-bar" id="progressBar"></div>
+
+<div
+    class="progress-bar"
+    id="progressBar"
+></div>
+
 </div>
 
 </div>
+
+
+<!-- =========================
+     SUBMIT BUTTON
+========================= -->
 
 <button
+    type="button"
     class="submit-btn"
     id="submitBtn"
     onclick="submitVideo()"
 >
-⬆️ Submit Video
+📤 Submit Video
 </button>
+
+
+<!-- =========================
+     MESSAGE
+========================= -->
 
 <div
     id="message"
     class="message"
 ></div>
+
+
+<!-- =========================
+     BACK BUTTON
+========================= -->
 
 <a
     href="index.html"
@@ -383,6 +486,11 @@ Uploading...
 >
 ← Back to Online Quick Tools
 </a>
+
+
+<!-- =========================
+     INFORMATION
+========================= -->
 
 <div class="upload-info">
 
@@ -410,9 +518,18 @@ Uploading...
 
 </div>
 
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
+/* =========================================
+   SUPABASE CONFIG
+========================================= */
 
 const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
@@ -420,74 +537,90 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
+
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
+
+/* =========================================
+   GLOBAL STATE
+========================================= */
+
 let currentPlatform = "YouTube";
 
-function validateURL(platform, url){
 
-    try{
+/* =========================================
+   ELEMENTS
+========================================= */
 
-        const parsed = new URL(url);
+const urlBox =
+document.getElementById("urlBox");
 
-        // Only allow HTTPS
-        if(parsed.protocol !== "https:"){
-            return false;
-        }
+const uploadBox =
+document.getElementById("uploadBox");
 
-        const host = parsed.hostname
-            .toLowerCase()
-            .replace(/^www\./, "");
+const videoURL =
+document.getElementById("videoURL");
 
-        if(platform === "YouTube"){
+const videoFile =
+document.getElementById("videoFile");
 
-            return (
-                host === "youtube.com" ||
-                host === "youtu.be" ||
-                host.endsWith(".youtube.com")
-            );
+const urlHelp =
+document.getElementById("urlHelp");
 
-        }
+const submitBtn =
+document.getElementById("submitBtn");
 
-        if(platform === "Facebook"){
+const fileInfo =
+document.getElementById("fileInfo");
 
-            return (
-                host === "facebook.com" ||
-                host.endsWith(".facebook.com") ||
-                host === "fb.watch"
-            );
+const progress =
+document.getElementById("progress");
 
-        }
+const progressBar =
+document.getElementById("progressBar");
 
-        if(platform === "TikTok"){
 
-            return (
-                host === "tiktok.com" ||
-                host.endsWith(".tiktok.com")
-            );
+/* =========================================
+   CHANGE PLATFORM
+========================================= */
 
-        }
+function changePlatform(platform){
 
-        return false;
+    currentPlatform = platform;
 
-    }
 
-    catch(error){
+    /* Remove active from all options */
 
-        return false;
-
-    }
-
-    }
     document
-        .getElementById(
+        .querySelectorAll(".platform-option")
+        .forEach(function(option){
+
+            option.classList.remove("active");
+
+        });
+
+
+    /* Add active to selected option */
+
+    const selectedOption =
+        document.getElementById(
             "option" + platform
-        )
-        .classList.add("active");
+        );
+
+    if(selectedOption){
+
+        selectedOption.classList.add("active");
+
+    }
+
+
+    /* ===============================
+       DIRECT UPLOAD
+    =============================== */
 
     if(platform === "Direct"){
 
@@ -497,23 +630,35 @@ function validateURL(platform, url){
 
         videoURL.value = "";
 
-        document.getElementById("submitBtn").innerText =
+        submitBtn.innerText =
             "⬆️ Upload & Submit Video";
 
         return;
     }
 
+
+    /* ===============================
+       URL PLATFORMS
+    =============================== */
+
     urlBox.style.display = "block";
 
     uploadBox.style.display = "none";
 
-    document.getElementById("videoFile").value = "";
 
-    document.getElementById("fileInfo").innerText =
+    videoFile.value = "";
+
+    fileInfo.innerText =
         "MP4 recommended • Maximum 50 MB";
 
-    document.getElementById("submitBtn").innerText =
+
+    submitBtn.innerText =
         "📤 Submit Video";
+
+
+    /* ===============================
+       YOUTUBE
+    =============================== */
 
     if(platform === "YouTube"){
 
@@ -525,6 +670,11 @@ function validateURL(platform, url){
 
     }
 
+
+    /* ===============================
+       FACEBOOK
+    =============================== */
+
     else if(platform === "Facebook"){
 
         videoURL.placeholder =
@@ -534,6 +684,11 @@ function validateURL(platform, url){
             "Example: https://www.facebook.com/share/r/xxxxxxxx/";
 
     }
+
+
+    /* ===============================
+       TIKTOK
+    =============================== */
 
     else if(platform === "TikTok"){
 
@@ -547,13 +702,16 @@ function validateURL(platform, url){
 
 }
 
+
+/* =========================================
+   FILE CHECK
+========================================= */
+
 function checkFile(){
 
     const file =
-        document.getElementById("videoFile").files[0];
+        videoFile.files[0];
 
-    const fileInfo =
-        document.getElementById("fileInfo");
 
     if(!file){
 
@@ -563,49 +721,116 @@ function checkFile(){
         return false;
     }
 
+
     const maxSize =
         50 * 1024 * 1024;
+
 
     if(file.size > maxSize){
 
         fileInfo.innerText =
             "❌ File is larger than 50 MB.";
 
-        document.getElementById("videoFile").value = "";
+        videoFile.value = "";
 
         return false;
     }
 
+
+    /* Only allow video files */
+
+    if(
+        file.type &&
+        !file.type.startsWith("video/")
+    ){
+
+        fileInfo.innerText =
+            "❌ Please select a valid video file.";
+
+        videoFile.value = "";
+
+        return false;
+    }
+
+
     const sizeMB =
-        (file.size / (1024 * 1024)).toFixed(2);
+        (
+            file.size /
+            (1024 * 1024)
+        ).toFixed(2);
+
 
     fileInfo.innerText =
-        "✅ " + file.name +
-        " (" + sizeMB + " MB)";
+        "✅ " +
+        file.name +
+        " (" +
+        sizeMB +
+        " MB)";
+
 
     return true;
+
 }
+
+
+/* =========================================
+   SHOW MESSAGE
+========================================= */
 
 function showMessage(text,type){
 
     const message =
         document.getElementById("message");
 
-    message.innerText = text;
+
+    message.innerText =
+        text;
+
 
     message.className =
         "message " + type;
 
-    message.style.display = "block";
+
+    message.style.display =
+        "block";
 
 }
+
+
+/* =========================================
+   HIDE MESSAGE
+========================================= */
 
 function hideMessage(){
 
-    document.getElementById("message")
-        .style.display = "none";
+    const message =
+        document.getElementById("message");
+
+
+    message.style.display =
+        "none";
 
 }
+
+
+/* =========================================
+   RESET PROGRESS
+========================================= */
+
+function resetProgress(){
+
+    progress.style.display =
+        "none";
+
+    progressBar.style.width =
+        "0%";
+
+}
+
+
+/* =========================================
+   VALIDATE PLATFORM URL
+========================================= */
 
 function validateURL(platform,url){
 
@@ -614,32 +839,65 @@ function validateURL(platform,url){
         const parsed =
             new URL(url);
 
+
+        /* HTTPS only */
+
+        if(parsed.protocol !== "https:"){
+
+            return false;
+
+        }
+
+
         const host =
-            parsed.hostname.toLowerCase();
+            parsed.hostname
+            .toLowerCase()
+            .replace(/^www\./,"");
+
+
+        /* ===============================
+           YOUTUBE
+        =============================== */
 
         if(platform === "YouTube"){
 
             return (
-                host.includes("youtube.com") ||
-                host.includes("youtu.be")
+                host === "youtube.com" ||
+                host === "youtu.be" ||
+                host.endsWith(".youtube.com")
             );
 
         }
+
+
+        /* ===============================
+           FACEBOOK
+        =============================== */
 
         if(platform === "Facebook"){
 
             return (
-                host.includes("facebook.com") ||
-                host.includes("fb.watch")
+                host === "facebook.com" ||
+                host.endsWith(".facebook.com") ||
+                host === "fb.watch"
             );
 
         }
 
+
+        /* ===============================
+           TIKTOK
+        =============================== */
+
         if(platform === "TikTok"){
 
-            return host.includes("tiktok.com");
+            return (
+                host === "tiktok.com" ||
+                host.endsWith(".tiktok.com")
+            );
 
         }
+
 
         return false;
 
@@ -653,18 +911,28 @@ function validateURL(platform,url){
 
 }
 
+
+/* =========================================
+   SUBMIT VIDEO
+========================================= */
+
 async function submitVideo(){
 
     hideMessage();
 
-    const button =
-        document.getElementById("submitBtn");
+    resetProgress();
+
 
     const title =
         document
         .getElementById("title")
         .value
         .trim();
+
+
+    /* =====================================
+       TITLE CHECK
+    ===================================== */
 
     if(!title){
 
@@ -674,14 +942,19 @@ async function submitVideo(){
         );
 
         return;
+
     }
+
+
+    /* =====================================
+       DIRECT UPLOAD
+    ===================================== */
 
     if(currentPlatform === "Direct"){
 
         const file =
-            document
-            .getElementById("videoFile")
-            .files[0];
+            videoFile.files[0];
+
 
         if(!file){
 
@@ -691,10 +964,13 @@ async function submitVideo(){
             );
 
             return;
+
         }
+
 
         const maxSize =
             50 * 1024 * 1024;
+
 
         if(file.size > maxSize){
 
@@ -704,18 +980,47 @@ async function submitVideo(){
             );
 
             return;
+
         }
+
+
+        if(
+            file.type &&
+            !file.type.startsWith("video/")
+        ){
+
+            showMessage(
+                "❌ Please select a valid video file.",
+                "error"
+            );
+
+            return;
+
+        }
+
 
         try{
 
-            button.disabled = true;
+            /* Disable button */
 
-            button.innerText =
+            submitBtn.disabled =
+                true;
+
+            submitBtn.innerText =
                 "⏳ Uploading...";
 
-            document
-                .getElementById("progress")
-                .style.display = "block";
+
+            progress.style.display =
+                "block";
+
+
+            progressBar.style.width =
+                "10%";
+
+
+            /* =================================
+               FILE NAME
+            ================================= */
 
             const extension =
                 file.name
@@ -723,18 +1028,30 @@ async function submitVideo(){
                 .pop()
                 .toLowerCase();
 
+
+            const randomPart =
+                Math.random()
+                .toString(36)
+                .substring(2,10);
+
+
             const fileName =
                 "video_" +
                 Date.now() +
                 "_" +
-                Math.random()
-                    .toString(36)
-                    .substring(2,10) +
+                randomPart +
                 "." +
                 extension;
 
+
             const filePath =
-                "uploads/" + fileName;
+                "uploads/" +
+                fileName;
+
+
+            /* =================================
+               UPLOAD TO SUPABASE STORAGE
+            ================================= */
 
             const uploadResult =
                 await supabaseClient
@@ -745,10 +1062,13 @@ async function submitVideo(){
                     file,
                     {
                         cacheControl:"3600",
-                        contentType:file.type,
+                        contentType:
+                            file.type ||
+                            "video/mp4",
                         upsert:false
                     }
                 );
+
 
             if(uploadResult.error){
 
@@ -756,9 +1076,14 @@ async function submitVideo(){
 
             }
 
-            document
-                .getElementById("progressBar")
-                .style.width = "70%";
+
+            progressBar.style.width =
+                "65%";
+
+
+            /* =================================
+               PUBLIC URL
+            ================================= */
 
             const publicURL =
                 supabaseClient
@@ -767,6 +1092,20 @@ async function submitVideo(){
                 .getPublicUrl(filePath)
                 .data
                 .publicUrl;
+
+
+            if(!publicURL){
+
+                throw new Error(
+                    "Could not create video URL."
+                );
+
+            }
+
+
+            /* =================================
+               INSERT INTO VIDEOS TABLE
+            ================================= */
 
             const databaseResult =
                 await supabaseClient
@@ -783,67 +1122,96 @@ async function submitVideo(){
 
                 });
 
+
             if(databaseResult.error){
 
                 throw databaseResult.error;
 
             }
 
-            document
-                .getElementById("progressBar")
-                .style.width = "100%";
+
+            progressBar.style.width =
+                "100%";
+
+
+            /* =================================
+               SUCCESS
+            ================================= */
 
             showMessage(
                 "✅ Video submitted successfully! Waiting for admin approval.",
                 "success"
             );
 
+
+            /* Reset form */
+
             document
                 .getElementById("title")
                 .value = "";
 
-            document
-                .getElementById("videoFile")
-                .value = "";
 
-            document
-                .getElementById("fileInfo")
-                .innerText =
+            videoFile.value = "";
+
+
+            fileInfo.innerText =
                 "MP4 recommended • Maximum 50 MB";
+
 
         }
 
         catch(error){
 
-            console.error(error);
+            console.error(
+                "Video upload error:",
+                error
+            );
+
 
             showMessage(
                 "❌ Upload failed: " +
-                (error.message || "Unknown error"),
+                (
+                    error.message ||
+                    "Unknown error"
+                ),
                 "error"
             );
 
         }
 
+
         finally{
 
-            button.disabled = false;
+            submitBtn.disabled =
+                false;
 
-            button.innerText =
+
+            submitBtn.innerText =
                 "⬆️ Upload & Submit Video";
+
+
+            setTimeout(
+                resetProgress,
+                1200
+            );
 
         }
 
+
         return;
+
     }
 
-    const videoURL =
-        document
-        .getElementById("videoURL")
-        .value
-        .trim();
 
-    if(!videoURL){
+    /* =====================================
+       URL SUBMISSION
+    ===================================== */
+
+    const url =
+        videoURL.value.trim();
+
+
+    if(!url){
 
         showMessage(
             "❌ Please enter the video URL.",
@@ -851,12 +1219,20 @@ async function submitVideo(){
         );
 
         return;
+
     }
 
-    if(!validateURL(
-        currentPlatform,
-        videoURL
-    )){
+
+    /* =====================================
+       URL VALIDATION
+    ===================================== */
+
+    if(
+        !validateURL(
+            currentPlatform,
+            url
+        )
+    ){
 
         showMessage(
             "❌ Please enter a valid " +
@@ -866,14 +1242,23 @@ async function submitVideo(){
         );
 
         return;
+
     }
+
 
     try{
 
-        button.disabled = true;
+        submitBtn.disabled =
+            true;
 
-        button.innerText =
+
+        submitBtn.innerText =
             "⏳ Submitting...";
+
+
+        /* =================================
+           INSERT URL VIDEO
+        ================================= */
 
         const databaseResult =
             await supabaseClient
@@ -884,11 +1269,12 @@ async function submitVideo(){
 
                 platform:currentPlatform,
 
-                videos_url:videoURL,
+                videos_url:url,
 
                 status:"pending"
 
             });
+
 
         if(databaseResult.error){
 
@@ -896,43 +1282,66 @@ async function submitVideo(){
 
         }
 
+
+        /* =================================
+           SUCCESS
+        ================================= */
+
         showMessage(
             "✅ Video submitted successfully! Waiting for admin approval.",
             "success"
         );
 
+
+        /* Reset form */
+
         document
             .getElementById("title")
             .value = "";
 
-        document
-            .getElementById("videoURL")
-            .value = "";
+
+        videoURL.value = "";
+
 
     }
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            "Video submission error:",
+            error
+        );
+
 
         showMessage(
             "❌ Submission failed: " +
-            (error.message || "Unknown error"),
+            (
+                error.message ||
+                "Unknown error"
+            ),
             "error"
         );
 
     }
 
+
     finally{
 
-        button.disabled = false;
+        submitBtn.disabled =
+            false;
 
-        button.innerText =
+
+        submitBtn.innerText =
             "📤 Submit Video";
 
     }
 
 }
+
+
+/* =========================================
+   INITIAL PLATFORM
+========================================= */
 
 changePlatform("YouTube");
 
