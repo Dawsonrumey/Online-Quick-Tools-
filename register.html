@@ -107,18 +107,21 @@ button:disabled{
 .home{
     margin-top:12px;
 }
-
 </style>
+
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-MQS2RKPRF2');
+function gtag(){
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+gtag('config', 'G-MQS2RKPRF2');
 </script>
-    
+
 </head>
 
 <body>
@@ -201,7 +204,6 @@ Login
 
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -209,7 +211,10 @@ Login
 const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-
+/*
+IMPORTANT:
+Keep your existing Supabase publishable key here.
+*/
 const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
@@ -240,25 +245,64 @@ function showMessage(text,type){
 }
 
 
+/*
+=========================================
+GET REFERRAL CODE FROM URL
+Example:
+
+register.html?ref=ABC12345
+=========================================
+*/
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const referralCode =
+    (urlParams.get("ref") || "")
+    .trim()
+    .toUpperCase();
+
+
+/*
+Save referral code temporarily.
+
+This is useful because email confirmation
+may happen later.
+*/
+
+if(referralCode){
+
+    localStorage.setItem(
+        "pendingReferralCode",
+        referralCode
+    );
+
+}
+
+
 form.addEventListener(
 "submit",
 async function(e){
 
     e.preventDefault();
 
+
     const username =
         document.getElementById("username")
         .value
         .trim();
+
 
     const email =
         document.getElementById("email")
         .value
         .trim();
 
+
     const password =
         document.getElementById("password")
         .value;
+
 
     const confirmPassword =
         document.getElementById("confirmPassword")
@@ -284,6 +328,21 @@ async function(e){
 
     try{
 
+        /*
+        Get referral code.
+
+        First use URL code.
+        If unavailable, use saved code.
+        */
+
+        const savedReferralCode =
+            referralCode ||
+            localStorage.getItem(
+                "pendingReferralCode"
+            ) ||
+            "";
+
+
         const { data, error } =
             await supabaseClient.auth.signUp({
 
@@ -292,8 +351,20 @@ async function(e){
                 password:password,
 
                 options:{
+
+                    /*
+                    Save username + referral
+                    inside Auth user metadata.
+
+                    Dashboard will process the
+                    referral after login.
+                    */
+
                     data:{
-                        username:username
+                        username:username,
+
+                        referral_code:
+                            savedReferralCode || null
                     },
 
                     emailRedirectTo:
@@ -310,10 +381,33 @@ async function(e){
         }
 
 
+        /*
+        Registration successful.
+        Referral is NOT rewarded here.
+
+        It will be processed securely
+        after the user logs in.
+        */
+
         showMessage(
             "Account created successfully! Please check your email and confirm your account.",
             "success"
         );
+
+
+        /*
+        Keep referral code until the
+        new user completes login.
+        */
+
+        if(savedReferralCode){
+
+            localStorage.setItem(
+                "pendingReferralCode",
+                savedReferralCode
+            );
+
+        }
 
 
         form.reset();
