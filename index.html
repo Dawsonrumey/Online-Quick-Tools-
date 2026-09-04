@@ -2374,6 +2374,70 @@ document.addEventListener(
 
     }
 );
+    /* =========================
+   FOOTER MODALS
+========================= */
+
+function openModal(modalId){
+
+    const modal =
+        document.getElementById(modalId);
+
+    if(modal){
+        modal.style.display = "block";
+    }
+
+}
+
+
+function closeModal(modalId){
+
+    const modal =
+        document.getElementById(modalId);
+
+    if(modal){
+        modal.style.display = "none";
+    }
+
+}
+
+
+/* Close modal when clicking outside */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target.classList.contains("modal")){
+
+            event.target.style.display = "none";
+
+        }
+
+    }
+);
+
+
+/* Close modal with Escape key */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            document
+                .querySelectorAll(".modal")
+                .forEach(function(modal){
+
+                    modal.style.display = "none";
+
+                });
+
+        }
+
+    }
+);
 </script>
 
 </body>
