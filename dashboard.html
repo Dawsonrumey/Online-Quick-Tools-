@@ -102,6 +102,69 @@ header h1{
     color:#166534;
 }
 
+.referral-box{
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    padding:15px;
+    margin-top:12px;
+}
+
+.referral-link{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    background:white;
+    font-size:14px;
+    margin:8px 0 10px;
+}
+
+.referral-stats{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    margin-top:15px;
+}
+
+.stat{
+    flex:1;
+    text-align:center;
+    background:#eff6ff;
+    padding:14px;
+    border-radius:10px;
+}
+
+.stat-number{
+    font-size:26px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.stat-label{
+    font-size:13px;
+    color:#64748b;
+    margin-top:4px;
+}
+
+.referral-info{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.5;
+    margin-top:12px;
+}
+
+.copy-success{
+    display:none;
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    background:#dcfce7;
+    color:#166534;
+    text-align:center;
+    font-size:14px;
+}
+
 .error{
     background:#fee2e2;
     color:#991b1b;
@@ -110,6 +173,22 @@ header h1{
 }
 
 </style>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+
+function gtag(){
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+
+gtag('config', 'G-MQS2RKPRF2');
+</script>
+
 </head>
 
 <body>
@@ -126,16 +205,6 @@ header h1{
     Logout
 </button>
 
-      <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-MQS2RKPRF2');
-</script>
-
 </header>
 
 
@@ -148,6 +217,8 @@ header h1{
 
 <div id="dashboard"
      style="display:none;">
+
+    <!-- ACCOUNT CARD -->
 
     <div class="card">
 
@@ -179,6 +250,98 @@ header h1{
     </div>
 
 
+    <!-- REFERRAL CARD -->
+
+    <div class="card">
+
+        <h2>🎁 Refer & Earn</h2>
+
+        <div class="referral-info">
+
+            Invite your friends to join
+            Online Quick Tools.
+
+            <br><br>
+
+            You get <strong>10 points</strong>
+            for each successful referral.
+
+            Your friend gets
+            <strong>5 points</strong>.
+
+        </div>
+
+
+        <div class="referral-box">
+
+            <div class="label">
+                Your Referral Link
+            </div>
+
+            <input
+                id="referralLink"
+                class="referral-link"
+                type="text"
+                readonly
+            >
+
+            <button
+                class="action"
+                id="copyReferralButton"
+                type="button"
+            >
+                📋 Copy Referral Link
+            </button>
+
+            <div
+                id="copySuccess"
+                class="copy-success"
+            >
+                ✅ Referral link copied!
+            </div>
+
+
+            <div class="referral-stats">
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="referralCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="stat-label">
+                        Total Referrals
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                    >
+                        10
+                    </div>
+
+                    <div class="stat-label">
+                        Points / Referral
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DAILY REWARD -->
+
     <div class="card">
 
         <h2>🎁 Daily Reward</h2>
@@ -204,6 +367,8 @@ header h1{
     </div>
 
 
+    <!-- QUICK LINKS -->
+
     <div class="card">
 
         <h2>Quick Links</h2>
@@ -215,20 +380,33 @@ header h1{
         >
             🏠 Home
         </button>
-          <button
-    class="action"
-    type="button"
-    onclick="location.href='reward-history.html'"
->
-    📜 Reward History
-</button>
-          <button
-    class="action"
-    type="button"
-    onclick="location.href='tasks.html'"
->
-    💰 Earn Points
-</button>
+
+
+        <button
+            class="action"
+            type="button"
+            onclick="location.href='reward-history.html'"
+        >
+            📜 Reward History
+        </button>
+
+
+        <button
+            class="action"
+            type="button"
+            onclick="location.href='tasks.html'"
+        >
+            💰 Earn Points
+        </button>
+
+
+        <button
+            class="action"
+            type="button"
+            onclick="location.href='referral-history.html'"
+        >
+            👥 Referral History
+        </button>
 
     </div>
 
@@ -248,8 +426,13 @@ header h1{
 const SUPABASE_URL =
     "https://etkqkptoxkfhxcysaadi.supabase.co";
 
+
+/*
+IMPORTANT:
+Keep your existing Supabase publishable key here.
+*/
 const SUPABASE_KEY =
-    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+    "YOUR_EXISTING_SUPABASE_PUBLISHABLE_KEY";
 
 
 const supabaseClient =
@@ -286,6 +469,21 @@ const dailyRewardButton =
 const dailyRewardText =
     document.getElementById("dailyRewardText");
 
+const referralLinkElement =
+    document.getElementById("referralLink");
+
+const referralCountElement =
+    document.getElementById("referralCount");
+
+const copyReferralButton =
+    document.getElementById("copyReferralButton");
+
+const copySuccess =
+    document.getElementById("copySuccess");
+
+
+let currentUser = null;
+
 
 function showError(message){
 
@@ -299,6 +497,107 @@ function showError(message){
 
 }
 
+
+/*
+=========================================
+PROCESS REFERRAL
+=========================================
+*/
+
+async function processPendingReferral(user){
+
+    try{
+
+        /*
+        Get referral code saved during
+        registration.
+
+        First check user metadata.
+        Then localStorage as fallback.
+        */
+
+        let referralCode =
+            user.user_metadata?.referral_code ||
+            localStorage.getItem(
+                "pendingReferralCode"
+            ) ||
+            "";
+
+
+        referralCode =
+            String(referralCode)
+            .trim()
+            .toUpperCase();
+
+
+        if(!referralCode){
+
+            return;
+
+        }
+
+
+        /*
+        Call secure Supabase function.
+
+        The function itself prevents:
+        - self referral
+        - duplicate referral
+        - unauthorized processing
+        */
+
+        const { error } =
+            await supabaseClient.rpc(
+                "process_referral",
+                {
+                    new_user_id: user.id,
+                    referral_code_input:
+                        referralCode
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Referral processing error:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        /*
+        Referral processing succeeded
+        or was already processed.
+
+        Remove local pending code.
+        */
+
+        localStorage.removeItem(
+            "pendingReferralCode"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Referral error:",
+            error
+        );
+
+    }
+
+}
+
+
+/*
+=========================================
+LOAD DASHBOARD
+=========================================
+*/
 
 async function loadDashboard(){
 
@@ -330,9 +629,25 @@ async function loadDashboard(){
         }
 
 
+        currentUser = user;
+
+
         emailElement.textContent =
             user.email || "-";
 
+
+        /*
+        Process referral before loading
+        points so the new user's points
+        are displayed correctly.
+        */
+
+        await processPendingReferral(user);
+
+
+        /*
+        Load profile
+        */
 
         const {
             data: profile,
@@ -340,7 +655,9 @@ async function loadDashboard(){
         } =
         await supabaseClient
             .from("profiles")
-            .select("username, points")
+            .select(
+                "username, points, referral_code, referral_count"
+            )
             .eq("id", user.id)
             .single();
 
@@ -359,6 +676,35 @@ async function loadDashboard(){
 
         pointsElement.textContent =
             profile.points ?? 0;
+
+
+        /*
+        Build referral link
+        */
+
+        const referralCode =
+            profile.referral_code || "";
+
+
+        const referralLink =
+            window.location.origin +
+            window.location.pathname
+                .replace(
+                    "dashboard.html",
+                    "register.html"
+                ) +
+            "?ref=" +
+            encodeURIComponent(
+                referralCode
+            );
+
+
+        referralLinkElement.value =
+            referralLink;
+
+
+        referralCountElement.textContent =
+            profile.referral_count ?? 0;
 
 
         loading.style.display =
@@ -384,6 +730,93 @@ async function loadDashboard(){
 
 }
 
+
+/*
+=========================================
+COPY REFERRAL LINK
+=========================================
+*/
+
+copyReferralButton.addEventListener(
+    "click",
+    async function(){
+
+        const link =
+            referralLinkElement.value;
+
+
+        if(!link){
+
+            return;
+
+        }
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                link
+            );
+
+
+            copySuccess.style.display =
+                "block";
+
+
+            setTimeout(
+                function(){
+
+                    copySuccess.style.display =
+                        "none";
+
+                },
+                2500
+            );
+
+
+        }catch(error){
+
+            /*
+            Fallback for browsers where
+            Clipboard API is unavailable.
+            */
+
+            referralLinkElement.select();
+
+            referralLinkElement.setSelectionRange(
+                0,
+                99999
+            );
+
+
+            document.execCommand("copy");
+
+
+            copySuccess.style.display =
+                "block";
+
+
+            setTimeout(
+                function(){
+
+                    copySuccess.style.display =
+                        "none";
+
+                },
+                2500
+            );
+
+        }
+
+    }
+);
+
+
+/*
+=========================================
+DAILY REWARD
+=========================================
+*/
 
 async function claimDailyReward(){
 
@@ -468,14 +901,22 @@ function showRewardMessage(text){
             "rewardMessage"
         );
 
+
     message.textContent =
         text;
+
 
     message.style.display =
         "block";
 
 }
 
+
+/*
+=========================================
+LOGOUT
+=========================================
+*/
 
 logoutButton.addEventListener(
     "click",
@@ -490,11 +931,23 @@ logoutButton.addEventListener(
 );
 
 
+/*
+=========================================
+EVENTS
+=========================================
+*/
+
 dailyRewardButton.addEventListener(
     "click",
     claimDailyReward
 );
 
+
+/*
+=========================================
+START
+=========================================
+*/
 
 loadDashboard();
 
