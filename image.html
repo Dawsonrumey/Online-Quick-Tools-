@@ -4,8 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Image Upload - Online Quick Tools</title>
-  <meta name="description" content="Upload and preview your images with Online Quick Tools.">
+  <title>Image Upload & Reactions - Online Quick Tools</title>
+
+  <meta
+    name="description"
+    content="Upload images and react to community images with Online Quick Tools."
+  >
 
   <style>
     * {
@@ -20,29 +24,39 @@
     }
 
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 16px;
     }
 
     .card {
-      background: white;
-      padding: 25px;
+      background: #fff;
+      padding: 22px;
       border-radius: 16px;
       box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
     }
 
-    h1 {
+    h1,
+    h2 {
       text-align: center;
       margin-top: 0;
+    }
+
+    .login-note {
+      text-align: center;
+      background: #eef4ff;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 18px;
     }
 
     .upload-box {
       border: 2px dashed #999;
       border-radius: 12px;
-      padding: 30px 15px;
+      padding: 25px 15px;
       text-align: center;
-      margin: 20px 0;
+      margin: 18px 0;
     }
 
     input[type="file"] {
@@ -51,13 +65,12 @@
     }
 
     button {
-      width: 100%;
-      padding: 13px;
       border: 0;
       border-radius: 10px;
+      padding: 11px 14px;
       background: #2563eb;
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
     }
 
@@ -66,10 +79,16 @@
       cursor: not-allowed;
     }
 
+    #uploadBtn {
+      width: 100%;
+      font-size: 16px;
+    }
+
     #status {
       text-align: center;
-      margin-top: 15px;
+      margin: 14px 0;
       font-weight: bold;
+      min-height: 20px;
     }
 
     #preview {
@@ -77,8 +96,74 @@
       width: 100%;
       max-height: 400px;
       object-fit: contain;
-      margin-top: 20px;
+      margin-top: 15px;
       border-radius: 10px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .image-card {
+      border: 1px solid #e1e5eb;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .image-card img {
+      display: block;
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      background: #f0f2f5;
+    }
+
+    .image-info {
+      padding: 12px;
+    }
+
+    .date {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .reactions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .reaction-btn {
+      flex: 1;
+      min-width: 90px;
+      background: #f1f3f5;
+      color: #222;
+    }
+
+    .reaction-btn.active {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .counts {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .empty {
+      text-align: center;
+      color: #777;
+      padding: 20px;
+    }
+
+    .error {
+      color: #b00020;
     }
   </style>
 </head>
@@ -86,18 +171,30 @@
 <body>
 
 <div class="container">
+
+  <!-- Upload -->
   <div class="card">
 
     <h1>🖼️ Image Upload</h1>
 
+    <div id="loginNote" class="login-note">
+      Checking login...
+    </div>
+
     <div class="upload-box">
-      <p>Select an image</p>
+
+      <p>
+        Select JPG, PNG or WEBP
+        <br>
+        Maximum size: 5 MB
+      </p>
 
       <input
         type="file"
         id="imageFile"
         accept="image/jpeg,image/png,image/webp"
       >
+
     </div>
 
     <button id="uploadBtn">
@@ -106,99 +203,782 @@
 
     <p id="status"></p>
 
-    <img id="preview" alt="Uploaded image preview">
+    <img
+      id="preview"
+      alt="Uploaded image preview"
+    >
 
   </div>
+
+
+  <!-- Gallery -->
+  <div class="card">
+
+    <h2>🌐 Image Gallery</h2>
+
+    <div id="gallery" class="gallery">
+      <div class="empty">
+        Loading images...
+      </div>
+    </div>
+
+  </div>
+
 </div>
+
 
 <!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL = "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-  // এখানে তোমার EXISTING publishable/anon key বসাবে
-  const SUPABASE_KEY = "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+  /* =========================================
+     SUPABASE CONFIG
+  ========================================= */
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  const SUPABASE_URL =
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-  const fileInput = document.getElementById("imageFile");
-  const uploadBtn = document.getElementById("uploadBtn");
-  const status = document.getElementById("status");
-  const preview = document.getElementById("preview");
+  /*
+    এখানে তোমার EXISTING Supabase
+    publishable/anon key বসাবে।
+  */
 
-  uploadBtn.addEventListener("click", async () => {
+  const SUPABASE_KEY =
+    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
-    const file = fileInput.files[0];
 
-    if (!file) {
-      status.textContent = "Please select an image first.";
-      return;
-    }
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
 
-    const allowedTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/webp"
-    ];
 
-    if (!allowedTypes.includes(file.type)) {
-      status.textContent = "Only JPG, PNG and WEBP images are allowed.";
-      return;
-    }
+  /* =========================================
+     ELEMENTS
+  ========================================= */
 
-    if (file.size > 5 * 1024 * 1024) {
-      status.textContent = "Maximum file size is 5 MB.";
-      return;
-    }
+  const fileInput =
+    document.getElementById("imageFile");
 
-    uploadBtn.disabled = true;
-    status.textContent = "Uploading...";
+  const uploadBtn =
+    document.getElementById("uploadBtn");
 
-    try {
+  const statusEl =
+    document.getElementById("status");
 
-      const fileName =
-        Date.now() + "-" +
-        Math.random().toString(36).substring(2, 10) +
-        "-" +
-        file.name.replace(/[^a-zA-Z0-9._-]/g, "");
+  const preview =
+    document.getElementById("preview");
 
-      const filePath = fileName;
+  const gallery =
+    document.getElementById("gallery");
 
-      const { error } = await supabaseClient
-        .storage
-        .from("images")
-        .upload(filePath, file);
+  const loginNote =
+    document.getElementById("loginNote");
 
-      if (error) {
-        throw error;
+
+  let currentUser = null;
+
+
+  /* =========================================
+     HTML SECURITY
+  ========================================= */
+
+  function escapeHtml(value) {
+
+    return String(value).replace(
+      /[&<>'"]/g,
+      function(c) {
+
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          "'": "&#39;",
+          '"': "&quot;"
+
+        }[c];
+
       }
+    );
 
-      const { data } = supabaseClient
-        .storage
-        .from("images")
-        .getPublicUrl(filePath);
+  }
 
-      preview.src = data.publicUrl;
-      preview.style.display = "block";
 
-      status.textContent = "✅ Image uploaded successfully!";
+  /* =========================================
+     CHECK LOGIN
+  ========================================= */
 
-    } catch (error) {
+  async function loadUser() {
+
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.getUser();
+
+
+    if (error) {
 
       console.error(error);
-      status.textContent =
-        "❌ Upload failed: " + error.message;
 
-    } finally {
+      currentUser = null;
+
+    } else {
+
+      currentUser =
+        data.user || null;
+
+    }
+
+
+    if (currentUser) {
+
+      loginNote.textContent =
+        "✅ You are logged in. You can upload and react to images.";
 
       uploadBtn.disabled = false;
 
+    } else {
+
+      loginNote.textContent =
+        "🔐 Please log in to upload or react to images.";
+
+      uploadBtn.disabled = true;
+
     }
-  });
+
+  }
+
+
+  /* =========================================
+     LOAD IMAGE GALLERY
+  ========================================= */
+
+  async function loadGallery() {
+
+    gallery.innerHTML =
+      '<div class="empty">Loading images...</div>';
+
+
+    const {
+      data: images,
+      error
+    } = await supabaseClient
+      .from("images")
+      .select(
+        "id,user_id,public_url,created_at"
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false
+        }
+      );
+
+
+    if (error) {
+
+      console.error(error);
+
+      gallery.innerHTML =
+        '<div class="empty error">' +
+        "Could not load images: " +
+        escapeHtml(error.message) +
+        "</div>";
+
+      return;
+
+    }
+
+
+    if (!images || images.length === 0) {
+
+      gallery.innerHTML =
+        '<div class="empty">' +
+        "No images uploaded yet." +
+        "</div>";
+
+      return;
+
+    }
+
+
+    const imageIds =
+      images.map(
+        image => image.id
+      );
+
+
+    /* Get reactions */
+
+    const {
+      data: reactions,
+      error: reactionError
+    } = await supabaseClient
+      .from("image_reactions")
+      .select(
+        "image_id,user_id,reaction"
+      )
+      .in(
+        "image_id",
+        imageIds
+      );
+
+
+    if (reactionError) {
+
+      console.error(
+        reactionError
+      );
+
+    }
+
+
+    /* Reaction map */
+
+    const reactionMap = {};
+
+
+    (reactions || []).forEach(
+      reaction => {
+
+        if (!reactionMap[reaction.image_id]) {
+
+          reactionMap[reaction.image_id] = {
+
+            like: 0,
+            love: 0,
+            wow: 0,
+            mine: null
+
+          };
+
+        }
+
+
+        if (
+          reactionMap[reaction.image_id]
+            [reaction.reaction] !== undefined
+        ) {
+
+          reactionMap[reaction.image_id]
+            [reaction.reaction]++;
+
+        }
+
+
+        if (
+          currentUser &&
+          reaction.user_id === currentUser.id
+        ) {
+
+          reactionMap[reaction.image_id]
+            .mine = reaction.reaction;
+
+        }
+
+      }
+    );
+
+
+    /* Create gallery */
+
+    gallery.innerHTML =
+      images.map(
+        image => {
+
+          const r =
+            reactionMap[image.id] || {
+
+              like: 0,
+              love: 0,
+              wow: 0,
+              mine: null
+
+            };
+
+
+          function active(type) {
+
+            return r.mine === type
+              ? " active"
+              : "";
+
+          }
+
+
+          const date =
+            new Date(
+              image.created_at
+            ).toLocaleString();
+
+
+          return `
+
+            <div class="image-card">
+
+              <img
+                src="${escapeHtml(image.public_url)}"
+                alt="Uploaded image"
+                loading="lazy"
+              >
+
+              <div class="image-info">
+
+                <div class="date">
+                  Uploaded:
+                  ${escapeHtml(date)}
+                </div>
+
+
+                <div class="reactions">
+
+                  <button
+                    class="reaction-btn${active("like")}"
+                    onclick="setReaction(${image.id}, 'like')"
+                  >
+                    👍 Like
+                  </button>
+
+
+                  <button
+                    class="reaction-btn${active("love")}"
+                    onclick="setReaction(${image.id}, 'love')"
+                  >
+                    ❤️ Love
+                  </button>
+
+
+                  <button
+                    class="reaction-btn${active("wow")}"
+                    onclick="setReaction(${image.id}, 'wow')"
+                  >
+                    😮 Wow
+                  </button>
+
+                </div>
+
+
+                <div class="counts">
+
+                  👍 ${r.like}
+
+                  &nbsp;&nbsp;
+
+                  ❤️ ${r.love}
+
+                  &nbsp;&nbsp;
+
+                  😮 ${r.wow}
+
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join("");
+
+  }
+
+
+  /* =========================================
+     REACTION SYSTEM
+  ========================================= */
+
+  window.setReaction =
+    async function(
+      imageId,
+      reaction
+    ) {
+
+
+      if (!currentUser) {
+
+        alert(
+          "Please log in first to react to an image."
+        );
+
+        return;
+
+      }
+
+
+      /* Check existing reaction */
+
+      const {
+        data: existing,
+        error: findError
+      } = await supabaseClient
+        .from("image_reactions")
+        .select(
+          "id,reaction"
+        )
+        .eq(
+          "image_id",
+          imageId
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+      if (findError) {
+
+        alert(
+          "Could not check your reaction: " +
+          findError.message
+        );
+
+        return;
+
+      }
+
+
+      /* Same reaction = remove */
+
+      if (
+        existing &&
+        existing.reaction === reaction
+      ) {
+
+        const {
+          error
+        } = await supabaseClient
+          .from("image_reactions")
+          .delete()
+          .eq(
+            "id",
+            existing.id
+          );
+
+
+        if (error) {
+
+          alert(
+            "Could not remove reaction: " +
+            error.message
+          );
+
+          return;
+
+        }
+
+      }
+
+
+      /* Different reaction = update */
+
+      else if (existing) {
+
+        const {
+          error
+        } = await supabaseClient
+          .from("image_reactions")
+          .update({
+            reaction: reaction
+          })
+          .eq(
+            "id",
+            existing.id
+          );
+
+
+        if (error) {
+
+          alert(
+            "Could not change reaction: " +
+            error.message
+          );
+
+          return;
+
+        }
+
+      }
+
+
+      /* No previous reaction = insert */
+
+      else {
+
+        const {
+          error
+        } = await supabaseClient
+          .from("image_reactions")
+          .insert({
+
+            image_id: imageId,
+            user_id: currentUser.id,
+            reaction: reaction
+
+          });
+
+
+        if (error) {
+
+          alert(
+            "Could not add reaction: " +
+            error.message
+          );
+
+          return;
+
+        }
+
+      }
+
+
+      await loadGallery();
+
+    };
+
+
+  /* =========================================
+     IMAGE UPLOAD
+  ========================================= */
+
+  uploadBtn.addEventListener(
+    "click",
+    async function() {
+
+
+      if (!currentUser) {
+
+        statusEl.textContent =
+          "🔐 Please log in first.";
+
+        return;
+
+      }
+
+
+      const file =
+        fileInput.files[0];
+
+
+      if (!file) {
+
+        statusEl.textContent =
+          "Please select an image first.";
+
+        return;
+
+      }
+
+
+      /* Allowed file types */
+
+      const allowedTypes = [
+
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+
+      ];
+
+
+      if (
+        !allowedTypes.includes(
+          file.type
+        )
+      ) {
+
+        statusEl.textContent =
+          "Only JPG, PNG and WEBP images are allowed.";
+
+        return;
+
+      }
+
+
+      /* Maximum 5 MB */
+
+      if (
+        file.size >
+        5 * 1024 * 1024
+      ) {
+
+        statusEl.textContent =
+          "Maximum file size is 5 MB.";
+
+        return;
+
+      }
+
+
+      uploadBtn.disabled = true;
+
+      statusEl.textContent =
+        "Uploading...";
+
+
+      preview.style.display =
+        "none";
+
+
+      try {
+
+
+        /* Safe filename */
+
+        const safeName =
+          file.name.replace(
+            /[^a-zA-Z0-9._-]/g,
+            ""
+          );
+
+
+        /*
+          User-specific folder
+        */
+
+        const filePath =
+          currentUser.id +
+          "/" +
+          Date.now() +
+          "-" +
+          Math.random()
+            .toString(36)
+            .substring(2, 10) +
+          "-" +
+          safeName;
+
+
+        /* Upload to Storage */
+
+        const {
+          error: uploadError
+        } = await supabaseClient
+          .storage
+          .from("images")
+          .upload(
+            filePath,
+            file
+          );
+
+
+        if (uploadError) {
+
+          throw uploadError;
+
+        }
+
+
+        /* Public URL */
+
+        const {
+          data: urlData
+        } = supabaseClient
+          .storage
+          .from("images")
+          .getPublicUrl(
+            filePath
+          );
+
+
+        /* Save database record */
+
+        const {
+          error: dbError
+        } = await supabaseClient
+          .from("images")
+          .insert({
+
+            user_id:
+              currentUser.id,
+
+            file_path:
+              filePath,
+
+            public_url:
+              urlData.publicUrl
+
+          });
+
+
+        /*
+          If database insert fails,
+          remove uploaded file.
+        */
+
+        if (dbError) {
+
+          await supabaseClient
+            .storage
+            .from("images")
+            .remove([
+              filePath
+            ]);
+
+          throw dbError;
+
+        }
+
+
+        /* Preview */
+
+        preview.src =
+          urlData.publicUrl;
+
+        preview.style.display =
+          "block";
+
+
+        statusEl.textContent =
+          "✅ Image uploaded successfully!";
+
+
+        fileInput.value = "";
+
+
+        /* Refresh gallery */
+
+        await loadGallery();
+
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        statusEl.textContent =
+          "❌ Upload failed: " +
+          error.message;
+
+      }
+
+
+      finally {
+
+        uploadBtn.disabled =
+          !currentUser;
+
+      }
+
+    }
+  );
+
+
+  /* =========================================
+     INITIALIZE
+  ========================================= */
+
+  (async function() {
+
+    await loadUser();
+
+    await loadGallery();
+
+  })();
+
 </script>
 
 </body>
