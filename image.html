@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Image Upload - Online Quick Tools</title>
+  <meta name="description" content="Upload and preview your images with Online Quick Tools.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .upload-box {
+      border: 2px dashed #999;
+      border-radius: 12px;
+      padding: 30px 15px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      border: 0;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #status {
+      text-align: center;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    #preview {
+      display: none;
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      margin-top: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <h1>🖼️ Image Upload</h1>
+
+    <div class="upload-box">
+      <p>Select an image</p>
+
+      <input
+        type="file"
+        id="imageFile"
+        accept="image/jpeg,image/png,image/webp"
+      >
+    </div>
+
+    <button id="uploadBtn">
+      ⬆️ Upload Image
+    </button>
+
+    <p id="status"></p>
+
+    <img id="preview" alt="Uploaded image preview">
+
+  </div>
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL = "https://etkqkptoxkfhxcysaadi.supabase.co";
+
+  // এখানে তোমার EXISTING publishable/anon key বসাবে
+  const SUPABASE_KEY = "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const fileInput = document.getElementById("imageFile");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const status = document.getElementById("status");
+  const preview = document.getElementById("preview");
+
+  uploadBtn.addEventListener("click", async () => {
+
+    const file = fileInput.files[0];
+
+    if (!file) {
+      status.textContent = "Please select an image first.";
+      return;
+    }
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      status.textContent = "Only JPG, PNG and WEBP images are allowed.";
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      status.textContent = "Maximum file size is 5 MB.";
+      return;
+    }
+
+    uploadBtn.disabled = true;
+    status.textContent = "Uploading...";
+
+    try {
+
+      const fileName =
+        Date.now() + "-" +
+        Math.random().toString(36).substring(2, 10) +
+        "-" +
+        file.name.replace(/[^a-zA-Z0-9._-]/g, "");
+
+      const filePath = fileName;
+
+      const { error } = await supabaseClient
+        .storage
+        .from("images")
+        .upload(filePath, file);
+
+      if (error) {
+        throw error;
+      }
+
+      const { data } = supabaseClient
+        .storage
+        .from("images")
+        .getPublicUrl(filePath);
+
+      preview.src = data.publicUrl;
+      preview.style.display = "block";
+
+      status.textContent = "✅ Image uploaded successfully!";
+
+    } catch (error) {
+
+      console.error(error);
+      status.textContent =
+        "❌ Upload failed: " + error.message;
+
+    } finally {
+
+      uploadBtn.disabled = false;
+
+    }
+  });
+</script>
+
+</body>
+</html>
