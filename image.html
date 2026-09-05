@@ -1,1192 +1,1723 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Image Hub - Online Quick Tools</title>
+<title>Image Feed — Online Quick Tools</title>
 
-  <meta name="description"
-        content="Upload, view and react to images on Online Quick Tools.">
+<meta name="description"
+      content="Browse and share images on Online Quick Tools Image Feed.">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #f3f4f6;
+    --card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --button: #f3f4f6;
+    --primary: #2563eb;
+    --danger: #ef4444;
+    --shadow: 0 3px 15px rgba(0,0,0,.08);
+}
+
+body.dark {
+    --bg: #111827;
+    --card: #1f2937;
+    --text: #f9fafb;
+    --muted: #9ca3af;
+    --border: #374151;
+    --button: #374151;
+    --primary: #60a5fa;
+    --shadow: 0 3px 15px rgba(0,0,0,.25);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+
+.header-inner {
+    max-width: 1100px;
+    margin: auto;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.nav button {
+    border: 1px solid var(--border);
+    background: var(--button);
+    color: var(--text);
+    border-radius: 10px;
+    padding: 9px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nav button:hover {
+    opacity: .85;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    padding: 20px 12px 50px;
+}
+
+.feed-title {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.feed-title h1 {
+    font-size: 27px;
+    margin-bottom: 6px;
+}
+
+.feed-title p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================
+   UPLOAD PANEL
+========================= */
+
+.upload-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.upload-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.upload-info {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.file-input {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.upload-btn {
+    width: 100%;
+    border: 0;
+    background: var(--primary);
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.upload-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.login-message {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    padding: 10px;
+}
+
+/* =========================
+   FEED
+========================= */
+
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.image-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+/* User row */
+
+.post-header {
+    padding: 13px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.post-user {
+    min-width: 0;
+}
+
+.post-user strong {
+    display: block;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-time {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* Image */
+
+.post-image-wrap {
+    width: 100%;
+    background: #000;
+}
+
+.post-image {
+    display: block;
+    width: 100%;
+    max-height: 700px;
+    object-fit: contain;
+    margin: auto;
+}
+
+/* Reactions */
+
+.reaction-summary {
+    padding: 10px 14px 6px;
+    color: var(--muted);
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+}
+
+.reaction-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 9px;
+}
+
+.reaction-btn {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    padding: 9px 4px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.reaction-btn:hover {
+    background: var(--button);
+}
+
+.reaction-btn.active {
+    background: var(--button);
+    color: var(--primary);
+}
+
+.reaction-btn.love-active {
+    color: var(--danger);
+}
+
+/* =========================
+   STATES
+========================= */
+
+.loading,
+.empty,
+.error-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px 15px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 10px;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
     }
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #222;
-      min-height: 100vh;
-    }
+.load-more {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+}
 
-    header {
-      background: #ffffff;
-      border-bottom: 1px solid #ddd;
-      padding: 14px 16px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+.load-more:disabled {
+    opacity: .5;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%) translateY(100px);
+    background: #111827;
+    color: white;
+    padding: 11px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    z-index: 2000;
+    transition: .3s ease;
+    max-width: 90%;
+    text-align: center;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
 
     .header-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .logo {
-      font-size: 21px;
-      font-weight: bold;
-      color: #e63946;
+        text-align: center;
     }
 
-    .header-buttons {
-      display: flex;
-      gap: 8px;
-      align-items: center;
+    .nav {
+        justify-content: center;
     }
 
-    button,
-    .home-btn {
-      border: none;
-      border-radius: 8px;
-      padding: 9px 13px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
+    .nav button {
+        font-size: 13px;
+        padding: 8px 10px;
     }
 
-    .home-btn {
-      background: #222;
-      color: #fff;
-      text-decoration: none;
+    .container {
+        padding-top: 15px;
     }
 
-    .login-btn {
-      background: #e63946;
-      color: white;
+    .feed-title h1 {
+        font-size: 24px;
     }
 
-    .logout-btn {
-      background: #555;
-      color: white;
-      display: none;
+    .post-image {
+        max-height: 600px;
     }
+}
 
-    main {
-      width: 94%;
-      max-width: 1100px;
-      margin: 25px auto 50px;
-    }
+@media (max-width: 420px) {
 
-    .hero {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-
-    .hero h1 {
-      font-size: 30px;
-      margin-bottom: 7px;
-    }
-
-    .hero p {
-      color: #666;
-      font-size: 15px;
-    }
-
-    .panel {
-      background: white;
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 3px 15px rgba(0,0,0,.07);
-    }
-
-    .panel h2 {
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    #uploadPanel {
-      display: none;
-    }
-
-    .user-info {
-      background: #f0f3f8;
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-size: 13px;
-      word-break: break-all;
-    }
-
-    input[type="file"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px dashed #aaa;
-      border-radius: 9px;
-      background: #fafafa;
-      margin-bottom: 12px;
-    }
-
-    .upload-btn {
-      width: 100%;
-      background: #e63946;
-      color: white;
-      padding: 12px;
-    }
-
-    .upload-btn:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-
-    .message {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 8px;
-      display: none;
-      font-size: 14px;
-    }
-
-    .success {
-      display: block;
-      background: #e8f7ed;
-      color: #16743a;
-    }
-
-    .error {
-      display: block;
-      background: #fdecec;
-      color: #a11;
-    }
-
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 18px;
-    }
-
-    .image-card {
-      background: #fff;
-      border-radius: 13px;
-      overflow: hidden;
-      box-shadow: 0 3px 14px rgba(0,0,0,.08);
-    }
-
-    .image-card img {
-      width: 100%;
-      height: 230px;
-      display: block;
-      object-fit: cover;
-      background: #eee;
-    }
-
-    .image-content {
-      padding: 12px;
-    }
-
-    .image-date {
-      color: #777;
-      font-size: 12px;
-      margin-bottom: 10px;
-    }
-
-    .reactions {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+    .nav button {
+        font-size: 12px;
+        padding: 7px 8px;
     }
 
     .reaction-btn {
-      flex: 1;
-      min-width: 65px;
-      background: #f1f3f6;
-      color: #222;
-      border: 1px solid #ddd;
-      transition: .2s;
+        font-size: 13px;
     }
-
-    .reaction-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .reaction-btn.active {
-      background: #ffe8e8;
-      border-color: #e63946;
-    }
-
-    .empty {
-      text-align: center;
-      padding: 35px 15px;
-      color: #777;
-      background: white;
-      border-radius: 12px;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 25px;
-      color: #666;
-    }
-
-    .login-required {
-      text-align: center;
-      padding: 18px;
-      background: #fff7df;
-      border-radius: 10px;
-      color: #765b00;
-      margin-bottom: 20px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px 15px;
-      color: #777;
-      font-size: 13px;
-      border-top: 1px solid #ddd;
-      background: #fff;
-    }
-
-    /* Dark mode */
-    body.dark {
-      background: #111827;
-      color: #eee;
-    }
-
-    body.dark header,
-    body.dark .panel,
-    body.dark .image-card,
-    body.dark footer,
-    body.dark .empty {
-      background: #1f2937;
-      color: #eee;
-    }
-
-    body.dark header,
-    body.dark footer {
-      border-color: #374151;
-    }
-
-    body.dark .hero p,
-    body.dark .image-date {
-      color: #aaa;
-    }
-
-    body.dark .user-info,
-    body.dark input[type="file"] {
-      background: #111827;
-      color: #eee;
-      border-color: #444;
-    }
-
-    body.dark .reaction-btn {
-      background: #374151;
-      color: #eee;
-      border-color: #4b5563;
-    }
-
-    body.dark .reaction-btn.active {
-      background: #4b2525;
-      border-color: #e63946;
-    }
-
-    @media (max-width: 600px) {
-      .header-inner {
-        flex-wrap: wrap;
-      }
-
-      .logo {
-        font-size: 18px;
-      }
-
-      .hero h1 {
-        font-size: 25px;
-      }
-
-      .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-
-      .image-card img {
-        height: 180px;
-      }
-
-      .image-content {
-        padding: 8px;
-      }
-
-      .reaction-btn {
-        min-width: 0;
-        padding: 8px 4px;
-        font-size: 12px;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .gallery {
-        grid-template-columns: 1fr;
-      }
-
-      .image-card img {
-        height: 240px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
-  <div class="header-inner">
+    <div class="header-inner">
 
-    <div class="logo">
-      🖼️ Image Hub
+        <div class="logo"
+             onclick="window.location.href='index.html'">
+            ⚡ Online Quick Tools
+        </div>
+
+        <div class="nav">
+
+            <button onclick="window.location.href='index.html'">
+                🏠 Home
+            </button>
+
+            <button id="authButton"
+                    onclick="handleAuthButton()">
+                👤 Login
+            </button>
+
+            <button onclick="toggleTheme()"
+                    title="Toggle theme">
+                🌙
+            </button>
+
+        </div>
+
     </div>
-
-    <div class="header-buttons">
-      <a href="index.html" class="home-btn">🏠 Home</a>
-      <button id="loginBtn" class="login-btn">🔐 Login</button>
-      <button id="logoutBtn" class="logout-btn">Logout</button>
-    </div>
-
-  </div>
 </header>
 
 
-<main>
+<!-- =========================
+     MAIN
+========================= -->
 
-  <section class="hero">
-    <h1>🖼️ Image Hub</h1>
-    <p>Share images and react to your favorite ones.</p>
-  </section>
+<main class="container">
 
-
-  <!-- Login notice -->
-  <div id="loginNotice" class="login-required">
-    🔐 Please login to upload images and react.
-  </div>
-
-
-  <!-- Upload -->
-  <section id="uploadPanel" class="panel">
-
-    <h2>📤 Upload Image</h2>
-
-    <div id="userInfo" class="user-info"></div>
-
-    <input
-      type="file"
-      id="imageFile"
-      accept="image/jpeg,image/png,image/webp"
-    >
-
-    <button
-      id="uploadBtn"
-      class="upload-btn"
-    >
-      ⬆️ Upload Image
-    </button>
-
-    <div id="uploadMessage" class="message"></div>
-
-  </section>
-
-
-  <!-- Gallery -->
-  <section class="panel">
-
-    <h2>🖼️ Image Gallery</h2>
-
-    <div id="gallery" class="gallery">
-      <div class="loading">
-        Loading images...
-      </div>
+    <div class="feed-title">
+        <h1>🖼️ Image Feed</h1>
+        <p>Latest images shared by our community</p>
     </div>
 
-  </section>
+
+    <!-- Upload -->
+
+    <div id="uploadArea"></div>
+
+
+    <!-- Feed -->
+
+    <div id="feed"
+         class="feed">
+
+        <div class="loading">
+            <div class="spinner"></div>
+            Loading images...
+        </div>
+
+    </div>
+
+    <button id="loadMoreBtn"
+            class="load-more"
+            onclick="loadMoreImages()"
+            style="display:none;">
+        Load More
+    </button>
 
 </main>
 
 
-<footer>
-  © 2026 Online Quick Tools — Image Hub
-</footer>
+<div id="toast"
+     class="toast"></div>
 
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-  /* =====================================================
-     SUPABASE CONFIG
-     ===================================================== */
+/* =========================================================
+   SUPABASE CONFIG
+========================================================= */
 
-  const SUPABASE_URL = "https://etkqkptoxkfhxcysaadi.supabase.co"
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGtmaHhjeXNhYWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTAzMjIsImV4cCI6MjEwMzY2NjMyMn0.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
+const SUPABASE_URL =
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-  const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
-
-  /* =====================================================
-     SETTINGS
-     ===================================================== */
-
-  const BUCKET_NAME = "images";
-  const IMAGES_TABLE = "images";
-  const REACTIONS_TABLE = "image_reactions";
+/*
+   IMPORTANT:
+   Keep your existing public anon/publishable key here.
+   Do NOT use a service_role/secret key in this HTML.
+*/
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGtmaHhjeXNhYWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTAzMjIsImV4cCI6MjEwMzY2NjMyMn0.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
 
 
-  /* =====================================================
-     ELEMENTS
-     ===================================================== */
-
-  const loginBtn = document.getElementById("loginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const loginNotice = document.getElementById("loginNotice");
-  const uploadPanel = document.getElementById("uploadPanel");
-  const userInfo = document.getElementById("userInfo");
-  const uploadBtn = document.getElementById("uploadBtn");
-  const imageFile = document.getElementById("imageFile");
-  const uploadMessage = document.getElementById("uploadMessage");
-  const gallery = document.getElementById("gallery");
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
 
 
-  /* =====================================================
-     LOGIN
-     ===================================================== */
+/* =========================================================
+   DATABASE CONFIG
+========================================================= */
 
-  loginBtn.addEventListener("click", async () => {
+const BUCKET_NAME = "images";
 
-    const email = prompt("Enter your email:");
+const IMAGES_TABLE = "images";
 
-    if (!email) return;
+const REACTIONS_TABLE = "image_reactions";
 
-    const password = prompt("Enter your password:");
 
-    if (!password) return;
+/* =========================================================
+   FEED SETTINGS
+========================================================= */
 
-    const { error } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
+const PAGE_SIZE = 8;
 
-    if (error) {
-      alert("Login failed: " + error.message);
-      return;
+let currentOffset = 0;
+
+let loadingImages = false;
+
+let hasMoreImages = true;
+
+let currentUser = null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2800);
+}
+
+
+function escapeHtml(value) {
+
+    if (value === null || value === undefined) {
+        return "";
     }
 
-    await updateAuthUI();
-
-  });
-
-
-  /* =====================================================
-     LOGOUT
-     ===================================================== */
-
-  logoutBtn.addEventListener("click", async () => {
-
-    await supabaseClient.auth.signOut();
-
-    await updateAuthUI();
-
-  });
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 
-  /* =====================================================
-     AUTH UI
-     ===================================================== */
+function getUserLabel(user) {
 
-  async function updateAuthUI() {
+    if (!user) {
+        return "Community User";
+    }
+
+    /*
+       If your Supabase Auth metadata contains
+       a name, show it.
+    */
+
+    const metadata =
+        user.user_metadata || {};
+
+    return (
+        metadata.full_name ||
+        metadata.name ||
+        user.email ||
+        "Community User"
+    );
+}
+
+
+function getInitial(user) {
+
+    const label = getUserLabel(user);
+
+    return label
+        .trim()
+        .charAt(0)
+        .toUpperCase() || "U";
+}
+
+
+function formatTime(dateString) {
+
+    if (!dateString) {
+        return "";
+    }
+
+    const date =
+        new Date(dateString);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    const now = new Date();
+
+    const diff =
+        Math.floor(
+            (now - date) / 1000
+        );
+
+    if (diff < 60) {
+        return "Just now";
+    }
+
+    if (diff < 3600) {
+        const minutes =
+            Math.floor(diff / 60);
+
+        return minutes +
+            (minutes === 1
+                ? " minute ago"
+                : " minutes ago");
+    }
+
+    if (diff < 86400) {
+        const hours =
+            Math.floor(diff / 3600);
+
+        return hours +
+            (hours === 1
+                ? " hour ago"
+                : " hours ago");
+    }
+
+    if (diff < 604800) {
+        const days =
+            Math.floor(diff / 86400);
+
+        return days +
+            (days === 1
+                ? " day ago"
+                : " days ago");
+    }
+
+    return date.toLocaleDateString();
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function loadTheme() {
+
+    const saved =
+        localStorage.getItem("imageFeedTheme");
+
+    if (saved === "dark") {
+        document.body.classList.add("dark");
+    }
+}
+
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "imageFeedTheme",
+        document.body.classList.contains("dark")
+            ? "dark"
+            : "light"
+    );
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+async function loadAuth() {
 
     const {
-      data: { user }
-    } = await supabaseClient.auth.getUser();
+        data,
+        error
+    } = await supabaseClient.auth.getSession();
 
-    if (user) {
+    if (error) {
+        console.error(error);
+    }
 
-      loginBtn.style.display = "none";
-      logoutBtn.style.display = "block";
+    currentUser =
+        data?.session?.user || null;
 
-      loginNotice.style.display = "none";
-      uploadPanel.style.display = "block";
+    updateAuthUI();
 
-      userInfo.textContent =
-        "Logged in as: " + user.email;
+    renderUploadArea();
+}
+
+
+function updateAuthUI() {
+
+    const button =
+        document.getElementById("authButton");
+
+    if (!button) {
+        return;
+    }
+
+    if (currentUser) {
+
+        button.textContent =
+            "🚪 Logout";
 
     } else {
 
-      loginBtn.style.display = "block";
-      logoutBtn.style.display = "none";
+        button.textContent =
+            "👤 Login";
+    }
+}
 
-      loginNotice.style.display = "block";
-      uploadPanel.style.display = "none";
 
+function handleAuthButton() {
+
+    if (currentUser) {
+        logoutUser();
+    } else {
+        loginUser();
+    }
+}
+
+
+async function loginUser() {
+
+    const email =
+        prompt("Enter your email:");
+
+    if (!email) {
+        return;
     }
 
-    await loadGallery();
+    const password =
+        prompt("Enter your password:");
 
-  }
-
-
-  /* =====================================================
-     UPLOAD IMAGE
-     ===================================================== */
-
-  uploadBtn.addEventListener("click", async () => {
+    if (!password) {
+        return;
+    }
 
     const {
-      data: { user }
-    } = await supabaseClient.auth.getUser();
+        error
+    } = await supabaseClient.auth
+        .signInWithPassword({
+            email: email.trim(),
+            password: password
+        });
 
-    if (!user) {
-      alert("Please login first.");
-      return;
+    if (error) {
+
+        showToast(
+            "Login failed: " +
+            error.message
+        );
+
+        return;
     }
 
-    const file = imageFile.files[0];
+    showToast("Login successful!");
 
-    if (!file) {
-      showUploadMessage(
-        "Please select an image first.",
-        "error"
-      );
-      return;
+    await loadAuth();
+}
+
+
+async function logoutUser() {
+
+    const {
+        error
+    } = await supabaseClient.auth.signOut();
+
+    if (error) {
+
+        showToast(
+            "Logout failed: " +
+            error.message
+        );
+
+        return;
     }
 
+    currentUser = null;
 
-    /* File validation */
+    updateAuthUI();
+
+    renderUploadArea();
+
+    showToast("Logged out");
+
+    /*
+       Refresh reaction buttons because
+       logged-in user's active reaction
+       may have changed.
+    */
+
+    currentOffset = 0;
+
+    hasMoreImages = true;
+
+    document.getElementById("feed").innerHTML = "";
+
+    await loadImages(true);
+}
+
+
+/* Listen for Supabase Auth changes */
+
+supabaseClient.auth.onAuthStateChange(
+    async (event, session) => {
+
+        currentUser =
+            session?.user || null;
+
+        updateAuthUI();
+
+        renderUploadArea();
+
+        /*
+           Reload feed so active reaction
+           state updates after login/logout.
+        */
+
+        currentOffset = 0;
+
+        hasMoreImages = true;
+
+        const feed =
+            document.getElementById("feed");
+
+        if (feed) {
+            feed.innerHTML = "";
+        }
+
+        await loadImages(true);
+    }
+);
+
+
+/* =========================================================
+   UPLOAD AREA
+========================================================= */
+
+function renderUploadArea() {
+
+    const area =
+        document.getElementById("uploadArea");
+
+    if (!area) {
+        return;
+    }
+
+    if (!currentUser) {
+
+        area.innerHTML = `
+            <div class="upload-card">
+                <div class="login-message">
+                    🔐 Login to share your image
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+    area.innerHTML = `
+
+        <div class="upload-card">
+
+            <h2>📤 Share an Image</h2>
+
+            <div class="upload-info">
+                JPG, PNG or WebP • Maximum 5 MB
+            </div>
+
+            <input
+                id="imageFile"
+                class="file-input"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+            >
+
+            <button
+                id="uploadBtn"
+                class="upload-btn"
+                onclick="uploadImage()">
+                ⬆️ Upload Image
+            </button>
+
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+async function uploadImage() {
+
+    if (!currentUser) {
+
+        showToast(
+            "Please login first."
+        );
+
+        return;
+    }
+
+    const input =
+        document.getElementById("imageFile");
+
+    const button =
+        document.getElementById("uploadBtn");
+
+    if (!input || !input.files.length) {
+
+        showToast(
+            "Please select an image."
+        );
+
+        return;
+    }
+
+    const file =
+        input.files[0];
 
     const allowedTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/webp"
+        "image/jpeg",
+        "image/png",
+        "image/webp"
     ];
 
     if (!allowedTypes.includes(file.type)) {
 
-      showUploadMessage(
-        "Only JPG, PNG or WebP images are allowed.",
-        "error"
-      );
+        showToast(
+            "Only JPG, PNG or WebP images are allowed."
+        );
 
-      return;
+        return;
     }
 
+    if (file.size > 5 * 1024 * 1024) {
 
-    /* 5 MB limit */
+        showToast(
+            "Maximum image size is 5 MB."
+        );
 
-    const MAX_SIZE = 5 * 1024 * 1024;
-
-    if (file.size > MAX_SIZE) {
-
-      showUploadMessage(
-        "Maximum image size is 5 MB.",
-        "error"
-      );
-
-      return;
+        return;
     }
 
+    button.disabled = true;
 
-    uploadBtn.disabled = true;
-    uploadBtn.textContent = "Uploading...";
-
-    showUploadMessage(
-      "Uploading image...",
-      "success"
-    );
-
+    button.textContent =
+        "⏳ Uploading...";
 
     try {
 
-      /*
-        User-specific folder:
+        const extension =
+            file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
 
-        user_id/random-file-name.ext
-
-        This is also compatible with
-        Storage RLS folder policies.
-      */
-
-      const extension =
-        file.name.split(".").pop().toLowerCase();
-
-      const fileName =
-        crypto.randomUUID() + "." + extension;
-
-      const filePath =
-        user.id + "/" + fileName;
+        const filePath =
+            currentUser.id +
+            "/" +
+            crypto.randomUUID() +
+            "." +
+            extension;
 
 
-      /* Upload to Storage */
+        /* Upload to Storage */
 
-      const {
-        error: storageError
-      } = await supabaseClient.storage
-        .from(BUCKET_NAME)
-        .upload(filePath, file, {
-          cacheControl: "3600",
-          upsert: false,
-          contentType: file.type
-        });
+        const {
+            error: uploadError
+        } = await supabaseClient
+            .storage
+            .from(BUCKET_NAME)
+            .upload(
+                filePath,
+                file,
+                {
+                    cacheControl: "3600",
+                    upsert: false,
+                    contentType: file.type
+                }
+            );
 
 
-      if (storageError) {
-        throw new Error(
-          "Storage upload failed: " +
-          storageError.message
+        if (uploadError) {
+            throw uploadError;
+        }
+
+
+        /* Get public URL */
+
+        const {
+            data: publicData
+        } = supabaseClient
+            .storage
+            .from(BUCKET_NAME)
+            .getPublicUrl(filePath);
+
+
+        const publicUrl =
+            publicData?.publicUrl;
+
+
+        if (!publicUrl) {
+
+            throw new Error(
+                "Could not create public image URL."
+            );
+        }
+
+
+        /* Insert database record */
+
+        const {
+            error: dbError
+        } = await supabaseClient
+            .from(IMAGES_TABLE)
+            .insert({
+                user_id: currentUser.id,
+                file_path: filePath,
+                public_url: publicUrl
+            });
+
+
+        if (dbError) {
+
+            /*
+               Remove uploaded file if
+               database insert fails.
+            */
+
+            await supabaseClient
+                .storage
+                .from(BUCKET_NAME)
+                .remove([filePath]);
+
+            throw dbError;
+        }
+
+
+        showToast(
+            "Image uploaded successfully! 🎉"
         );
-      }
 
 
-      /* Public URL */
-
-      const {
-        data: publicData
-      } = supabaseClient.storage
-        .from(BUCKET_NAME)
-        .getPublicUrl(filePath);
-
-      const publicUrl =
-        publicData.publicUrl;
-
-
-      /* Insert image record */
-
-      const {
-        error: dbError
-      } = await supabaseClient
-        .from(IMAGES_TABLE)
-        .insert({
-          user_id: user.id,
-          file_path: filePath,
-          public_url: publicUrl
-        });
-
-
-      if (dbError) {
+        input.value = "";
 
         /*
-          If database insert fails after
-          storage upload, try removing
-          the uploaded file.
+           Refresh feed so the new image
+           appears at the top.
         */
 
-        await supabaseClient.storage
-          .from(BUCKET_NAME)
-          .remove([filePath]);
+        currentOffset = 0;
 
-        throw new Error(
-          "Database insert failed: " +
-          dbError.message
-        );
-      }
+        hasMoreImages = true;
 
+        document.getElementById("feed").innerHTML = "";
 
-      imageFile.value = "";
-
-      showUploadMessage(
-        "✅ Image uploaded successfully!",
-        "success"
-      );
-
-      await loadGallery();
+        await loadImages(true);
 
 
     } catch (error) {
 
-      console.error(error);
+        console.error(
+            "Upload error:",
+            error
+        );
 
-      showUploadMessage(
-        "❌ " + error.message,
-        "error"
-      );
+        showToast(
+            "Upload failed: " +
+            error.message
+        );
 
     } finally {
 
-      uploadBtn.disabled = false;
-      uploadBtn.textContent = "⬆️ Upload Image";
+        button.disabled = false;
 
+        button.textContent =
+            "⬆️ Upload Image";
     }
+}
 
-  });
 
+/* =========================================================
+   LOAD IMAGES
+========================================================= */
 
-  /* =====================================================
-     UPLOAD MESSAGE
-     ===================================================== */
+async function loadImages(reset = false) {
 
-  function showUploadMessage(message, type) {
-
-    uploadMessage.textContent = message;
-
-    uploadMessage.className =
-      "message " + type;
-
-  }
-
-
-  /* =====================================================
-     LOAD GALLERY
-     ===================================================== */
-
-  async function loadGallery() {
-
-    gallery.innerHTML =
-      '<div class="loading">Loading images...</div>';
-
-
-    const {
-      data: images,
-      error
-    } = await supabaseClient
-      .from(IMAGES_TABLE)
-      .select("*")
-      .order("created_at", {
-        ascending: false
-      });
-
-
-    if (error) {
-
-      console.error(error);
-
-      gallery.innerHTML = `
-        <div class="empty">
-          ❌ Failed to load images.<br><br>
-          ${escapeHtml(error.message)}
-        </div>
-      `;
-
-      return;
-    }
-
-
-    if (!images || images.length === 0) {
-
-      gallery.innerHTML = `
-        <div class="empty">
-          🖼️ No images uploaded yet.
-        </div>
-      `;
-
-      return;
-    }
-
-
-    /* Get current user */
-
-    const {
-      data: { user }
-    } = await supabaseClient.auth.getUser();
-
-
-    /*
-      Load all reactions once.
-      This is more efficient than making
-      a separate request for every image.
-    */
-
-    const {
-      data: reactions,
-      error: reactionError
-    } = await supabaseClient
-      .from(REACTIONS_TABLE)
-      .select("image_id,user_id,reaction");
-
-
-    if (reactionError) {
-
-      console.warn(
-        "Reaction loading error:",
-        reactionError.message
-      );
-
-    }
-
-
-    const reactionList =
-      reactions || [];
-
-
-    gallery.innerHTML = "";
-
-
-    images.forEach(image => {
-
-      const imageReactions =
-        reactionList.filter(
-          r => String(r.image_id) === String(image.id)
-        );
-
-
-      const likeCount =
-        imageReactions.filter(
-          r => r.reaction === "like"
-        ).length;
-
-      const loveCount =
-        imageReactions.filter(
-          r => r.reaction === "love"
-        ).length;
-
-      const wowCount =
-        imageReactions.filter(
-          r => r.reaction === "wow"
-        ).length;
-
-
-      let userReaction = null;
-
-      if (user) {
-
-        const myReaction =
-          imageReactions.find(
-            r => r.user_id === user.id
-          );
-
-        if (myReaction) {
-          userReaction = myReaction.reaction;
-        }
-
-      }
-
-
-      const card =
-        document.createElement("div");
-
-      card.className = "image-card";
-
-
-      card.innerHTML = `
-
-        <img
-          src="${escapeAttribute(image.public_url)}"
-          alt="Uploaded image"
-          loading="lazy"
-          onerror="this.style.display='none';"
-        >
-
-        <div class="image-content">
-
-          <div class="image-date">
-            ${formatDate(image.created_at)}
-          </div>
-
-          <div class="reactions">
-
-            <button
-              class="reaction-btn ${userReaction === "like" ? "active" : ""}"
-              data-image="${image.id}"
-              data-reaction="like"
-            >
-              👍 ${likeCount}
-            </button>
-
-            <button
-              class="reaction-btn ${userReaction === "love" ? "active" : ""}"
-              data-image="${image.id}"
-              data-reaction="love"
-            >
-              ❤️ ${loveCount}
-            </button>
-
-            <button
-              class="reaction-btn ${userReaction === "wow" ? "active" : ""}"
-              data-image="${image.id}"
-              data-reaction="wow"
-            >
-              😮 ${wowCount}
-            </button>
-
-          </div>
-
-        </div>
-      `;
-
-
-      card.querySelectorAll(
-        ".reaction-btn"
-      ).forEach(button => {
-
-        button.addEventListener(
-          "click",
-          async () => {
-
-            await handleReaction(
-              image.id,
-              button.dataset.reaction
-            );
-
-          }
-        );
-
-      });
-
-
-      gallery.appendChild(card);
-
-    });
-
-  }
-
-
-  /* =====================================================
-     REACTION HANDLER
-     ===================================================== */
-
-  async function handleReaction(
-    imageId,
-    reaction
-  ) {
-
-    const {
-      data: { user }
-    } = await supabaseClient.auth.getUser();
-
-
-    if (!user) {
-
-      alert(
-        "Please login to react to an image."
-      );
-
-      return;
-    }
-
-
-    /*
-      Find existing reaction
-    */
-
-    const {
-      data: existing,
-      error: findError
-    } = await supabaseClient
-      .from(REACTIONS_TABLE)
-      .select("id,reaction")
-      .eq("image_id", imageId)
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-
-    if (findError) {
-
-      alert(
-        "Reaction check failed: " +
-        findError.message
-      );
-
-      return;
-    }
-
-
-    /*
-      Same reaction = REMOVE
-    */
-
-    if (
-      existing &&
-      existing.reaction === reaction
-    ) {
-
-      const {
-        error
-      } = await supabaseClient
-        .from(REACTIONS_TABLE)
-        .delete()
-        .eq("id", existing.id);
-
-      if (error) {
-
-        alert(
-          "Could not remove reaction: " +
-          error.message
-        );
-
+    if (loadingImages) {
         return;
-      }
-
     }
 
-    /*
-      Different reaction =
-      UPDATE existing row
-    */
-
-    else if (existing) {
-
-      const {
-        error
-      } = await supabaseClient
-        .from(REACTIONS_TABLE)
-        .update({
-          reaction: reaction
-        })
-        .eq("id", existing.id);
-
-      if (error) {
-
-        alert(
-          "Could not change reaction: " +
-          error.message
-        );
-
+    if (!hasMoreImages && !reset) {
         return;
-      }
+    }
+
+    loadingImages = true;
+
+
+    const feed =
+        document.getElementById("feed");
+
+    const loadMoreBtn =
+        document.getElementById("loadMoreBtn");
+
+
+    if (reset) {
+
+        currentOffset = 0;
+
+        hasMoreImages = true;
+
+        feed.innerHTML = `
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading images...
+            </div>
+        `;
 
     }
 
-    /*
-      No existing reaction =
-      INSERT new row
-    */
-
-    else {
-
-      const {
-        error
-      } = await supabaseClient
-        .from(REACTIONS_TABLE)
-        .insert({
-          image_id: imageId,
-          user_id: user.id,
-          reaction: reaction
-        });
-
-
-      if (error) {
-
-        alert(
-          "Could not add reaction: " +
-          error.message
-        );
-
-        return;
-      }
-
-    }
-
-
-    /*
-      Reload gallery so counts
-      immediately update.
-    */
-
-    await loadGallery();
-
-  }
-
-
-  /* =====================================================
-     DATE FORMAT
-     ===================================================== */
-
-  function formatDate(dateString) {
-
-    if (!dateString) return "";
 
     try {
 
-      return new Date(dateString)
-        .toLocaleString();
+        const from =
+            currentOffset;
 
-    } catch {
+        const to =
+            currentOffset +
+            PAGE_SIZE -
+            1;
 
-      return "";
 
+        /*
+           Latest images first.
+        */
+
+        const {
+            data: images,
+            error
+        } = await supabaseClient
+            .from(IMAGES_TABLE)
+            .select(
+                "id,user_id,file_path,public_url,created_at"
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            )
+            .range(from, to);
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        if (reset) {
+            feed.innerHTML = "";
+        }
+
+
+        if (!images || images.length === 0) {
+
+            if (reset) {
+
+                feed.innerHTML = `
+                    <div class="empty">
+                        <div style="font-size:40px;margin-bottom:10px;">
+                            🖼️
+                        </div>
+                        <strong>No images yet</strong>
+                        <p style="margin-top:6px;">
+                            Be the first person to share an image.
+                        </p>
+                    </div>
+                `;
+            }
+
+            hasMoreImages = false;
+
+            loadMoreBtn.style.display = "none";
+
+            return;
+        }
+
+
+        /*
+           Get reaction data.
+        */
+
+        const imageIds =
+            images.map(
+                image => image.id
+            );
+
+
+        let reactions = [];
+
+        const {
+            data: reactionData,
+            error: reactionError
+        } = await supabaseClient
+            .from(REACTIONS_TABLE)
+            .select(
+                "id,image_id,user_id,reaction"
+            )
+            .in(
+                "image_id",
+                imageIds
+            );
+
+
+        if (reactionError) {
+
+            console.warn(
+                "Reaction loading error:",
+                reactionError
+            );
+
+        } else {
+
+            reactions =
+                reactionData || [];
+        }
+
+
+        /*
+           Build each feed card.
+        */
+
+        images.forEach(image => {
+
+            const imageReactions =
+                reactions.filter(
+                    reaction =>
+                        String(reaction.image_id) ===
+                        String(image.id)
+                );
+
+
+            const card =
+                createImageCard(
+                    image,
+                    imageReactions
+                );
+
+
+            feed.insertAdjacentHTML(
+                "beforeend",
+                card
+            );
+
+        });
+
+
+        currentOffset += images.length;
+
+        hasMoreImages =
+            images.length === PAGE_SIZE;
+
+
+        if (hasMoreImages) {
+
+            loadMoreBtn.style.display =
+                "block";
+
+        } else {
+
+            loadMoreBtn.style.display =
+                "none";
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Gallery error:",
+            error
+        );
+
+
+        if (reset) {
+
+            feed.innerHTML = `
+                <div class="error-box">
+                    ❌ Could not load images.
+                    <br><br>
+                    ${escapeHtml(error.message)}
+                </div>
+            `;
+
+        } else {
+
+            showToast(
+                "Could not load more images."
+            );
+        }
+
+    } finally {
+
+        loadingImages = false;
+    }
+}
+
+
+/* =========================================================
+   CREATE IMAGE CARD
+========================================================= */
+
+function createImageCard(
+    image,
+    reactions
+) {
+
+    const likeCount =
+        reactions.filter(
+            r => r.reaction === "like"
+        ).length;
+
+    const loveCount =
+        reactions.filter(
+            r => r.reaction === "love"
+        ).length;
+
+    const wowCount =
+        reactions.filter(
+            r => r.reaction === "wow"
+        ).length;
+
+
+    let myReaction = null;
+
+    if (currentUser) {
+
+        const mine =
+            reactions.find(
+                r =>
+                    String(r.user_id) ===
+                    String(currentUser.id)
+            );
+
+        if (mine) {
+            myReaction =
+                mine.reaction;
+        }
     }
 
-  }
+
+    /*
+       We don't have a separate public profile
+       table, so use a generic community label.
+       If the image belongs to the current user,
+       show "You".
+    */
+
+    const isMine =
+        currentUser &&
+        String(image.user_id) ===
+        String(currentUser.id);
 
 
-  /* =====================================================
-     HTML ESCAPE
-     ===================================================== */
-
-  function escapeHtml(value) {
-
-    return String(value)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
+    const userName =
+        isMine
+            ? "You"
+            : "Community User";
 
 
-  function escapeAttribute(value) {
+    const initial =
+        isMine
+            ? getInitial(currentUser)
+            : "U";
 
-    return escapeHtml(value);
 
-  }
+    return `
+
+        <article
+            class="image-card"
+            data-image-id="${escapeHtml(image.id)}"
+        >
+
+            <div class="post-header">
+
+                <div class="avatar">
+                    ${escapeHtml(initial)}
+                </div>
+
+                <div class="post-user">
+
+                    <strong>
+                        ${escapeHtml(userName)}
+                    </strong>
+
+                    <div class="post-time">
+                        ${escapeHtml(
+                            formatTime(image.created_at)
+                        )}
+                    </div>
+
+                </div>
+
+            </div>
 
 
-  /* =====================================================
-     AUTH STATE LISTENER
-     ===================================================== */
+            <div class="post-image-wrap">
 
-  supabaseClient.auth.onAuthStateChange(
-    async () => {
+                <img
+                    class="post-image"
+                    src="${escapeHtml(image.public_url)}"
+                    alt="Shared image"
+                    loading="lazy"
+                    onerror="this.style.display='none';"
+                >
 
-      await updateAuthUI();
+            </div>
 
+
+            <div class="reaction-summary">
+
+                👍 ${likeCount}
+                &nbsp;&nbsp;
+                ❤️ ${loveCount}
+                &nbsp;&nbsp;
+                😮 ${wowCount}
+
+            </div>
+
+
+            <div class="reaction-buttons">
+
+                <button
+                    class="reaction-btn ${
+                        myReaction === "like"
+                            ? "active"
+                            : ""
+                    }"
+                    onclick="reactToImage(
+                        ${image.id},
+                        'like',
+                        this
+                    )">
+
+                    👍 Like
+
+                </button>
+
+
+                <button
+                    class="reaction-btn ${
+                        myReaction === "love"
+                            ? "love-active"
+                            : ""
+                    }"
+                    onclick="reactToImage(
+                        ${image.id},
+                        'love',
+                        this
+                    )">
+
+                    ❤️ Love
+
+                </button>
+
+
+                <button
+                    class="reaction-btn ${
+                        myReaction === "wow"
+                            ? "active"
+                            : ""
+                    }"
+                    onclick="reactToImage(
+                        ${image.id},
+                        'wow',
+                        this
+                    )">
+
+                    😮 Wow
+
+                </button>
+
+            </div>
+
+        </article>
+    `;
+}
+
+
+/* =========================================================
+   REACTION SYSTEM
+========================================================= */
+
+async function reactToImage(
+    imageId,
+    reactionType,
+    button
+) {
+
+    if (!currentUser) {
+
+        showToast(
+            "Please login to react."
+        );
+
+        return;
     }
-  );
 
 
-  /* =====================================================
-     DARK MODE
-     ===================================================== */
+    button.disabled = true;
 
-  /*
-    If your index.html already saves the theme
-    using localStorage, this page will follow it.
-  */
 
-  function applyTheme() {
+    try {
 
-    const theme =
-      localStorage.getItem("theme");
+        /*
+           Find the current user's reaction.
+        */
 
-    const darkMode =
-      localStorage.getItem("darkMode");
+        const {
+            data: existing,
+            error: findError
+        } = await supabaseClient
+            .from(REACTIONS_TABLE)
+            .select(
+                "id,reaction"
+            )
+            .eq(
+                "image_id",
+                imageId
+            )
+            .eq(
+                "user_id",
+                currentUser.id
+            )
+            .maybeSingle();
 
-    if (
-      theme === "dark" ||
-      darkMode === "true"
-    ) {
 
-      document.body.classList.add("dark");
+        if (findError) {
+            throw findError;
+        }
 
+
+        /*
+           Same reaction = remove it.
+        */
+
+        if (
+            existing &&
+            existing.reaction === reactionType
+        ) {
+
+            const {
+                error
+            } = await supabaseClient
+                .from(REACTIONS_TABLE)
+                .delete()
+                .eq(
+                    "id",
+                    existing.id
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                );
+
+
+            if (error) {
+                throw error;
+            }
+
+        }
+
+
+        /*
+           Different reaction = change it.
+        */
+
+        else if (existing) {
+
+            const {
+                error
+            } = await supabaseClient
+                .from(REACTIONS_TABLE)
+                .update({
+                    reaction: reactionType
+                })
+                .eq(
+                    "id",
+                    existing.id
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                );
+
+
+            if (error) {
+                throw error;
+            }
+
+        }
+
+
+        /*
+           No reaction = insert new one.
+        */
+
+        else {
+
+            const {
+                error
+            } = await supabaseClient
+                .from(REACTIONS_TABLE)
+                .insert({
+                    image_id: imageId,
+                    user_id: currentUser.id,
+                    reaction: reactionType
+                });
+
+
+            if (error) {
+                throw error;
+            }
+        }
+
+
+        /*
+           Reload feed to update counts.
+        */
+
+        currentOffset = 0;
+
+        hasMoreImages = true;
+
+        document.getElementById("feed").innerHTML = "";
+
+        await loadImages(true);
+
+
+    } catch (error) {
+
+        console.error(
+            "Reaction error:",
+            error
+        );
+
+        showToast(
+            "Reaction failed: " +
+            error.message
+        );
+
+    } finally {
+
+        button.disabled = false;
     }
-
-  }
-
-  applyTheme();
+}
 
 
-  /* =====================================================
-     INITIAL LOAD
-     ===================================================== */
+/* =========================================================
+   LOAD MORE
+========================================================= */
 
-  updateAuthUI();
+async function loadMoreImages() {
+
+    await loadImages(false);
+}
+
+
+/* =========================================================
+   INITIAL START
+========================================================= */
+
+loadTheme();
+
+(async function init() {
+
+    await loadAuth();
+
+    await loadImages(true);
+
+})();
 
 </script>
 
