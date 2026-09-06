@@ -36,6 +36,7 @@ body.dark {
     --border: #374151;
     --button: #374151;
     --primary: #60a5fa;
+    --danger: #f87171;
     --shadow: 0 3px 15px rgba(0,0,0,.25);
 }
 
@@ -46,9 +47,7 @@ body {
     min-height: 100vh;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 header {
     position: sticky;
@@ -99,9 +98,7 @@ header {
     opacity: .85;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .container {
     width: 100%;
@@ -125,9 +122,7 @@ header {
     font-size: 14px;
 }
 
-/* =========================
-   UPLOAD PANEL
-========================= */
+/* UPLOAD */
 
 .upload-card {
     background: var(--card);
@@ -179,9 +174,19 @@ header {
     padding: 10px;
 }
 
-/* =========================
-   FEED
-========================= */
+/* MODERATION NOTICE */
+
+.moderation-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--button);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* FEED */
 
 .feed {
     display: flex;
@@ -197,7 +202,7 @@ header {
     box-shadow: var(--shadow);
 }
 
-/* User row */
+/* POST HEADER */
 
 .post-header {
     padding: 13px 14px;
@@ -237,7 +242,7 @@ header {
     margin-top: 3px;
 }
 
-/* Image */
+/* IMAGE */
 
 .post-image-wrap {
     width: 100%;
@@ -252,7 +257,7 @@ header {
     margin: auto;
 }
 
-/* Reactions */
+/* REACTIONS */
 
 .reaction-summary {
     padding: 10px 14px 6px;
@@ -289,12 +294,11 @@ header {
 }
 
 .reaction-btn.love-active {
+    background: var(--button);
     color: var(--danger);
 }
 
-/* =========================
-   STATES
-========================= */
+/* STATES */
 
 .loading,
 .empty,
@@ -339,9 +343,7 @@ header {
     opacity: .5;
 }
 
-/* =========================
-   TOAST
-========================= */
+/* TOAST */
 
 .toast {
     position: fixed;
@@ -363,9 +365,7 @@ header {
     transform: translateX(-50%) translateY(0);
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media (max-width: 700px) {
 
@@ -416,10 +416,6 @@ header {
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
-
 <header>
     <div class="header-inner">
 
@@ -449,28 +445,16 @@ header {
     </div>
 </header>
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
 <main class="container">
 
     <div class="feed-title">
         <h1>🖼️ Image Feed</h1>
-        <p>Latest images shared by our community</p>
+        <p>Latest approved images shared by our community</p>
     </div>
-
-
-    <!-- Upload -->
 
     <div id="uploadArea"></div>
 
-
-    <!-- Feed -->
-
-    <div id="feed"
-         class="feed">
+    <div id="feed" class="feed">
 
         <div class="loading">
             <div class="spinner"></div>
@@ -488,30 +472,26 @@ header {
 
 </main>
 
-
-<div id="toast"
-     class="toast"></div>
-
+<div id="toast" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
 /* =========================================================
-   SUPABASE CONFIG
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
     "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 /*
-   IMPORTANT:
-   Keep your existing public anon/publishable key here.
-   Do NOT use a service_role/secret key in this HTML.
+   Use your existing public anon/publishable key.
+   Never use a service_role/secret key here.
 */
-const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGtmaHhjeXNhYWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTAzMjIsImV4cCI6MjEwMzY2NjMyMn0.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
 
+const SUPABASE_ANON_KEY =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGtmaHhjeXNhYWRpIiwiaWF0IjoxNzg4MDkwMzIyLCJleHAiOjIxMDM2NjYzMjJ9.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
 
 const supabaseClient =
     window.supabase.createClient(
@@ -521,7 +501,7 @@ const supabaseClient =
 
 
 /* =========================================================
-   DATABASE CONFIG
+   CONFIG
 ========================================================= */
 
 const BUCKET_NAME = "images";
@@ -530,12 +510,12 @@ const IMAGES_TABLE = "images";
 
 const REACTIONS_TABLE = "image_reactions";
 
+const PAGE_SIZE = 8;
+
 
 /* =========================================================
-   FEED SETTINGS
+   STATE
 ========================================================= */
-
-const PAGE_SIZE = 8;
 
 let currentOffset = 0;
 
@@ -547,7 +527,7 @@ let currentUser = null;
 
 
 /* =========================================================
-   HELPERS
+   TOAST
 ========================================================= */
 
 function showToast(message) {
@@ -565,6 +545,10 @@ function showToast(message) {
 }
 
 
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
 function escapeHtml(value) {
 
     if (value === null || value === undefined) {
@@ -580,16 +564,15 @@ function escapeHtml(value) {
 }
 
 
+/* =========================================================
+   USER
+========================================================= */
+
 function getUserLabel(user) {
 
     if (!user) {
         return "Community User";
     }
-
-    /*
-       If your Supabase Auth metadata contains
-       a name, show it.
-    */
 
     const metadata =
         user.user_metadata || {};
@@ -607,12 +590,16 @@ function getInitial(user) {
 
     const label = getUserLabel(user);
 
-    return label
-        .trim()
-        .charAt(0)
-        .toUpperCase() || "U";
+    return (
+        label.trim().charAt(0).toUpperCase()
+        || "U"
+    );
 }
 
+
+/* =========================================================
+   TIME
+========================================================= */
 
 function formatTime(dateString) {
 
@@ -639,6 +626,7 @@ function formatTime(dateString) {
     }
 
     if (diff < 3600) {
+
         const minutes =
             Math.floor(diff / 60);
 
@@ -649,6 +637,7 @@ function formatTime(dateString) {
     }
 
     if (diff < 86400) {
+
         const hours =
             Math.floor(diff / 3600);
 
@@ -659,6 +648,7 @@ function formatTime(dateString) {
     }
 
     if (diff < 604800) {
+
         const days =
             Math.floor(diff / 86400);
 
@@ -733,16 +723,10 @@ function updateAuthUI() {
         return;
     }
 
-    if (currentUser) {
-
-        button.textContent =
-            "🚪 Logout";
-
-    } else {
-
-        button.textContent =
-            "👤 Login";
-    }
+    button.textContent =
+        currentUser
+            ? "🚪 Logout"
+            : "👤 Login";
 }
 
 
@@ -820,23 +804,15 @@ async function logoutUser() {
 
     showToast("Logged out");
 
-    /*
-       Refresh reaction buttons because
-       logged-in user's active reaction
-       may have changed.
-    */
-
-    currentOffset = 0;
-
-    hasMoreImages = true;
-
-    document.getElementById("feed").innerHTML = "";
+    resetFeed();
 
     await loadImages(true);
 }
 
 
-/* Listen for Supabase Auth changes */
+/* =========================================================
+   AUTH STATE
+========================================================= */
 
 supabaseClient.auth.onAuthStateChange(
     async (event, session) => {
@@ -848,21 +824,7 @@ supabaseClient.auth.onAuthStateChange(
 
         renderUploadArea();
 
-        /*
-           Reload feed so active reaction
-           state updates after login/logout.
-        */
-
-        currentOffset = 0;
-
-        hasMoreImages = true;
-
-        const feed =
-            document.getElementById("feed");
-
-        if (feed) {
-            feed.innerHTML = "";
-        }
+        resetFeed();
 
         await loadImages(true);
     }
@@ -919,13 +881,18 @@ function renderUploadArea() {
                 ⬆️ Upload Image
             </button>
 
+            <div class="moderation-note">
+                🛡️ Your image will be reviewed before
+                appearing publicly.
+            </div>
+
         </div>
     `;
 }
 
 
 /* =========================================================
-   IMAGE UPLOAD
+   UPLOAD IMAGE
 ========================================================= */
 
 async function uploadImage() {
@@ -1002,7 +969,7 @@ async function uploadImage() {
             extension;
 
 
-        /* Upload to Storage */
+        /* STORAGE UPLOAD */
 
         const {
             error: uploadError
@@ -1025,7 +992,7 @@ async function uploadImage() {
         }
 
 
-        /* Get public URL */
+        /* PUBLIC URL */
 
         const {
             data: publicData
@@ -1047,25 +1014,30 @@ async function uploadImage() {
         }
 
 
-        /* Insert database record */
+        /* DATABASE INSERT */
 
         const {
             error: dbError
         } = await supabaseClient
             .from(IMAGES_TABLE)
             .insert({
-                user_id: currentUser.id,
-                file_path: filePath,
-                public_url: publicUrl
+
+                user_id:
+                    currentUser.id,
+
+                file_path:
+                    filePath,
+
+                public_url:
+                    publicUrl,
+
+                /* IMPORTANT */
+                status:
+                    "pending"
             });
 
 
         if (dbError) {
-
-            /*
-               Remove uploaded file if
-               database insert fails.
-            */
 
             await supabaseClient
                 .storage
@@ -1076,23 +1048,21 @@ async function uploadImage() {
         }
 
 
+        /*
+           IMPORTANT:
+           The image is NOT immediately shown.
+           It stays pending until approved.
+        */
+
         showToast(
-            "Image uploaded successfully! 🎉"
+            "Image submitted! Waiting for approval. 🛡️"
         );
 
 
         input.value = "";
 
-        /*
-           Refresh feed so the new image
-           appears at the top.
-        */
 
-        currentOffset = 0;
-
-        hasMoreImages = true;
-
-        document.getElementById("feed").innerHTML = "";
+        resetFeed();
 
         await loadImages(true);
 
@@ -1120,7 +1090,33 @@ async function uploadImage() {
 
 
 /* =========================================================
-   LOAD IMAGES
+   RESET FEED
+========================================================= */
+
+function resetFeed() {
+
+    currentOffset = 0;
+
+    hasMoreImages = true;
+
+    const feed =
+        document.getElementById("feed");
+
+    if (feed) {
+        feed.innerHTML = "";
+    }
+
+    const loadMoreBtn =
+        document.getElementById("loadMoreBtn");
+
+    if (loadMoreBtn) {
+        loadMoreBtn.style.display = "none";
+    }
+}
+
+
+/* =========================================================
+   LOAD APPROVED IMAGES
 ========================================================= */
 
 async function loadImages(reset = false) {
@@ -1134,7 +1130,6 @@ async function loadImages(reset = false) {
     }
 
     loadingImages = true;
-
 
     const feed =
         document.getElementById("feed");
@@ -1152,10 +1147,9 @@ async function loadImages(reset = false) {
         feed.innerHTML = `
             <div class="loading">
                 <div class="spinner"></div>
-                Loading images...
+                Loading approved images...
             </div>
         `;
-
     }
 
 
@@ -1171,7 +1165,8 @@ async function loadImages(reset = false) {
 
 
         /*
-           Latest images first.
+           IMPORTANT MODERATION FILTER:
+           Only approved images are public.
         */
 
         const {
@@ -1180,7 +1175,11 @@ async function loadImages(reset = false) {
         } = await supabaseClient
             .from(IMAGES_TABLE)
             .select(
-                "id,user_id,file_path,public_url,created_at"
+                "id,user_id,file_path,public_url,created_at,status"
+            )
+            .eq(
+                "status",
+                "approved"
             )
             .order(
                 "created_at",
@@ -1207,28 +1206,39 @@ async function loadImages(reset = false) {
 
                 feed.innerHTML = `
                     <div class="empty">
-                        <div style="font-size:40px;margin-bottom:10px;">
+
+                        <div style="
+                            font-size:40px;
+                            margin-bottom:10px;
+                        ">
                             🖼️
                         </div>
-                        <strong>No images yet</strong>
-                        <p style="margin-top:6px;">
-                            Be the first person to share an image.
+
+                        <strong>
+                            No approved images yet
+                        </strong>
+
+                        <p style="
+                            margin-top:6px;
+                        ">
+                            Be the first person to
+                            share an image.
                         </p>
+
                     </div>
                 `;
             }
 
             hasMoreImages = false;
 
-            loadMoreBtn.style.display = "none";
+            loadMoreBtn.style.display =
+                "none";
 
             return;
         }
 
 
-        /*
-           Get reaction data.
-        */
+        /* REACTIONS */
 
         const imageIds =
             images.map(
@@ -1237,6 +1247,7 @@ async function loadImages(reset = false) {
 
 
         let reactions = [];
+
 
         const {
             data: reactionData,
@@ -1266,16 +1277,16 @@ async function loadImages(reset = false) {
         }
 
 
-        /*
-           Build each feed card.
-        */
+        /* CREATE CARDS */
 
         images.forEach(image => {
 
             const imageReactions =
                 reactions.filter(
                     reaction =>
-                        String(reaction.image_id) ===
+                        String(
+                            reaction.image_id
+                        ) ===
                         String(image.id)
                 );
 
@@ -1295,22 +1306,18 @@ async function loadImages(reset = false) {
         });
 
 
-        currentOffset += images.length;
+        currentOffset +=
+            images.length;
+
 
         hasMoreImages =
             images.length === PAGE_SIZE;
 
 
-        if (hasMoreImages) {
-
-            loadMoreBtn.style.display =
-                "block";
-
-        } else {
-
-            loadMoreBtn.style.display =
-                "none";
-        }
+        loadMoreBtn.style.display =
+            hasMoreImages
+                ? "block"
+                : "none";
 
 
     } catch (error) {
@@ -1325,9 +1332,15 @@ async function loadImages(reset = false) {
 
             feed.innerHTML = `
                 <div class="error-box">
+
                     ❌ Could not load images.
+
                     <br><br>
-                    ${escapeHtml(error.message)}
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
                 </div>
             `;
 
@@ -1346,7 +1359,7 @@ async function loadImages(reset = false) {
 
 
 /* =========================================================
-   CREATE IMAGE CARD
+   IMAGE CARD
 ========================================================= */
 
 function createImageCard(
@@ -1359,10 +1372,12 @@ function createImageCard(
             r => r.reaction === "like"
         ).length;
 
+
     const loveCount =
         reactions.filter(
             r => r.reaction === "love"
         ).length;
+
 
     const wowCount =
         reactions.filter(
@@ -1371,6 +1386,7 @@ function createImageCard(
 
 
     let myReaction = null;
+
 
     if (currentUser) {
 
@@ -1381,19 +1397,13 @@ function createImageCard(
                     String(currentUser.id)
             );
 
+
         if (mine) {
             myReaction =
                 mine.reaction;
         }
     }
 
-
-    /*
-       We don't have a separate public profile
-       table, so use a generic community label.
-       If the image belongs to the current user,
-       show "You".
-    */
 
     const isMine =
         currentUser &&
@@ -1417,7 +1427,9 @@ function createImageCard(
 
         <article
             class="image-card"
-            data-image-id="${escapeHtml(image.id)}"
+            data-image-id="${escapeHtml(
+                image.id
+            )}"
         >
 
             <div class="post-header">
@@ -1434,7 +1446,9 @@ function createImageCard(
 
                     <div class="post-time">
                         ${escapeHtml(
-                            formatTime(image.created_at)
+                            formatTime(
+                                image.created_at
+                            )
                         )}
                     </div>
 
@@ -1447,10 +1461,14 @@ function createImageCard(
 
                 <img
                     class="post-image"
-                    src="${escapeHtml(image.public_url)}"
+                    src="${escapeHtml(
+                        image.public_url
+                    )}"
                     alt="Shared image"
                     loading="lazy"
-                    onerror="this.style.display='none';"
+                    onerror="
+                        this.style.display='none';
+                    "
                 >
 
             </div>
@@ -1459,9 +1477,13 @@ function createImageCard(
             <div class="reaction-summary">
 
                 👍 ${likeCount}
+
                 &nbsp;&nbsp;
+
                 ❤️ ${loveCount}
+
                 &nbsp;&nbsp;
+
                 😮 ${wowCount}
 
             </div>
@@ -1479,10 +1501,9 @@ function createImageCard(
                         ${image.id},
                         'like',
                         this
-                    )">
-
+                    )"
+                >
                     👍 Like
-
                 </button>
 
 
@@ -1496,10 +1517,9 @@ function createImageCard(
                         ${image.id},
                         'love',
                         this
-                    )">
-
+                    )"
+                >
                     ❤️ Love
-
                 </button>
 
 
@@ -1513,10 +1533,9 @@ function createImageCard(
                         ${image.id},
                         'wow',
                         this
-                    )">
-
+                    )"
+                >
                     😮 Wow
-
                 </button>
 
             </div>
@@ -1551,10 +1570,6 @@ async function reactToImage(
 
     try {
 
-        /*
-           Find the current user's reaction.
-        */
-
         const {
             data: existing,
             error: findError
@@ -1579,9 +1594,7 @@ async function reactToImage(
         }
 
 
-        /*
-           Same reaction = remove it.
-        */
+        /* REMOVE SAME REACTION */
 
         if (
             existing &&
@@ -1606,13 +1619,10 @@ async function reactToImage(
             if (error) {
                 throw error;
             }
-
         }
 
 
-        /*
-           Different reaction = change it.
-        */
+        /* CHANGE REACTION */
 
         else if (existing) {
 
@@ -1621,7 +1631,8 @@ async function reactToImage(
             } = await supabaseClient
                 .from(REACTIONS_TABLE)
                 .update({
-                    reaction: reactionType
+                    reaction:
+                        reactionType
                 })
                 .eq(
                     "id",
@@ -1636,13 +1647,10 @@ async function reactToImage(
             if (error) {
                 throw error;
             }
-
         }
 
 
-        /*
-           No reaction = insert new one.
-        */
+        /* NEW REACTION */
 
         else {
 
@@ -1651,9 +1659,15 @@ async function reactToImage(
             } = await supabaseClient
                 .from(REACTIONS_TABLE)
                 .insert({
-                    image_id: imageId,
-                    user_id: currentUser.id,
-                    reaction: reactionType
+
+                    image_id:
+                        imageId,
+
+                    user_id:
+                        currentUser.id,
+
+                    reaction:
+                        reactionType
                 });
 
 
@@ -1663,15 +1677,9 @@ async function reactToImage(
         }
 
 
-        /*
-           Reload feed to update counts.
-        */
+        /* REFRESH */
 
-        currentOffset = 0;
-
-        hasMoreImages = true;
-
-        document.getElementById("feed").innerHTML = "";
+        resetFeed();
 
         await loadImages(true);
 
@@ -1700,16 +1708,16 @@ async function reactToImage(
 ========================================================= */
 
 async function loadMoreImages() {
-
     await loadImages(false);
 }
 
 
 /* =========================================================
-   INITIAL START
+   INIT
 ========================================================= */
 
 loadTheme();
+
 
 (async function init() {
 
