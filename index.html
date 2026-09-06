@@ -20,7 +20,6 @@
 
 
 <!-- GOOGLE ANALYTICS -->
-
 <script async
 src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
 
@@ -32,7 +31,6 @@ function gtag(){
 }
 
 gtag('js', new Date());
-
 gtag('config', 'G-MQS2RKPRF2');
 </script>
 
@@ -70,7 +68,7 @@ body.dark{
 ===================================================== */
 
 header{
-    background:#ffffff;
+    background:#fff;
     border-bottom:1px solid #ddd;
     position:sticky;
     top:0;
@@ -117,7 +115,7 @@ header{
 
 .dark .nav button{
     background:#374151;
-    color:white;
+    color:#fff;
 }
 
 .nav button:hover{
@@ -177,14 +175,14 @@ header{
     border-radius:12px;
     font-size:16px;
     outline:none;
-    background:white;
+    background:#fff;
     color:#222;
 }
 
 .dark .search-box input{
     background:#1f2937;
     border-color:#4b5563;
-    color:white;
+    color:#fff;
 }
 
 
@@ -213,12 +211,12 @@ header{
 
 .dark .categories button{
     background:#374151;
-    color:white;
+    color:#fff;
 }
 
 .categories button.active{
     background:#e11d48;
-    color:white;
+    color:#fff;
 }
 
 
@@ -230,22 +228,21 @@ header{
     max-width:1200px;
     margin:20px auto;
     padding:0 12px;
+    scroll-margin-top:90px;
 }
 
 .tool-grid{
     display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:15px;
 }
 
 .tool{
-    background:white;
+    background:#fff;
     border:1px solid #e2e8f0;
     border-radius:14px;
     padding:18px;
-    box-shadow:
-        0 3px 12px rgba(0,0,0,.05);
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
     transition:.2s;
 }
 
@@ -281,7 +278,7 @@ header{
     margin:5px 0;
     border:1px solid #cbd5e1;
     border-radius:8px;
-    background:white;
+    background:#fff;
     color:#222;
 }
 
@@ -289,7 +286,7 @@ header{
 .dark .tool textarea,
 .dark .tool select{
     background:#111827;
-    color:white;
+    color:#fff;
     border-color:#4b5563;
 }
 
@@ -299,7 +296,7 @@ header{
     padding:10px 14px;
     border-radius:8px;
     background:#e11d48;
-    color:white;
+    color:#fff;
     cursor:pointer;
     margin-top:5px;
 }
@@ -361,14 +358,13 @@ header{
 }
 
 .image-upload-box{
-    background:white;
+    background:#fff;
     border:1px solid #e2e8f0;
     border-radius:14px;
     padding:15px;
     margin-bottom:18px;
     text-align:center;
-    box-shadow:
-        0 3px 12px rgba(0,0,0,.05);
+    box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
 
 .dark .image-upload-box{
@@ -388,10 +384,9 @@ header{
 }
 
 .image-upload-btn{
-    display:inline-block;
     border:0;
     background:#e11d48;
-    color:white;
+    color:#fff;
     padding:10px 16px;
     border-radius:9px;
     cursor:pointer;
@@ -405,12 +400,11 @@ header{
 }
 
 .image-card{
-    background:white;
+    background:#fff;
     border:1px solid #e2e8f0;
     border-radius:15px;
     overflow:hidden;
-    box-shadow:
-        0 3px 12px rgba(0,0,0,.06);
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
 .dark .image-card{
@@ -431,7 +425,7 @@ header{
     height:42px;
     border-radius:50%;
     background:#e11d48;
-    color:white;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -481,8 +475,7 @@ header{
 
 .image-reaction-buttons{
     display:grid;
-    grid-template-columns:
-        repeat(3,1fr);
+    grid-template-columns:repeat(3,1fr);
     gap:5px;
     padding:8px;
 }
@@ -519,13 +512,18 @@ header{
 }
 
 .image-reaction-btn.love-active{
+    background:#fef2f2;
     color:#ef4444;
+}
+
+.dark .image-reaction-btn.love-active{
+    background:#3f1d24;
 }
 
 .image-feed-loading,
 .image-feed-empty,
 .image-feed-error{
-    background:white;
+    background:#fff;
     border:1px solid #e2e8f0;
     border-radius:14px;
     padding:25px 15px;
@@ -539,6 +537,10 @@ header{
     background:#1f2937;
     border-color:#374151;
     color:#cbd5e1;
+}
+
+.image-feed-error{
+    word-break:break-word;
 }
 
 .image-spinner{
@@ -562,7 +564,7 @@ header{
     margin-top:18px;
     padding:12px;
     border:1px solid #e2e8f0;
-    background:white;
+    background:#fff;
     color:#222;
     border-radius:9px;
     cursor:pointer;
@@ -572,7 +574,7 @@ header{
 .dark .image-load-more{
     background:#1f2937;
     border-color:#374151;
-    color:white;
+    color:#fff;
 }
 
 
@@ -618,19 +620,17 @@ header{
 
 .video-grid{
     display:grid;
-    grid-template-columns:
-        repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:18px;
     margin-top:20px;
 }
 
 .video-card{
-    background:white;
+    background:#fff;
     border:1px solid #e2e8f0;
     border-radius:14px;
     overflow:hidden;
-    box-shadow:
-        0 3px 12px rgba(0,0,0,.06);
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
 }
 
 .dark .video-card{
@@ -701,13 +701,12 @@ header{
     position:absolute;
     left:50%;
     top:50%;
-    transform:
-        translate(-50%,-50%);
+    transform:translate(-50%,-50%);
     width:64px;
     height:45px;
     border-radius:12px;
     background:#e11d48;
-    color:white;
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -754,7 +753,7 @@ footer{
     padding:30px 15px;
     text-align:center;
     background:#111827;
-    color:white;
+    color:#fff;
 }
 
 .footer-links{
@@ -786,7 +785,7 @@ footer{
 .modal-box{
     max-width:600px;
     margin:80px auto;
-    background:white;
+    background:#fff;
     color:#222;
     border-radius:14px;
     padding:25px;
@@ -796,7 +795,7 @@ footer{
 
 .dark .modal-box{
     background:#1f2937;
-    color:white;
+    color:#fff;
 }
 
 .close{
@@ -895,8 +894,6 @@ footer{
         </button>
 
 
-        <!-- IMAGE FEED -->
-
         <button
             onclick="showImageFeed()">
 
@@ -970,49 +967,32 @@ footer{
     <button
         class="active"
         onclick="filterTools('all',this)">
-
         All
-
     </button>
-
 
     <button
         onclick="filterTools('text',this)">
-
         📝 Text
-
     </button>
-
 
     <button
         onclick="filterTools('image',this)">
-
         🖼️ Image
-
     </button>
-
 
     <button
         onclick="filterTools('converter',this)">
-
         🔄 Converter
-
     </button>
-
 
     <button
         onclick="filterTools('generator',this)">
-
         ⚙️ Generator
-
     </button>
-
 
     <button
         onclick="filterTools('utility',this)">
-
         🧰 Utility
-
     </button>
 
 </div>
@@ -1028,16 +1008,12 @@ footer{
 <div class="tool-grid">
 
 
-<!-- TEXT -->
-
 <div class="tool"
      data-cat="text">
 
     <h3>🔠 Text Uppercase</h3>
 
-    <p>
-        Convert text to uppercase.
-    </p>
+    <p>Convert text to uppercase.</p>
 
     <textarea
         id="upperText"
@@ -1060,9 +1036,7 @@ footer{
 
     <h3>🔡 Text Lowercase</h3>
 
-    <p>
-        Convert text to lowercase.
-    </p>
+    <p>Convert text to lowercase.</p>
 
     <textarea
         id="lowerText"
@@ -1085,9 +1059,7 @@ footer{
 
     <h3>🔢 Word Counter</h3>
 
-    <p>
-        Count words and characters.
-    </p>
+    <p>Count words and characters.</p>
 
     <textarea
         id="wordText"
@@ -1098,24 +1070,18 @@ footer{
     <div
         id="wordResult"
         class="result">
-
         Words: 0 | Characters: 0
-
     </div>
 
 </div>
 
-
-<!-- GENERATORS -->
 
 <div class="tool"
      data-cat="generator">
 
     <h3>🔐 Password Generator</h3>
 
-    <p>
-        Generate a random password.
-    </p>
+    <p>Generate a random password.</p>
 
     <input
         id="passwordLength"
@@ -1140,9 +1106,7 @@ footer{
 
     <h3>🔢 Random Number</h3>
 
-    <p>
-        Generate a random number.
-    </p>
+    <p>Generate a random number.</p>
 
     <input
         id="minNumber"
@@ -1165,16 +1129,12 @@ footer{
 </div>
 
 
-<!-- CONVERTERS -->
-
 <div class="tool"
      data-cat="converter">
 
     <h3>📏 CM → Inch</h3>
 
-    <p>
-        Convert centimeters to inches.
-    </p>
+    <p>Convert centimeters to inches.</p>
 
     <input
         id="cmValue"
@@ -1197,9 +1157,7 @@ footer{
 
     <h3>📏 Inch → CM</h3>
 
-    <p>
-        Convert inches to centimeters.
-    </p>
+    <p>Convert inches to centimeters.</p>
 
     <input
         id="inchValue"
@@ -1222,9 +1180,7 @@ footer{
 
     <h3>⚖️ KG → Pound</h3>
 
-    <p>
-        Convert kilograms to pounds.
-    </p>
+    <p>Convert kilograms to pounds.</p>
 
     <input
         id="kgValue"
@@ -1242,16 +1198,12 @@ footer{
 </div>
 
 
-<!-- UTILITY -->
-
 <div class="tool"
      data-cat="utility">
 
     <h3>📅 Current Date</h3>
 
-    <p>
-        Show today's date.
-    </p>
+    <p>Show today's date.</p>
 
     <button onclick="showDate()">
         Show Date
@@ -1269,9 +1221,7 @@ footer{
 
     <h3>🕐 Current Time</h3>
 
-    <p>
-        Show current local time.
-    </p>
+    <p>Show current local time.</p>
 
     <button onclick="showTime()">
         Show Time
@@ -1289,9 +1239,7 @@ footer{
 
     <h3>📋 Text Copy</h3>
 
-    <p>
-        Write and copy text quickly.
-    </p>
+    <p>Write and copy text quickly.</p>
 
     <textarea
         id="copyText"
@@ -1309,16 +1257,12 @@ footer{
 </div>
 
 
-<!-- IMAGE -->
-
 <div class="tool"
      data-cat="image">
 
     <h3>🖼️ Image Preview</h3>
 
-    <p>
-        Preview an image from your device.
-    </p>
+    <p>Preview an image from your device.</p>
 
     <input
         type="file"
@@ -1418,10 +1362,8 @@ footer{
     </h2>
 
     <p class="video-subtitle">
-
         Watch approved videos from YouTube,
         Facebook, TikTok and direct uploads.
-
     </p>
 
 
@@ -1430,41 +1372,27 @@ footer{
         <button
             class="active"
             onclick="showVideoTab('all',this)">
-
             🎬 All
-
         </button>
-
 
         <button
             onclick="showVideoTab('YouTube',this)">
-
             ▶️ YouTube
-
         </button>
-
 
         <button
             onclick="showVideoTab('Facebook',this)">
-
             📘 Facebook
-
         </button>
-
 
         <button
             onclick="showVideoTab('TikTok',this)">
-
             🎵 TikTok
-
         </button>
-
 
         <button
             onclick="showVideoTab('Direct',this)">
-
             📁 Direct
-
         </button>
 
     </div>
@@ -1513,25 +1441,17 @@ footer{
 
         <button
             onclick="openModal('aboutModal')">
-
             About
-
         </button>
-
 
         <button
             onclick="openModal('privacyModal')">
-
             Privacy
-
         </button>
-
 
         <button
             onclick="openModal('contactModal')">
-
             Contact
-
         </button>
 
     </div>
@@ -1540,7 +1460,7 @@ footer{
 
 
 <!-- =====================================================
-     ABOUT MODAL
+     ABOUT
 ===================================================== -->
 
 <div
@@ -1552,9 +1472,7 @@ footer{
         <span
             class="close"
             onclick="closeModal('aboutModal')">
-
             ×
-
         </span>
 
         <h2>
@@ -1577,7 +1495,7 @@ footer{
 
 
 <!-- =====================================================
-     PRIVACY MODAL
+     PRIVACY
 ===================================================== -->
 
 <div
@@ -1589,9 +1507,7 @@ footer{
         <span
             class="close"
             onclick="closeModal('privacyModal')">
-
             ×
-
         </span>
 
         <h2>
@@ -1614,7 +1530,7 @@ footer{
 
 
 <!-- =====================================================
-     CONTACT MODAL
+     CONTACT
 ===================================================== -->
 
 <div
@@ -1626,9 +1542,7 @@ footer{
         <span
             class="close"
             onclick="closeModal('contactModal')">
-
             ×
-
         </span>
 
         <h2>
@@ -1659,7 +1573,6 @@ footer{
 
 <script>
 
-
 /* =====================================================
    SUPABASE CONFIG
 ===================================================== */
@@ -1678,24 +1591,18 @@ const supabaseClient =
 
 
 /* =====================================================
-   IMAGE DATABASE CONFIG
+   DATABASE TABLES
 ===================================================== */
 
-const IMAGE_TABLE =
-    "images";
+const IMAGE_TABLE = "images";
+const REACTION_TABLE = "image_reactions";
+const VIDEO_TABLE = "Videos";
 
-const REACTION_TABLE =
-    "image_reactions";
-
-const IMAGE_PAGE_SIZE =
-    8;
+const IMAGE_PAGE_SIZE = 8;
 
 let imageOffset = 0;
-
 let imageLoading = false;
-
 let imageHasMore = true;
-
 let currentUser = null;
 
 
@@ -1714,16 +1621,14 @@ function toggleTheme(){
         "quickToolsTheme",
         dark ? "dark" : "light"
     );
-}
 
+}
 
 if(
     localStorage.getItem("quickToolsTheme")
     === "dark"
 ){
-
     document.body.classList.add("dark");
-
 }
 
 
@@ -1736,14 +1641,12 @@ function showTools(){
     const tools =
         document.getElementById("tools");
 
-    if(tools){
+    if(!tools) return;
 
-        tools.scrollIntoView({
-            behavior:"smooth",
-            block:"start"
-        });
-
-    }
+    tools.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
 
 }
 
@@ -1757,9 +1660,7 @@ function showImageFeed(){
     const section =
         document.getElementById("imageFeed");
 
-    if(!section){
-        return;
-    }
+    if(!section) return;
 
     section.scrollIntoView({
         behavior:"smooth",
@@ -1787,20 +1688,20 @@ function filterTools(category,button){
 
 
     if(button){
-
         button.classList.add("active");
-
     }
 
 
-    document.getElementById(
-        "search"
-    ).value = "";
+    const search =
+        document.getElementById("search");
+
+    if(search){
+        search.value = "";
+    }
 
 
     const cards =
         document.querySelectorAll(".tool");
-
 
     let count = 0;
 
@@ -1811,10 +1712,8 @@ function filterTools(category,button){
             category === "all" ||
             card.dataset.cat === category;
 
-
         card.style.display =
             show ? "" : "none";
-
 
         if(show){
             count++;
@@ -1823,10 +1722,13 @@ function filterTools(category,button){
     });
 
 
-    document.getElementById(
-        "noResult"
-    ).style.display =
-        count ? "none" : "block";
+    const noResult =
+        document.getElementById("noResult");
+
+    if(noResult){
+        noResult.style.display =
+            count ? "none" : "block";
+    }
 
 }
 
@@ -1837,10 +1739,13 @@ function filterTools(category,button){
 
 function searchTools(){
 
+    const search =
+        document.getElementById("search");
+
+    if(!search) return;
+
     const query =
-        document
-            .getElementById("search")
-            .value
+        search.value
             .toLowerCase()
             .trim();
 
@@ -1859,7 +1764,6 @@ function searchTools(){
     const cards =
         document.querySelectorAll(".tool");
 
-
     let count = 0;
 
 
@@ -1868,15 +1772,12 @@ function searchTools(){
         const text =
             card.innerText.toLowerCase();
 
-
         const show =
             !query ||
             text.includes(query);
 
-
         card.style.display =
             show ? "" : "none";
-
 
         if(show){
             count++;
@@ -1885,10 +1786,13 @@ function searchTools(){
     });
 
 
-    document.getElementById(
-        "noResult"
-    ).style.display =
-        count ? "none" : "block";
+    const noResult =
+        document.getElementById("noResult");
+
+    if(noResult){
+        noResult.style.display =
+            count ? "none" : "block";
+    }
 
 }
 
@@ -1900,14 +1804,9 @@ function searchTools(){
 function makeUppercase(){
 
     const value =
-        document.getElementById(
-            "upperText"
-        ).value;
+        document.getElementById("upperText").value;
 
-
-    document.getElementById(
-        "upperResult"
-    ).textContent =
+    document.getElementById("upperResult").textContent =
         value.toUpperCase();
 
 }
@@ -1916,14 +1815,9 @@ function makeUppercase(){
 function makeLowercase(){
 
     const value =
-        document.getElementById(
-            "lowerText"
-        ).value;
+        document.getElementById("lowerText").value;
 
-
-    document.getElementById(
-        "lowerResult"
-    ).textContent =
+    document.getElementById("lowerResult").textContent =
         value.toLowerCase();
 
 }
@@ -1932,24 +1826,17 @@ function makeLowercase(){
 function countWords(){
 
     const value =
-        document.getElementById(
-            "wordText"
-        ).value;
-
+        document.getElementById("wordText").value;
 
     const words =
         value.trim()
         ? value.trim().split(/\s+/).length
         : 0;
 
-
     const chars =
         value.length;
 
-
-    document.getElementById(
-        "wordResult"
-    ).textContent =
+    document.getElementById("wordResult").textContent =
         "Words: " +
         words +
         " | Characters: " +
@@ -1971,23 +1858,18 @@ function generatePassword(){
             ).value
         );
 
-
     if(!length || length < 4){
         length = 12;
     }
-
 
     if(length > 50){
         length = 50;
     }
 
-
     const chars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
 
-
     let password = "";
-
 
     for(
         let i = 0;
@@ -1998,18 +1880,15 @@ function generatePassword(){
         password +=
             chars.charAt(
                 Math.floor(
-                    Math.random() *
-                    chars.length
+                    Math.random() * chars.length
                 )
             );
 
     }
 
-
     document.getElementById(
         "passwordResult"
-    ).textContent =
-        password;
+    ).textContent = password;
 
 }
 
@@ -2027,7 +1906,6 @@ function randomNumber(){
             ).value
         );
 
-
     let max =
         Number(
             document.getElementById(
@@ -2035,17 +1913,13 @@ function randomNumber(){
             ).value
         );
 
-
     if(min > max){
 
         const temp = min;
-
         min = max;
-
         max = temp;
 
     }
-
 
     const result =
         Math.floor(
@@ -2053,11 +1927,9 @@ function randomNumber(){
             (max - min + 1)
         ) + min;
 
-
     document.getElementById(
         "randomResult"
-    ).textContent =
-        result;
+    ).textContent = result;
 
 }
 
@@ -2068,63 +1940,84 @@ function randomNumber(){
 
 function cmToInch(){
 
-    const cm =
-        Number(
-            document.getElementById(
-                "cmValue"
-            ).value
-        );
+    const value =
+        document.getElementById(
+            "cmValue"
+        ).value;
 
+    if(value === ""){
+
+        document.getElementById(
+            "cmResult"
+        ).textContent =
+            "Enter a number.";
+
+        return;
+    }
+
+    const cm = Number(value);
 
     document.getElementById(
         "cmResult"
     ).textContent =
-        isNaN(cm)
-        ? "Enter a number."
-        : (cm / 2.54).toFixed(4)
-          + " inch";
+        (cm / 2.54).toFixed(4) +
+        " inch";
 
 }
 
 
 function inchToCm(){
 
-    const inch =
-        Number(
-            document.getElementById(
-                "inchValue"
-            ).value
-        );
+    const value =
+        document.getElementById(
+            "inchValue"
+        ).value;
 
+    if(value === ""){
+
+        document.getElementById(
+            "inchResult"
+        ).textContent =
+            "Enter a number.";
+
+        return;
+    }
+
+    const inch = Number(value);
 
     document.getElementById(
         "inchResult"
     ).textContent =
-        isNaN(inch)
-        ? "Enter a number."
-        : (inch * 2.54).toFixed(4)
-          + " cm";
+        (inch * 2.54).toFixed(4) +
+        " cm";
 
 }
 
 
 function kgToLb(){
 
-    const kg =
-        Number(
-            document.getElementById(
-                "kgValue"
-            ).value
-        );
+    const value =
+        document.getElementById(
+            "kgValue"
+        ).value;
 
+    if(value === ""){
+
+        document.getElementById(
+            "kgResult"
+        ).textContent =
+            "Enter a number.";
+
+        return;
+    }
+
+    const kg = Number(value);
 
     document.getElementById(
         "kgResult"
     ).textContent =
-        isNaN(kg)
-        ? "Enter a number."
-        : (kg * 2.2046226218).toFixed(4)
-          + " lb";
+        (kg * 2.2046226218).toFixed(4) +
+        " lb";
 
 }
 
@@ -2164,12 +2057,15 @@ async function copyText(){
             "copyText"
         ).value;
 
+    const result =
+        document.getElementById(
+            "copyResult"
+        );
+
 
     if(!text){
 
-        document.getElementById(
-            "copyResult"
-        ).textContent =
+        result.textContent =
             "Nothing to copy.";
 
         return;
@@ -2183,18 +2079,12 @@ async function copyText(){
             text
         );
 
-
-        document.getElementById(
-            "copyResult"
-        ).textContent =
+        result.textContent =
             "✅ Copied!";
-
 
     }catch(error){
 
-        document.getElementById(
-            "copyResult"
-        ).textContent =
+        result.textContent =
             "Copy failed. Please copy manually.";
 
     }
@@ -2210,7 +2100,6 @@ function previewImage(event){
 
     const file =
         event.target.files[0];
-
 
     const result =
         document.getElementById(
@@ -2241,7 +2130,6 @@ function previewImage(event){
 
     const url =
         URL.createObjectURL(file);
-
 
     result.innerHTML =
         '<img src="' +
@@ -2277,15 +2165,12 @@ function imageUserName(user){
         return "Community User";
     }
 
-
     const metadata =
         user.user_metadata || {};
-
 
     return (
         metadata.full_name ||
         metadata.name ||
-        user.email ||
         "Community User"
     );
 
@@ -2296,7 +2181,6 @@ function imageInitial(user){
 
     const name =
         imageUserName(user);
-
 
     return (
         name
@@ -2319,25 +2203,19 @@ function imageTime(dateString){
         return "";
     }
 
-
     const date =
         new Date(dateString);
-
 
     if(
         Number.isNaN(
             date.getTime()
         )
     ){
-
         return "";
-
     }
-
 
     const now =
         new Date();
-
 
     const diff =
         Math.floor(
@@ -2354,7 +2232,6 @@ function imageTime(dateString){
 
         const minutes =
             Math.floor(diff / 60);
-
 
         return (
             minutes +
@@ -2373,7 +2250,6 @@ function imageTime(dateString){
         const hours =
             Math.floor(diff / 3600);
 
-
         return (
             hours +
             (
@@ -2390,7 +2266,6 @@ function imageTime(dateString){
 
         const days =
             Math.floor(diff / 86400);
-
 
         return (
             days +
@@ -2410,6 +2285,50 @@ function imageTime(dateString){
 
 
 /* =====================================================
+   LOAD CURRENT USER
+===================================================== */
+
+async function loadCurrentUser(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getUser();
+
+        if(error){
+
+            console.warn(
+                "User loading:",
+                error.message
+            );
+
+            currentUser = null;
+
+            return;
+
+        }
+
+        currentUser =
+            data?.user || null;
+
+    }catch(error){
+
+        console.warn(
+            "User loading failed:",
+            error
+        );
+
+        currentUser = null;
+
+    }
+
+}
+
+
+/* =====================================================
    LOAD IMAGE FEED
 ===================================================== */
 
@@ -2424,13 +2343,8 @@ async function loadImages(reset = false){
         !imageHasMore &&
         !reset
     ){
-
         return;
-
     }
-
-
-    imageLoading = true;
 
 
     const feed =
@@ -2438,19 +2352,24 @@ async function loadImages(reset = false){
             "imageFeedList"
         );
 
-
     const loadMore =
         document.getElementById(
             "imageLoadMore"
         );
 
 
+    if(!feed){
+        return;
+    }
+
+
+    imageLoading = true;
+
+
     if(reset){
 
         imageOffset = 0;
-
         imageHasMore = true;
-
 
         feed.innerHTML = `
 
@@ -2472,7 +2391,6 @@ async function loadImages(reset = false){
         const from =
             imageOffset;
 
-
         const to =
             imageOffset +
             IMAGE_PAGE_SIZE -
@@ -2481,8 +2399,8 @@ async function loadImages(reset = false){
 
         /*
            IMPORTANT:
-           Only approved images
-           are displayed publicly.
+           Supabase table is lowercase:
+           images
         */
 
         const {
@@ -2511,12 +2429,21 @@ async function loadImages(reset = false){
 
 
         if(error){
+
+            console.error(
+                "IMAGE DATABASE ERROR:",
+                error
+            );
+
             throw error;
+
         }
 
 
         if(reset){
+
             feed.innerHTML = "";
+
         }
 
 
@@ -2542,9 +2469,7 @@ async function loadImages(reset = false){
                             No approved images yet
                         </strong>
 
-                        <p style="
-                            margin-top:6px;
-                        ">
+                        <p>
                             Be the first to share an image.
                         </p>
 
@@ -2554,19 +2479,21 @@ async function loadImages(reset = false){
 
             }
 
-
             imageHasMore = false;
 
-            loadMore.style.display =
-                "none";
-
+            if(loadMore){
+                loadMore.style.display =
+                    "none";
+            }
 
             return;
 
         }
 
 
-        /* REACTIONS */
+        /* =================================================
+           LOAD REACTIONS
+        ================================================= */
 
         const imageIds =
             images.map(
@@ -2577,37 +2504,43 @@ async function loadImages(reset = false){
         let reactions = [];
 
 
-        const {
-            data:reactionData,
-            error:reactionError
-        } =
-            await supabaseClient
-                .from(REACTION_TABLE)
-                .select(
-                    "id,image_id,user_id,reaction"
-                )
-                .in(
-                    "image_id",
-                    imageIds
+        if(imageIds.length){
+
+            const {
+                data:reactionData,
+                error:reactionError
+            } =
+                await supabaseClient
+                    .from(REACTION_TABLE)
+                    .select(
+                        "id,image_id,user_id,reaction"
+                    )
+                    .in(
+                        "image_id",
+                        imageIds
+                    );
+
+
+            if(reactionError){
+
+                console.warn(
+                    "Reaction loading error:",
+                    reactionError
                 );
 
+            }else{
 
-        if(reactionError){
+                reactions =
+                    reactionData || [];
 
-            console.warn(
-                "Reaction loading error:",
-                reactionError
-            );
-
-        }else{
-
-            reactions =
-                reactionData || [];
+            }
 
         }
 
 
-        /* CREATE CARDS */
+        /* =================================================
+           CREATE IMAGE CARDS
+        ================================================= */
 
         images.forEach(function(image){
 
@@ -2646,16 +2579,20 @@ async function loadImages(reset = false){
             IMAGE_PAGE_SIZE;
 
 
-        loadMore.style.display =
-            imageHasMore
-            ? "block"
-            : "none";
+        if(loadMore){
+
+            loadMore.style.display =
+                imageHasMore
+                ? "block"
+                : "none";
+
+        }
 
 
     }catch(error){
 
         console.error(
-            "Image feed error:",
+            "IMAGE FEED ERROR:",
             error
         );
 
@@ -2670,9 +2607,17 @@ async function loadImages(reset = false){
 
                     <br><br>
 
-                    ${escapeHtml(
-                        error.message
-                    )}
+                    <strong>
+                        ${escapeHtml(
+                            error.message ||
+                            "Unknown error"
+                        )}
+                    </strong>
+
+                    <br><br>
+
+                    Please check Supabase
+                    table, API key and RLS.
 
                 </div>
 
@@ -2700,22 +2645,31 @@ function createImageCard(
 
     const likeCount =
         reactions.filter(
-            r =>
-                r.reaction === "like"
+            function(r){
+                return String(
+                    r.reaction
+                ).toLowerCase() === "like";
+            }
         ).length;
 
 
     const loveCount =
         reactions.filter(
-            r =>
-                r.reaction === "love"
+            function(r){
+                return String(
+                    r.reaction
+                ).toLowerCase() === "love";
+            }
         ).length;
 
 
     const wowCount =
         reactions.filter(
-            r =>
-                r.reaction === "wow"
+            function(r){
+                return String(
+                    r.reaction
+                ).toLowerCase() === "wow";
+            }
         ).length;
 
 
@@ -2726,20 +2680,25 @@ function createImageCard(
 
         const mine =
             reactions.find(
-                r =>
-                    String(
+                function(r){
+
+                    return String(
                         r.user_id
                     ) ===
                     String(
                         currentUser.id
-                    )
+                    );
+
+                }
             );
 
 
         if(mine){
 
             myReaction =
-                mine.reaction;
+                String(
+                    mine.reaction
+                ).toLowerCase();
 
         }
 
@@ -2748,12 +2707,8 @@ function createImageCard(
 
     const isMine =
         currentUser &&
-        String(
-            image.user_id
-        ) ===
-        String(
-            currentUser.id
-        );
+        String(image.user_id) ===
+        String(currentUser.id);
 
 
     const userName =
@@ -2768,6 +2723,12 @@ function createImageCard(
         : "U";
 
 
+    const imageUrl =
+        String(
+            image.public_url || ""
+        ).trim();
+
+
     return `
 
         <article
@@ -2778,29 +2739,22 @@ function createImageCard(
             <div class="image-post-header">
 
                 <div class="image-avatar">
-
                     ${escapeHtml(initial)}
-
                 </div>
 
 
                 <div>
 
                     <div class="image-user-name">
-
                         ${escapeHtml(userName)}
-
                     </div>
 
-
                     <div class="image-post-time">
-
                         ${escapeHtml(
                             imageTime(
                                 image.created_at
                             )
                         )}
-
                     </div>
 
                 </div>
@@ -2811,12 +2765,11 @@ function createImageCard(
             <div class="image-post-photo">
 
                 <img
-                    src="${escapeHtml(image.public_url)}"
-                    alt="Community shared image"
+                    src="${escapeHtml(imageUrl)}"
+                    alt="Approved community image"
                     loading="lazy"
-                    onerror="
-                        this.style.display='none';
-                    "
+                    referrerpolicy="no-referrer"
+                    onerror="this.style.display='none';"
                 >
 
             </div>
@@ -2839,8 +2792,8 @@ function createImageCard(
 
             <div class="image-reaction-buttons">
 
-
                 <button
+                    type="button"
                     class="image-reaction-btn ${
                         myReaction === "like"
                         ? "active"
@@ -2848,19 +2801,18 @@ function createImageCard(
                     }"
                     onclick="
                         reactToImage(
-                            ${image.id},
+                            ${Number(image.id)},
                             'like',
                             this
                         )
                     "
                 >
-
                     👍 Like
-
                 </button>
 
 
                 <button
+                    type="button"
                     class="image-reaction-btn ${
                         myReaction === "love"
                         ? "love-active"
@@ -2868,19 +2820,18 @@ function createImageCard(
                     }"
                     onclick="
                         reactToImage(
-                            ${image.id},
+                            ${Number(image.id)},
                             'love',
                             this
                         )
                     "
                 >
-
                     ❤️ Love
-
                 </button>
 
 
                 <button
+                    type="button"
                     class="image-reaction-btn ${
                         myReaction === "wow"
                         ? "active"
@@ -2888,17 +2839,14 @@ function createImageCard(
                     }"
                     onclick="
                         reactToImage(
-                            ${image.id},
+                            ${Number(image.id)},
                             'wow',
                             this
                         )
                     "
                 >
-
                     😮 Wow
-
                 </button>
-
 
             </div>
 
@@ -2920,6 +2868,10 @@ async function reactToImage(
 ){
 
     if(!currentUser){
+
+        alert(
+            "Please login to react to an image."
+        );
 
         window.location.href =
             "login.html";
@@ -2961,11 +2913,11 @@ async function reactToImage(
         }
 
 
-        /* REMOVE */
-
         if(
             existing &&
-            existing.reaction ===
+            String(
+                existing.reaction
+            ).toLowerCase() ===
             reactionType
         ){
 
@@ -2991,8 +2943,6 @@ async function reactToImage(
 
         }
 
-
-        /* CHANGE */
 
         else if(existing){
 
@@ -3022,8 +2972,6 @@ async function reactToImage(
         }
 
 
-        /* NEW */
-
         else{
 
             const {
@@ -3052,10 +3000,7 @@ async function reactToImage(
         }
 
 
-        /* REFRESH */
-
         imageOffset = 0;
-
         imageHasMore = true;
 
         await loadImages(true);
@@ -3064,14 +3009,17 @@ async function reactToImage(
     }catch(error){
 
         console.error(
-            "Image reaction error:",
+            "IMAGE REACTION ERROR:",
             error
         );
 
 
         alert(
             "Reaction failed: " +
-            error.message
+            (
+                error.message ||
+                "Unknown error"
+            )
         );
 
     }finally{
@@ -3086,7 +3034,7 @@ async function reactToImage(
 
 
 /* =====================================================
-   LOAD MORE IMAGES
+   LOAD MORE
 ===================================================== */
 
 async function loadMoreImages(){
@@ -3097,7 +3045,7 @@ async function loadMoreImages(){
 
 
 /* =====================================================
-   AUTH
+   ACCOUNT BUTTON
 ===================================================== */
 
 async function updateAccountButton(){
@@ -3107,32 +3055,44 @@ async function updateAccountButton(){
             "accountButton"
         );
 
-
     if(!button){
         return;
     }
 
 
-    const {
-        data
-    } =
-        await supabaseClient.auth.getUser();
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getUser();
 
 
-    const user =
-        data?.user || null;
+        if(error){
+
+            currentUser = null;
+            button.textContent =
+                "👤 Login";
+
+            return;
+
+        }
 
 
-    currentUser =
-        user;
+        currentUser =
+            data?.user || null;
 
-
-    if(user){
 
         button.textContent =
-            "👤 Dashboard";
+            currentUser
+            ? "👤 Dashboard"
+            : "👤 Login";
 
-    }else{
+
+    }catch(error){
+
+        currentUser = null;
 
         button.textContent =
             "👤 Login";
@@ -3148,22 +3108,27 @@ async function updateAccountButton(){
 
 async function openAccount(){
 
-    const {
-        data
-    } =
-        await supabaseClient.auth.getUser();
+    try{
+
+        const {
+            data
+        } =
+            await supabaseClient.auth.getUser();
 
 
-    const user =
-        data?.user || null;
+        if(data?.user){
 
+            window.location.href =
+                "dashboard.html";
 
-    if(user){
+        }else{
 
-        window.location.href =
-            "dashboard.html";
+            window.location.href =
+                "login.html";
 
-    }else{
+        }
+
+    }catch(error){
 
         window.location.href =
             "login.html";
@@ -3184,26 +3149,44 @@ supabaseClient.auth.onAuthStateChange(
             session?.user || null;
 
 
-        updateAccountButton();
+        const button =
+            document.getElementById(
+                "accountButton"
+            );
+
+
+        if(button){
+
+            button.textContent =
+                currentUser
+                ? "👤 Dashboard"
+                : "👤 Login";
+
+        }
 
 
         /*
-           Reload image feed so
-           current reaction state updates.
+           Refresh reactions after login/logout.
         */
 
-        imageOffset = 0;
+        setTimeout(
+            function(){
 
-        imageHasMore = true;
+                imageOffset = 0;
+                imageHasMore = true;
 
-        loadImages(true);
+                loadImages(true);
+
+            },
+            0
+        );
 
     }
 );
 
 
 /* =====================================================
-   VIDEO
+   VIDEO NAVIGATION
 ===================================================== */
 
 let currentVideoPlatform =
@@ -3283,13 +3266,10 @@ function getYouTubeId(url){
 
 
         const host =
-            parsed.hostname
-                .toLowerCase();
+            parsed.hostname.toLowerCase();
 
 
-        if(
-            host === "youtu.be"
-        ){
+        if(host === "youtu.be"){
 
             return parsed.pathname
                 .split("/")
@@ -3306,8 +3286,7 @@ function getYouTubeId(url){
         ){
 
             const watchID =
-                parsed.searchParams
-                    .get("v");
+                parsed.searchParams.get("v");
 
 
             if(watchID){
@@ -3322,9 +3301,7 @@ function getYouTubeId(url){
 
 
             const shortsIndex =
-                parts.indexOf(
-                    "shorts"
-                );
+                parts.indexOf("shorts");
 
 
             if(
@@ -3340,9 +3317,7 @@ function getYouTubeId(url){
 
 
             const embedIndex =
-                parts.indexOf(
-                    "embed"
-                );
+                parts.indexOf("embed");
 
 
             if(
@@ -3358,9 +3333,7 @@ function getYouTubeId(url){
 
 
             const liveIndex =
-                parts.indexOf(
-                    "live"
-                );
+                parts.indexOf("live");
 
 
             if(
@@ -3378,7 +3351,7 @@ function getYouTubeId(url){
 
     }catch(error){
 
-        console.error(
+        console.warn(
             "YouTube URL error:",
             error
         );
@@ -3445,8 +3418,7 @@ function createVideoPlayer(
 
     if(
         p === "youtube" ||
-        /youtube\.com|youtu\.be/i
-            .test(url)
+        /youtube\.com|youtu\.be/i.test(url)
     ){
 
         const videoId =
@@ -3490,7 +3462,6 @@ function createVideoPlayer(
                     loading="lazy"
                 >
 
-
                 <div class="play-button">
                     ▶
                 </div>
@@ -3514,9 +3485,7 @@ function createVideoPlayer(
         player.innerHTML = `
 
             <iframe
-                src="
-                    https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false
-                "
+                src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false"
                 style="
                     width:100%;
                     height:500px;
@@ -3568,9 +3537,7 @@ function createVideoPlayer(
         player.innerHTML = `
 
             <iframe
-                src="
-                    https://www.tiktok.com/player/v1/${tiktokId}
-                "
+                src="https://www.tiktok.com/player/v1/${encodeURIComponent(tiktokId)}"
                 style="
                     width:100%;
                     height:500px;
@@ -3593,8 +3560,7 @@ function createVideoPlayer(
     /* DIRECT VIDEO */
 
     if(
-        /\.(mp4|webm|ogg)(\?.*)?$/i
-            .test(url)
+        /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)
     ){
 
         player.innerHTML = `
@@ -3668,13 +3634,12 @@ function playYouTubeVideo(
     element.innerHTML = `
 
         <iframe
-            src="
-                https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0
-            "
+            src="https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0"
             title="YouTube video"
             style="
                 width:100%;
                 height:100%;
+                min-height:220px;
                 border:0;
             "
             allow="
@@ -3703,7 +3668,6 @@ async function renderSiteVideos(
         document.getElementById(
             "videoFeed"
         );
-
 
     const status =
         document.getElementById(
@@ -3735,7 +3699,7 @@ async function renderSiteVideos(
             error
         } =
             await supabaseClient
-                .from("Videos")
+                .from(VIDEO_TABLE)
                 .select(
                     "id,title,platform,videos_url,status,created_at"
                 )
@@ -3754,27 +3718,11 @@ async function renderSiteVideos(
         if(error){
 
             console.error(
-                "Supabase video error:",
+                "VIDEO DATABASE ERROR:",
                 error
             );
 
-
-            feed.innerHTML = `
-                <div class="empty-video">
-                    ❌ Videos could not be loaded.
-                </div>
-            `;
-
-
-            if(status){
-
-                status.textContent =
-                    "Video database error.";
-
-            }
-
-
-            return;
+            throw error;
 
         }
 
@@ -3931,7 +3879,7 @@ async function renderSiteVideos(
     }catch(error){
 
         console.error(
-            "Unexpected video error:",
+            "VIDEO FEED ERROR:",
             error
         );
 
@@ -3940,7 +3888,14 @@ async function renderSiteVideos(
 
             <div class="empty-video">
 
-                ❌ Something went wrong.
+                ❌ Videos could not be loaded.
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message ||
+                    "Unknown error"
+                )}
 
             </div>
 
@@ -3950,7 +3905,7 @@ async function renderSiteVideos(
         if(status){
 
             status.textContent =
-                "Video loading failed.";
+                "Video database error.";
 
         }
 
@@ -3970,7 +3925,6 @@ function openModal(modalId){
             modalId
         );
 
-
     if(modal){
 
         modal.style.display =
@@ -3988,7 +3942,6 @@ function closeModal(modalId){
             modalId
         );
 
-
     if(modal){
 
         modal.style.display =
@@ -4004,8 +3957,9 @@ document.addEventListener(
     function(event){
 
         if(
-            event.target.classList
-                .contains("modal")
+            event.target.classList.contains(
+                "modal"
+            )
         ){
 
             event.target.style.display =
@@ -4049,6 +4003,8 @@ document.addEventListener(
 document.addEventListener(
     "DOMContentLoaded",
     async function(){
+
+        await loadCurrentUser();
 
         await updateAccountButton();
 
