@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Online Quick Tools - Free Online Tools</title>
 
-<meta name="description" content="Free online quick tools for text, images, QR codes, video and more.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://dawsonrumey.github.io/Online-Quick-Tools-/">
+<meta name="description"
+      content="Free online quick tools for text, images, converters, generators, video and community image feed.">
+
+<meta name="robots"
+      content="index, follow">
+
+<link rel="canonical"
+      href="https://dawsonrumey.github.io/Online-Quick-Tools-/">
+
+
+<!-- GOOGLE ANALYTICS -->
+
+<script async
+src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+
+function gtag(){
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+
+gtag('config', 'G-MQS2RKPRF2');
+</script>
+
 
 <style>
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 *{
     box-sizing:border-box;
 }
@@ -31,6 +63,11 @@ body.dark{
     background:#111827;
     color:#f3f4f6;
 }
+
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 header{
     background:#ffffff;
@@ -96,6 +133,11 @@ header{
     padding:7px 10px !important;
 }
 
+
+/* =====================================================
+   HERO
+===================================================== */
+
 .hero{
     max-width:1000px;
     margin:25px auto 10px;
@@ -116,6 +158,11 @@ header{
 .dark .hero p{
     color:#cbd5e1;
 }
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
 
 .search-box{
     max-width:650px;
@@ -139,6 +186,11 @@ header{
     border-color:#4b5563;
     color:white;
 }
+
+
+/* =====================================================
+   CATEGORIES
+===================================================== */
 
 .categories{
     max-width:1200px;
@@ -169,6 +221,11 @@ header{
     color:white;
 }
 
+
+/* =====================================================
+   TOOLS
+===================================================== */
+
 .tools{
     max-width:1200px;
     margin:20px auto;
@@ -177,7 +234,8 @@ header{
 
 .tool-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
     gap:15px;
 }
 
@@ -186,7 +244,8 @@ header{
     border:1px solid #e2e8f0;
     border-radius:14px;
     padding:18px;
-    box-shadow:0 3px 12px rgba(0,0,0,.05);
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.05);
     transition:.2s;
 }
 
@@ -269,12 +328,263 @@ header{
     padding:30px;
 }
 
-/* VIDEO HUB */
+
+/* =====================================================
+   IMAGE FEED
+===================================================== */
+
+#imageFeed{
+    max-width:760px;
+    margin:45px auto;
+    padding:20px 12px;
+    scroll-margin-top:90px;
+}
+
+.image-feed-title{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.image-feed-title h2{
+    margin:0 0 7px;
+    font-size:28px;
+}
+
+.image-feed-title p{
+    margin:0;
+    color:#64748b;
+    font-size:14px;
+}
+
+.dark .image-feed-title p{
+    color:#cbd5e1;
+}
+
+.image-upload-box{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:18px;
+    text-align:center;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.05);
+}
+
+.dark .image-upload-box{
+    background:#1f2937;
+    border-color:#374151;
+    box-shadow:none;
+}
+
+.image-upload-box p{
+    margin:0 0 10px;
+    color:#64748b;
+    font-size:14px;
+}
+
+.dark .image-upload-box p{
+    color:#cbd5e1;
+}
+
+.image-upload-btn{
+    display:inline-block;
+    border:0;
+    background:#e11d48;
+    color:white;
+    padding:10px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.image-feed-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.image-card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.06);
+}
+
+.dark .image-card{
+    background:#1f2937;
+    border-color:#374151;
+    box-shadow:none;
+}
+
+.image-post-header{
+    padding:13px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.image-avatar{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#e11d48;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    flex-shrink:0;
+}
+
+.image-user-name{
+    font-weight:bold;
+    font-size:14px;
+}
+
+.image-post-time{
+    color:#64748b;
+    font-size:12px;
+    margin-top:3px;
+}
+
+.dark .image-post-time{
+    color:#9ca3af;
+}
+
+.image-post-photo{
+    width:100%;
+    background:#000;
+}
+
+.image-post-photo img{
+    display:block;
+    width:100%;
+    max-height:700px;
+    object-fit:contain;
+    margin:auto;
+}
+
+.image-reaction-summary{
+    padding:10px 14px 7px;
+    color:#64748b;
+    font-size:13px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.dark .image-reaction-summary{
+    color:#cbd5e1;
+    border-color:#374151;
+}
+
+.image-reaction-buttons{
+    display:grid;
+    grid-template-columns:
+        repeat(3,1fr);
+    gap:5px;
+    padding:8px;
+}
+
+.image-reaction-btn{
+    border:0;
+    background:transparent;
+    color:#64748b;
+    padding:9px 4px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.dark .image-reaction-btn{
+    color:#cbd5e1;
+}
+
+.image-reaction-btn:hover{
+    background:#f1f5f9;
+}
+
+.dark .image-reaction-btn:hover{
+    background:#374151;
+}
+
+.image-reaction-btn.active{
+    background:#f1f5f9;
+    color:#2563eb;
+}
+
+.dark .image-reaction-btn.active{
+    background:#374151;
+}
+
+.image-reaction-btn.love-active{
+    color:#ef4444;
+}
+
+.image-feed-loading,
+.image-feed-empty,
+.image-feed-error{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:25px 15px;
+    text-align:center;
+    color:#64748b;
+}
+
+.dark .image-feed-loading,
+.dark .image-feed-empty,
+.dark .image-feed-error{
+    background:#1f2937;
+    border-color:#374151;
+    color:#cbd5e1;
+}
+
+.image-spinner{
+    width:30px;
+    height:30px;
+    margin:0 auto 10px;
+    border:3px solid #e2e8f0;
+    border-top-color:#e11d48;
+    border-radius:50%;
+    animation:imageSpin .8s linear infinite;
+}
+
+@keyframes imageSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.image-load-more{
+    width:100%;
+    margin-top:18px;
+    padding:12px;
+    border:1px solid #e2e8f0;
+    background:white;
+    color:#222;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.dark .image-load-more{
+    background:#1f2937;
+    border-color:#374151;
+    color:white;
+}
+
+
+/* =====================================================
+   VIDEO HUB
+===================================================== */
 
 #videoHub{
     max-width:1200px;
     margin:40px auto;
     padding:20px 12px;
+    scroll-margin-top:90px;
 }
 
 .video-title{
@@ -308,7 +618,8 @@ header{
 
 .video-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    grid-template-columns:
+        repeat(auto-fit,minmax(280px,1fr));
     gap:18px;
     margin-top:20px;
 }
@@ -318,7 +629,8 @@ header{
     border:1px solid #e2e8f0;
     border-radius:14px;
     overflow:hidden;
-    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.06);
 }
 
 .dark .video-card{
@@ -327,17 +639,17 @@ header{
     box-shadow:none;
 }
 
-.video-card-header{
+.video-info{
     padding:14px;
 }
 
-.video-card-header h3{
+.video-info h3{
     margin:0 0 8px;
     font-size:17px;
     word-break:break-word;
 }
 
-.platform{
+.video-meta{
     display:inline-block;
     padding:4px 8px;
     border-radius:6px;
@@ -345,25 +657,24 @@ header{
     background:#f1f5f9;
 }
 
-.dark .platform{
+.dark .video-meta{
     background:#374151;
 }
 
-.video-frame{
+.video-player{
     width:100%;
     min-height:220px;
     background:#000;
-    position:relative;
 }
 
-.video-frame iframe{
+.video-player iframe{
     width:100%;
     height:500px;
     border:0;
     display:block;
 }
 
-.video-frame video{
+.video-player video{
     width:100%;
     display:block;
     max-height:500px;
@@ -376,6 +687,7 @@ header{
     aspect-ratio:16/9;
     background:#000;
     overflow:hidden;
+    cursor:pointer;
 }
 
 .youtube-preview img{
@@ -385,30 +697,21 @@ header{
     display:block;
 }
 
-.youtube-play{
+.play-button{
     position:absolute;
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+    transform:
+        translate(-50%,-50%);
     width:64px;
     height:45px;
-    border:0;
     border-radius:12px;
     background:#e11d48;
     color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     font-size:25px;
-    cursor:pointer;
-    box-shadow:0 3px 15px rgba(0,0,0,.4);
-}
-
-.youtube-play:hover{
-    transform:translate(-50%,-50%) scale(1.05);
-}
-
-.video-error{
-    padding:25px;
-    text-align:center;
-    color:#94a3b8;
 }
 
 .empty-video{
@@ -421,10 +724,30 @@ header{
     color:#cbd5e1;
 }
 
+.video-placeholder{
+    padding:30px;
+    text-align:center;
+}
+
+.video-placeholder a{
+    color:#e11d48;
+    font-weight:bold;
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
 .submit-box{
     text-align:center;
     margin:25px 0;
 }
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
 
 footer{
     margin-top:50px;
@@ -445,6 +768,11 @@ footer{
     cursor:pointer;
     margin:4px;
 }
+
+
+/* =====================================================
+   MODAL
+===================================================== */
 
 .modal{
     display:none;
@@ -477,6 +805,11 @@ footer{
     cursor:pointer;
 }
 
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
 @media(max-width:600px){
 
     .header-inner{
@@ -499,73 +832,112 @@ footer{
         grid-template-columns:1fr;
     }
 
-    .video-frame iframe{
+    .video-player iframe{
         height:520px;
     }
-}
-</style>
-    <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-MQS2RKPRF2');
-</script>
+    .image-feed-title h2{
+        font-size:24px;
+    }
+
+    .image-post-photo img{
+        max-height:600px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header>
-    <div class="header-inner">
 
-        <div class="logo" onclick="showTools()">
-            ⚡ Online Quick Tools
-        </div>
+<div class="header-inner">
 
-        <div class="nav">
+    <div class="logo"
+         onclick="showTools()">
 
-            <button
-                id="accountButton"
-                onclick="openAccount()"
-            >
-                👤 Login
-            </button>
-
-            <button onclick="showTools()">
-                🛠️ Tools
-            </button>
-
-            <button onclick="showVideoTab('all',this)">
-                🎬 Videos
-            </button>
-
-            <!-- Image Hub -->
-            <button onclick="window.location.href='image.html'">
-                🖼️ Images
-            </button>
-
-            <button onclick="window.location.href='video-submit.html'">
-                📤 Submit
-            </button>
-
-            <button
-                class="theme-btn"
-                onclick="toggleTheme()"
-                title="Toggle theme">
-                🌙
-            </button>
-
-        </div>
+        ⚡ Online Quick Tools
 
     </div>
+
+
+    <div class="nav">
+
+        <button
+            id="accountButton"
+            onclick="openAccount()">
+
+            👤 Login
+
+        </button>
+
+
+        <button onclick="showTools()">
+
+            🛠️ Tools
+
+        </button>
+
+
+        <button
+            onclick="showVideoTab('all',this)">
+
+            🎬 Videos
+
+        </button>
+
+
+        <!-- IMAGE FEED -->
+
+        <button
+            onclick="showImageFeed()">
+
+            🖼️ Images
+
+        </button>
+
+
+        <button
+            onclick="window.location.href='video-submit.html'">
+
+            📤 Submit
+
+        </button>
+
+
+        <button
+            class="theme-btn"
+            onclick="toggleTheme()"
+            title="Toggle theme">
+
+            🌙
+
+        </button>
+
+    </div>
+
+</div>
+
 </header>
 
 
+<!-- =====================================================
+     HERO
+===================================================== -->
+
 <section class="hero">
 
-    <h1>⚡ Free Online Quick Tools</h1>
+    <h1>
+        ⚡ Free Online Quick Tools
+    </h1>
 
     <p>
         Simple, fast and free tools for everyday tasks.
@@ -574,60 +946,98 @@ footer{
 </section>
 
 
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
 <div class="search-box">
 
     <input
         id="search"
         type="search"
         placeholder="🔎 Search tools..."
-        oninput="searchTools()"
-    >
+        oninput="searchTools()">
 
 </div>
 
+
+<!-- =====================================================
+     TOOL CATEGORIES
+===================================================== -->
 
 <div class="categories">
 
     <button
         class="active"
         onclick="filterTools('all',this)">
+
         All
+
     </button>
 
-    <button onclick="filterTools('text',this)">
+
+    <button
+        onclick="filterTools('text',this)">
+
         📝 Text
+
     </button>
 
-    <button onclick="filterTools('image',this)">
+
+    <button
+        onclick="filterTools('image',this)">
+
         🖼️ Image
+
     </button>
 
-    <button onclick="filterTools('converter',this)">
+
+    <button
+        onclick="filterTools('converter',this)">
+
         🔄 Converter
+
     </button>
 
-    <button onclick="filterTools('generator',this)">
+
+    <button
+        onclick="filterTools('generator',this)">
+
         ⚙️ Generator
+
     </button>
 
-    <button onclick="filterTools('utility',this)">
+
+    <button
+        onclick="filterTools('utility',this)">
+
         🧰 Utility
+
     </button>
 
 </div>
 
 
-<section id="tools" class="tools">
+<!-- =====================================================
+     TOOLS
+===================================================== -->
+
+<section id="tools"
+         class="tools">
 
 <div class="tool-grid">
 
-<!-- TEXT TOOLS -->
 
-<div class="tool" data-cat="text">
+<!-- TEXT -->
+
+<div class="tool"
+     data-cat="text">
 
     <h3>🔠 Text Uppercase</h3>
 
-    <p>Convert text to uppercase.</p>
+    <p>
+        Convert text to uppercase.
+    </p>
 
     <textarea
         id="upperText"
@@ -638,16 +1048,21 @@ footer{
         Convert
     </button>
 
-    <div id="upperResult" class="result"></div>
+    <div
+        id="upperResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="text">
+<div class="tool"
+     data-cat="text">
 
     <h3>🔡 Text Lowercase</h3>
 
-    <p>Convert text to lowercase.</p>
+    <p>
+        Convert text to lowercase.
+    </p>
 
     <textarea
         id="lowerText"
@@ -658,16 +1073,21 @@ footer{
         Convert
     </button>
 
-    <div id="lowerResult" class="result"></div>
+    <div
+        id="lowerResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="text">
+<div class="tool"
+     data-cat="text">
 
     <h3>🔢 Word Counter</h3>
 
-    <p>Count words and characters.</p>
+    <p>
+        Count words and characters.
+    </p>
 
     <textarea
         id="wordText"
@@ -675,20 +1095,27 @@ footer{
         placeholder="Enter text..."
         oninput="countWords()"></textarea>
 
-    <div id="wordResult" class="result">
+    <div
+        id="wordResult"
+        class="result">
+
         Words: 0 | Characters: 0
+
     </div>
 
 </div>
 
 
-<!-- GENERATOR -->
+<!-- GENERATORS -->
 
-<div class="tool" data-cat="generator">
+<div class="tool"
+     data-cat="generator">
 
     <h3>🔐 Password Generator</h3>
 
-    <p>Generate a random password.</p>
+    <p>
+        Generate a random password.
+    </p>
 
     <input
         id="passwordLength"
@@ -701,16 +1128,21 @@ footer{
         Generate
     </button>
 
-    <div id="passwordResult" class="result"></div>
+    <div
+        id="passwordResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="generator">
+<div class="tool"
+     data-cat="generator">
 
     <h3>🔢 Random Number</h3>
 
-    <p>Generate a random number.</p>
+    <p>
+        Generate a random number.
+    </p>
 
     <input
         id="minNumber"
@@ -726,18 +1158,23 @@ footer{
         Generate
     </button>
 
-    <div id="randomResult" class="result"></div>
+    <div
+        id="randomResult"
+        class="result"></div>
 
 </div>
 
 
-<!-- CONVERTER -->
+<!-- CONVERTERS -->
 
-<div class="tool" data-cat="converter">
+<div class="tool"
+     data-cat="converter">
 
     <h3>📏 CM → Inch</h3>
 
-    <p>Convert centimeters to inches.</p>
+    <p>
+        Convert centimeters to inches.
+    </p>
 
     <input
         id="cmValue"
@@ -748,16 +1185,21 @@ footer{
         Convert
     </button>
 
-    <div id="cmResult" class="result"></div>
+    <div
+        id="cmResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="converter">
+<div class="tool"
+     data-cat="converter">
 
     <h3>📏 Inch → CM</h3>
 
-    <p>Convert inches to centimeters.</p>
+    <p>
+        Convert inches to centimeters.
+    </p>
 
     <input
         id="inchValue"
@@ -768,16 +1210,21 @@ footer{
         Convert
     </button>
 
-    <div id="inchResult" class="result"></div>
+    <div
+        id="inchResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="converter">
+<div class="tool"
+     data-cat="converter">
 
     <h3>⚖️ KG → Pound</h3>
 
-    <p>Convert kilograms to pounds.</p>
+    <p>
+        Convert kilograms to pounds.
+    </p>
 
     <input
         id="kgValue"
@@ -788,48 +1235,63 @@ footer{
         Convert
     </button>
 
-    <div id="kgResult" class="result"></div>
+    <div
+        id="kgResult"
+        class="result"></div>
 
 </div>
 
 
 <!-- UTILITY -->
 
-<div class="tool" data-cat="utility">
+<div class="tool"
+     data-cat="utility">
 
     <h3>📅 Current Date</h3>
 
-    <p>Show today's date.</p>
+    <p>
+        Show today's date.
+    </p>
 
     <button onclick="showDate()">
         Show Date
     </button>
 
-    <div id="dateResult" class="result"></div>
+    <div
+        id="dateResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="utility">
+<div class="tool"
+     data-cat="utility">
 
     <h3>🕐 Current Time</h3>
 
-    <p>Show current local time.</p>
+    <p>
+        Show current local time.
+    </p>
 
     <button onclick="showTime()">
         Show Time
     </button>
 
-    <div id="timeResult" class="result"></div>
+    <div
+        id="timeResult"
+        class="result"></div>
 
 </div>
 
 
-<div class="tool" data-cat="utility">
+<div class="tool"
+     data-cat="utility">
 
     <h3>📋 Text Copy</h3>
 
-    <p>Write and copy text quickly.</p>
+    <p>
+        Write and copy text quickly.
+    </p>
 
     <textarea
         id="copyText"
@@ -840,18 +1302,23 @@ footer{
         Copy
     </button>
 
-    <div id="copyResult" class="result"></div>
+    <div
+        id="copyResult"
+        class="result"></div>
 
 </div>
 
 
 <!-- IMAGE -->
 
-<div class="tool" data-cat="image">
+<div class="tool"
+     data-cat="image">
 
     <h3>🖼️ Image Preview</h3>
 
-    <p>Preview an image from your device.</p>
+    <p>
+        Preview an image from your device.
+    </p>
 
     <input
         type="file"
@@ -859,12 +1326,15 @@ footer{
         accept="image/*"
         onchange="previewImage(event)">
 
-    <div id="imageResult" class="result"></div>
+    <div
+        id="imageResult"
+        class="result"></div>
 
 </div>
 
 
 </div>
+
 
 <div id="noResult">
     ❌ No tools found.
@@ -873,9 +1343,73 @@ footer{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
+     IMAGE FEED
+===================================================== -->
+
+<section id="imageFeed">
+
+    <div class="image-feed-title">
+
+        <h2>
+            🖼️ Community Image Feed
+        </h2>
+
+        <p>
+            Latest approved images shared by our community.
+        </p>
+
+    </div>
+
+
+    <div class="image-upload-box">
+
+        <p>
+            Want to share an image?
+        </p>
+
+        <button
+            class="image-upload-btn"
+            onclick="window.location.href='image.html'">
+
+            📤 Upload Image
+
+        </button>
+
+    </div>
+
+
+    <div
+        id="imageFeedList"
+        class="image-feed-list">
+
+        <div class="image-feed-loading">
+
+            <div class="image-spinner"></div>
+
+            Loading approved images...
+
+        </div>
+
+    </div>
+
+
+    <button
+        id="imageLoadMore"
+        class="image-load-more"
+        onclick="loadMoreImages()"
+        style="display:none;">
+
+        Load More
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
      VIDEO HUB
-========================= -->
+===================================================== -->
 
 <section id="videoHub">
 
@@ -884,7 +1418,10 @@ footer{
     </h2>
 
     <p class="video-subtitle">
-        Watch approved videos from YouTube, Facebook, TikTok and direct uploads.
+
+        Watch approved videos from YouTube,
+        Facebook, TikTok and direct uploads.
+
     </p>
 
 
@@ -893,38 +1430,58 @@ footer{
         <button
             class="active"
             onclick="showVideoTab('all',this)">
+
             🎬 All
+
         </button>
+
 
         <button
             onclick="showVideoTab('YouTube',this)">
+
             ▶️ YouTube
+
         </button>
+
 
         <button
             onclick="showVideoTab('Facebook',this)">
+
             📘 Facebook
+
         </button>
+
 
         <button
             onclick="showVideoTab('TikTok',this)">
+
             🎵 TikTok
+
         </button>
+
 
         <button
             onclick="showVideoTab('Direct',this)">
+
             📁 Direct
+
         </button>
 
     </div>
 
 
-    <div id="videoStatus" class="video-status">
+    <div
+        id="videoStatus"
+        class="video-status">
+
         Loading approved videos...
+
     </div>
 
 
-    <div id="videoFeed" class="video-grid"></div>
+    <div
+        id="videoFeed"
+        class="video-grid"></div>
 
 </section>
 
@@ -934,11 +1491,17 @@ footer{
     <button
         class="primary-btn"
         onclick="window.location.href='video-submit.html'">
+
         📤 Submit Your Video
+
     </button>
 
 </div>
 
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer>
 
@@ -948,16 +1511,27 @@ footer{
 
     <div class="footer-links">
 
-        <button onclick="openModal('aboutModal')">
+        <button
+            onclick="openModal('aboutModal')">
+
             About
+
         </button>
 
-        <button onclick="openModal('privacyModal')">
+
+        <button
+            onclick="openModal('privacyModal')">
+
             Privacy
+
         </button>
 
-        <button onclick="openModal('contactModal')">
+
+        <button
+            onclick="openModal('contactModal')">
+
             Contact
+
         </button>
 
     </div>
@@ -965,48 +1539,64 @@ footer{
 </footer>
 
 
-<!-- ABOUT MODAL -->
+<!-- =====================================================
+     ABOUT MODAL
+===================================================== -->
 
-<div id="aboutModal" class="modal">
+<div
+    id="aboutModal"
+    class="modal">
 
     <div class="modal-box">
 
         <span
             class="close"
             onclick="closeModal('aboutModal')">
+
             ×
+
         </span>
 
-        <h2>About Online Quick Tools</h2>
+        <h2>
+            About Online Quick Tools
+        </h2>
 
         <p>
-            Online Quick Tools is a collection of simple,
-            free and useful online tools.
+            Online Quick Tools is a collection
+            of simple, free and useful online tools.
         </p>
 
         <p>
-            We also provide a video hub for approved
-            YouTube, Facebook, TikTok and direct videos.
+            We also provide a community image feed
+            and a video hub for approved content.
         </p>
-<p> <b></b>you are use the website get the rewards points and get the money BDT </b></p>
+
     </div>
 
 </div>
 
 
-<!-- PRIVACY MODAL -->
+<!-- =====================================================
+     PRIVACY MODAL
+===================================================== -->
 
-<div id="privacyModal" class="modal">
+<div
+    id="privacyModal"
+    class="modal">
 
     <div class="modal-box">
 
         <span
             class="close"
             onclick="closeModal('privacyModal')">
+
             ×
+
         </span>
 
-        <h2>Privacy Policy</h2>
+        <h2>
+            Privacy Policy
+        </h2>
 
         <p>
             We respect your privacy.
@@ -1014,8 +1604,8 @@ footer{
         </p>
 
         <p>
-            Submitted videos may be stored and displayed
-            after approval.
+            Submitted images and videos may be stored
+            and displayed after approval.
         </p>
 
     </div>
@@ -1023,40 +1613,56 @@ footer{
 </div>
 
 
-<!-- CONTACT MODAL -->
+<!-- =====================================================
+     CONTACT MODAL
+===================================================== -->
 
-<div id="contactModal" class="modal">
+<div
+    id="contactModal"
+    class="modal">
 
     <div class="modal-box">
 
         <span
             class="close"
             onclick="closeModal('contactModal')">
+
             ×
+
         </span>
 
-        <h2>Contact</h2>
+        <h2>
+            Contact
+        </h2>
 
         <p>
-            For website-related questions, please use
-            the available contact method provided by the site owner.
+            For website-related questions,
+            please use the available contact
+            method provided by the site owner.
         </p>
-<p>Mobail: 01953511826 <br>
-Email: dawson.rumey1996@gmail.com</p>
+
+        <p>
+            Email:
+            dawson.rumey1996@gmail.com
+        </p>
+
     </div>
 
 </div>
 
 
-<!-- SUPABASE -->
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
 
 const SUPABASE_URL =
     "https://etkqkptoxkfhxcysaadi.supabase.co";
@@ -1071,9 +1677,31 @@ const supabaseClient =
     );
 
 
-/* =========================
+/* =====================================================
+   IMAGE DATABASE CONFIG
+===================================================== */
+
+const IMAGE_TABLE =
+    "images";
+
+const REACTION_TABLE =
+    "image_reactions";
+
+const IMAGE_PAGE_SIZE =
+    8;
+
+let imageOffset = 0;
+
+let imageLoading = false;
+
+let imageHasMore = true;
+
+let currentUser = null;
+
+
+/* =====================================================
    THEME
-========================= */
+===================================================== */
 
 function toggleTheme(){
 
@@ -1093,13 +1721,15 @@ if(
     localStorage.getItem("quickToolsTheme")
     === "dark"
 ){
+
     document.body.classList.add("dark");
+
 }
 
 
-/* =========================
+/* =====================================================
    TOOLS NAVIGATION
-========================= */
+===================================================== */
 
 function showTools(){
 
@@ -1118,30 +1748,62 @@ function showTools(){
 }
 
 
-/* =========================
+/* =====================================================
+   IMAGE FEED NAVIGATION
+===================================================== */
+
+function showImageFeed(){
+
+    const section =
+        document.getElementById("imageFeed");
+
+    if(!section){
+        return;
+    }
+
+    section.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* =====================================================
    TOOL FILTER
-========================= */
+===================================================== */
 
 function filterTools(category,button){
 
     document
-        .querySelectorAll(".categories:not(.video-menu) button")
+        .querySelectorAll(
+            ".categories:not(.video-menu) button"
+        )
         .forEach(function(btn){
 
             btn.classList.remove("active");
 
         });
 
+
     if(button){
+
         button.classList.add("active");
+
     }
 
-    document.getElementById("search").value = "";
+
+    document.getElementById(
+        "search"
+    ).value = "";
+
 
     const cards =
         document.querySelectorAll(".tool");
 
+
     let count = 0;
+
 
     cards.forEach(function(card){
 
@@ -1149,8 +1811,10 @@ function filterTools(category,button){
             category === "all" ||
             card.dataset.cat === category;
 
+
         card.style.display =
             show ? "" : "none";
+
 
         if(show){
             count++;
@@ -1158,44 +1822,61 @@ function filterTools(category,button){
 
     });
 
-    document.getElementById("noResult").style.display =
+
+    document.getElementById(
+        "noResult"
+    ).style.display =
         count ? "none" : "block";
+
 }
 
 
-/* =========================
+/* =====================================================
    TOOL SEARCH
-========================= */
+===================================================== */
 
 function searchTools(){
 
     const query =
-        document.getElementById("search")
-        .value
-        .toLowerCase()
-        .trim();
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase()
+            .trim();
+
 
     document
-        .querySelectorAll(".categories:not(.video-menu) button")
+        .querySelectorAll(
+            ".categories:not(.video-menu) button"
+        )
         .forEach(function(btn){
+
             btn.classList.remove("active");
+
         });
+
 
     const cards =
         document.querySelectorAll(".tool");
 
+
     let count = 0;
+
 
     cards.forEach(function(card){
 
         const text =
             card.innerText.toLowerCase();
 
+
         const show =
-            !query || text.includes(query);
+            !query ||
+            text.includes(query);
+
 
         card.style.display =
             show ? "" : "none";
+
 
         if(show){
             count++;
@@ -1203,143 +1884,206 @@ function searchTools(){
 
     });
 
-    document.getElementById("noResult").style.display =
+
+    document.getElementById(
+        "noResult"
+    ).style.display =
         count ? "none" : "block";
+
 }
 
 
-/* =========================
+/* =====================================================
    TEXT TOOLS
-========================= */
+===================================================== */
 
 function makeUppercase(){
 
     const value =
-        document.getElementById("upperText").value;
+        document.getElementById(
+            "upperText"
+        ).value;
 
-    document.getElementById("upperResult").textContent =
+
+    document.getElementById(
+        "upperResult"
+    ).textContent =
         value.toUpperCase();
+
 }
 
 
 function makeLowercase(){
 
     const value =
-        document.getElementById("lowerText").value;
+        document.getElementById(
+            "lowerText"
+        ).value;
 
-    document.getElementById("lowerResult").textContent =
+
+    document.getElementById(
+        "lowerResult"
+    ).textContent =
         value.toLowerCase();
+
 }
 
 
 function countWords(){
 
     const value =
-        document.getElementById("wordText").value;
+        document.getElementById(
+            "wordText"
+        ).value;
+
 
     const words =
         value.trim()
         ? value.trim().split(/\s+/).length
         : 0;
 
+
     const chars =
         value.length;
 
-    document.getElementById("wordResult").textContent =
-        "Words: " + words +
-        " | Characters: " + chars;
+
+    document.getElementById(
+        "wordResult"
+    ).textContent =
+        "Words: " +
+        words +
+        " | Characters: " +
+        chars;
+
 }
 
 
-/* =========================
+/* =====================================================
    PASSWORD
-========================= */
+===================================================== */
 
 function generatePassword(){
 
     let length =
         parseInt(
-            document.getElementById("passwordLength").value
+            document.getElementById(
+                "passwordLength"
+            ).value
         );
+
 
     if(!length || length < 4){
         length = 12;
     }
 
+
     if(length > 50){
         length = 50;
     }
 
+
     const chars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
 
+
     let password = "";
 
-    for(let i=0;i<length;i++){
+
+    for(
+        let i = 0;
+        i < length;
+        i++
+    ){
 
         password +=
             chars.charAt(
                 Math.floor(
-                    Math.random() * chars.length
+                    Math.random() *
+                    chars.length
                 )
             );
 
     }
 
-    document.getElementById("passwordResult").textContent =
+
+    document.getElementById(
+        "passwordResult"
+    ).textContent =
         password;
+
 }
 
 
-/* =========================
+/* =====================================================
    RANDOM NUMBER
-========================= */
+===================================================== */
 
 function randomNumber(){
 
     let min =
         Number(
-            document.getElementById("minNumber").value
+            document.getElementById(
+                "minNumber"
+            ).value
         );
+
 
     let max =
         Number(
-            document.getElementById("maxNumber").value
+            document.getElementById(
+                "maxNumber"
+            ).value
         );
+
 
     if(min > max){
 
         const temp = min;
+
         min = max;
+
         max = temp;
 
     }
 
+
     const result =
         Math.floor(
-            Math.random() * (max - min + 1)
+            Math.random() *
+            (max - min + 1)
         ) + min;
 
-    document.getElementById("randomResult").textContent =
+
+    document.getElementById(
+        "randomResult"
+    ).textContent =
         result;
+
 }
 
 
-/* =========================
+/* =====================================================
    CONVERTERS
-========================= */
+===================================================== */
 
 function cmToInch(){
 
     const cm =
         Number(
-            document.getElementById("cmValue").value
+            document.getElementById(
+                "cmValue"
+            ).value
         );
 
-    document.getElementById("cmResult").textContent =
+
+    document.getElementById(
+        "cmResult"
+    ).textContent =
         isNaN(cm)
         ? "Enter a number."
-        : (cm / 2.54).toFixed(4) + " inch";
+        : (cm / 2.54).toFixed(4)
+          + " inch";
+
 }
 
 
@@ -1347,13 +2091,20 @@ function inchToCm(){
 
     const inch =
         Number(
-            document.getElementById("inchValue").value
+            document.getElementById(
+                "inchValue"
+            ).value
         );
 
-    document.getElementById("inchResult").textContent =
+
+    document.getElementById(
+        "inchResult"
+    ).textContent =
         isNaN(inch)
         ? "Enter a number."
-        : (inch * 2.54).toFixed(4) + " cm";
+        : (inch * 2.54).toFixed(4)
+          + " cm";
+
 }
 
 
@@ -1361,983 +2112,993 @@ function kgToLb(){
 
     const kg =
         Number(
-            document.getElementById("kgValue").value
+            document.getElementById(
+                "kgValue"
+            ).value
         );
 
-    document.getElementById("kgResult").textContent =
+
+    document.getElementById(
+        "kgResult"
+    ).textContent =
         isNaN(kg)
         ? "Enter a number."
-        : (kg * 2.2046226218).toFixed(4) + " lb";
+        : (kg * 2.2046226218).toFixed(4)
+          + " lb";
+
 }
 
 
-/* =========================
+/* =====================================================
    DATE / TIME
-========================= */
+===================================================== */
 
 function showDate(){
 
-    document.getElementById("dateResult").textContent =
+    document.getElementById(
+        "dateResult"
+    ).textContent =
         new Date().toLocaleDateString();
+
 }
 
 
 function showTime(){
 
-    document.getElementById("timeResult").textContent =
+    document.getElementById(
+        "timeResult"
+    ).textContent =
         new Date().toLocaleTimeString();
+
 }
 
 
-/* =========================
+/* =====================================================
    COPY
-========================= */
+===================================================== */
 
 async function copyText(){
 
     const text =
-        document.getElementById("copyText").value;
+        document.getElementById(
+            "copyText"
+        ).value;
+
 
     if(!text){
 
-        document.getElementById("copyResult").textContent =
+        document.getElementById(
+            "copyResult"
+        ).textContent =
             "Nothing to copy.";
 
         return;
+
     }
+
 
     try{
 
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(
+            text
+        );
 
-        document.getElementById("copyResult").textContent =
+
+        document.getElementById(
+            "copyResult"
+        ).textContent =
             "✅ Copied!";
+
 
     }catch(error){
 
-        document.getElementById("copyResult").textContent =
+        document.getElementById(
+            "copyResult"
+        ).textContent =
             "Copy failed. Please copy manually.";
 
     }
+
 }
 
 
-/* =========================
+/* =====================================================
    IMAGE PREVIEW
-========================= */
+===================================================== */
 
 function previewImage(event){
 
     const file =
         event.target.files[0];
 
+
     const result =
-        document.getElementById("imageResult");
+        document.getElementById(
+            "imageResult"
+        );
+
 
     if(!file){
 
         result.innerHTML = "";
 
         return;
+
     }
 
-    if(!file.type.startsWith("image/")){
+
+    if(
+        !file.type.startsWith("image/")
+    ){
 
         result.textContent =
             "Please select an image.";
 
         return;
+
     }
+
 
     const url =
         URL.createObjectURL(file);
 
+
     result.innerHTML =
-        '<img src="' + url + '" ' +
-        'style="max-width:100%;border-radius:8px;">';
+        '<img src="' +
+        url +
+        '" style="max-width:100%;border-radius:8px;">';
+
 }
 
 
-/* =========================
-   VIDEO TAB
-========================= */
-
-let currentVideoPlatform = "all";
-
-
-function showVideoTab(platform,button){
-
-    currentVideoPlatform =
-        platform || "all";
-
-    const hub =
-        document.getElementById("videoHub");
-
-    if(!hub){
-        return;
-    }
-
-    hub.style.display = "block";
-
-    document
-        .querySelectorAll(".video-menu button")
-        .forEach(function(btn){
-
-            btn.classList.remove("active");
-
-        });
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    renderSiteVideos(currentVideoPlatform);
-
-    hub.scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-    });
-}
-
-
-/* =========================
-   YOUTUBE ID
-========================= */
-
-function getYouTubeID(url){
-
-    if(!url){
-        return null;
-    }
-
-    try{
-
-        const parsed =
-            new URL(url);
-
-        const host =
-            parsed.hostname.toLowerCase();
-
-
-        /* youtu.be */
-
-        if(host === "youtu.be"){
-
-            return parsed.pathname
-                .split("/")
-                .filter(Boolean)[0] || null;
-        }
-
-
-        /* youtube.com */
-
-        if(
-            host === "youtube.com" ||
-            host === "www.youtube.com" ||
-            host === "m.youtube.com"
-        ){
-
-            /* Normal watch URL */
-
-            const watchID =
-                parsed.searchParams.get("v");
-
-            if(watchID){
-                return watchID;
-            }
-
-
-            const parts =
-                parsed.pathname
-                .split("/")
-                .filter(Boolean);
-
-
-            /* Shorts */
-
-            const shortsIndex =
-                parts.indexOf("shorts");
-
-            if(
-                shortsIndex !== -1 &&
-                parts[shortsIndex + 1]
-            ){
-
-                return parts[shortsIndex + 1];
-            }
-
-
-            /* Embed */
-
-            const embedIndex =
-                parts.indexOf("embed");
-
-            if(
-                embedIndex !== -1 &&
-                parts[embedIndex + 1]
-            ){
-
-                return parts[embedIndex + 1];
-            }
-
-
-            /* Live */
-
-            const liveIndex =
-                parts.indexOf("live");
-
-            if(
-                liveIndex !== -1 &&
-                parts[liveIndex + 1]
-            ){
-
-                return parts[liveIndex + 1];
-            }
-
-        }
-
-    }catch(error){
-
-        console.error(
-            "YouTube URL error:",
-            error
-        );
-
-    }
-
-    return null;
-}
-
-
-/* =========================
-   TIKTOK ID
-========================= */
-
-function getTikTokID(url){
-
-    if(!url){
-        return null;
-    }
-
-    const match =
-        String(url).match(/\/video\/(\d+)/);
-
-    return match
-        ? match[1]
-        : null;
-}
-
-
-/* =========================
+/* =====================================================
    SAFE HTML
-========================= */
+===================================================== */
 
-function escapeHTML(value){
+function escapeHtml(value){
 
-    return String(value || "")
+    return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
+
 }
 
 
-/* =========================
-   VIDEO PLAYER
-========================= */
+/* =====================================================
+   IMAGE USER
+===================================================== */
 
-function createSitePlayer(video){
+function imageUserName(user){
 
-    const platform =
-        video.platform || "";
+    if(!user){
+        return "Community User";
+    }
 
-    const url =
-        video.videos_url || "";
 
-    const title =
-        escapeHTML(
-            video.title || "Untitled Video"
+    const metadata =
+        user.user_metadata || {};
+
+
+    return (
+        metadata.full_name ||
+        metadata.name ||
+        user.email ||
+        "Community User"
+    );
+
+}
+
+
+function imageInitial(user){
+
+    const name =
+        imageUserName(user);
+
+
+    return (
+        name
+            .trim()
+            .charAt(0)
+            .toUpperCase() ||
+        "U"
+    );
+
+}
+
+
+/* =====================================================
+   IMAGE TIME
+===================================================== */
+
+function imageTime(dateString){
+
+    if(!dateString){
+        return "";
+    }
+
+
+    const date =
+        new Date(dateString);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return "";
+
+    }
+
+
+    const now =
+        new Date();
+
+
+    const diff =
+        Math.floor(
+            (now - date) / 1000
         );
 
 
-    /* =====================
-       YOUTUBE
-    ===================== */
-
-    if(platform === "YouTube"){
-
-        const id =
-            getYouTubeID(url);
-
-        if(!id){
-
-            return `
-                <div class="video-error">
-                    ⚠️ Unable to read YouTube video.
-                </div>
-            `;
-        }
-
-        const safeID =
-            encodeURIComponent(id);
-
-        const thumb =
-            "https://img.youtube.com/vi/" +
-            safeID +
-            "/hqdefault.jpg";
-
-
-        return `
-            <div
-                class="youtube-preview"
-                data-youtube-id="${safeID}">
-
-                <img
-                    src="${thumb}"
-                    alt="${title}"
-                    loading="lazy">
-
-                <button
-                    class="youtube-play"
-                    type="button"
-                    onclick="playYouTubeInline(this,'${safeID}')"
-                    aria-label="Play YouTube video">
-
-                    ▶
-
-                </button>
-
-            </div>
-        `;
+    if(diff < 60){
+        return "Just now";
     }
 
 
-    /* =====================
-       FACEBOOK
-    ===================== */
+    if(diff < 3600){
 
-    if(platform === "Facebook"){
-
-        if(!url){
-
-            return `
-                <div class="video-error">
-                    ⚠️ Invalid Facebook video URL.
-                </div>
-            `;
-        }
-
-        const facebookURL =
-            encodeURIComponent(url);
-
-        return `
-            <div class="video-frame">
-
-                <iframe
-                    src="https://www.facebook.com/plugins/video.php?href=${facebookURL}&show_text=false"
-                    scrolling="no"
-                    frameborder="0"
-                    allowfullscreen="true"
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-                </iframe>
-
-            </div>
-        `;
-    }
+        const minutes =
+            Math.floor(diff / 60);
 
 
-    /* =====================
-       TIKTOK
-    ===================== */
-
-    if(platform === "TikTok"){
-
-        const id =
-            getTikTokID(url);
-
-        if(!id){
-
-            return `
-                <div class="video-error">
-                    ⚠️ Unable to read TikTok video.
-                </div>
-            `;
-        }
-
-        return `
-            <div class="video-frame">
-
-                <iframe
-                    src="https://www.tiktok.com/player/v1/${id}?description=1&music_info=1"
-                    title="${title}"
-                    allow="autoplay; fullscreen"
-                    scrolling="no"
-                    allowfullscreen>
-                </iframe>
-
-            </div>
-        `;
-    }
-
-
-    /* =====================
-       DIRECT VIDEO
-    ===================== */
-
-    if(platform === "Direct"){
-
-        const safeURL =
-            escapeHTML(url);
-
-        if(!url){
-
-            return `
-                <div class="video-error">
-                    ⚠️ Video file unavailable.
-                </div>
-            `;
-        }
-
-        return `
-            <div class="video-frame">
-
-                <video
-                    controls
-                    preload="metadata"
-                    playsinline>
-
-                    <source
-                        src="${safeURL}"
-                        type="video/mp4">
-
-                    Your browser does not support
-                    video playback.
-
-                </video>
-
-            </div>
-        `;
-    }
-
-
-    return `
-        <div class="video-error">
-            ⚠️ Unsupported video platform.
-        </div>
-    `;
-}
-
-
-/* =========================
-   YOUTUBE INLINE PLAY
-========================= */
-
-function playYouTubeInline(button,id){
-
-    if(!button || !id){
-        return;
-    }
-
-    const player =
-        button.closest(".youtube-preview");
-
-    if(!player){
-        return;
-    }
-
-    player.innerHTML = `
-        <iframe
-            src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0"
-            title="YouTube video player"
-            allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-            allowfullscreen>
-        </iframe>
-    `;
-}
-
-
-/* =========================
-   RENDER APPROVED VIDEOS
-========================= */
-
-    async function renderSiteVideos(platform = "all") {
-
-    const feed = document.getElementById("videoFeed");
-    const status = document.getElementById("videoStatus");
-
-    if (!feed) return;
-
-    feed.innerHTML =
-        '<div class="empty-video">⏳ Loading videos...</div>';
-
-    if (status) {
-        status.textContent = "Loading approved videos...";
-    }
-
-    try {
-
-        const { data, error } = await supabaseClient
-            .from("Videos")
-            .select(
-                "id,title,platform,videos_url,status,created_at"
+        return (
+            minutes +
+            (
+                minutes === 1
+                ? " minute ago"
+                : " minutes ago"
             )
-            .eq("status", "approved")
-            .order("created_at", {
-                ascending: false
-            });
+        );
 
-        if (error) {
+    }
 
-            console.error("Supabase video error:", error);
 
-            feed.innerHTML = `
-                <div class="empty-video">
-                    ❌ Videos could not be loaded.
-                </div>
-            `;
+    if(diff < 86400){
 
-            if (status) {
-                status.textContent =
-                    "Video database error.";
-            }
+        const hours =
+            Math.floor(diff / 3600);
 
-            return;
+
+        return (
+            hours +
+            (
+                hours === 1
+                ? " hour ago"
+                : " hours ago"
+            )
+        );
+
+    }
+
+
+    if(diff < 604800){
+
+        const days =
+            Math.floor(diff / 86400);
+
+
+        return (
+            days +
+            (
+                days === 1
+                ? " day ago"
+                : " days ago"
+            )
+        );
+
+    }
+
+
+    return date.toLocaleDateString();
+
+}
+
+
+/* =====================================================
+   LOAD IMAGE FEED
+===================================================== */
+
+async function loadImages(reset = false){
+
+    if(imageLoading){
+        return;
+    }
+
+
+    if(
+        !imageHasMore &&
+        !reset
+    ){
+
+        return;
+
+    }
+
+
+    imageLoading = true;
+
+
+    const feed =
+        document.getElementById(
+            "imageFeedList"
+        );
+
+
+    const loadMore =
+        document.getElementById(
+            "imageLoadMore"
+        );
+
+
+    if(reset){
+
+        imageOffset = 0;
+
+        imageHasMore = true;
+
+
+        feed.innerHTML = `
+
+            <div class="image-feed-loading">
+
+                <div class="image-spinner"></div>
+
+                Loading approved images...
+
+            </div>
+
+        `;
+
+    }
+
+
+    try{
+
+        const from =
+            imageOffset;
+
+
+        const to =
+            imageOffset +
+            IMAGE_PAGE_SIZE -
+            1;
+
+
+        /*
+           IMPORTANT:
+           Only approved images
+           are displayed publicly.
+        */
+
+        const {
+            data:images,
+            error
+        } =
+            await supabaseClient
+                .from(IMAGE_TABLE)
+                .select(
+                    "id,user_id,file_path,public_url,created_at,status"
+                )
+                .eq(
+                    "status",
+                    "approved"
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                )
+                .range(
+                    from,
+                    to
+                );
+
+
+        if(error){
+            throw error;
         }
 
-        let videos = data || [];
 
-        /* CATEGORY FILTER */
-
-        if (platform !== "all") {
-
-            videos = videos.filter(video => {
-
-                const p =
-                    String(video.platform || "")
-                        .trim()
-                        .toLowerCase();
-
-                return p ===
-                    String(platform)
-                        .trim()
-                        .toLowerCase();
-
-            });
+        if(reset){
+            feed.innerHTML = "";
         }
 
-        /* NO VIDEOS */
 
-        if (videos.length === 0) {
+        if(
+            !images ||
+            images.length === 0
+        ){
 
-            feed.innerHTML = `
-                <div class="empty-video">
-                    🎬 No approved videos found.
-                </div>
-            `;
+            if(reset){
 
-            if (status) {
-                status.textContent =
-                    "No videos available in this category.";
-            }
+                feed.innerHTML = `
 
-            return;
-        }
+                    <div class="image-feed-empty">
 
-        /* CREATE VIDEO CARDS */
+                        <div style="
+                            font-size:40px;
+                            margin-bottom:10px;
+                        ">
+                            🖼️
+                        </div>
 
-        feed.innerHTML = "";
+                        <strong>
+                            No approved images yet
+                        </strong>
 
-        videos.forEach(video => {
+                        <p style="
+                            margin-top:6px;
+                        ">
+                            Be the first to share an image.
+                        </p>
 
-            const title =
-                video.title || "Untitled Video";
-
-            const videoPlatform =
-                String(video.platform || "")
-                    .trim();
-
-            const url =
-                String(video.videos_url || "")
-                    .trim();
-
-            if (!url) return;
-
-            const card =
-                document.createElement("div");
-
-            card.className = "video-card";
-
-            card.innerHTML = `
-                <div class="video-player"></div>
-
-                <div class="video-info">
-
-                    <h3>
-                        ${escapeHtml(title)}
-                    </h3>
-
-                    <div class="video-meta">
-                        ${escapeHtml(videoPlatform)}
                     </div>
 
-                </div>
-            `;
+                `;
 
-            feed.appendChild(card);
+            }
 
-            const player =
-                card.querySelector(".video-player");
 
-            createVideoPlayer(
-                player,
-                url,
-                videoPlatform
+            imageHasMore = false;
+
+            loadMore.style.display =
+                "none";
+
+
+            return;
+
+        }
+
+
+        /* REACTIONS */
+
+        const imageIds =
+            images.map(
+                image => image.id
+            );
+
+
+        let reactions = [];
+
+
+        const {
+            data:reactionData,
+            error:reactionError
+        } =
+            await supabaseClient
+                .from(REACTION_TABLE)
+                .select(
+                    "id,image_id,user_id,reaction"
+                )
+                .in(
+                    "image_id",
+                    imageIds
+                );
+
+
+        if(reactionError){
+
+            console.warn(
+                "Reaction loading error:",
+                reactionError
+            );
+
+        }else{
+
+            reactions =
+                reactionData || [];
+
+        }
+
+
+        /* CREATE CARDS */
+
+        images.forEach(function(image){
+
+            const imageReactions =
+                reactions.filter(
+                    function(reaction){
+
+                        return String(
+                            reaction.image_id
+                        ) ===
+                        String(
+                            image.id
+                        );
+
+                    }
+                );
+
+
+            feed.insertAdjacentHTML(
+                "beforeend",
+                createImageCard(
+                    image,
+                    imageReactions
+                )
             );
 
         });
 
-        if (status) {
 
-            status.textContent =
-                `${videos.length} video${videos.length === 1 ? "" : "s"} available.`;
+        imageOffset +=
+            images.length;
 
-        }
 
-    } catch (error) {
+        imageHasMore =
+            images.length ===
+            IMAGE_PAGE_SIZE;
+
+
+        loadMore.style.display =
+            imageHasMore
+            ? "block"
+            : "none";
+
+
+    }catch(error){
 
         console.error(
-            "Unexpected video error:",
+            "Image feed error:",
             error
         );
 
-        feed.innerHTML = `
-            <div class="empty-video">
-                ❌ Something went wrong.
-            </div>
-        `;
 
-        if (status) {
-            status.textContent =
-                "Video loading failed.";
+        if(reset){
+
+            feed.innerHTML = `
+
+                <div class="image-feed-error">
+
+                    ❌ Could not load images.
+
+                    <br><br>
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
+                </div>
+
+            `;
+
         }
+
+    }finally{
+
+        imageLoading = false;
+
     }
+
 }
 
 
-/* =========================
-   CREATE VIDEO PLAYER
-========================= */
+/* =====================================================
+   CREATE IMAGE CARD
+===================================================== */
 
-function createVideoPlayer(
-    player,
-    url,
-    platform
-) {
+function createImageCard(
+    image,
+    reactions
+){
 
-    if (!player || !url) return;
+    const likeCount =
+        reactions.filter(
+            r =>
+                r.reaction === "like"
+        ).length;
 
-    const p =
-        String(platform || "")
-            .trim()
-            .toLowerCase();
 
-    /* =========================
-       YOUTUBE
-    ========================= */
+    const loveCount =
+        reactions.filter(
+            r =>
+                r.reaction === "love"
+        ).length;
 
-    if (
-        p === "youtube" ||
-        /youtube\.com|youtu\.be/i.test(url)
-    ) {
 
-        const videoId =
-            getYouTubeId(url);
+    const wowCount =
+        reactions.filter(
+            r =>
+                r.reaction === "wow"
+        ).length;
 
-        if (!videoId) {
 
-            player.innerHTML = `
-                <div class="empty-video">
-                    ❌ Invalid YouTube URL
-                </div>
-            `;
+    let myReaction = null;
 
-            return;
+
+    if(currentUser){
+
+        const mine =
+            reactions.find(
+                r =>
+                    String(
+                        r.user_id
+                    ) ===
+                    String(
+                        currentUser.id
+                    )
+            );
+
+
+        if(mine){
+
+            myReaction =
+                mine.reaction;
+
         }
 
-        const thumbnail =
-            `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    }
 
-        player.innerHTML = `
-            <div
-                class="youtube-preview"
-                onclick="playYouTubeVideo(this, '${videoId}')"
-            >
+
+    const isMine =
+        currentUser &&
+        String(
+            image.user_id
+        ) ===
+        String(
+            currentUser.id
+        );
+
+
+    const userName =
+        isMine
+        ? "You"
+        : "Community User";
+
+
+    const initial =
+        isMine
+        ? imageInitial(currentUser)
+        : "U";
+
+
+    return `
+
+        <article
+            class="image-card"
+            data-image-id="${escapeHtml(image.id)}"
+        >
+
+            <div class="image-post-header">
+
+                <div class="image-avatar">
+
+                    ${escapeHtml(initial)}
+
+                </div>
+
+
+                <div>
+
+                    <div class="image-user-name">
+
+                        ${escapeHtml(userName)}
+
+                    </div>
+
+
+                    <div class="image-post-time">
+
+                        ${escapeHtml(
+                            imageTime(
+                                image.created_at
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="image-post-photo">
 
                 <img
-                    src="${thumbnail}"
-                    alt="YouTube video"
+                    src="${escapeHtml(image.public_url)}"
+                    alt="Community shared image"
                     loading="lazy"
+                    onerror="
+                        this.style.display='none';
+                    "
                 >
-
-                <div class="play-button">
-                    ▶
-                </div>
 
             </div>
-        `;
-
-        return;
-    }
 
 
-    /* =========================
-       FACEBOOK
-    ========================= */
+            <div class="image-reaction-summary">
 
-    if (
-        p === "facebook" ||
-        /facebook\.com/i.test(url)
-    ) {
+                👍 ${likeCount}
 
-        player.innerHTML = `
-            <iframe
-                src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false"
-                style="
-                    width:100%;
-                    height:100%;
-                    border:0;
-                    overflow:hidden;
-                "
-                scrolling="no"
-                frameborder="0"
-                allowfullscreen
-                allow="
-                    autoplay;
-                    clipboard-write;
-                    encrypted-media;
-                    picture-in-picture;
-                    web-share
-                ">
-            </iframe>
-        `;
+                &nbsp;&nbsp;
 
-        return;
-    }
+                ❤️ ${loveCount}
+
+                &nbsp;&nbsp;
+
+                😮 ${wowCount}
+
+            </div>
 
 
-    /* =========================
-       TIKTOK
-    ========================= */
-
-    if (
-        p === "tiktok" ||
-        /tiktok\.com/i.test(url)
-    ) {
-
-        const tiktokId =
-            getTikTokId(url);
-
-        if (!tiktokId) {
-
-            player.innerHTML = `
-                <div class="empty-video">
-                    ❌ Invalid TikTok URL
-                </div>
-            `;
-
-            return;
-        }
-
-        player.innerHTML = `
-            <iframe
-                src="https://www.tiktok.com/player/v1/${tiktokId}"
-                style="
-                    width:100%;
-                    height:100%;
-                    border:0;
-                "
-                scrolling="no"
-                allow="
-                    autoplay;
-                    encrypted-media;
-                ">
-            </iframe>
-        `;
-
-        return;
-    }
+            <div class="image-reaction-buttons">
 
 
-    /* =========================
-       DIRECT VIDEO
-    ========================= */
-
-    if (
-        /\.(mp4|webm|ogg)(\?.*)?$/i.test(url)
-    ) {
-
-        player.innerHTML = `
-            <video
-                controls
-                playsinline
-                preload="metadata"
-                style="
-                    width:100%;
-                    height:100%;
-                    object-fit:contain;
-                "
-            >
-
-                <source
-                    src="${escapeHtml(url)}"
+                <button
+                    class="image-reaction-btn ${
+                        myReaction === "like"
+                        ? "active"
+                        : ""
+                    }"
+                    onclick="
+                        reactToImage(
+                            ${image.id},
+                            'like',
+                            this
+                        )
+                    "
                 >
 
-                Your browser does not support video.
+                    👍 Like
 
-            </video>
-        `;
-
-        return;
-    }
+                </button>
 
 
-    /* =========================
-       OTHER VIDEO URL
-    ========================= */
+                <button
+                    class="image-reaction-btn ${
+                        myReaction === "love"
+                        ? "love-active"
+                        : ""
+                    }"
+                    onclick="
+                        reactToImage(
+                            ${image.id},
+                            'love',
+                            this
+                        )
+                    "
+                >
 
-    player.innerHTML = `
-        <div class="video-placeholder">
+                    ❤️ Love
 
-            <a
-                href="${escapeHtml(url)}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                ▶️ Open Video
-            </a>
+                </button>
 
-        </div>
+
+                <button
+                    class="image-reaction-btn ${
+                        myReaction === "wow"
+                        ? "active"
+                        : ""
+                    }"
+                    onclick="
+                        reactToImage(
+                            ${image.id},
+                            'wow',
+                            this
+                        )
+                    "
+                >
+
+                    😮 Wow
+
+                </button>
+
+
+            </div>
+
+        </article>
+
     `;
+
 }
 
 
-/* =========================
-   YOUTUBE ID
-========================= */
+/* =====================================================
+   IMAGE REACTION
+===================================================== */
 
-function getYouTubeId(url) {
+async function reactToImage(
+    imageId,
+    reactionType,
+    button
+){
 
-    const match =
-        String(url).match(
-            /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([^&?/]+)/i
-        );
-
-    return match
-        ? match[1]
-        : null;
-}
-
-
-/* =========================
-   TIKTOK ID
-========================= */
-
-function getTikTokId(url) {
-
-    const match =
-        String(url).match(
-            /video\/(\d+)/i
-        );
-
-    return match
-        ? match[1]
-        : null;
-}
-
-
-/* =========================
-   PLAY YOUTUBE
-========================= */
-
-function playYouTubeVideo(
-    element,
-    videoId
-) {
-
-    if (!element || !videoId) return;
-
-    element.innerHTML = `
-        <iframe
-            src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-            title="YouTube video"
-            style="
-                width:100%;
-                height:100%;
-                border:0;
-            "
-            allow="
-                autoplay;
-                encrypted-media;
-                picture-in-picture;
-            "
-            allowfullscreen>
-        </iframe>
-    `;
-}
-
-
-/* =========================
-   HTML ESCAPE
-========================= */
-
-function escapeHtml(value) {
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}    
-    
-
-
-/* =========================
-   INITIAL LOAD
-========================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
-
-        renderSiteVideos("all");
-
-    }
-);
-async function openAccount(){
-
-    const {
-        data:{
-            user
-        }
-    } = await supabaseClient.auth.getUser();
-
-
-    if(user){
-
-        window.location.href =
-            "dashboard.html";
-
-    }else{
+    if(!currentUser){
 
         window.location.href =
             "login.html";
 
+        return;
+
+    }
+
+
+    if(button){
+        button.disabled = true;
+    }
+
+
+    try{
+
+        const {
+            data:existing,
+            error:findError
+        } =
+            await supabaseClient
+                .from(REACTION_TABLE)
+                .select(
+                    "id,reaction"
+                )
+                .eq(
+                    "image_id",
+                    imageId
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+                .maybeSingle();
+
+
+        if(findError){
+            throw findError;
+        }
+
+
+        /* REMOVE */
+
+        if(
+            existing &&
+            existing.reaction ===
+            reactionType
+        ){
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from(REACTION_TABLE)
+                    .delete()
+                    .eq(
+                        "id",
+                        existing.id
+                    )
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
+
+
+            if(error){
+                throw error;
+            }
+
+        }
+
+
+        /* CHANGE */
+
+        else if(existing){
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from(REACTION_TABLE)
+                    .update({
+                        reaction:
+                            reactionType
+                    })
+                    .eq(
+                        "id",
+                        existing.id
+                    )
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
+
+
+            if(error){
+                throw error;
+            }
+
+        }
+
+
+        /* NEW */
+
+        else{
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from(REACTION_TABLE)
+                    .insert({
+
+                        image_id:
+                            imageId,
+
+                        user_id:
+                            currentUser.id,
+
+                        reaction:
+                            reactionType
+
+                    });
+
+
+            if(error){
+                throw error;
+            }
+
+        }
+
+
+        /* REFRESH */
+
+        imageOffset = 0;
+
+        imageHasMore = true;
+
+        await loadImages(true);
+
+
+    }catch(error){
+
+        console.error(
+            "Image reaction error:",
+            error
+        );
+
+
+        alert(
+            "Reaction failed: " +
+            error.message
+        );
+
+    }finally{
+
+        if(button){
+            button.disabled = false;
+        }
+
     }
 
 }
 
+
+/* =====================================================
+   LOAD MORE IMAGES
+===================================================== */
+
+async function loadMoreImages(){
+
+    await loadImages(false);
+
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
 
 async function updateAccountButton(){
 
@@ -2346,16 +3107,24 @@ async function updateAccountButton(){
             "accountButton"
         );
 
+
     if(!button){
         return;
     }
 
 
     const {
-        data:{
-            user
-        }
-    } = await supabaseClient.auth.getUser();
+        data
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    const user =
+        data?.user || null;
+
+
+    currentUser =
+        user;
 
 
     if(user){
@@ -2373,25 +3142,840 @@ async function updateAccountButton(){
 }
 
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function(){
+/* =====================================================
+   ACCOUNT
+===================================================== */
+
+async function openAccount(){
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getUser();
+
+
+    const user =
+        data?.user || null;
+
+
+    if(user){
+
+        window.location.href =
+            "dashboard.html";
+
+    }else{
+
+        window.location.href =
+            "login.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event,session){
+
+        currentUser =
+            session?.user || null;
+
 
         updateAccountButton();
 
+
+        /*
+           Reload image feed so
+           current reaction state updates.
+        */
+
+        imageOffset = 0;
+
+        imageHasMore = true;
+
+        loadImages(true);
+
     }
 );
-    /* =========================
-   FOOTER MODALS
-========================= */
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
+
+let currentVideoPlatform =
+    "all";
+
+
+function showVideoTab(
+    platform,
+    button
+){
+
+    currentVideoPlatform =
+        platform || "all";
+
+
+    const hub =
+        document.getElementById(
+            "videoHub"
+        );
+
+
+    if(!hub){
+        return;
+    }
+
+
+    document
+        .querySelectorAll(
+            ".video-menu button"
+        )
+        .forEach(function(btn){
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    renderSiteVideos(
+        currentVideoPlatform
+    );
+
+
+    hub.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+/* =====================================================
+   YOUTUBE ID
+===================================================== */
+
+function getYouTubeId(url){
+
+    if(!url){
+        return null;
+    }
+
+
+    try{
+
+        const parsed =
+            new URL(url);
+
+
+        const host =
+            parsed.hostname
+                .toLowerCase();
+
+
+        if(
+            host === "youtu.be"
+        ){
+
+            return parsed.pathname
+                .split("/")
+                .filter(Boolean)[0]
+                || null;
+
+        }
+
+
+        if(
+            host === "youtube.com" ||
+            host === "www.youtube.com" ||
+            host === "m.youtube.com"
+        ){
+
+            const watchID =
+                parsed.searchParams
+                    .get("v");
+
+
+            if(watchID){
+                return watchID;
+            }
+
+
+            const parts =
+                parsed.pathname
+                    .split("/")
+                    .filter(Boolean);
+
+
+            const shortsIndex =
+                parts.indexOf(
+                    "shorts"
+                );
+
+
+            if(
+                shortsIndex !== -1 &&
+                parts[shortsIndex + 1]
+            ){
+
+                return parts[
+                    shortsIndex + 1
+                ];
+
+            }
+
+
+            const embedIndex =
+                parts.indexOf(
+                    "embed"
+                );
+
+
+            if(
+                embedIndex !== -1 &&
+                parts[embedIndex + 1]
+            ){
+
+                return parts[
+                    embedIndex + 1
+                ];
+
+            }
+
+
+            const liveIndex =
+                parts.indexOf(
+                    "live"
+                );
+
+
+            if(
+                liveIndex !== -1 &&
+                parts[liveIndex + 1]
+            ){
+
+                return parts[
+                    liveIndex + 1
+                ];
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.error(
+            "YouTube URL error:",
+            error
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   TIKTOK ID
+===================================================== */
+
+function getTikTokId(url){
+
+    if(!url){
+        return null;
+    }
+
+
+    const match =
+        String(url).match(
+            /\/video\/(\d+)/i
+        );
+
+
+    return match
+        ? match[1]
+        : null;
+
+}
+
+
+/* =====================================================
+   VIDEO PLAYER
+===================================================== */
+
+function createVideoPlayer(
+    player,
+    url,
+    platform
+){
+
+    if(
+        !player ||
+        !url
+    ){
+        return;
+    }
+
+
+    const p =
+        String(
+            platform || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    /* YOUTUBE */
+
+    if(
+        p === "youtube" ||
+        /youtube\.com|youtu\.be/i
+            .test(url)
+    ){
+
+        const videoId =
+            getYouTubeId(url);
+
+
+        if(!videoId){
+
+            player.innerHTML = `
+                <div class="empty-video">
+                    ❌ Invalid YouTube URL
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        const thumbnail =
+            "https://img.youtube.com/vi/" +
+            encodeURIComponent(videoId) +
+            "/hqdefault.jpg";
+
+
+        player.innerHTML = `
+
+            <div
+                class="youtube-preview"
+                onclick="
+                    playYouTubeVideo(
+                        this,
+                        '${escapeHtml(videoId)}'
+                    )
+                "
+            >
+
+                <img
+                    src="${thumbnail}"
+                    alt="YouTube video"
+                    loading="lazy"
+                >
+
+
+                <div class="play-button">
+                    ▶
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* FACEBOOK */
+
+    if(
+        p === "facebook" ||
+        /facebook\.com/i.test(url)
+    ){
+
+        player.innerHTML = `
+
+            <iframe
+                src="
+                    https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false
+                "
+                style="
+                    width:100%;
+                    height:500px;
+                    border:0;
+                "
+                scrolling="no"
+                frameborder="0"
+                allowfullscreen
+                allow="
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    picture-in-picture;
+                    web-share;
+                ">
+            </iframe>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* TIKTOK */
+
+    if(
+        p === "tiktok" ||
+        /tiktok\.com/i.test(url)
+    ){
+
+        const tiktokId =
+            getTikTokId(url);
+
+
+        if(!tiktokId){
+
+            player.innerHTML = `
+                <div class="empty-video">
+                    ❌ Invalid TikTok URL
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        player.innerHTML = `
+
+            <iframe
+                src="
+                    https://www.tiktok.com/player/v1/${tiktokId}
+                "
+                style="
+                    width:100%;
+                    height:500px;
+                    border:0;
+                "
+                scrolling="no"
+                allow="
+                    autoplay;
+                    encrypted-media;
+                ">
+            </iframe>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* DIRECT VIDEO */
+
+    if(
+        /\.(mp4|webm|ogg)(\?.*)?$/i
+            .test(url)
+    ){
+
+        player.innerHTML = `
+
+            <video
+                controls
+                playsinline
+                preload="metadata"
+                style="
+                    width:100%;
+                    max-height:500px;
+                    object-fit:contain;
+                "
+            >
+
+                <source
+                    src="${escapeHtml(url)}"
+                >
+
+                Your browser does not support video.
+
+            </video>
+
+        `;
+
+        return;
+
+    }
+
+
+    /* OTHER */
+
+    player.innerHTML = `
+
+        <div class="video-placeholder">
+
+            <a
+                href="${escapeHtml(url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                ▶️ Open Video
+
+            </a>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   PLAY YOUTUBE
+===================================================== */
+
+function playYouTubeVideo(
+    element,
+    videoId
+){
+
+    if(
+        !element ||
+        !videoId
+    ){
+        return;
+    }
+
+
+    element.innerHTML = `
+
+        <iframe
+            src="
+                https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0
+            "
+            title="YouTube video"
+            style="
+                width:100%;
+                height:100%;
+                border:0;
+            "
+            allow="
+                autoplay;
+                encrypted-media;
+                picture-in-picture;
+                fullscreen;
+            "
+            allowfullscreen>
+        </iframe>
+
+    `;
+
+}
+
+
+/* =====================================================
+   LOAD VIDEOS
+===================================================== */
+
+async function renderSiteVideos(
+    platform = "all"
+){
+
+    const feed =
+        document.getElementById(
+            "videoFeed"
+        );
+
+
+    const status =
+        document.getElementById(
+            "videoStatus"
+        );
+
+
+    if(!feed){
+        return;
+    }
+
+
+    feed.innerHTML =
+        '<div class="empty-video">⏳ Loading videos...</div>';
+
+
+    if(status){
+
+        status.textContent =
+            "Loading approved videos...";
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("Videos")
+                .select(
+                    "id,title,platform,videos_url,status,created_at"
+                )
+                .eq(
+                    "status",
+                    "approved"
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+
+        if(error){
+
+            console.error(
+                "Supabase video error:",
+                error
+            );
+
+
+            feed.innerHTML = `
+                <div class="empty-video">
+                    ❌ Videos could not be loaded.
+                </div>
+            `;
+
+
+            if(status){
+
+                status.textContent =
+                    "Video database error.";
+
+            }
+
+
+            return;
+
+        }
+
+
+        let videos =
+            data || [];
+
+
+        if(
+            platform !== "all"
+        ){
+
+            videos =
+                videos.filter(
+                    function(video){
+
+                        return String(
+                            video.platform || ""
+                        )
+                        .trim()
+                        .toLowerCase()
+                        ===
+                        String(platform)
+                        .trim()
+                        .toLowerCase();
+
+                    }
+                );
+
+        }
+
+
+        if(
+            videos.length === 0
+        ){
+
+            feed.innerHTML = `
+
+                <div class="empty-video">
+
+                    🎬 No approved videos found.
+
+                </div>
+
+            `;
+
+
+            if(status){
+
+                status.textContent =
+                    "No videos available in this category.";
+
+            }
+
+
+            return;
+
+        }
+
+
+        feed.innerHTML = "";
+
+
+        videos.forEach(
+            function(video){
+
+                const title =
+                    video.title ||
+                    "Untitled Video";
+
+
+                const videoPlatform =
+                    String(
+                        video.platform || ""
+                    ).trim();
+
+
+                const url =
+                    String(
+                        video.videos_url || ""
+                    ).trim();
+
+
+                if(!url){
+                    return;
+                }
+
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "video-card";
+
+
+                card.innerHTML = `
+
+                    <div class="video-player"></div>
+
+                    <div class="video-info">
+
+                        <h3>
+                            ${escapeHtml(title)}
+                        </h3>
+
+                        <div class="video-meta">
+                            ${escapeHtml(
+                                videoPlatform
+                            )}
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                feed.appendChild(card);
+
+
+                const player =
+                    card.querySelector(
+                        ".video-player"
+                    );
+
+
+                createVideoPlayer(
+                    player,
+                    url,
+                    videoPlatform
+                );
+
+            }
+        );
+
+
+        if(status){
+
+            status.textContent =
+                videos.length +
+                " video" +
+                (
+                    videos.length === 1
+                    ? ""
+                    : "s"
+                ) +
+                " available.";
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "Unexpected video error:",
+            error
+        );
+
+
+        feed.innerHTML = `
+
+            <div class="empty-video">
+
+                ❌ Something went wrong.
+
+            </div>
+
+        `;
+
+
+        if(status){
+
+            status.textContent =
+                "Video loading failed.";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   MODALS
+===================================================== */
 
 function openModal(modalId){
 
     const modal =
-        document.getElementById(modalId);
+        document.getElementById(
+            modalId
+        );
+
 
     if(modal){
-        modal.style.display = "block";
+
+        modal.style.display =
+            "block";
+
     }
 
 }
@@ -2400,51 +3984,81 @@ function openModal(modalId){
 function closeModal(modalId){
 
     const modal =
-        document.getElementById(modalId);
+        document.getElementById(
+            modalId
+        );
+
 
     if(modal){
-        modal.style.display = "none";
+
+        modal.style.display =
+            "none";
+
     }
 
 }
 
 
-/* Close modal when clicking outside */
-
 document.addEventListener(
     "click",
     function(event){
 
-        if(event.target.classList.contains("modal")){
+        if(
+            event.target.classList
+                .contains("modal")
+        ){
 
-            event.target.style.display = "none";
+            event.target.style.display =
+                "none";
 
         }
 
     }
 );
 
-
-/* Close modal with Escape key */
 
 document.addEventListener(
     "keydown",
     function(event){
 
-        if(event.key === "Escape"){
+        if(
+            event.key === "Escape"
+        ){
 
             document
                 .querySelectorAll(".modal")
-                .forEach(function(modal){
+                .forEach(
+                    function(modal){
 
-                    modal.style.display = "none";
+                        modal.style.display =
+                            "none";
 
-                });
+                    }
+                );
 
         }
 
     }
 );
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function(){
+
+        await updateAccountButton();
+
+        await loadImages(true);
+
+        await renderSiteVideos("all");
+
+    }
+);
+
 </script>
 
 </body>
