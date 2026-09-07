@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Admin Panel - Online Quick Tools</title>
+<meta name="robots" content="noindex,nofollow">
 
 <style>
 *{
@@ -19,7 +20,7 @@ body{
 }
 
 .container{
-    max-width:1000px;
+    max-width:1100px;
     margin:25px auto;
     padding:15px;
 }
@@ -32,12 +33,7 @@ body{
     box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
 
-h1{
-    margin-top:0;
-    text-align:center;
-}
-
-h2{
+h1,h2,h3{
     margin-top:0;
 }
 
@@ -97,7 +93,7 @@ button:disabled{
 }
 
 .hidden{
-    display:none;
+    display:none !important;
 }
 
 .message{
@@ -132,6 +128,12 @@ button:disabled{
     text-align:left;
 }
 
+.top-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
 .user-info{
     padding:12px;
     background:#f1f5ff;
@@ -141,9 +143,19 @@ button:disabled{
     word-break:break-word;
 }
 
+.admin-badge{
+    display:inline-block;
+    background:#16a34a;
+    color:white;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    margin-top:8px;
+}
+
 .stats{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(6,1fr);
     gap:12px;
     margin-top:20px;
 }
@@ -167,7 +179,32 @@ button:disabled{
     margin-top:5px;
 }
 
-.video-card{
+.section-tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.tab-btn{
+    background:#e5e7eb;
+    color:#222;
+}
+
+.tab-btn.active{
+    background:#4f46e5;
+    color:white;
+}
+
+.content-section{
+    display:none;
+}
+
+.content-section.active{
+    display:block;
+}
+
+.item-card{
     background:#fafafa;
     border:1px solid #e5e7eb;
     border-radius:12px;
@@ -175,10 +212,11 @@ button:disabled{
     margin:15px 0;
 }
 
-.video-title{
+.item-title{
     font-size:18px;
     font-weight:bold;
     margin-bottom:8px;
+    word-break:break-word;
 }
 
 .meta{
@@ -192,13 +230,58 @@ button:disabled{
     display:inline-block;
     padding:5px 9px;
     border-radius:20px;
-    background:#fff3cd;
-    color:#856404;
     font-size:12px;
     font-weight:bold;
 }
 
-/* ================= VIDEO PREVIEW ================= */
+.status-pending{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.status-approved{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-rejected{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.actions button{
+    flex:1;
+    min-width:100px;
+}
+
+.empty{
+    text-align:center;
+    color:#777;
+    padding:30px 10px;
+}
+
+.debug{
+    background:#111827;
+    color:#d1d5db;
+    padding:15px;
+    border-radius:10px;
+    font-family:monospace;
+    font-size:12px;
+    white-space:pre-wrap;
+    word-break:break-word;
+    margin-top:15px;
+    max-height:400px;
+    overflow:auto;
+}
+
+/* VIDEO PREVIEW */
 
 .preview-container{
     width:100%;
@@ -245,34 +328,63 @@ button:disabled{
     color:#2563eb;
 }
 
-.actions{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
+/* IMAGE */
+
+.image-preview-wrap{
+    width:100%;
+    background:#e5e7eb;
+    border-radius:12px;
+    overflow:hidden;
+    margin:15px 0;
+    text-align:center;
+}
+
+.image-preview{
+    display:block;
+    width:100%;
+    max-height:500px;
+    object-fit:contain;
+    background:#111;
+}
+
+.image-fallback{
+    padding:30px;
+    color:#666;
+}
+
+.image-url{
+    font-size:12px;
+    word-break:break-all;
+    background:#f1f5f9;
+    padding:10px;
+    border-radius:8px;
+}
+
+.danger-note{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#9a3412;
+    border-radius:10px;
+    padding:12px;
+    font-size:13px;
     margin-top:12px;
 }
 
-.actions button{
-    flex:1;
-    min-width:100px;
-}
-
-.empty{
-    text-align:center;
-    color:#777;
-    padding:30px 10px;
-}
-
-.debug{
-    background:#111827;
-    color:#d1d5db;
-    padding:15px;
+.success-note{
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    color:#166534;
     border-radius:10px;
-    font-family:monospace;
-    font-size:12px;
-    white-space:pre-wrap;
-    word-break:break-word;
-    margin-top:15px;
+    padding:12px;
+    font-size:13px;
+    margin-top:12px;
+}
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
 }
 
 @media(max-width:600px){
@@ -288,7 +400,7 @@ button:disabled{
     }
 
     .stats{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(2,1fr);
     }
 
     .topbar{
@@ -299,9 +411,12 @@ button:disabled{
         width:100%;
     }
 
-    .topbar button{
+    .top-actions{
         width:100%;
-        margin-top:5px;
+    }
+
+    .top-actions button{
+        flex:1;
     }
 
     .video-iframe{
@@ -315,6 +430,15 @@ button:disabled{
     .actions button{
         min-width:100%;
     }
+
+    .section-tabs{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .tab-btn{
+        width:100%;
+    }
 }
 </style>
 </head>
@@ -323,189 +447,288 @@ button:disabled{
 
 <div class="container">
 
-<!-- ================= LOGIN ================= -->
+<!-- ==================================================
+     LOGIN
+================================================== -->
 
 <div id="loginBox" class="card">
 
-<h1>🔐 Admin Login</h1>
+    <h1>🔐 Admin Login</h1>
 
-<p>
-Login with your Supabase admin account.
-</p>
+    <p>
+        Login with your Supabase admin account.
+    </p>
 
-<input
-    id="email"
-    type="email"
-    placeholder="Admin email"
-    autocomplete="username"
->
+    <input
+        id="email"
+        type="email"
+        placeholder="Admin email"
+        autocomplete="username"
+    >
 
-<input
-    id="password"
-    type="password"
-    placeholder="Password"
-    autocomplete="current-password"
->
+    <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+    >
 
-<button
-    id="loginBtn"
-    class="login-btn"
->
-Login
-</button>
+    <button
+        id="loginBtn"
+        class="login-btn"
+    >
+        Login
+    </button>
 
-<div
-    id="loginMessage"
-    class="message"
-></div>
+    <div
+        id="loginMessage"
+        class="message"
+    ></div>
 
 </div>
 
 
-<!-- ================= ADMIN PANEL ================= -->
+<!-- ==================================================
+     ADMIN PANEL
+================================================== -->
 
 <div
     id="adminPanel"
     class="hidden"
 >
 
-<div class="card">
+    <!-- HEADER -->
 
-<div class="topbar">
+    <div class="card">
 
-<h1>🎬 Video Admin Panel</h1>
+        <div class="topbar">
 
-<div>
+            <h1>🛡️ Admin Panel</h1>
 
-<button
-    id="refreshBtn"
-    class="refresh"
->
-🔄 Refresh
-</button>
+            <div class="top-actions">
 
-<button
-    id="logoutBtn"
-    class="logout"
->
-Logout
-</button>
+                <button
+                    id="refreshBtn"
+                    class="refresh"
+                >
+                    🔄 Refresh
+                </button>
 
-</div>
+                <button
+                    id="logoutBtn"
+                    class="logout"
+                >
+                    Logout
+                </button>
 
-</div>
+            </div>
 
+        </div>
 
-<div
-    id="userInfo"
-    class="user-info"
-></div>
+        <div
+            id="userInfo"
+            class="user-info"
+        ></div>
 
+        <div
+            id="mainMessage"
+            class="message"
+        ></div>
 
-<div
-    id="mainMessage"
-    class="message"
-></div>
+        <div class="success-note">
+            🔒 You are viewing the protected administration area.
+            Only authorized users in <b>admin_users</b> can manage content.
+        </div>
 
-
-<!-- ================= STATS ================= -->
-
-<div class="stats">
-
-<div class="stat">
-
-<div
-    id="totalCount"
-    class="stat-number"
->
-0
-</div>
-
-<div class="stat-label">
-Total Videos
-</div>
-
-</div>
+    </div>
 
 
-<div class="stat">
+    <!-- ==================================================
+         STATS
+    ================================================== -->
 
-<div
-    id="pendingCount"
-    class="stat-number"
->
-0
-</div>
+    <div class="card">
 
-<div class="stat-label">
-Pending
-</div>
+        <h2>📊 Dashboard</h2>
 
-</div>
+        <div class="stats">
 
+            <div class="stat">
+                <div
+                    id="totalVideos"
+                    class="stat-number"
+                >0</div>
 
-<div class="stat">
-
-<div
-    id="approvedCount"
-    class="stat-number"
->
-0
-</div>
-
-<div class="stat-label">
-Approved
-</div>
-
-</div>
-
-</div>
-
-</div>
+                <div class="stat-label">
+                    Total Videos
+                </div>
+            </div>
 
 
-<!-- ================= PENDING ================= -->
+            <div class="stat">
+                <div
+                    id="pendingVideosCount"
+                    class="stat-number"
+                >0</div>
 
-<div class="card">
-
-<h2>⏳ Pending Videos</h2>
-
-<div id="pendingVideos">
-
-<div class="empty">
-Loading...
-</div>
-
-</div>
-
-</div>
+                <div class="stat-label">
+                    Pending Videos
+                </div>
+            </div>
 
 
-<!-- ================= DATABASE TEST ================= -->
+            <div class="stat">
+                <div
+                    id="approvedVideosCount"
+                    class="stat-number"
+                >0</div>
 
-<div class="card">
+                <div class="stat-label">
+                    Approved Videos
+                </div>
+            </div>
 
-<h2>🔧 Database Test</h2>
 
-<p>
-This section shows exactly what the Admin Panel can read from the Videos table.
-</p>
+            <div class="stat">
+                <div
+                    id="totalImages"
+                    class="stat-number"
+                >0</div>
 
-<div
-    id="debugBox"
-    class="debug"
->
+                <div class="stat-label">
+                    Total Images
+                </div>
+            </div>
+
+
+            <div class="stat">
+                <div
+                    id="pendingImagesCount"
+                    class="stat-number"
+                >0</div>
+
+                <div class="stat-label">
+                    Pending Images
+                </div>
+            </div>
+
+
+            <div class="stat">
+                <div
+                    id="approvedImagesCount"
+                    class="stat-number"
+                >0</div>
+
+                <div class="stat-label">
+                    Approved Images
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         TABS
+    ================================================== -->
+
+    <div class="card">
+
+        <div class="section-tabs">
+
+            <button
+                id="videoTabBtn"
+                class="tab-btn active"
+            >
+                🎬 Videos
+            </button>
+
+            <button
+                id="imageTabBtn"
+                class="tab-btn"
+            >
+                🖼️ Images
+            </button>
+
+        </div>
+
+
+        <!-- ==================================================
+             VIDEO SECTION
+        ================================================== -->
+
+        <div
+            id="videoSection"
+            class="content-section active"
+        >
+
+            <h2>🎬 Video Management</h2>
+
+            <div id="pendingVideosList">
+
+                <div class="empty">
+                    ⏳ Loading videos...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================================================
+             IMAGE SECTION
+        ================================================== -->
+
+        <div
+            id="imageSection"
+            class="content-section"
+        >
+
+            <h2>🖼️ Image Management</h2>
+
+            <div id="pendingImagesList">
+
+                <div class="empty">
+                    ⏳ Loading images...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         DATABASE DEBUG
+    ================================================== -->
+
+    <div class="card">
+
+        <h2>🔧 Database Status</h2>
+
+        <p>
+            This diagnostic area shows the latest database results.
+        </p>
+
+        <div
+            id="debugBox"
+            class="debug"
+        >
 Waiting for database test...
-</div>
+        </div>
+
+    </div>
 
 </div>
 
 </div>
 
-</div>
 
-
-<!-- ================= SUPABASE ================= -->
+<!-- ==================================================
+     SUPABASE
+================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -526,6 +749,20 @@ window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
+
+
+/* ==================================================
+   TABLE / BUCKET CONFIG
+================================================== */
+
+const VIDEO_TABLE =
+"Videos";
+
+const IMAGE_TABLE =
+"images";
+
+const IMAGE_BUCKET =
+"images";
 
 
 /* ==================================================
@@ -562,20 +799,44 @@ document.getElementById("mainMessage");
 const userInfo =
 document.getElementById("userInfo");
 
-const pendingVideos =
-document.getElementById("pendingVideos");
-
-const totalCount =
-document.getElementById("totalCount");
-
-const pendingCount =
-document.getElementById("pendingCount");
-
-const approvedCount =
-document.getElementById("approvedCount");
-
 const debugBox =
 document.getElementById("debugBox");
+
+const pendingVideosList =
+document.getElementById("pendingVideosList");
+
+const pendingImagesList =
+document.getElementById("pendingImagesList");
+
+const totalVideos =
+document.getElementById("totalVideos");
+
+const pendingVideosCount =
+document.getElementById("pendingVideosCount");
+
+const approvedVideosCount =
+document.getElementById("approvedVideosCount");
+
+const totalImages =
+document.getElementById("totalImages");
+
+const pendingImagesCount =
+document.getElementById("pendingImagesCount");
+
+const approvedImagesCount =
+document.getElementById("approvedImagesCount");
+
+const videoTabBtn =
+document.getElementById("videoTabBtn");
+
+const imageTabBtn =
+document.getElementById("imageTabBtn");
+
+const videoSection =
+document.getElementById("videoSection");
+
+const imageSection =
+document.getElementById("imageSection");
 
 
 /* ==================================================
@@ -611,11 +872,10 @@ async function loginAdmin(){
 
     if(!email || !password){
 
-        loginMessage.className =
-        "message error";
-
-        loginMessage.textContent =
-        "❌ Enter email and password.";
+        showLoginMessage(
+            "❌ Enter email and password.",
+            "error"
+        );
 
         return;
     }
@@ -623,11 +883,10 @@ async function loginAdmin(){
 
     loginBtn.disabled = true;
 
-    loginMessage.className =
-    "message info";
-
-    loginMessage.textContent =
-    "⏳ Logging in...";
+    showLoginMessage(
+        "⏳ Logging in...",
+        "info"
+    );
 
 
     try{
@@ -644,12 +903,11 @@ async function loginAdmin(){
 
         if(result.error){
 
-            loginMessage.className =
-            "message error";
-
-            loginMessage.textContent =
-            "❌ Login failed: " +
-            result.error.message;
+            showLoginMessage(
+                "❌ Login failed: " +
+                result.error.message,
+                "error"
+            );
 
             loginBtn.disabled = false;
 
@@ -657,26 +915,90 @@ async function loginAdmin(){
         }
 
 
-        loginMessage.className =
-        "message success";
+        const user =
+        result.data &&
+        result.data.user;
 
-        loginMessage.textContent =
-        "✅ Login successful.";
+
+        if(!user){
+
+            showLoginMessage(
+                "❌ Login succeeded but user was not found.",
+                "error"
+            );
+
+            loginBtn.disabled = false;
+
+            return;
+        }
+
+
+        /* ==================================================
+           ADMIN AUTHORIZATION CHECK
+        ================================================== */
+
+        const adminCheck =
+        await client
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+
+        if(adminCheck.error){
+
+            console.error(
+                "Admin check error:",
+                adminCheck.error
+            );
+
+            await client.auth.signOut();
+
+            showLoginMessage(
+                "❌ Admin authorization check failed: " +
+                adminCheck.error.message,
+                "error"
+            );
+
+            loginBtn.disabled = false;
+
+            return;
+        }
+
+
+        if(!adminCheck.data){
+
+            await client.auth.signOut();
+
+            showLoginMessage(
+                "❌ Access denied. This account is not an authorized admin.",
+                "error"
+            );
+
+            loginBtn.disabled = false;
+
+            return;
+        }
+
+
+        showLoginMessage(
+            "✅ Admin login successful.",
+            "success"
+        );
 
         loginBtn.disabled = false;
 
-        await showAdmin();
+        await showAdmin(user);
 
     }
 
     catch(error){
 
-        loginMessage.className =
-        "message error";
-
-        loginMessage.textContent =
-        "❌ Login error: " +
-        error.message;
+        showLoginMessage(
+            "❌ Login error: " +
+            error.message,
+            "error"
+        );
 
         loginBtn.disabled = false;
 
@@ -686,10 +1008,28 @@ async function loginAdmin(){
 
 
 /* ==================================================
+   LOGIN MESSAGE
+================================================== */
+
+function showLoginMessage(
+    text,
+    type
+){
+
+    loginMessage.className =
+    "message " + type;
+
+    loginMessage.textContent =
+    text;
+
+}
+
+
+/* ==================================================
    SHOW ADMIN
 ================================================== */
 
-async function showAdmin(){
+async function showAdmin(user){
 
     loginBox.classList.add(
         "hidden"
@@ -700,18 +1040,25 @@ async function showAdmin(){
     );
 
 
-    const sessionResult =
-    await client.auth.getSession();
+    if(!user){
+
+        const sessionResult =
+        await client.auth.getSession();
+
+        if(
+            sessionResult.data &&
+            sessionResult.data.session
+        ){
+
+            user =
+            sessionResult.data.session.user;
+
+        }
+
+    }
 
 
-    if(
-        sessionResult.data &&
-        sessionResult.data.session
-    ){
-
-        const user =
-        sessionResult.data.session.user;
-
+    if(user){
 
         userInfo.innerHTML =
         "<b>Logged in as:</b><br>" +
@@ -723,12 +1070,42 @@ async function showAdmin(){
         "<b>User ID:</b><br>" +
         escapeHTML(
             user.id
-        );
+        ) +
+        "<br>" +
+        '<span class="admin-badge">AUTHORIZED ADMIN</span>';
 
     }
 
 
-    await loadVideos();
+    await loadAll();
+
+}
+
+
+/* ==================================================
+   LOAD ALL
+================================================== */
+
+async function loadAll(){
+
+    mainMessage.className =
+    "message info";
+
+    mainMessage.textContent =
+    "⏳ Loading dashboard...";
+
+
+    await Promise.all([
+        loadVideos(),
+        loadImages()
+    ]);
+
+
+    mainMessage.className =
+    "message success";
+
+    mainMessage.textContent =
+    "✅ Dashboard updated.";
 
 }
 
@@ -739,25 +1116,15 @@ async function showAdmin(){
 
 async function loadVideos(){
 
-    pendingVideos.innerHTML =
-    '<div class="empty">' +
-    '⏳ Loading videos...' +
-    '</div>';
-
-
-    debugBox.textContent =
-    "Running database query...";
-
-
-    mainMessage.textContent =
-    "";
+    pendingVideosList.innerHTML =
+    '<div class="empty">⏳ Loading videos...</div>';
 
 
     const result =
     await client
-    .from("Videos")
+    .from(VIDEO_TABLE)
     .select(
-        "id,title,platform,videos_url,status,created_at"
+        "id,title,description,platform,videos_url,status,created_at"
     )
     .order(
         "created_at",
@@ -767,90 +1134,45 @@ async function loadVideos(){
     );
 
 
-    const data =
-    result.data;
+    if(result.error){
 
-    const error =
-    result.error;
+        pendingVideosList.innerHTML =
+        '<div class="empty">❌ Video database query failed.</div>';
 
 
-    /* DATABASE ERROR */
+        totalVideos.textContent =
+        "ERR";
 
-    if(error){
+        pendingVideosCount.textContent =
+        "ERR";
 
-        pendingVideos.innerHTML =
-        '<div class="empty">' +
-        '❌ Database query failed.' +
-        '</div>';
+        approvedVideosCount.textContent =
+        "ERR";
 
 
         debugBox.textContent =
-        "DATABASE ERROR\n\n" +
-        "Code: " +
-        (error.code || "N/A") +
-        "\n\n" +
-        "Message: " +
-        (error.message || "N/A") +
-        "\n\n" +
-        "Details: " +
-        (error.details || "N/A") +
-        "\n\n" +
-        "Hint: " +
-        (error.hint || "N/A");
-
-
-        totalCount.textContent =
-        "ERROR";
-
-        pendingCount.textContent =
-        "ERROR";
-
-        approvedCount.textContent =
-        "ERROR";
-
-
-        mainMessage.className =
-        "message error";
-
-        mainMessage.textContent =
-        "❌ Videos table could not be read.";
+        "VIDEO DATABASE ERROR\n\n" +
+        formatSupabaseError(
+            result.error
+        );
 
         return;
     }
 
 
-    /* SUCCESS */
-
     const videos =
-    Array.isArray(data)
-    ? data
+    Array.isArray(result.data)
+    ? result.data
     : [];
 
-
-    debugBox.textContent =
-    "DATABASE QUERY SUCCESS\n\n" +
-    "Rows received: " +
-    videos.length +
-    "\n\n" +
-    JSON.stringify(
-        videos,
-        null,
-        2
-    );
-
-
-    /* STATS */
 
     const pending =
     videos.filter(
         function(video){
 
-            return String(
-                video.status || ""
-            )
-            .trim()
-            .toLowerCase()
-            === "pending";
+            return normalizeStatus(
+                video.status
+            ) === "pending";
 
         }
     );
@@ -860,38 +1182,31 @@ async function loadVideos(){
     videos.filter(
         function(video){
 
-            return String(
-                video.status || ""
-            )
-            .trim()
-            .toLowerCase()
-            === "approved";
+            return normalizeStatus(
+                video.status
+            ) === "approved";
 
         }
     );
 
 
-    totalCount.textContent =
+    totalVideos.textContent =
     videos.length;
 
-    pendingCount.textContent =
+    pendingVideosCount.textContent =
     pending.length;
 
-    approvedCount.textContent =
+    approvedVideosCount.textContent =
     approved.length;
 
 
-    /* PENDING EMPTY */
+    if(pending.length === 0){
 
-    if(
-        pending.length === 0
-    ){
-
-        pendingVideos.innerHTML =
+        pendingVideosList.innerHTML =
         '<div class="empty">' +
         '🎉 No pending videos.' +
         '<br><br>' +
-        'Total rows found: ' +
+        'Total videos: ' +
         videos.length +
         '</div>';
 
@@ -899,20 +1214,37 @@ async function loadVideos(){
     }
 
 
-    /* SHOW PENDING */
-
-    pendingVideos.innerHTML =
+    pendingVideosList.innerHTML =
     "";
 
 
     pending.forEach(
         function(video){
 
-            pendingVideos.appendChild(
+            pendingVideosList.appendChild(
                 createVideoCard(video)
             );
 
         }
+    );
+
+
+    debugBox.textContent =
+    "VIDEO DATABASE SUCCESS\n\n" +
+    "Total rows: " +
+    videos.length +
+    "\n" +
+    "Pending: " +
+    pending.length +
+    "\n" +
+    "Approved: " +
+    approved.length +
+    "\n\n" +
+    "Latest rows:\n" +
+    JSON.stringify(
+        videos.slice(0,5),
+        null,
+        2
     );
 
 }
@@ -928,13 +1260,20 @@ function createVideoCard(video){
     document.createElement("div");
 
     card.className =
-    "video-card";
+    "item-card";
 
 
     const title =
     escapeHTML(
         video.title ||
         "Untitled"
+    );
+
+
+    const description =
+    escapeHTML(
+        video.description ||
+        "No description"
     );
 
 
@@ -946,10 +1285,10 @@ function createVideoCard(video){
 
 
     const url =
-    escapeHTML(
+    String(
         video.videos_url ||
         ""
-    );
+    ).trim();
 
 
     const created =
@@ -961,8 +1300,8 @@ function createVideoCard(video){
 
     card.innerHTML = `
 
-        <div class="video-title">
-            ${title}
+        <div class="item-title">
+            🎬 ${title}
         </div>
 
         <div class="meta">
@@ -971,12 +1310,17 @@ function createVideoCard(video){
         </div>
 
         <div class="meta">
+            <b>Description:</b>
+            ${description}
+        </div>
+
+        <div class="meta">
             <b>Platform:</b>
             ${platform}
         </div>
 
         <div class="meta">
-            <span class="status">
+            <span class="status status-pending">
                 PENDING
             </span>
         </div>
@@ -988,7 +1332,7 @@ function createVideoCard(video){
 
         <div class="meta">
             <b>Video URL:</b><br>
-            ${url}
+            ${escapeHTML(url)}
         </div>
 
         <div class="preview-container"></div>
@@ -1018,19 +1362,11 @@ function createVideoCard(video){
     );
 
 
-    /* ==================================================
-       VIDEO PREVIEW
-    ================================================== */
-
     createVideoPreview(
         video,
         previewContainer
     );
 
-
-    /* ==================================================
-       APPROVE
-    ================================================== */
 
     card.querySelector(
         ".approve"
@@ -1039,7 +1375,7 @@ function createVideoCard(video){
         "click",
         function(){
 
-            updateStatus(
+            updateVideoStatus(
                 video.id,
                 "approved"
             );
@@ -1048,10 +1384,6 @@ function createVideoCard(video){
     );
 
 
-    /* ==================================================
-       REJECT
-    ================================================== */
-
     card.querySelector(
         ".reject"
     )
@@ -1059,7 +1391,7 @@ function createVideoCard(video){
         "click",
         function(){
 
-            updateStatus(
+            updateVideoStatus(
                 video.id,
                 "rejected"
             );
@@ -1067,10 +1399,6 @@ function createVideoCard(video){
         }
     );
 
-
-    /* ==================================================
-       DELETE
-    ================================================== */
 
     card.querySelector(
         ".delete"
@@ -1091,7 +1419,7 @@ function createVideoCard(video){
 
 
 /* ==================================================
-   CREATE VIDEO PREVIEW
+   VIDEO PREVIEW
 ================================================== */
 
 function createVideoPreview(
@@ -1106,11 +1434,11 @@ function createVideoPreview(
     .trim()
     .toLowerCase();
 
+
     const url =
     String(
         video.videos_url || ""
-    )
-    .trim();
+    ).trim();
 
 
     if(!url){
@@ -1124,9 +1452,7 @@ function createVideoPreview(
     }
 
 
-    /* ==================================================
-       DIRECT UPLOAD
-    ================================================== */
+    /* DIRECT */
 
     if(
         platform === "direct" ||
@@ -1160,9 +1486,7 @@ function createVideoPreview(
     }
 
 
-    /* ==================================================
-       YOUTUBE
-    ================================================== */
+    /* YOUTUBE */
 
     if(platform === "youtube"){
 
@@ -1227,28 +1551,9 @@ function createVideoPreview(
     }
 
 
-    /* ==================================================
-       FACEBOOK
-    ================================================== */
+    /* FACEBOOK */
 
     if(platform === "facebook"){
-
-        const encodedURL =
-        encodeURIComponent(url);
-
-        const label =
-        document.createElement("div");
-
-        label.className =
-        "preview-title";
-
-        label.textContent =
-        "📘 Facebook Preview";
-
-        container.appendChild(
-            label
-        );
-
 
         const iframe =
         document.createElement("iframe");
@@ -1258,7 +1563,7 @@ function createVideoPreview(
 
         iframe.src =
         "https://www.facebook.com/plugins/video.php?href=" +
-        encodedURL +
+        encodeURIComponent(url) +
         "&show_text=false&width=560";
 
         iframe.title =
@@ -1272,6 +1577,9 @@ function createVideoPreview(
 
         iframe.loading =
         "lazy";
+
+        container.innerHTML =
+        '<div class="preview-title">📘 Facebook Preview</div>';
 
         container.appendChild(
             iframe
@@ -1287,13 +1595,24 @@ function createVideoPreview(
         fallback.style.marginTop =
         "8px";
 
-        fallback.innerHTML =
-        'If the Facebook preview does not load, ' +
-        '<a href="' +
-        escapeHTML(url) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        'Open Facebook Video ↗' +
-        '</a>';
+        const link =
+        document.createElement("a");
+
+        link.href =
+        url;
+
+        link.target =
+        "_blank";
+
+        link.rel =
+        "noopener noreferrer";
+
+        link.textContent =
+        "Open Facebook Video ↗";
+
+        fallback.appendChild(
+            link
+        );
 
         container.appendChild(
             fallback
@@ -1303,9 +1622,7 @@ function createVideoPreview(
     }
 
 
-    /* ==================================================
-       TIKTOK
-    ================================================== */
+    /* TIKTOK */
 
     if(platform === "tiktok"){
 
@@ -1372,10 +1689,6 @@ function createVideoPreview(
     }
 
 
-    /* ==================================================
-       UNKNOWN PLATFORM
-    ================================================== */
-
     showFallback(
         container,
         url,
@@ -1405,32 +1718,21 @@ function getYouTubeID(url){
         );
 
 
-        /* youtu.be/VIDEO_ID */
-
-        if(
-            host === "youtu.be"
-        ){
+        if(host === "youtu.be"){
 
             return cleanVideoID(
                 parsed.pathname
-                .replace(
-                    /^\/+/,
-                    ""
-                )
+                .replace(/^\/+/,"")
                 .split("/")[0]
             );
 
         }
 
 
-        /* youtube.com */
-
         if(
             host === "youtube.com" ||
             host === "m.youtube.com"
         ){
-
-            /* /watch?v= */
 
             const watchID =
             parsed.searchParams.get("v");
@@ -1443,8 +1745,6 @@ function getYouTubeID(url){
 
             }
 
-
-            /* /shorts/VIDEO_ID */
 
             const shortsMatch =
             parsed.pathname.match(
@@ -1460,8 +1760,6 @@ function getYouTubeID(url){
             }
 
 
-            /* /embed/VIDEO_ID */
-
             const embedMatch =
             parsed.pathname.match(
                 /\/embed\/([^/?#]+)/
@@ -1475,8 +1773,6 @@ function getYouTubeID(url){
 
             }
 
-
-            /* /live/VIDEO_ID */
 
             const liveMatch =
             parsed.pathname.match(
@@ -1573,7 +1869,7 @@ function getTikTokID(url){
 
 
 /* ==================================================
-   FALLBACK LINK
+   FALLBACK
 ================================================== */
 
 function showFallback(
@@ -1588,8 +1884,16 @@ function showFallback(
     box.className =
     "preview-fallback";
 
-    box.innerHTML =
+    box.textContent =
     "⚠️ Preview unavailable.";
+
+
+    const br =
+    document.createElement("br");
+
+    box.appendChild(
+        br
+    );
 
 
     const link =
@@ -1609,10 +1913,6 @@ function showFallback(
 
 
     box.appendChild(
-        document.createElement("br")
-    );
-
-    box.appendChild(
         link
     );
 
@@ -1624,10 +1924,10 @@ function showFallback(
 
 
 /* ==================================================
-   UPDATE STATUS
+   UPDATE VIDEO STATUS
 ================================================== */
 
-async function updateStatus(
+async function updateVideoStatus(
     id,
     newStatus
 ){
@@ -1641,7 +1941,7 @@ async function updateStatus(
 
     const result =
     await client
-    .from("Videos")
+    .from(VIDEO_TABLE)
     .update({
         status:newStatus
     })
@@ -1657,7 +1957,7 @@ async function updateStatus(
         "message error";
 
         mainMessage.textContent =
-        "❌ Update failed: " +
+        "❌ Video update failed: " +
         result.error.message;
 
         return;
@@ -1666,7 +1966,6 @@ async function updateStatus(
 
     mainMessage.className =
     "message success";
-
 
     mainMessage.textContent =
     newStatus === "approved"
@@ -1687,13 +1986,11 @@ async function updateStatus(
 
 async function deleteVideo(video){
 
-    const confirmDelete =
-    confirm(
-        "Delete this video permanently?"
-    );
-
-
-    if(!confirmDelete){
+    if(
+        !confirm(
+            "Delete this video permanently?"
+        )
+    ){
         return;
     }
 
@@ -1705,11 +2002,9 @@ async function deleteVideo(video){
     "⏳ Deleting video...";
 
 
-    /* DATABASE DELETE */
-
     const result =
     await client
-    .from("Videos")
+    .from(VIDEO_TABLE)
     .delete()
     .eq(
         "id",
@@ -1723,19 +2018,30 @@ async function deleteVideo(video){
         "message error";
 
         mainMessage.textContent =
-        "❌ Delete failed: " +
+        "❌ Video delete failed: " +
         result.error.message;
 
         return;
     }
 
 
-    /* STORAGE DELETE */
+    /* DIRECT VIDEO STORAGE */
+
+    const platform =
+    String(
+        video.platform || ""
+    )
+    .trim()
+    .toLowerCase();
+
 
     if(
-        String(
-            video.platform || ""
-        ).toLowerCase() === "direct" &&
+        (
+            platform === "direct" ||
+            platform === "upload" ||
+            platform === "direct upload"
+        )
+        &&
         video.videos_url
     ){
 
@@ -1767,12 +2073,10 @@ async function deleteVideo(video){
             ]);
 
 
-            if(
-                storageResult.error
-            ){
+            if(storageResult.error){
 
                 console.warn(
-                    "Storage delete error:",
+                    "Video storage delete error:",
                     storageResult.error
                 );
 
@@ -1796,6 +2100,592 @@ async function deleteVideo(video){
 
 
 /* ==================================================
+   LOAD IMAGES
+================================================== */
+
+async function loadImages(){
+
+    pendingImagesList.innerHTML =
+    '<div class="empty">⏳ Loading images...</div>';
+
+
+    const result =
+    await client
+    .from(IMAGE_TABLE)
+    .select(
+        "id,user_id,file_path,public_url,created_at,status"
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(result.error){
+
+        pendingImagesList.innerHTML =
+        '<div class="empty">' +
+        '❌ Image database query failed.' +
+        '</div>';
+
+
+        totalImages.textContent =
+        "ERR";
+
+        pendingImagesCount.textContent =
+        "ERR";
+
+        approvedImagesCount.textContent =
+        "ERR";
+
+
+        debugBox.textContent +=
+        "\n\nIMAGE DATABASE ERROR\n\n" +
+        formatSupabaseError(
+            result.error
+        );
+
+        return;
+    }
+
+
+    const images =
+    Array.isArray(result.data)
+    ? result.data
+    : [];
+
+
+    const pending =
+    images.filter(
+        function(image){
+
+            return normalizeStatus(
+                image.status
+            ) === "pending";
+
+        }
+    );
+
+
+    const approved =
+    images.filter(
+        function(image){
+
+            return normalizeStatus(
+                image.status
+            ) === "approved";
+
+        }
+    );
+
+
+    totalImages.textContent =
+    images.length;
+
+    pendingImagesCount.textContent =
+    pending.length;
+
+    approvedImagesCount.textContent =
+    approved.length;
+
+
+    if(pending.length === 0){
+
+        pendingImagesList.innerHTML =
+        '<div class="empty">' +
+        '🎉 No pending images.' +
+        '<br><br>' +
+        'Total images: ' +
+        images.length +
+        '</div>';
+
+        return;
+    }
+
+
+    pendingImagesList.innerHTML =
+    "";
+
+
+    pending.forEach(
+        function(image){
+
+            pendingImagesList.appendChild(
+                createImageCard(image)
+            );
+
+        }
+    );
+
+
+    debugBox.textContent +=
+    "\n\nIMAGE DATABASE SUCCESS\n\n" +
+    "Total rows: " +
+    images.length +
+    "\n" +
+    "Pending: " +
+    pending.length +
+    "\n" +
+    "Approved: " +
+    approved.length +
+    "\n\n" +
+    "Latest rows:\n" +
+    JSON.stringify(
+        images.slice(0,5),
+        null,
+        2
+    );
+
+}
+
+
+/* ==================================================
+   CREATE IMAGE CARD
+================================================== */
+
+function createImageCard(image){
+
+    const card =
+    document.createElement("div");
+
+    card.className =
+    "item-card";
+
+
+    const imageURL =
+    String(
+        image.public_url ||
+        ""
+    ).trim();
+
+
+    const filePath =
+    String(
+        image.file_path ||
+        ""
+    ).trim();
+
+
+    const created =
+    escapeHTML(
+        image.created_at ||
+        ""
+    );
+
+
+    card.innerHTML = `
+
+        <div class="item-title">
+            🖼️ Image #${escapeHTML(image.id)}
+        </div>
+
+        <div class="meta">
+            <b>Image ID:</b>
+            ${escapeHTML(image.id)}
+        </div>
+
+        <div class="meta">
+            <b>User ID:</b><br>
+            ${escapeHTML(image.user_id || "N/A")}
+        </div>
+
+        <div class="meta">
+            <span class="status status-pending">
+                PENDING
+            </span>
+        </div>
+
+        <div class="meta">
+            <b>Created:</b>
+            ${created}
+        </div>
+
+        <div class="image-preview-wrap">
+            <div class="image-fallback">
+                ⏳ Loading image...
+            </div>
+        </div>
+
+        <div class="meta">
+            <b>File Path:</b>
+        </div>
+
+        <div class="image-url">
+            ${escapeHTML(filePath || "N/A")}
+        </div>
+
+        <div class="meta">
+            <b>Public URL:</b>
+        </div>
+
+        <div class="image-url">
+            ${escapeHTML(imageURL || "N/A")}
+        </div>
+
+        <div class="actions">
+
+            <button class="approve">
+                ✅ Approve
+            </button>
+
+            <button class="reject">
+                ❌ Reject
+            </button>
+
+            <button class="delete">
+                🗑️ Delete
+            </button>
+
+        </div>
+
+    `;
+
+
+    /* IMAGE PREVIEW */
+
+    const previewWrap =
+    card.querySelector(
+        ".image-preview-wrap"
+    );
+
+
+    if(imageURL){
+
+        const imageElement =
+        document.createElement("img");
+
+        imageElement.className =
+        "image-preview";
+
+        imageElement.src =
+        imageURL;
+
+        imageElement.alt =
+        "Submitted image";
+
+        imageElement.loading =
+        "lazy";
+
+
+        imageElement.onload =
+        function(){
+
+            previewWrap.innerHTML =
+            "";
+
+            previewWrap.appendChild(
+                imageElement
+            );
+
+        };
+
+
+        imageElement.onerror =
+        function(){
+
+            previewWrap.innerHTML =
+            '<div class="image-fallback">' +
+            '⚠️ Image preview could not load.' +
+            '<br><br>' +
+            'Check the Storage public URL.' +
+            '</div>';
+
+        };
+
+    }
+    else{
+
+        previewWrap.innerHTML =
+        '<div class="image-fallback">' +
+        '⚠️ No public image URL.' +
+        '</div>';
+
+    }
+
+
+    /* APPROVE */
+
+    card.querySelector(
+        ".approve"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            updateImageStatus(
+                image.id,
+                "approved"
+            );
+
+        }
+    );
+
+
+    /* REJECT */
+
+    card.querySelector(
+        ".reject"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            updateImageStatus(
+                image.id,
+                "rejected"
+            );
+
+        }
+    );
+
+
+    /* DELETE */
+
+    card.querySelector(
+        ".delete"
+    )
+    .addEventListener(
+        "click",
+        function(){
+
+            deleteImage(image);
+
+        }
+    );
+
+
+    return card;
+
+}
+
+
+/* ==================================================
+   UPDATE IMAGE STATUS
+================================================== */
+
+async function updateImageStatus(
+    id,
+    newStatus
+){
+
+    mainMessage.className =
+    "message info";
+
+    mainMessage.textContent =
+    "⏳ Updating image...";
+
+
+    const result =
+    await client
+    .from(IMAGE_TABLE)
+    .update({
+        status:newStatus
+    })
+    .eq(
+        "id",
+        id
+    );
+
+
+    if(result.error){
+
+        mainMessage.className =
+        "message error";
+
+        mainMessage.textContent =
+        "❌ Image update failed: " +
+        result.error.message;
+
+        debugBox.textContent =
+        "IMAGE UPDATE ERROR\n\n" +
+        formatSupabaseError(
+            result.error
+        );
+
+        return;
+    }
+
+
+    mainMessage.className =
+    "message success";
+
+    mainMessage.textContent =
+    newStatus === "approved"
+    ?
+    "✅ Image approved."
+    :
+    "❌ Image rejected.";
+
+
+    await loadImages();
+
+}
+
+
+/* ==================================================
+   DELETE IMAGE
+================================================== */
+
+async function deleteImage(image){
+
+    if(
+        !confirm(
+            "Delete this image permanently?\n\n" +
+            "The database record and Storage file will be deleted."
+        )
+    ){
+        return;
+    }
+
+
+    mainMessage.className =
+    "message info";
+
+    mainMessage.textContent =
+    "⏳ Deleting image...";
+
+
+    /* ==================================================
+       FIRST: DATABASE DELETE
+    ================================================== */
+
+    const dbResult =
+    await client
+    .from(IMAGE_TABLE)
+    .delete()
+    .eq(
+        "id",
+        image.id
+    );
+
+
+    if(dbResult.error){
+
+        mainMessage.className =
+        "message error";
+
+        mainMessage.textContent =
+        "❌ Image database delete failed: " +
+        dbResult.error.message;
+
+        return;
+    }
+
+
+    /* ==================================================
+       SECOND: STORAGE DELETE
+    ================================================== */
+
+    let storageError =
+    null;
+
+
+    if(image.file_path){
+
+        const storageResult =
+        await client
+        .storage
+        .from(IMAGE_BUCKET)
+        .remove([
+            image.file_path
+        ]);
+
+
+        if(storageResult.error){
+
+            storageError =
+            storageResult.error;
+
+            console.warn(
+                "Image Storage delete error:",
+                storageResult.error
+            );
+
+        }
+
+    }
+
+
+    if(storageError){
+
+        mainMessage.className =
+        "message info";
+
+        mainMessage.textContent =
+        "⚠️ Image database record deleted, but Storage file could not be deleted. Check Storage RLS.";
+
+    }
+    else{
+
+        mainMessage.className =
+        "message success";
+
+        mainMessage.textContent =
+        "🗑️ Image and Storage file deleted.";
+
+    }
+
+
+    await loadImages();
+
+}
+
+
+/* ==================================================
+   TABS
+================================================== */
+
+videoTabBtn.addEventListener(
+    "click",
+    function(){
+
+        videoTabBtn.classList.add(
+            "active"
+        );
+
+        imageTabBtn.classList.remove(
+            "active"
+        );
+
+        videoSection.classList.add(
+            "active"
+        );
+
+        imageSection.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+imageTabBtn.addEventListener(
+    "click",
+    function(){
+
+        imageTabBtn.classList.add(
+            "active"
+        );
+
+        videoTabBtn.classList.remove(
+            "active"
+        );
+
+        imageSection.classList.add(
+            "active"
+        );
+
+        videoSection.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* ==================================================
    LOGOUT
 ================================================== */
 
@@ -1809,7 +2699,6 @@ logoutBtn.addEventListener(
         adminPanel.classList.add(
             "hidden"
         );
-
 
         loginBox.classList.remove(
             "hidden"
@@ -1828,6 +2717,10 @@ logoutBtn.addEventListener(
         "";
 
 
+        userInfo.innerHTML =
+        "";
+
+
         debugBox.textContent =
         "Logged out.";
 
@@ -1843,7 +2736,7 @@ refreshBtn.addEventListener(
     "click",
     async function(){
 
-        await loadVideos();
+        await loadAll();
 
     }
 );
@@ -1855,16 +2748,59 @@ refreshBtn.addEventListener(
 
 async function checkSession(){
 
-    const result =
-    await client.auth.getSession();
+    try{
+
+        const result =
+        await client.auth.getSession();
 
 
-    if(
-        result.data &&
-        result.data.session
-    ){
+        if(
+            result.data &&
+            result.data.session
+        ){
 
-        await showAdmin();
+            const user =
+            result.data.session.user;
+
+
+            /* CHECK ADMIN AGAIN */
+
+            const adminCheck =
+            await client
+            .from("admin_users")
+            .select("user_id")
+            .eq(
+                "user_id",
+                user.id
+            )
+            .maybeSingle();
+
+
+            if(
+                adminCheck.error ||
+                !adminCheck.data
+            ){
+
+                await client.auth.signOut();
+
+                return;
+            }
+
+
+            await showAdmin(
+                user
+            );
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Session check error:",
+            error
+        );
 
     }
 
@@ -1875,12 +2811,60 @@ checkSession();
 
 
 /* ==================================================
+   NORMALIZE STATUS
+================================================== */
+
+function normalizeStatus(value){
+
+    return String(
+        value || ""
+    )
+    .trim()
+    .toLowerCase();
+
+}
+
+
+/* ==================================================
+   SUPABASE ERROR FORMAT
+================================================== */
+
+function formatSupabaseError(error){
+
+    if(!error){
+        return "Unknown error";
+    }
+
+
+    return (
+        "Code: " +
+        (error.code || "N/A") +
+        "\n\n" +
+
+        "Message: " +
+        (error.message || "N/A") +
+        "\n\n" +
+
+        "Details: " +
+        (error.details || "N/A") +
+        "\n\n" +
+
+        "Hint: " +
+        (error.hint || "N/A")
+    );
+
+}
+
+
+/* ==================================================
    HTML ESCAPE
 ================================================== */
 
 function escapeHTML(value){
 
-    return String(value)
+    return String(
+        value ?? ""
+    )
 
     .replace(
         /&/g,
