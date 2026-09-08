@@ -43,7 +43,29 @@ h1{
 .subtitle{
     text-align:center;
     color:#666;
-    margin-bottom:25px;
+    margin-bottom:20px;
+}
+
+.user-box{
+    background:#eef3ff;
+    border:1px solid #cdd9ff;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:20px;
+    font-size:13px;
+    line-height:1.6;
+    word-break:break-word;
+}
+
+.user-badge{
+    display:inline-block;
+    background:#16a34a;
+    color:white;
+    padding:4px 9px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:bold;
+    margin-top:5px;
 }
 
 label{
@@ -160,6 +182,19 @@ button.submit-btn:disabled{
     font-weight:bold;
 }
 
+.profile-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    margin-top:12px;
+    padding:13px;
+    border-radius:12px;
+    background:#e0e7ff;
+    color:#3730a3;
+    font-weight:bold;
+}
+
 .message{
     display:none;
     margin-top:18px;
@@ -179,6 +214,11 @@ button.submit-btn:disabled{
 .error{
     background:#fee2e2;
     color:#991b1b;
+}
+
+.info{
+    background:#dbeafe;
+    color:#1e40af;
 }
 
 .upload-info{
@@ -216,6 +256,16 @@ button.submit-btn:disabled{
     margin-top:5px;
 }
 
+.login-required{
+    text-align:center;
+    padding:20px;
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#9a3412;
+    border-radius:12px;
+    margin-top:20px;
+}
+
 @media(max-width:450px){
 
     .card{
@@ -250,7 +300,19 @@ Upload or submit your video to Online Quick Tools.
 
 
 <!-- =========================
-     VIDEO TITLE
+     USER INFORMATION
+========================= -->
+
+<div
+    id="userBox"
+    class="user-box"
+>
+⏳ Checking your account...
+</div>
+
+
+<!-- =========================
+     TITLE
 ========================= -->
 
 <label for="title">
@@ -393,7 +455,7 @@ Example: https://youtube.com/shorts/xxxxxxxx
 
 
 <!-- =========================
-     DIRECT UPLOAD BOX
+     DIRECT UPLOAD
 ========================= -->
 
 <div
@@ -453,7 +515,7 @@ Uploading...
 
 
 <!-- =========================
-     SUBMIT BUTTON
+     SUBMIT
 ========================= -->
 
 <button
@@ -477,7 +539,19 @@ Uploading...
 
 
 <!-- =========================
-     BACK BUTTON
+     PROFILE BUTTON
+========================= -->
+
+<a
+    href="profile.html"
+    class="profile-btn"
+>
+👤 My Profile
+</a>
+
+
+<!-- =========================
+     BACK
 ========================= -->
 
 <a
@@ -510,6 +584,8 @@ Uploading...
 
 • Admin approval is required before the video appears publicly.<br>
 
+• Your upload is automatically connected to your account.<br>
+
 • Please submit only videos you have permission to share.
 
 </div>
@@ -537,7 +613,6 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
-
 const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
@@ -550,6 +625,8 @@ window.supabase.createClient(
 ========================================= */
 
 let currentPlatform = "YouTube";
+
+let currentUser = null;
 
 
 /* =========================================
@@ -583,6 +660,100 @@ document.getElementById("progress");
 const progressBar =
 document.getElementById("progressBar");
 
+const userBox =
+document.getElementById("userBox");
+
+
+/* =========================================
+   CHECK LOGIN
+========================================= */
+
+async function checkUser(){
+
+    try{
+
+        const result =
+            await supabaseClient.auth.getSession();
+
+
+        if(result.error){
+
+            throw result.error;
+
+        }
+
+
+        const session =
+            result.data &&
+            result.data.session;
+
+
+        if(!session || !session.user){
+
+            currentUser = null;
+
+            userBox.innerHTML = `
+                <div class="login-required">
+                    🔐 You must be logged in to submit a video.
+                    <br><br>
+                    Please log in to your account first.
+                </div>
+            `;
+
+            submitBtn.disabled = true;
+
+            return false;
+        }
+
+
+        currentUser =
+            session.user;
+
+
+        userBox.innerHTML = `
+            <b>👤 Logged in account</b><br>
+            ${escapeHTML(currentUser.email || "User")}
+            <br>
+            <span class="user-badge">
+                ACCOUNT CONNECTED
+            </span>
+        `;
+
+
+        submitBtn.disabled = false;
+
+        return true;
+
+    }
+
+    catch(error){
+
+        console.error(
+            "User check error:",
+            error
+        );
+
+
+        userBox.innerHTML = `
+            <div class="login-required">
+                ❌ Could not verify your account.
+                <br><br>
+                ${escapeHTML(
+                    error.message ||
+                    "Unknown error"
+                )}
+            </div>
+        `;
+
+
+        submitBtn.disabled = true;
+
+        return false;
+
+    }
+
+}
+
 
 /* =========================================
    CHANGE PLATFORM
@@ -593,8 +764,6 @@ function changePlatform(platform){
     currentPlatform = platform;
 
 
-    /* Remove active from all options */
-
     document
         .querySelectorAll(".platform-option")
         .forEach(function(option){
@@ -604,12 +773,11 @@ function changePlatform(platform){
         });
 
 
-    /* Add active to selected option */
-
     const selectedOption =
         document.getElementById(
             "option" + platform
         );
+
 
     if(selectedOption){
 
@@ -618,9 +786,7 @@ function changePlatform(platform){
     }
 
 
-    /* ===============================
-       DIRECT UPLOAD
-    =============================== */
+    /* DIRECT */
 
     if(platform === "Direct"){
 
@@ -637,28 +803,20 @@ function changePlatform(platform){
     }
 
 
-    /* ===============================
-       URL PLATFORMS
-    =============================== */
+    /* URL */
 
     urlBox.style.display = "block";
 
     uploadBox.style.display = "none";
-
 
     videoFile.value = "";
 
     fileInfo.innerText =
         "MP4 recommended • Maximum 50 MB";
 
-
     submitBtn.innerText =
         "📤 Submit Video";
 
-
-    /* ===============================
-       YOUTUBE
-    =============================== */
 
     if(platform === "YouTube"){
 
@@ -671,10 +829,6 @@ function changePlatform(platform){
     }
 
 
-    /* ===============================
-       FACEBOOK
-    =============================== */
-
     else if(platform === "Facebook"){
 
         videoURL.placeholder =
@@ -685,10 +839,6 @@ function changePlatform(platform){
 
     }
 
-
-    /* ===============================
-       TIKTOK
-    =============================== */
 
     else if(platform === "TikTok"){
 
@@ -737,8 +887,6 @@ function checkFile(){
     }
 
 
-    /* Only allow video files */
-
     if(
         file.type &&
         !file.type.startsWith("video/")
@@ -774,7 +922,7 @@ function checkFile(){
 
 
 /* =========================================
-   SHOW MESSAGE
+   MESSAGE
 ========================================= */
 
 function showMessage(text,type){
@@ -796,10 +944,6 @@ function showMessage(text,type){
 
 }
 
-
-/* =========================================
-   HIDE MESSAGE
-========================================= */
 
 function hideMessage(){
 
@@ -829,7 +973,7 @@ function resetProgress(){
 
 
 /* =========================================
-   VALIDATE PLATFORM URL
+   URL VALIDATION
 ========================================= */
 
 function validateURL(platform,url){
@@ -839,8 +983,6 @@ function validateURL(platform,url){
         const parsed =
             new URL(url);
 
-
-        /* HTTPS only */
 
         if(parsed.protocol !== "https:"){
 
@@ -855,10 +997,6 @@ function validateURL(platform,url){
             .replace(/^www\./,"");
 
 
-        /* ===============================
-           YOUTUBE
-        =============================== */
-
         if(platform === "YouTube"){
 
             return (
@@ -870,10 +1008,6 @@ function validateURL(platform,url){
         }
 
 
-        /* ===============================
-           FACEBOOK
-        =============================== */
-
         if(platform === "Facebook"){
 
             return (
@@ -884,10 +1018,6 @@ function validateURL(platform,url){
 
         }
 
-
-        /* ===============================
-           TIKTOK
-        =============================== */
 
         if(platform === "TikTok"){
 
@@ -923,16 +1053,31 @@ async function submitVideo(){
     resetProgress();
 
 
+    /* =====================================
+       REQUIRE LOGIN
+    ===================================== */
+
+    const loggedIn =
+        await checkUser();
+
+
+    if(!loggedIn){
+
+        showMessage(
+            "❌ Please log in before submitting a video.",
+            "error"
+        );
+
+        return;
+    }
+
+
     const title =
         document
         .getElementById("title")
         .value
         .trim();
 
-
-    /* =====================================
-       TITLE CHECK
-    ===================================== */
 
     if(!title){
 
@@ -1001,10 +1146,7 @@ async function submitVideo(){
 
         try{
 
-            /* Disable button */
-
-            submitBtn.disabled =
-                true;
+            submitBtn.disabled = true;
 
             submitBtn.innerText =
                 "⏳ Uploading...";
@@ -1012,7 +1154,6 @@ async function submitVideo(){
 
             progress.style.display =
                 "block";
-
 
             progressBar.style.width =
                 "10%";
@@ -1050,7 +1191,7 @@ async function submitVideo(){
 
 
             /* =================================
-               UPLOAD TO SUPABASE STORAGE
+               STORAGE UPLOAD
             ================================= */
 
             const uploadResult =
@@ -1104,7 +1245,8 @@ async function submitVideo(){
 
 
             /* =================================
-               INSERT INTO VIDEOS TABLE
+               DATABASE INSERT
+               USER ID IS AUTOMATIC
             ================================= */
 
             const databaseResult =
@@ -1118,7 +1260,9 @@ async function submitVideo(){
 
                     videos_url:publicURL,
 
-                    status:"pending"
+                    status:"pending",
+
+                    user_id:currentUser.id
 
                 });
 
@@ -1134,17 +1278,11 @@ async function submitVideo(){
                 "100%";
 
 
-            /* =================================
-               SUCCESS
-            ================================= */
-
             showMessage(
                 "✅ Video submitted successfully! Waiting for admin approval.",
                 "success"
             );
 
-
-            /* Reset form */
 
             document
                 .getElementById("title")
@@ -1182,9 +1320,7 @@ async function submitVideo(){
 
         finally{
 
-            submitBtn.disabled =
-                false;
-
+            submitBtn.disabled = false;
 
             submitBtn.innerText =
                 "⬆️ Upload & Submit Video";
@@ -1223,10 +1359,6 @@ async function submitVideo(){
     }
 
 
-    /* =====================================
-       URL VALIDATION
-    ===================================== */
-
     if(
         !validateURL(
             currentPlatform,
@@ -1251,13 +1383,13 @@ async function submitVideo(){
         submitBtn.disabled =
             true;
 
-
         submitBtn.innerText =
             "⏳ Submitting...";
 
 
         /* =================================
-           INSERT URL VIDEO
+           DATABASE INSERT
+           USER ID IS AUTOMATIC
         ================================= */
 
         const databaseResult =
@@ -1271,7 +1403,9 @@ async function submitVideo(){
 
                 videos_url:url,
 
-                status:"pending"
+                status:"pending",
+
+                user_id:currentUser.id
 
             });
 
@@ -1283,17 +1417,11 @@ async function submitVideo(){
         }
 
 
-        /* =================================
-           SUCCESS
-        ================================= */
-
         showMessage(
             "✅ Video submitted successfully! Waiting for admin approval.",
             "success"
         );
 
-
-        /* Reset form */
 
         document
             .getElementById("title")
@@ -1330,7 +1458,6 @@ async function submitVideo(){
         submitBtn.disabled =
             false;
 
-
         submitBtn.innerText =
             "📤 Submit Video";
 
@@ -1340,10 +1467,82 @@ async function submitVideo(){
 
 
 /* =========================================
+   HTML ESCAPE
+========================================= */
+
+function escapeHTML(value){
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================
    INITIAL PLATFORM
 ========================================= */
 
 changePlatform("YouTube");
+
+
+/* =========================================
+   INITIAL USER CHECK
+========================================= */
+
+checkUser();
+
+
+/* =========================================
+   AUTH STATE LISTENER
+========================================= */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event,session){
+
+        if(session && session.user){
+
+            currentUser =
+                session.user;
+
+            checkUser();
+
+        }
+        else{
+
+            currentUser = null;
+
+            checkUser();
+
+        }
+
+    }
+);
 
 </script>
 
