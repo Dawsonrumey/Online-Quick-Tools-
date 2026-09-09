@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,6 +11,7 @@
       content="Browse and share images on Online Quick Tools Image Feed.">
 
 <style>
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -47,7 +49,10 @@ body {
     min-height: 100vh;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header {
     position: sticky;
@@ -98,7 +103,10 @@ header {
     opacity: .85;
 }
 
-/* MAIN */
+
+/* =========================================================
+   MAIN
+========================================================= */
 
 .container {
     width: 100%;
@@ -122,7 +130,10 @@ header {
     font-size: 14px;
 }
 
-/* UPLOAD */
+
+/* =========================================================
+   UPLOAD
+========================================================= */
 
 .upload-card {
     background: var(--card);
@@ -174,7 +185,10 @@ header {
     padding: 10px;
 }
 
-/* MODERATION NOTICE */
+
+/* =========================================================
+   MODERATION NOTICE
+========================================================= */
 
 .moderation-note {
     margin-top: 10px;
@@ -186,7 +200,10 @@ header {
     line-height: 1.5;
 }
 
-/* FEED */
+
+/* =========================================================
+   FEED
+========================================================= */
 
 .feed {
     display: flex;
@@ -202,7 +219,10 @@ header {
     box-shadow: var(--shadow);
 }
 
-/* POST HEADER */
+
+/* =========================================================
+   POST HEADER
+========================================================= */
 
 .post-header {
     padding: 13px 14px;
@@ -234,6 +254,7 @@ header {
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .post-time {
@@ -242,7 +263,10 @@ header {
     margin-top: 3px;
 }
 
-/* IMAGE */
+
+/* =========================================================
+   IMAGE
+========================================================= */
 
 .post-image-wrap {
     width: 100%;
@@ -257,7 +281,10 @@ header {
     margin: auto;
 }
 
-/* REACTIONS */
+
+/* =========================================================
+   REACTIONS
+========================================================= */
 
 .reaction-summary {
     padding: 10px 14px 6px;
@@ -298,7 +325,10 @@ header {
     color: var(--danger);
 }
 
-/* STATES */
+
+/* =========================================================
+   STATES
+========================================================= */
 
 .loading,
 .empty,
@@ -322,9 +352,11 @@ header {
 }
 
 @keyframes spin {
+
     to {
         transform: rotate(360deg);
     }
+
 }
 
 .load-more {
@@ -343,7 +375,10 @@ header {
     opacity: .5;
 }
 
-/* TOAST */
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast {
     position: fixed;
@@ -365,7 +400,10 @@ header {
     transform: translateX(-50%) translateY(0);
 }
 
-/* MOBILE */
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 700px) {
 
@@ -398,7 +436,9 @@ header {
     .post-image {
         max-height: 600px;
     }
+
 }
+
 
 @media (max-width: 420px) {
 
@@ -410,73 +450,128 @@ header {
     .reaction-btn {
         font-size: 13px;
     }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <header>
+
     <div class="header-inner">
 
         <div class="logo"
              onclick="window.location.href='index.html'">
+
             ⚡ Online Quick Tools
+
         </div>
+
 
         <div class="nav">
 
-            <button onclick="window.location.href='index.html'">
+            <button
+                onclick="window.location.href='index.html'">
+
                 🏠 Home
+
             </button>
 
-            <button id="authButton"
-                    onclick="handleAuthButton()">
+
+            <button
+                id="authButton"
+                onclick="handleAuthButton()">
+
                 👤 Login
+
             </button>
 
-            <button onclick="toggleTheme()"
-                    title="Toggle theme">
+
+            <button
+                onclick="toggleTheme()"
+                title="Toggle theme">
+
                 🌙
+
             </button>
 
         </div>
 
     </div>
+
 </header>
+
+
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
 
 <main class="container">
 
+
     <div class="feed-title">
+
         <h1>🖼️ Image Feed</h1>
-        <p>Latest approved images shared by our community</p>
+
+        <p>
+            Latest approved images shared by our community
+        </p>
+
     </div>
 
+
     <div id="uploadArea"></div>
+
 
     <div id="feed" class="feed">
 
         <div class="loading">
+
             <div class="spinner"></div>
+
             Loading images...
+
         </div>
 
     </div>
 
-    <button id="loadMoreBtn"
-            class="load-more"
-            onclick="loadMoreImages()"
-            style="display:none;">
+
+    <button
+        id="loadMoreBtn"
+        class="load-more"
+        onclick="loadMoreImages()"
+        style="display:none;">
+
         Load More
+
     </button>
+
 
 </main>
 
+
 <div id="toast" class="toast"></div>
+
+
+
+<!-- =======================================================
+     SUPABASE
+======================================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
+
 
 /* =========================================================
    SUPABASE
@@ -485,13 +580,10 @@ header {
 const SUPABASE_URL =
     "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-/*
-   Use your existing public anon/publishable key.
-   Never use a service_role/secret key here.
-*/
 
 const SUPABASE_ANON_KEY =
     "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -500,17 +592,30 @@ const supabaseClient =
     );
 
 
+
 /* =========================================================
    CONFIG
 ========================================================= */
 
-const BUCKET_NAME = "images";
+const BUCKET_NAME =
+    "images";
 
-const IMAGES_TABLE = "images";
 
-const REACTIONS_TABLE = "image_reactions";
+const IMAGES_TABLE =
+    "images";
 
-const PAGE_SIZE = 8;
+
+const REACTIONS_TABLE =
+    "image_reactions";
+
+
+const PROFILES_TABLE =
+    "profiles";
+
+
+const PAGE_SIZE =
+    8;
+
 
 
 /* =========================================================
@@ -526,6 +631,7 @@ let hasMoreImages = true;
 let currentUser = null;
 
 
+
 /* =========================================================
    TOAST
 ========================================================= */
@@ -535,14 +641,20 @@ function showToast(message) {
     const toast =
         document.getElementById("toast");
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
     toast.classList.add("show");
 
+
     setTimeout(() => {
+
         toast.classList.remove("show");
+
     }, 2800);
+
 }
+
 
 
 /* =========================================================
@@ -551,50 +663,216 @@ function showToast(message) {
 
 function escapeHtml(value) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
+
     }
 
+
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
 }
 
 
+
 /* =========================================================
-   USER
+   USER LABEL
 ========================================================= */
 
 function getUserLabel(user) {
 
     if (!user) {
+
         return "Community User";
+
     }
+
 
     const metadata =
         user.user_metadata || {};
 
+
     return (
+
+        metadata.username ||
+
         metadata.full_name ||
+
         metadata.name ||
+
         user.email ||
+
         "Community User"
+
     );
+
 }
 
 
-function getInitial(user) {
 
-    const label = getUserLabel(user);
+/* =========================================================
+   PROFILE USERNAME
+========================================================= */
+
+/*
+   This function gets the username from
+   profiles table.
+
+   images.user_id
+        ↓
+   profiles.id
+        ↓
+   profiles.username
+*/
+
+async function getProfileUsernames(userIds) {
+
+    const usernameMap = {};
+
+
+    if (
+        !userIds ||
+        userIds.length === 0
+    ) {
+
+        return usernameMap;
+
+    }
+
+
+    const uniqueIds =
+        [...new Set(
+            userIds
+                .filter(Boolean)
+                .map(id => String(id))
+        )];
+
+
+    if (
+        uniqueIds.length === 0
+    ) {
+
+        return usernameMap;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+
+            .from(PROFILES_TABLE)
+
+            .select(
+                "id,username"
+            )
+
+            .in(
+                "id",
+                uniqueIds
+            );
+
+
+        if (error) {
+
+            console.warn(
+                "Profile loading error:",
+                error
+            );
+
+            return usernameMap;
+
+        }
+
+
+        (data || []).forEach(profile => {
+
+            if (
+                profile.id &&
+                profile.username
+            ) {
+
+                usernameMap[
+                    String(profile.id)
+                ] =
+                    profile.username;
+
+            }
+
+        });
+
+
+    } catch (error) {
+
+        console.warn(
+            "Could not load usernames:",
+            error
+        );
+
+    }
+
+
+    return usernameMap;
+
+}
+
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+function getInitialFromName(name) {
+
+    if (!name) {
+
+        return "U";
+
+    }
+
 
     return (
-        label.trim().charAt(0).toUpperCase()
+        String(name)
+            .trim()
+            .charAt(0)
+            .toUpperCase()
         || "U"
     );
+
 }
+
 
 
 /* =========================================================
@@ -604,62 +882,105 @@ function getInitial(user) {
 function formatTime(dateString) {
 
     if (!dateString) {
+
         return "";
+
     }
+
 
     const date =
         new Date(dateString);
 
-    if (Number.isNaN(date.getTime())) {
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
         return "";
+
     }
 
-    const now = new Date();
+
+    const now =
+        new Date();
+
 
     const diff =
         Math.floor(
             (now - date) / 1000
         );
 
+
     if (diff < 60) {
+
         return "Just now";
+
     }
+
 
     if (diff < 3600) {
 
         const minutes =
-            Math.floor(diff / 60);
+            Math.floor(
+                diff / 60
+            );
+
 
         return minutes +
-            (minutes === 1
-                ? " minute ago"
-                : " minutes ago");
+
+            (
+                minutes === 1
+                    ? " minute ago"
+                    : " minutes ago"
+            );
+
     }
+
 
     if (diff < 86400) {
 
         const hours =
-            Math.floor(diff / 3600);
+            Math.floor(
+                diff / 3600
+            );
+
 
         return hours +
-            (hours === 1
-                ? " hour ago"
-                : " hours ago");
+
+            (
+                hours === 1
+                    ? " hour ago"
+                    : " hours ago"
+            );
+
     }
+
 
     if (diff < 604800) {
 
         const days =
-            Math.floor(diff / 86400);
+            Math.floor(
+                diff / 86400
+            );
+
 
         return days +
-            (days === 1
-                ? " day ago"
-                : " days ago");
+
+            (
+                days === 1
+                    ? " day ago"
+                    : " days ago"
+            );
+
     }
 
+
     return date.toLocaleDateString();
+
 }
+
 
 
 /* =========================================================
@@ -669,25 +990,44 @@ function formatTime(dateString) {
 function loadTheme() {
 
     const saved =
-        localStorage.getItem("imageFeedTheme");
+        localStorage.getItem(
+            "imageFeedTheme"
+        );
+
 
     if (saved === "dark") {
-        document.body.classList.add("dark");
+
+        document.body.classList.add(
+            "dark"
+        );
+
     }
+
 }
+
 
 
 function toggleTheme() {
 
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle(
+        "dark"
+    );
+
 
     localStorage.setItem(
+
         "imageFeedTheme",
-        document.body.classList.contains("dark")
+
+        document.body.classList.contains(
+            "dark"
+        )
             ? "dark"
             : "light"
+
     );
+
 }
+
 
 
 /* =========================================================
@@ -699,70 +1039,129 @@ async function loadAuth() {
     const {
         data,
         error
-    } = await supabaseClient.auth.getSession();
+    } =
+        await supabaseClient
+            .auth
+            .getSession();
+
 
     if (error) {
+
         console.error(error);
+
     }
+
 
     currentUser =
         data?.session?.user || null;
 
+
     updateAuthUI();
 
     renderUploadArea();
+
 }
 
+
+
+/* =========================================================
+   AUTH UI
+========================================================= */
 
 function updateAuthUI() {
 
     const button =
-        document.getElementById("authButton");
+        document.getElementById(
+            "authButton"
+        );
+
 
     if (!button) {
+
         return;
+
     }
 
+
     button.textContent =
+
         currentUser
+
             ? "🚪 Logout"
+
             : "👤 Login";
+
 }
 
+
+
+/* =========================================================
+   AUTH BUTTON
+========================================================= */
 
 function handleAuthButton() {
 
     if (currentUser) {
+
         logoutUser();
+
     } else {
+
         loginUser();
+
     }
+
 }
 
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 async function loginUser() {
 
     const email =
-        prompt("Enter your email:");
+        prompt(
+            "Enter your email:"
+        );
+
 
     if (!email) {
+
         return;
+
     }
+
 
     const password =
-        prompt("Enter your password:");
+        prompt(
+            "Enter your password:"
+        );
+
 
     if (!password) {
+
         return;
+
     }
+
 
     const {
         error
-    } = await supabaseClient.auth
-        .signInWithPassword({
-            email: email.trim(),
-            password: password
-        });
+    } =
+        await supabaseClient
+            .auth
+            .signInWithPassword({
+
+                email:
+                    email.trim(),
+
+                password:
+                    password
+
+            });
+
 
     if (error) {
 
@@ -772,19 +1171,34 @@ async function loginUser() {
         );
 
         return;
+
     }
 
-    showToast("Login successful!");
+
+    showToast(
+        "Login successful!"
+    );
+
 
     await loadAuth();
+
 }
 
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 async function logoutUser() {
 
     const {
         error
-    } = await supabaseClient.auth.signOut();
+    } =
+        await supabaseClient
+            .auth
+            .signOut();
+
 
     if (error) {
 
@@ -794,41 +1208,63 @@ async function logoutUser() {
         );
 
         return;
+
     }
 
+
     currentUser = null;
+
 
     updateAuthUI();
 
     renderUploadArea();
 
-    showToast("Logged out");
+
+    showToast(
+        "Logged out"
+    );
+
 
     resetFeed();
 
     await loadImages(true);
+
 }
+
 
 
 /* =========================================================
    AUTH STATE
 ========================================================= */
 
-supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
+supabaseClient
+    .auth
+    .onAuthStateChange(
 
-        currentUser =
-            session?.user || null;
+        async (
+            event,
+            session
+        ) => {
 
-        updateAuthUI();
 
-        renderUploadArea();
+            currentUser =
+                session?.user || null;
 
-        resetFeed();
 
-        await loadImages(true);
-    }
-);
+            updateAuthUI();
+
+            renderUploadArea();
+
+
+            resetFeed();
+
+            await loadImages(true);
+
+
+        }
+
+    );
+
 
 
 /* =========================================================
@@ -838,34 +1274,54 @@ supabaseClient.auth.onAuthStateChange(
 function renderUploadArea() {
 
     const area =
-        document.getElementById("uploadArea");
+        document.getElementById(
+            "uploadArea"
+        );
+
 
     if (!area) {
+
         return;
+
     }
+
 
     if (!currentUser) {
 
         area.innerHTML = `
+
             <div class="upload-card">
+
                 <div class="login-message">
+
                     🔐 Login to share your image
+
                 </div>
+
             </div>
+
         `;
 
         return;
+
     }
+
 
     area.innerHTML = `
 
         <div class="upload-card">
 
-            <h2>📤 Share an Image</h2>
+            <h2>
+                📤 Share an Image
+            </h2>
+
 
             <div class="upload-info">
+
                 JPG, PNG or WebP • Maximum 5 MB
+
             </div>
+
 
             <input
                 id="imageFile"
@@ -874,21 +1330,30 @@ function renderUploadArea() {
                 accept="image/jpeg,image/png,image/webp"
             >
 
+
             <button
                 id="uploadBtn"
                 class="upload-btn"
                 onclick="uploadImage()">
+
                 ⬆️ Upload Image
+
             </button>
 
+
             <div class="moderation-note">
+
                 🛡️ Your image will be reviewed before
                 appearing publicly.
+
             </div>
 
         </div>
+
     `;
+
 }
+
 
 
 /* =========================================================
@@ -904,56 +1369,88 @@ async function uploadImage() {
         );
 
         return;
+
     }
 
+
     const input =
-        document.getElementById("imageFile");
+        document.getElementById(
+            "imageFile"
+        );
+
 
     const button =
-        document.getElementById("uploadBtn");
+        document.getElementById(
+            "uploadBtn"
+        );
 
-    if (!input || !input.files.length) {
+
+    if (
+        !input ||
+        !input.files.length
+    ) {
 
         showToast(
             "Please select an image."
         );
 
         return;
+
     }
+
 
     const file =
         input.files[0];
 
+
     const allowedTypes = [
+
         "image/jpeg",
+
         "image/png",
+
         "image/webp"
+
     ];
 
-    if (!allowedTypes.includes(file.type)) {
+
+    if (
+        !allowedTypes.includes(
+            file.type
+        )
+    ) {
 
         showToast(
             "Only JPG, PNG or WebP images are allowed."
         );
 
         return;
+
     }
 
-    if (file.size > 5 * 1024 * 1024) {
+
+    if (
+        file.size >
+        5 * 1024 * 1024
+    ) {
 
         showToast(
             "Maximum image size is 5 MB."
         );
 
         return;
+
     }
+
 
     button.disabled = true;
 
     button.textContent =
         "⏳ Uploading...";
 
+
     try {
+
 
         const extension =
             file.name
@@ -961,45 +1458,76 @@ async function uploadImage() {
                 .pop()
                 .toLowerCase();
 
+
         const filePath =
+
             currentUser.id +
+
             "/" +
+
             crypto.randomUUID() +
+
             "." +
+
             extension;
 
 
-        /* STORAGE UPLOAD */
+
+        /* STORAGE */
 
         const {
             error: uploadError
-        } = await supabaseClient
-            .storage
-            .from(BUCKET_NAME)
-            .upload(
-                filePath,
-                file,
-                {
-                    cacheControl: "3600",
-                    upsert: false,
-                    contentType: file.type
-                }
-            );
+        } =
+            await supabaseClient
+
+                .storage
+
+                .from(BUCKET_NAME)
+
+                .upload(
+
+                    filePath,
+
+                    file,
+
+                    {
+
+                        cacheControl:
+                            "3600",
+
+                        upsert:
+                            false,
+
+                        contentType:
+                            file.type
+
+                    }
+
+                );
 
 
         if (uploadError) {
+
             throw uploadError;
+
         }
+
 
 
         /* PUBLIC URL */
 
         const {
             data: publicData
-        } = supabaseClient
-            .storage
-            .from(BUCKET_NAME)
-            .getPublicUrl(filePath);
+        } =
+            supabaseClient
+
+                .storage
+
+                .from(BUCKET_NAME)
+
+                .getPublicUrl(
+                    filePath
+                );
 
 
         const publicUrl =
@@ -1011,48 +1539,56 @@ async function uploadImage() {
             throw new Error(
                 "Could not create public image URL."
             );
+
         }
 
 
-        /* DATABASE INSERT */
+
+        /* DATABASE */
 
         const {
             error: dbError
-        } = await supabaseClient
-            .from(IMAGES_TABLE)
-            .insert({
+        } =
+            await supabaseClient
 
-                user_id:
-                    currentUser.id,
+                .from(IMAGES_TABLE)
 
-                file_path:
-                    filePath,
+                .insert({
 
-                public_url:
-                    publicUrl,
+                    user_id:
+                        currentUser.id,
 
-                /* IMPORTANT */
-                status:
-                    "pending"
-            });
+                    file_path:
+                        filePath,
+
+                    public_url:
+                        publicUrl,
+
+                    status:
+                        "pending"
+
+                });
 
 
         if (dbError) {
 
+
             await supabaseClient
+
                 .storage
+
                 .from(BUCKET_NAME)
-                .remove([filePath]);
+
+                .remove([
+                    filePath
+                ]);
+
 
             throw dbError;
+
         }
 
 
-        /*
-           IMPORTANT:
-           The image is NOT immediately shown.
-           It stays pending until approved.
-        */
 
         showToast(
             "Image submitted! Waiting for approval. 🛡️"
@@ -1069,24 +1605,33 @@ async function uploadImage() {
 
     } catch (error) {
 
+
         console.error(
             "Upload error:",
             error
         );
+
 
         showToast(
             "Upload failed: " +
             error.message
         );
 
+
     } finally {
 
-        button.disabled = false;
+
+        button.disabled =
+            false;
+
 
         button.textContent =
             "⬆️ Upload Image";
+
     }
+
 }
+
 
 
 /* =========================================================
@@ -1099,43 +1644,77 @@ function resetFeed() {
 
     hasMoreImages = true;
 
+
     const feed =
-        document.getElementById("feed");
+        document.getElementById(
+            "feed"
+        );
+
 
     if (feed) {
+
         feed.innerHTML = "";
+
     }
+
 
     const loadMoreBtn =
-        document.getElementById("loadMoreBtn");
+        document.getElementById(
+            "loadMoreBtn"
+        );
+
 
     if (loadMoreBtn) {
-        loadMoreBtn.style.display = "none";
+
+        loadMoreBtn.style.display =
+            "none";
+
     }
+
 }
+
 
 
 /* =========================================================
    LOAD APPROVED IMAGES
 ========================================================= */
 
-async function loadImages(reset = false) {
+async function loadImages(
+    reset = false
+) {
+
 
     if (loadingImages) {
+
         return;
+
     }
 
-    if (!hasMoreImages && !reset) {
+
+    if (
+        !hasMoreImages &&
+        !reset
+    ) {
+
         return;
+
     }
+
 
     loadingImages = true;
 
+
     const feed =
-        document.getElementById("feed");
+        document.getElementById(
+            "feed"
+        );
+
 
     const loadMoreBtn =
-        document.getElementById("loadMoreBtn");
+        document.getElementById(
+            "loadMoreBtn"
+        );
+
 
 
     if (reset) {
@@ -1144,19 +1723,29 @@ async function loadImages(reset = false) {
 
         hasMoreImages = true;
 
+
         feed.innerHTML = `
+
             <div class="loading">
+
                 <div class="spinner"></div>
+
                 Loading approved images...
+
             </div>
+
         `;
+
     }
+
 
 
     try {
 
+
         const from =
             currentOffset;
+
 
         const to =
             currentOffset +
@@ -1164,85 +1753,143 @@ async function loadImages(reset = false) {
             1;
 
 
-        /*
-           IMPORTANT MODERATION FILTER:
-           Only approved images are public.
-        */
+
+        /* =================================================
+           GET APPROVED IMAGES
+        ================================================= */
 
         const {
             data: images,
             error
-        } = await supabaseClient
-            .from(IMAGES_TABLE)
-            .select(
-                "id,user_id,file_path,public_url,created_at,status"
-            )
-            .eq(
-                "status",
-                "approved"
-            )
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            )
-            .range(from, to);
+        } =
+            await supabaseClient
+
+                .from(IMAGES_TABLE)
+
+                .select(
+                    "id,user_id,file_path,public_url,created_at,status"
+                )
+
+                .eq(
+                    "status",
+                    "approved"
+                )
+
+                .order(
+                    "created_at",
+                    {
+                        ascending:
+                            false
+                    }
+                )
+
+                .range(
+                    from,
+                    to
+                );
 
 
         if (error) {
+
             throw error;
+
         }
+
 
 
         if (reset) {
+
             feed.innerHTML = "";
+
         }
 
 
-        if (!images || images.length === 0) {
+
+        if (
+            !images ||
+            images.length === 0
+        ) {
+
 
             if (reset) {
 
                 feed.innerHTML = `
+
                     <div class="empty">
 
                         <div style="
                             font-size:40px;
                             margin-bottom:10px;
                         ">
+
                             🖼️
+
                         </div>
 
+
                         <strong>
+
                             No approved images yet
+
                         </strong>
+
 
                         <p style="
                             margin-top:6px;
                         ">
+
                             Be the first person to
                             share an image.
+
                         </p>
 
                     </div>
+
                 `;
+
             }
 
-            hasMoreImages = false;
+
+            hasMoreImages =
+                false;
+
 
             loadMoreBtn.style.display =
                 "none";
 
+
             return;
+
         }
 
 
-        /* REACTIONS */
+
+        /* =================================================
+           GET USERNAMES FROM PROFILES
+        ================================================= */
+
+        const userIds =
+            images.map(
+                image =>
+                    image.user_id
+            );
+
+
+        const usernameMap =
+            await getProfileUsernames(
+                userIds
+            );
+
+
+
+        /* =================================================
+           REACTIONS
+        ================================================= */
 
         const imageIds =
             images.map(
-                image => image.id
+                image =>
+                    image.id
             );
 
 
@@ -1252,15 +1899,19 @@ async function loadImages(reset = false) {
         const {
             data: reactionData,
             error: reactionError
-        } = await supabaseClient
-            .from(REACTIONS_TABLE)
-            .select(
-                "id,image_id,user_id,reaction"
-            )
-            .in(
-                "image_id",
-                imageIds
-            );
+        } =
+            await supabaseClient
+
+                .from(REACTIONS_TABLE)
+
+                .select(
+                    "id,image_id,user_id,reaction"
+                )
+
+                .in(
+                    "image_id",
+                    imageIds
+                );
 
 
         if (reactionError) {
@@ -1274,36 +1925,58 @@ async function loadImages(reset = false) {
 
             reactions =
                 reactionData || [];
+
         }
 
 
-        /* CREATE CARDS */
 
-        images.forEach(image => {
+        /* =================================================
+           CREATE IMAGE CARDS
+        ================================================= */
 
-            const imageReactions =
-                reactions.filter(
-                    reaction =>
-                        String(
-                            reaction.image_id
-                        ) ===
-                        String(image.id)
+        images.forEach(
+            image => {
+
+
+                const imageReactions =
+                    reactions.filter(
+
+                        reaction =>
+
+                            String(
+                                reaction.image_id
+                            ) ===
+
+                            String(
+                                image.id
+                            )
+
+                    );
+
+
+                const card =
+                    createImageCard(
+
+                        image,
+
+                        imageReactions,
+
+                        usernameMap
+
+                    );
+
+
+                feed.insertAdjacentHTML(
+
+                    "beforeend",
+
+                    card
+
                 );
 
+            }
+        );
 
-            const card =
-                createImageCard(
-                    image,
-                    imageReactions
-                );
-
-
-            feed.insertAdjacentHTML(
-                "beforeend",
-                card
-            );
-
-        });
 
 
         currentOffset +=
@@ -1311,16 +1984,22 @@ async function loadImages(reset = false) {
 
 
         hasMoreImages =
-            images.length === PAGE_SIZE;
+            images.length ===
+            PAGE_SIZE;
 
 
         loadMoreBtn.style.display =
+
             hasMoreImages
+
                 ? "block"
+
                 : "none";
 
 
+
     } catch (error) {
+
 
         console.error(
             "Gallery error:",
@@ -1331,6 +2010,7 @@ async function loadImages(reset = false) {
         if (reset) {
 
             feed.innerHTML = `
+
                 <div class="error-box">
 
                     ❌ Could not load images.
@@ -1342,6 +2022,7 @@ async function loadImages(reset = false) {
                     )}
 
                 </div>
+
             `;
 
         } else {
@@ -1349,13 +2030,18 @@ async function loadImages(reset = false) {
             showToast(
                 "Could not load more images."
             );
+
         }
+
 
     } finally {
 
         loadingImages = false;
+
     }
+
 }
+
 
 
 /* =========================================================
@@ -1363,65 +2049,162 @@ async function loadImages(reset = false) {
 ========================================================= */
 
 function createImageCard(
+
     image,
-    reactions
+
+    reactions,
+
+    usernameMap
+
 ) {
+
+
+    /* =====================================================
+       REACTION COUNTS
+    ===================================================== */
 
     const likeCount =
         reactions.filter(
-            r => r.reaction === "like"
+
+            r =>
+                r.reaction ===
+                "like"
+
         ).length;
 
 
     const loveCount =
         reactions.filter(
-            r => r.reaction === "love"
+
+            r =>
+                r.reaction ===
+                "love"
+
         ).length;
 
 
     const wowCount =
         reactions.filter(
-            r => r.reaction === "wow"
+
+            r =>
+                r.reaction ===
+                "wow"
+
         ).length;
 
+
+
+    /* =====================================================
+       MY REACTION
+    ===================================================== */
 
     let myReaction = null;
 
 
     if (currentUser) {
 
+
         const mine =
             reactions.find(
+
                 r =>
-                    String(r.user_id) ===
-                    String(currentUser.id)
+
+                    String(
+                        r.user_id
+                    ) ===
+
+                    String(
+                        currentUser.id
+                    )
+
             );
 
 
         if (mine) {
+
             myReaction =
                 mine.reaction;
+
         }
+
     }
 
 
-    const isMine =
+
+    /* =====================================================
+       USERNAME
+    ===================================================== */
+
+    const imageUserId =
+        image.user_id
+            ? String(image.user_id)
+            : "";
+
+
+    let userName =
+        usernameMap?.[imageUserId]
+        || null;
+
+
+
+    /*
+       If the logged-in user owns the image,
+       use their profile username if available.
+    */
+
+    if (
+        !userName &&
         currentUser &&
-        String(image.user_id) ===
-        String(currentUser.id);
+        String(currentUser.id) ===
+        imageUserId
+    ) {
+
+        const metadata =
+            currentUser.user_metadata
+            || {};
 
 
-    const userName =
-        isMine
-            ? "You"
-            : "Community User";
+        userName =
 
+            metadata.username ||
+
+            metadata.full_name ||
+
+            metadata.name ||
+
+            null;
+
+    }
+
+
+
+    /*
+       Final fallback.
+    */
+
+    if (!userName) {
+
+        userName =
+            "Community User";
+
+    }
+
+
+
+    /* =====================================================
+       AVATAR INITIAL
+    ===================================================== */
 
     const initial =
-        isMine
-            ? getInitial(currentUser)
-            : "U";
+        getInitialFromName(
+            userName
+        );
 
+
+
+    /* =====================================================
+       CREATE CARD
+    ===================================================== */
 
     return `
 
@@ -1432,117 +2215,184 @@ function createImageCard(
             )}"
         >
 
+
+            <!-- POST HEADER -->
+
             <div class="post-header">
 
+
                 <div class="avatar">
-                    ${escapeHtml(initial)}
+
+                    ${escapeHtml(
+                        initial
+                    )}
+
                 </div>
+
 
                 <div class="post-user">
 
+
                     <strong>
-                        ${escapeHtml(userName)}
+
+                        👤 ${escapeHtml(
+                            userName
+                        )}
+
                     </strong>
 
+
                     <div class="post-time">
+
                         ${escapeHtml(
+
                             formatTime(
                                 image.created_at
                             )
+
                         )}
+
                     </div>
+
 
                 </div>
 
+
             </div>
 
+
+
+            <!-- IMAGE -->
 
             <div class="post-image-wrap">
 
+
                 <img
+
                     class="post-image"
+
                     src="${escapeHtml(
                         image.public_url
                     )}"
+
                     alt="Shared image"
+
                     loading="lazy"
+
                     onerror="
                         this.style.display='none';
                     "
+
                 >
+
 
             </div>
 
+
+
+            <!-- REACTION SUMMARY -->
 
             <div class="reaction-summary">
 
+
                 👍 ${likeCount}
 
+
                 &nbsp;&nbsp;
+
 
                 ❤️ ${loveCount}
 
+
                 &nbsp;&nbsp;
 
+
                 😮 ${wowCount}
+
 
             </div>
 
 
+
+            <!-- REACTION BUTTONS -->
+
             <div class="reaction-buttons">
 
+
                 <button
+
                     class="reaction-btn ${
                         myReaction === "like"
                             ? "active"
                             : ""
                     }"
+
                     onclick="reactToImage(
                         ${image.id},
                         'like',
                         this
                     )"
+
                 >
+
                     👍 Like
+
                 </button>
 
 
+
                 <button
+
                     class="reaction-btn ${
                         myReaction === "love"
                             ? "love-active"
                             : ""
                     }"
+
                     onclick="reactToImage(
                         ${image.id},
                         'love',
                         this
                     )"
+
                 >
+
                     ❤️ Love
+
                 </button>
 
 
+
                 <button
+
                     class="reaction-btn ${
                         myReaction === "wow"
                             ? "active"
                             : ""
                     }"
+
                     onclick="reactToImage(
                         ${image.id},
                         'wow',
                         this
                     )"
+
                 >
+
                     😮 Wow
+
                 </button>
+
 
             </div>
 
+
         </article>
+
     `;
+
 }
+
 
 
 /* =========================================================
@@ -1550,10 +2400,15 @@ function createImageCard(
 ========================================================= */
 
 async function reactToImage(
+
     imageId,
+
     reactionType,
+
     button
+
 ) {
+
 
     if (!currentUser) {
 
@@ -1562,6 +2417,7 @@ async function reactToImage(
         );
 
         return;
+
     }
 
 
@@ -1570,111 +2426,162 @@ async function reactToImage(
 
     try {
 
+
         const {
             data: existing,
             error: findError
-        } = await supabaseClient
-            .from(REACTIONS_TABLE)
-            .select(
-                "id,reaction"
-            )
-            .eq(
-                "image_id",
-                imageId
-            )
-            .eq(
-                "user_id",
-                currentUser.id
-            )
-            .maybeSingle();
+        } =
+            await supabaseClient
+
+                .from(REACTIONS_TABLE)
+
+                .select(
+                    "id,reaction"
+                )
+
+                .eq(
+                    "image_id",
+                    imageId
+                )
+
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+
+                .maybeSingle();
 
 
         if (findError) {
+
             throw findError;
+
         }
+
 
 
         /* REMOVE SAME REACTION */
 
         if (
+
             existing &&
-            existing.reaction === reactionType
+
+            existing.reaction ===
+            reactionType
+
         ) {
+
 
             const {
                 error
-            } = await supabaseClient
-                .from(REACTIONS_TABLE)
-                .delete()
-                .eq(
-                    "id",
-                    existing.id
-                )
-                .eq(
-                    "user_id",
-                    currentUser.id
-                );
+            } =
+                await supabaseClient
+
+                    .from(
+                        REACTIONS_TABLE
+                    )
+
+                    .delete()
+
+                    .eq(
+                        "id",
+                        existing.id
+                    )
+
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
 
 
             if (error) {
+
                 throw error;
+
             }
+
         }
+
 
 
         /* CHANGE REACTION */
 
         else if (existing) {
 
+
             const {
                 error
-            } = await supabaseClient
-                .from(REACTIONS_TABLE)
-                .update({
-                    reaction:
-                        reactionType
-                })
-                .eq(
-                    "id",
-                    existing.id
-                )
-                .eq(
-                    "user_id",
-                    currentUser.id
-                );
+            } =
+                await supabaseClient
+
+                    .from(
+                        REACTIONS_TABLE
+                    )
+
+                    .update({
+
+                        reaction:
+                            reactionType
+
+                    })
+
+                    .eq(
+                        "id",
+                        existing.id
+                    )
+
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
 
 
             if (error) {
+
                 throw error;
+
             }
+
         }
+
 
 
         /* NEW REACTION */
 
         else {
 
+
             const {
                 error
-            } = await supabaseClient
-                .from(REACTIONS_TABLE)
-                .insert({
+            } =
+                await supabaseClient
 
-                    image_id:
-                        imageId,
+                    .from(
+                        REACTIONS_TABLE
+                    )
 
-                    user_id:
-                        currentUser.id,
+                    .insert({
 
-                    reaction:
-                        reactionType
-                });
+                        image_id:
+                            imageId,
+
+                        user_id:
+                            currentUser.id,
+
+                        reaction:
+                            reactionType
+
+                    });
 
 
             if (error) {
+
                 throw error;
+
             }
+
         }
+
 
 
         /* REFRESH */
@@ -1686,21 +2593,28 @@ async function reactToImage(
 
     } catch (error) {
 
+
         console.error(
             "Reaction error:",
             error
         );
+
 
         showToast(
             "Reaction failed: " +
             error.message
         );
 
+
     } finally {
 
-        button.disabled = false;
+        button.disabled =
+            false;
+
     }
+
 }
+
 
 
 /* =========================================================
@@ -1708,8 +2622,11 @@ async function reactToImage(
 ========================================================= */
 
 async function loadMoreImages() {
+
     await loadImages(false);
+
 }
+
 
 
 /* =========================================================
@@ -1721,11 +2638,15 @@ loadTheme();
 
 (async function init() {
 
+
     await loadAuth();
+
 
     await loadImages(true);
 
+
 })();
+
 
 </script>
 
