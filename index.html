@@ -2156,19 +2156,120 @@ function escapeHtml(value){
 
 
 /* =====================================================
+   PUBLIC USERNAMES
+===================================================== */
+
+async function getPublicUsernames(userIds){
+
+    const usernameMap = {};
+
+    if(
+        !userIds ||
+        userIds.length === 0
+    ){
+
+        return usernameMap;
+
+    }
+
+
+    const uniqueIds = [
+        ...new Set(
+            userIds
+                .filter(Boolean)
+                .map(function(id){
+                    return String(id);
+                })
+        )
+    ];
+
+
+    if(uniqueIds.length === 0){
+
+        return usernameMap;
+
+    }
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.rpc(
+                "get_public_usernames",
+                {
+                    p_user_ids: uniqueIds
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Username RPC error:",
+                error
+            );
+
+            return usernameMap;
+
+        }
+
+
+        (data || []).forEach(
+            function(profile){
+
+                if(
+                    profile.id &&
+                    profile.username
+                ){
+
+                    usernameMap[
+                        String(profile.id)
+                    ] =
+                        String(profile.username);
+
+                }
+
+            }
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Username loading error:",
+            error
+        );
+
+    }
+
+
+    return usernameMap;
+
+}
+
+
+/* =====================================================
    IMAGE USER
 ===================================================== */
 
 function imageUserName(user){
 
     if(!user){
+
         return "Community User";
+
     }
+
 
     const metadata =
         user.user_metadata || {};
 
+
     return (
+        metadata.username ||
         metadata.full_name ||
         metadata.name ||
         "Community User"
@@ -2177,13 +2278,10 @@ function imageUserName(user){
 }
 
 
-function imageInitial(user){
-
-    const name =
-        imageUserName(user);
+function imageInitialFromName(name){
 
     return (
-        name
+        String(name || "")
             .trim()
             .charAt(0)
             .toUpperCase() ||
@@ -2298,6 +2396,7 @@ async function loadCurrentUser(){
         } =
             await supabaseClient.auth.getUser();
 
+
         if(error){
 
             console.warn(
@@ -2311,8 +2410,10 @@ async function loadCurrentUser(){
 
         }
 
+
         currentUser =
             data?.user || null;
+
 
     }catch(error){
 
@@ -2371,6 +2472,7 @@ async function loadImages(reset = false){
         imageOffset = 0;
         imageHasMore = true;
 
+
         feed.innerHTML = `
 
             <div class="image-feed-loading">
@@ -2396,12 +2498,6 @@ async function loadImages(reset = false){
             IMAGE_PAGE_SIZE -
             1;
 
-
-        /*
-           IMPORTANT:
-           Supabase table is lowercase:
-           images
-        */
 
         const {
             data:images,
@@ -2482,8 +2578,10 @@ async function loadImages(reset = false){
             imageHasMore = false;
 
             if(loadMore){
+
                 loadMore.style.display =
                     "none";
+
             }
 
             return;
@@ -2497,7 +2595,9 @@ async function loadImages(reset = false){
 
         const imageIds =
             images.map(
-                image => image.id
+                function(image){
+                    return image.id;
+                }
             );
 
 
@@ -2539,35 +2639,58 @@ async function loadImages(reset = false){
 
 
         /* =================================================
+           LOAD IMAGE USERNAMES
+        ================================================= */
+
+        const imageUserIds =
+            images.map(
+                function(image){
+
+                    return image.user_id;
+
+                }
+            );
+
+
+        const imageUsernameMap =
+            await getPublicUsernames(
+                imageUserIds
+            );
+
+
+        /* =================================================
            CREATE IMAGE CARDS
         ================================================= */
 
-        images.forEach(function(image){
+        images.forEach(
+            function(image){
 
-            const imageReactions =
-                reactions.filter(
-                    function(reaction){
+                const imageReactions =
+                    reactions.filter(
+                        function(reaction){
 
-                        return String(
-                            reaction.image_id
-                        ) ===
-                        String(
-                            image.id
-                        );
+                            return String(
+                                reaction.image_id
+                            ) ===
+                            String(
+                                image.id
+                            );
 
-                    }
+                        }
+                    );
+
+
+                feed.insertAdjacentHTML(
+                    "beforeend",
+                    createImageCard(
+                        image,
+                        imageReactions,
+                        imageUsernameMap
+                    )
                 );
 
-
-            feed.insertAdjacentHTML(
-                "beforeend",
-                createImageCard(
-                    image,
-                    imageReactions
-                )
-            );
-
-        });
+            }
+        );
 
 
         imageOffset +=
@@ -2640,15 +2763,18 @@ async function loadImages(reset = false){
 
 function createImageCard(
     image,
-    reactions
+    reactions,
+    usernameMap
 ){
 
     const likeCount =
         reactions.filter(
             function(r){
+
                 return String(
                     r.reaction
                 ).toLowerCase() === "like";
+
             }
         ).length;
 
@@ -2656,9 +2782,11 @@ function createImageCard(
     const loveCount =
         reactions.filter(
             function(r){
+
                 return String(
                     r.reaction
                 ).toLowerCase() === "love";
+
             }
         ).length;
 
@@ -2666,9 +2794,11 @@ function createImageCard(
     const wowCount =
         reactions.filter(
             function(r){
+
                 return String(
                     r.reaction
                 ).toLowerCase() === "wow";
+
             }
         ).length;
 
@@ -2705,22 +2835,48 @@ function createImageCard(
     }
 
 
-    const isMine =
+    /* =================================================
+       REAL IMAGE USERNAME
+    ================================================= */
+
+    const imageUserId =
+        image.user_id
+        ? String(image.user_id)
+        : "";
+
+
+    let userName =
+        usernameMap?.[imageUserId]
+        || null;
+
+
+    if(
+        !userName &&
         currentUser &&
-        String(image.user_id) ===
-        String(currentUser.id);
+        String(currentUser.id) ===
+        imageUserId
+    ){
+
+        userName =
+            imageUserName(
+                currentUser
+            );
+
+    }
 
 
-    const userName =
-        isMine
-        ? "You"
-        : "Community User";
+    if(!userName){
+
+        userName =
+            "Community User";
+
+    }
 
 
     const initial =
-        isMine
-        ? imageInitial(currentUser)
-        : "U";
+        imageInitialFromName(
+            userName
+        );
 
 
     const imageUrl =
@@ -2739,22 +2895,29 @@ function createImageCard(
             <div class="image-post-header">
 
                 <div class="image-avatar">
+
                     ${escapeHtml(initial)}
+
                 </div>
 
 
                 <div>
 
                     <div class="image-user-name">
+
                         ${escapeHtml(userName)}
+
                     </div>
 
+
                     <div class="image-post-time">
+
                         ${escapeHtml(
                             imageTime(
                                 image.created_at
                             )
                         )}
+
                     </div>
 
                 </div>
@@ -3072,6 +3235,7 @@ async function updateAccountButton(){
         if(error){
 
             currentUser = null;
+
             button.textContent =
                 "👤 Login";
 
@@ -3164,10 +3328,6 @@ supabaseClient.auth.onAuthStateChange(
 
         }
 
-
-        /*
-           Refresh reactions after login/logout.
-        */
 
         setTimeout(
             function(){
@@ -3701,7 +3861,7 @@ async function renderSiteVideos(
             await supabaseClient
                 .from(VIDEO_TABLE)
                 .select(
-                    "id,title,platform,videos_url,status,created_at"
+                    "id,title,platform,videos_url,status,created_at,user_id"
                 )
                 .eq(
                     "status",
@@ -3730,6 +3890,30 @@ async function renderSiteVideos(
         let videos =
             data || [];
 
+
+        /* =================================================
+           LOAD VIDEO USERNAMES
+        ================================================= */
+
+        const videoUserIds =
+            videos.map(
+                function(video){
+
+                    return video.user_id;
+
+                }
+            );
+
+
+        const videoUsernameMap =
+            await getPublicUsernames(
+                videoUserIds
+            );
+
+
+        /* =================================================
+           FILTER PLATFORM
+        ================================================= */
 
         if(
             platform !== "all"
@@ -3811,6 +3995,46 @@ async function renderSiteVideos(
                 }
 
 
+                /* =================================================
+                   REAL VIDEO USERNAME
+                ================================================= */
+
+                const videoUserId =
+                    video.user_id
+                    ? String(video.user_id)
+                    : "";
+
+
+                let videoUserName =
+                    videoUsernameMap?.[
+                        videoUserId
+                    ]
+                    || null;
+
+
+                if(
+                    !videoUserName &&
+                    currentUser &&
+                    String(currentUser.id) ===
+                    videoUserId
+                ){
+
+                    videoUserName =
+                        imageUserName(
+                            currentUser
+                        );
+
+                }
+
+
+                if(!videoUserName){
+
+                    videoUserName =
+                        "Community User";
+
+                }
+
+
                 const card =
                     document.createElement(
                         "div"
@@ -3831,10 +4055,26 @@ async function renderSiteVideos(
                             ${escapeHtml(title)}
                         </h3>
 
+
+                        <div style="
+                            margin-bottom:8px;
+                            font-size:14px;
+                            font-weight:bold;
+                        ">
+
+                            👤 ${escapeHtml(
+                                videoUserName
+                            )}
+
+                        </div>
+
+
                         <div class="video-meta">
+
                             ${escapeHtml(
                                 videoPlatform
                             )}
+
                         </div>
 
                     </div>
