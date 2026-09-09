@@ -758,64 +758,40 @@ async function getProfileUsernames(userIds) {
 
     const usernameMap = {};
 
-
-    if (
-        !userIds ||
-        userIds.length === 0
-    ) {
-
+    if (!userIds || userIds.length === 0) {
         return usernameMap;
-
     }
 
-
-    const uniqueIds =
-        [...new Set(
+    const uniqueIds = [
+        ...new Set(
             userIds
                 .filter(Boolean)
                 .map(id => String(id))
-        )];
+        )
+    ];
 
-
-    if (
-        uniqueIds.length === 0
-    ) {
-
+    if (uniqueIds.length === 0) {
         return usernameMap;
-
     }
-
 
     try {
 
-        const {
-            data,
-            error
-        } = await supabaseClient
-
-            .from(PROFILES_TABLE)
-
-            .select(
-                "id,username"
-            )
-
-            .in(
-                "id",
-                uniqueIds
+        const { data, error } =
+            await supabaseClient.rpc(
+                "get_public_usernames",
+                {
+                    p_user_ids: uniqueIds
+                }
             );
 
-
         if (error) {
-
-            console.warn(
-                "Profile loading error:",
+            console.error(
+                "Username RPC error:",
                 error
             );
 
             return usernameMap;
-
         }
-
 
         (data || []).forEach(profile => {
 
@@ -826,28 +802,23 @@ async function getProfileUsernames(userIds) {
 
                 usernameMap[
                     String(profile.id)
-                ] =
-                    profile.username;
+                ] = String(profile.username);
 
             }
 
         });
 
-
     } catch (error) {
 
-        console.warn(
-            "Could not load usernames:",
+        console.error(
+            "Username loading error:",
             error
         );
 
     }
 
-
     return usernameMap;
-
 }
-
 
 
 /* =========================================================
