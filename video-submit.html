@@ -7,8 +7,9 @@
 
 <title>Submit Your Video - Online Quick Tools</title>
 
-<style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
 *{
     box-sizing:border-box;
 }
@@ -22,212 +23,172 @@ body{
 
 .container{
     width:100%;
-    max-width:650px;
+    max-width:700px;
     margin:0 auto;
-    padding:20px 14px 40px;
+    padding:20px;
 }
 
 .card{
     background:#fff;
-    border-radius:18px;
-    padding:25px 20px;
+    border-radius:16px;
+    padding:25px;
     box-shadow:0 5px 25px rgba(0,0,0,.08);
 }
 
 h1{
+    margin-top:0;
     text-align:center;
-    margin:5px 0 10px;
-    font-size:28px;
+    color:#222;
 }
 
 .subtitle{
     text-align:center;
     color:#666;
-    margin-bottom:20px;
-}
-
-.user-box{
-    background:#eef3ff;
-    border:1px solid #cdd9ff;
-    border-radius:12px;
-    padding:12px;
-    margin-bottom:20px;
-    font-size:13px;
-    line-height:1.6;
-    word-break:break-word;
-}
-
-.user-badge{
-    display:inline-block;
-    background:#16a34a;
-    color:white;
-    padding:4px 9px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:bold;
-    margin-top:5px;
+    margin-bottom:25px;
 }
 
 label{
     display:block;
     font-weight:bold;
-    margin:16px 0 8px;
+    margin:15px 0 7px;
 }
 
 input,
+textarea,
 select{
     width:100%;
-    padding:13px 14px;
-    border:1px solid #d6dbe5;
-    border-radius:10px;
+    padding:13px;
+    border:1px solid #d5d9e0;
+    border-radius:9px;
     font-size:15px;
     outline:none;
 }
 
 input:focus,
+textarea:focus,
 select:focus{
-    border-color:#4b7bec;
+    border-color:#2563eb;
 }
 
-.platforms{
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.platform-box{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:10px;
-    margin-top:8px;
+    margin-top:10px;
 }
 
 .platform-option{
-    border:1px solid #d9deea;
-    border-radius:12px;
-    padding:13px 8px;
-    text-align:center;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:12px;
     cursor:pointer;
-    background:#fafbfe;
-    font-weight:bold;
-    transition:.2s;
-}
-
-.platform-option:hover{
-    transform:translateY(-1px);
-}
-
-.platform-option.active{
-    border:2px solid #4b7bec;
-    background:#eef3ff;
+    text-align:center;
+    background:#fafafa;
 }
 
 .platform-option input{
-    display:none;
+    width:auto;
+    margin-right:5px;
 }
 
-.platform-icon{
-    display:block;
-    font-size:25px;
-    margin-bottom:5px;
+.platform-option:hover{
+    background:#f0f5ff;
 }
 
-.input-box{
+.upload-box{
     margin-top:15px;
-}
-
-.file-box{
-    border:2px dashed #cbd3e1;
+    padding:18px;
+    border:2px dashed #cbd5e1;
     border-radius:12px;
-    padding:20px 12px;
-    text-align:center;
-    background:#fafbfe;
+    background:#f8fafc;
 }
 
-.file-box input{
-    border:none;
-    padding:5px;
-    background:transparent;
-}
-
-.file-info{
-    margin-top:8px;
-    font-size:13px;
-    color:#666;
-    word-break:break-word;
-}
-
-button.submit-btn{
+.submit-btn{
     width:100%;
-    border:none;
-    border-radius:12px;
+    border:0;
+    border-radius:10px;
     padding:15px;
     margin-top:22px;
+    background:#2563eb;
+    color:#fff;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
-    background:#2563eb;
-    color:white;
 }
 
-button.submit-btn:disabled{
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+.submit-btn:disabled{
     opacity:.6;
     cursor:not-allowed;
-}
-
-.back-btn{
-    display:block;
-    width:100%;
-    text-align:center;
-    text-decoration:none;
-    margin-top:12px;
-    padding:13px;
-    border-radius:12px;
-    background:#eef1f6;
-    color:#333;
-    font-weight:bold;
-}
-
-.profile-btn{
-    display:block;
-    width:100%;
-    text-align:center;
-    text-decoration:none;
-    margin-top:12px;
-    padding:13px;
-    border-radius:12px;
-    background:#e0e7ff;
-    color:#3730a3;
-    font-weight:bold;
 }
 
 .message{
     display:none;
     margin-top:18px;
     padding:13px;
-    border-radius:10px;
+    border-radius:9px;
     text-align:center;
-    font-weight:bold;
-    line-height:1.5;
-    word-break:break-word;
 }
 
 .success{
+    display:block;
     background:#dcfce7;
     color:#166534;
 }
 
 .error{
+    display:block;
     background:#fee2e2;
     color:#991b1b;
 }
 
 .info{
+    display:block;
     background:#dbeafe;
     color:#1e40af;
 }
 
-.upload-info{
-    margin-top:25px;
-    padding:15px;
-    background:#f3f6fb;
-    border-radius:12px;
-    font-size:14px;
-    line-height:1.7;
+.user-box{
+    margin-bottom:20px;
+    padding:14px;
+    border-radius:10px;
+    background:#eff6ff;
+    color:#1e40af;
+}
+
+.login-link{
+    display:inline-block;
+    margin-top:8px;
+    color:#2563eb;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#2563eb;
+    text-decoration:none;
+}
+
+#urlBox,
+#fileBox{
+    display:none;
+}
+
+.note{
+    margin-top:8px;
+    font-size:13px;
+    color:#666;
 }
 
 .progress{
@@ -238,50 +199,24 @@ button.submit-btn:disabled{
 .progress-bar{
     width:0%;
     height:8px;
-    border-radius:10px;
     background:#2563eb;
+    border-radius:10px;
     transition:.3s;
 }
 
-.progress-bg{
-    width:100%;
-    background:#e5e7eb;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-.small{
-    font-size:12px;
-    color:#777;
-    margin-top:5px;
-}
-
-.login-required{
-    text-align:center;
-    padding:20px;
-    background:#fff7ed;
-    border:1px solid #fed7aa;
-    color:#9a3412;
-    border-radius:12px;
-    margin-top:20px;
-}
-
-@media(max-width:450px){
+@media(max-width:500px){
+    .container{
+        padding:12px;
+    }
 
     .card{
-        padding:20px 15px;
+        padding:18px;
     }
 
-    h1{
-        font-size:24px;
+    .platform-box{
+        grid-template-columns:1fr;
     }
-
-    .platforms{
-        grid-template-columns:1fr 1fr;
-    }
-
 }
-
 </style>
 
 </head>
@@ -292,217 +227,127 @@ button.submit-btn:disabled{
 
 <div class="card">
 
-<h1>🎬 Submit Your Video</h1>
+<h1>Submit Your Video</h1>
 
-<div class="subtitle">
-Upload or submit your video to Online Quick Tools.
+<p class="subtitle">
+Upload your video to Online Quick Tools.
+</p>
+
+<div id="userBox" class="user-box">
+Checking login...
 </div>
 
+<form id="videoForm">
 
-<!-- =========================
-     USER INFORMATION
-========================= -->
-
-<div
-    id="userBox"
-    class="user-box"
->
-⏳ Checking your account...
-</div>
-
-
-<!-- =========================
-     TITLE
-========================= -->
-
-<label for="title">
-Video Title
-</label>
+<label for="title">Video Title</label>
 
 <input
     type="text"
     id="title"
     placeholder="Enter video title"
     maxlength="150"
+    required
 >
 
+<label for="description">Description</label>
 
-<!-- =========================
-     PLATFORM
-========================= -->
+<textarea
+    id="description"
+    placeholder="Write a short description..."
+    maxlength="1000"
+></textarea>
 
-<label>
-Select Video Platform
-</label>
+<label>Video Platform</label>
 
-<div class="platforms">
+<div class="platform-box">
 
-
-<label
-    class="platform-option active"
-    id="optionYouTube"
->
-
+<label class="platform-option">
 <input
     type="radio"
     name="platform"
     value="YouTube"
     checked
-    onchange="changePlatform('YouTube')"
 >
-
-<span class="platform-icon">
-▶️
-</span>
-
 YouTube
-
 </label>
 
-
-<label
-    class="platform-option"
-    id="optionFacebook"
->
-
+<label class="platform-option">
 <input
     type="radio"
     name="platform"
     value="Facebook"
-    onchange="changePlatform('Facebook')"
 >
-
-<span class="platform-icon">
-📘
-</span>
-
 Facebook
-
 </label>
 
-
-<label
-    class="platform-option"
-    id="optionTikTok"
->
-
+<label class="platform-option">
 <input
     type="radio"
     name="platform"
     value="TikTok"
-    onchange="changePlatform('TikTok')"
 >
-
-<span class="platform-icon">
-🎵
-</span>
-
 TikTok
-
 </label>
 
-
-<label
-    class="platform-option"
-    id="optionDirect"
->
-
+<label class="platform-option">
 <input
     type="radio"
     name="platform"
-    value="Direct"
-    onchange="changePlatform('Direct')"
+    value="Direct Upload"
 >
-
-<span class="platform-icon">
-📤
-</span>
-
 Direct Upload
-
 </label>
 
 </div>
 
+<div id="urlBox">
 
-<!-- =========================
-     URL BOX
-========================= -->
-
-<div
-    id="urlBox"
-    class="input-box"
->
-
-<label for="videoURL">
-Video URL
-</label>
+<label for="videoUrl">Video URL</label>
 
 <input
     type="url"
-    id="videoURL"
-    placeholder="Paste YouTube video URL"
+    id="videoUrl"
+    placeholder="https://youtube.com/..."
 >
 
-<div
-    class="small"
-    id="urlHelp"
->
-Example: https://youtube.com/shorts/xxxxxxxx
+<div class="note">
+Paste your YouTube, Facebook or TikTok video URL.
 </div>
 
 </div>
 
+<div id="fileBox">
 
-<!-- =========================
-     DIRECT UPLOAD
-========================= -->
+<label for="videoFile">Select Video</label>
 
-<div
-    id="uploadBox"
-    class="input-box"
-    style="display:none;"
->
-
-<label for="videoFile">
-Select Video
-</label>
-
-<div class="file-box">
+<div class="upload-box">
 
 <input
     type="file"
     id="videoFile"
-    accept="video/mp4,video/*"
-    onchange="checkFile()"
+    accept="video/*"
 >
 
-<div
-    class="file-info"
-    id="fileInfo"
->
-MP4 recommended • Maximum 50 MB
+<div class="note">
+MP4 is recommended. Maximum size: 50 MB.
 </div>
 
 </div>
 
 </div>
 
+<div class="progress" id="progressBox">
 
-<!-- =========================
-     PROGRESS
-========================= -->
-
-<div
-    class="progress"
-    id="progress"
->
-
-<div style="font-size:13px;margin-bottom:6px;">
-Uploading...
+<div class="note">
+Uploading video...
 </div>
 
-<div class="progress-bg">
+<div style="
+    width:100%;
+    background:#e5e7eb;
+    border-radius:10px;
+    margin-top:7px;
+">
 
 <div
     class="progress-bar"
@@ -513,99 +358,48 @@ Uploading...
 
 </div>
 
-
-<!-- =========================
-     SUBMIT
-========================= -->
-
 <button
-    type="button"
+    type="submit"
     class="submit-btn"
     id="submitBtn"
-    onclick="submitVideo()"
 >
-📤 Submit Video
+⬆️ Upload & Submit Video
 </button>
 
+</form>
 
-<!-- =========================
-     MESSAGE
-========================= -->
+<div id="message" class="message"></div>
 
-<div
-    id="message"
-    class="message"
-></div>
+<p style="
+    margin-top:20px;
+    font-size:14px;
+    color:#666;
+    line-height:1.6;
+">
 
+<strong>Upload information:</strong><br>
 
-<!-- =========================
-     PROFILE BUTTON
-========================= -->
+• MP4 is recommended<br>
+• Maximum direct upload size: 50 MB<br>
+• Video will be submitted as <strong>pending</strong><br>
+• Admin approval is required before it appears publicly
 
-<a
-    href="profile.html"
-    class="profile-btn"
->
-👤 My Profile
-</a>
+</p>
 
-
-<!-- =========================
-     BACK
-========================= -->
-
-<a
-    href="index.html"
-    class="back-btn"
->
+<a href="index.html" class="back">
 ← Back to Online Quick Tools
 </a>
 
-
-<!-- =========================
-     INFORMATION
-========================= -->
-
-<div class="upload-info">
-
-<strong>📌 Submission Information</strong>
-
-<br>
-
-• YouTube, Facebook and TikTok videos can be submitted using their URL.<br>
-
-• Direct Upload supports video files.<br>
-
-• MP4 is recommended for Direct Upload.<br>
-
-• Maximum Direct Upload size: <strong>50 MB</strong>.<br>
-
-• All videos are submitted as <strong>pending</strong>.<br>
-
-• Admin approval is required before the video appears publicly.<br>
-
-• Your upload is automatically connected to your account.<br>
-
-• Please submit only videos you have permission to share.
-
 </div>
 
 </div>
 
-</div>
-
-
-<!-- =========================
-     SUPABASE
-========================= -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
+// ===============================
+// SUPABASE CONFIG
+// ===============================
 
 const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
@@ -614,457 +408,249 @@ const SUPABASE_KEY =
 "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const supabaseClient =
-window.supabase.createClient(
+supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
 
-/* =========================================
-   GLOBAL STATE
-========================================= */
+// ===============================
+// ELEMENTS
+// ===============================
 
-let currentPlatform = "YouTube";
+const form =
+document.getElementById("videoForm");
 
-let currentUser = null;
+const titleInput =
+document.getElementById("title");
 
+const descriptionInput =
+document.getElementById("description");
 
-/* =========================================
-   ELEMENTS
-========================================= */
-
-const urlBox =
-document.getElementById("urlBox");
-
-const uploadBox =
-document.getElementById("uploadBox");
-
-const videoURL =
-document.getElementById("videoURL");
+const videoUrl =
+document.getElementById("videoUrl");
 
 const videoFile =
 document.getElementById("videoFile");
 
-const urlHelp =
-document.getElementById("urlHelp");
+const urlBox =
+document.getElementById("urlBox");
+
+const fileBox =
+document.getElementById("fileBox");
+
+const message =
+document.getElementById("message");
 
 const submitBtn =
 document.getElementById("submitBtn");
 
-const fileInfo =
-document.getElementById("fileInfo");
+const userBox =
+document.getElementById("userBox");
 
-const progress =
-document.getElementById("progress");
+const progressBox =
+document.getElementById("progressBox");
 
 const progressBar =
 document.getElementById("progressBar");
 
-const userBox =
-document.getElementById("userBox");
 
-
-/* =========================================
-   CHECK LOGIN
-========================================= */
-
-async function checkUser(){
-
-    try{
-
-        const result =
-            await supabaseClient.auth.getSession();
-
-
-        if(result.error){
-
-            throw result.error;
-
-        }
-
-
-        const session =
-            result.data &&
-            result.data.session;
-
-
-        if(!session || !session.user){
-
-            currentUser = null;
-
-            userBox.innerHTML = `
-                <div class="login-required">
-                    🔐 You must be logged in to submit a video.
-                    <br><br>
-                    Please log in to your account first.
-                </div>
-            `;
-
-            submitBtn.disabled = true;
-
-            return false;
-        }
-
-
-        currentUser =
-            session.user;
-
-
-        userBox.innerHTML = `
-            <b>👤 Logged in account</b><br>
-            ${escapeHTML(currentUser.email || "User")}
-            <br>
-            <span class="user-badge">
-                ACCOUNT CONNECTED
-            </span>
-        `;
-
-
-        submitBtn.disabled = false;
-
-        return true;
-
-    }
-
-    catch(error){
-
-        console.error(
-            "User check error:",
-            error
-        );
-
-
-        userBox.innerHTML = `
-            <div class="login-required">
-                ❌ Could not verify your account.
-                <br><br>
-                ${escapeHTML(
-                    error.message ||
-                    "Unknown error"
-                )}
-            </div>
-        `;
-
-
-        submitBtn.disabled = true;
-
-        return false;
-
-    }
-
-}
-
-
-/* =========================================
-   CHANGE PLATFORM
-========================================= */
-
-function changePlatform(platform){
-
-    currentPlatform = platform;
-
-
-    document
-        .querySelectorAll(".platform-option")
-        .forEach(function(option){
-
-            option.classList.remove("active");
-
-        });
-
-
-    const selectedOption =
-        document.getElementById(
-            "option" + platform
-        );
-
-
-    if(selectedOption){
-
-        selectedOption.classList.add("active");
-
-    }
-
-
-    /* DIRECT */
-
-    if(platform === "Direct"){
-
-        urlBox.style.display = "none";
-
-        uploadBox.style.display = "block";
-
-        videoURL.value = "";
-
-        submitBtn.innerText =
-            "⬆️ Upload & Submit Video";
-
-        return;
-    }
-
-
-    /* URL */
-
-    urlBox.style.display = "block";
-
-    uploadBox.style.display = "none";
-
-    videoFile.value = "";
-
-    fileInfo.innerText =
-        "MP4 recommended • Maximum 50 MB";
-
-    submitBtn.innerText =
-        "📤 Submit Video";
-
-
-    if(platform === "YouTube"){
-
-        videoURL.placeholder =
-            "Paste YouTube video URL";
-
-        urlHelp.innerText =
-            "Example: https://youtube.com/shorts/xxxxxxxx";
-
-    }
-
-
-    else if(platform === "Facebook"){
-
-        videoURL.placeholder =
-            "Paste Facebook video URL";
-
-        urlHelp.innerText =
-            "Example: https://www.facebook.com/share/r/xxxxxxxx/";
-
-    }
-
-
-    else if(platform === "TikTok"){
-
-        videoURL.placeholder =
-            "Paste TikTok video URL";
-
-        urlHelp.innerText =
-            "Example: https://www.tiktok.com/@user/video/xxxxxxxx";
-
-    }
-
-}
-
-
-/* =========================================
-   FILE CHECK
-========================================= */
-
-function checkFile(){
-
-    const file =
-        videoFile.files[0];
-
-
-    if(!file){
-
-        fileInfo.innerText =
-            "MP4 recommended • Maximum 50 MB";
-
-        return false;
-    }
-
-
-    const maxSize =
-        50 * 1024 * 1024;
-
-
-    if(file.size > maxSize){
-
-        fileInfo.innerText =
-            "❌ File is larger than 50 MB.";
-
-        videoFile.value = "";
-
-        return false;
-    }
-
-
-    if(
-        file.type &&
-        !file.type.startsWith("video/")
-    ){
-
-        fileInfo.innerText =
-            "❌ Please select a valid video file.";
-
-        videoFile.value = "";
-
-        return false;
-    }
-
-
-    const sizeMB =
-        (
-            file.size /
-            (1024 * 1024)
-        ).toFixed(2);
-
-
-    fileInfo.innerText =
-        "✅ " +
-        file.name +
-        " (" +
-        sizeMB +
-        " MB)";
-
-
-    return true;
-
-}
-
-
-/* =========================================
-   MESSAGE
-========================================= */
+// ===============================
+// SHOW MESSAGE
+// ===============================
 
 function showMessage(text,type){
 
-    const message =
-        document.getElementById("message");
-
-
-    message.innerText =
-        text;
-
+    message.textContent = text;
 
     message.className =
         "message " + type;
 
-
-    message.style.display =
-        "block";
-
 }
 
 
-function hideMessage(){
+// ===============================
+// ESCAPE HTML
+// ===============================
 
-    const message =
-        document.getElementById("message");
+function escapeHTML(text){
 
+    const div =
+    document.createElement("div");
 
-    message.style.display =
-        "none";
+    div.textContent = text;
 
+    return div.innerHTML;
 }
 
 
-/* =========================================
-   RESET PROGRESS
-========================================= */
+// ===============================
+// CURRENT USER
+// ===============================
 
-function resetProgress(){
+let currentUser = null;
 
-    progress.style.display =
-        "none";
 
-    progressBar.style.width =
-        "0%";
+// ===============================
+// LOAD USER
+// ===============================
 
+async function loadUser(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getUser();
+
+    if(error || !data.user){
+
+        currentUser = null;
+
+        userBox.innerHTML = `
+            <strong>Login required</strong><br>
+            You must be logged in before submitting a video.
+            <br>
+            <a class="login-link" href="login.html">
+                Go to Login →
+            </a>
+        `;
+
+        submitBtn.disabled = true;
+
+        return;
+    }
+
+    currentUser = data.user;
+
+    userBox.innerHTML = `
+        <strong>Logged in</strong><br>
+        ${escapeHTML(currentUser.email || "User")}
+    `;
+
+    submitBtn.disabled = false;
 }
 
 
-/* =========================================
-   URL VALIDATION
-========================================= */
+// ===============================
+// PLATFORM CHANGE
+// ===============================
 
-function validateURL(platform,url){
+function updatePlatform(){
+
+    const selected =
+    document.querySelector(
+        'input[name="platform"]:checked'
+    ).value;
+
+    if(selected === "Direct Upload"){
+
+        urlBox.style.display = "none";
+
+        fileBox.style.display = "block";
+
+        videoUrl.required = false;
+
+        videoFile.required = true;
+
+    }else{
+
+        urlBox.style.display = "block";
+
+        fileBox.style.display = "none";
+
+        videoUrl.required = true;
+
+        videoFile.required = false;
+    }
+}
+
+
+document
+.querySelectorAll('input[name="platform"]')
+.forEach(function(radio){
+
+    radio.addEventListener(
+        "change",
+        updatePlatform
+    );
+
+});
+
+
+updatePlatform();
+
+
+// ===============================
+// VALIDATE URL
+// ===============================
+
+function validateVideoURL(url,platform){
 
     try{
 
         const parsed =
-            new URL(url);
-
-
-        if(parsed.protocol !== "https:"){
-
-            return false;
-
-        }
-
+        new URL(url);
 
         const host =
-            parsed.hostname
-            .toLowerCase()
-            .replace(/^www\./,"");
-
+        parsed.hostname.toLowerCase();
 
         if(platform === "YouTube"){
 
             return (
-                host === "youtube.com" ||
-                host === "youtu.be" ||
-                host.endsWith(".youtube.com")
+                host.includes("youtube.com") ||
+                host.includes("youtu.be")
             );
 
         }
-
 
         if(platform === "Facebook"){
 
             return (
-                host === "facebook.com" ||
-                host.endsWith(".facebook.com") ||
-                host === "fb.watch"
+                host.includes("facebook.com") ||
+                host.includes("fb.watch")
             );
 
         }
-
 
         if(platform === "TikTok"){
 
-            return (
-                host === "tiktok.com" ||
-                host.endsWith(".tiktok.com")
-            );
+            return host.includes("tiktok.com");
 
         }
 
+        return false;
+
+    }catch(e){
 
         return false;
 
     }
-
-    catch(error){
-
-        return false;
-
-    }
-
 }
 
 
-/* =========================================
-   SUBMIT VIDEO
-========================================= */
+// ===============================
+// FORM SUBMIT
+// ===============================
 
-async function submitVideo(){
+form.addEventListener(
+"submit",
+async function(e){
 
-    hideMessage();
+    e.preventDefault();
 
-    resetProgress();
+    message.className = "message";
 
+    message.textContent = "";
 
-    /* =====================================
-       REQUIRE LOGIN
-    ===================================== */
+    // ---------------------------
+    // CHECK LOGIN
+    // ---------------------------
 
-    const loggedIn =
-        await checkUser();
-
-
-    if(!loggedIn){
+    if(!currentUser){
 
         showMessage(
-            "❌ Please log in before submitting a video.",
+            "Please login before submitting a video.",
             "error"
         );
 
@@ -1072,130 +658,127 @@ async function submitVideo(){
     }
 
 
+    // ---------------------------
+    // VALUES
+    // ---------------------------
+
     const title =
-        document
-        .getElementById("title")
-        .value
-        .trim();
+    titleInput.value.trim();
+
+    const description =
+    descriptionInput.value.trim();
+
+    const platform =
+    document.querySelector(
+        'input[name="platform"]:checked'
+    ).value;
 
 
     if(!title){
 
         showMessage(
-            "❌ Please enter a video title.",
+            "Please enter a video title.",
             "error"
         );
 
         return;
-
     }
 
 
-    /* =====================================
-       DIRECT UPLOAD
-    ===================================== */
+    // ---------------------------
+    // DISABLE BUTTON
+    // ---------------------------
 
-    if(currentPlatform === "Direct"){
+    submitBtn.disabled = true;
 
-        const file =
+    submitBtn.textContent =
+        "Submitting...";
+
+
+    try{
+
+        // =================================
+        // DIRECT VIDEO UPLOAD
+        // =================================
+
+        if(platform === "Direct Upload"){
+
+            const file =
             videoFile.files[0];
 
+            if(!file){
 
-        if(!file){
+                throw new Error(
+                    "Please select a video file."
+                );
 
-            showMessage(
-                "❌ Please select a video file.",
-                "error"
-            );
-
-            return;
-
-        }
+            }
 
 
-        const maxSize =
+            // Maximum 50 MB
+
+            const maxSize =
             50 * 1024 * 1024;
 
+            if(file.size > maxSize){
 
-        if(file.size > maxSize){
+                throw new Error(
+                    "Video size must be 50 MB or less."
+                );
 
-            showMessage(
-                "❌ Maximum file size is 50 MB.",
-                "error"
-            );
-
-            return;
-
-        }
+            }
 
 
-        if(
-            file.type &&
-            !file.type.startsWith("video/")
-        ){
+            if(!file.type.startsWith("video/")){
 
-            showMessage(
-                "❌ Please select a valid video file.",
-                "error"
-            );
+                throw new Error(
+                    "Please select a valid video file."
+                );
 
-            return;
-
-        }
+            }
 
 
-        try{
-
-            submitBtn.disabled = true;
-
-            submitBtn.innerText =
-                "⏳ Uploading...";
-
-
-            progress.style.display =
+            progressBox.style.display =
                 "block";
 
             progressBar.style.width =
-                "10%";
+                "20%";
 
 
-            /* =================================
-               FILE NAME
-            ================================= */
+            // File extension
 
             const extension =
-                file.name
+            file.name.includes(".")
+            ? file.name
                 .split(".")
                 .pop()
-                .toLowerCase();
+                .toLowerCase()
+            : "mp4";
 
 
-            const randomPart =
-                Math.random()
-                .toString(36)
-                .substring(2,10);
-
+            // Unique filename
 
             const fileName =
                 "video_" +
                 Date.now() +
                 "_" +
-                randomPart +
+                Math.random()
+                    .toString(36)
+                    .substring(2,10) +
                 "." +
                 extension;
 
 
             const filePath =
-                "uploads/" +
-                fileName;
+                "uploads/" + fileName;
 
 
-            /* =================================
-               STORAGE UPLOAD
-            ================================= */
+            // Upload to Supabase Storage
 
-            const uploadResult =
-                await supabaseClient
+            const {
+                error: uploadError
+            } =
+            await supabaseClient
                 .storage
                 .from("videos")
                 .upload(
@@ -1203,60 +786,54 @@ async function submitVideo(){
                     file,
                     {
                         cacheControl:"3600",
-                        contentType:
-                            file.type ||
-                            "video/mp4",
-                        upsert:false
+                        upsert:false,
+                        contentType:file.type
                     }
                 );
 
 
-            if(uploadResult.error){
+            if(uploadError){
 
-                throw uploadResult.error;
+                throw new Error(
+                    uploadError.message
+                );
 
             }
 
 
             progressBar.style.width =
-                "65%";
+                "70%";
 
 
-            /* =================================
-               PUBLIC URL
-            ================================= */
+            // Get public URL
 
-            const publicURL =
-                supabaseClient
+            const {
+                data: publicData
+            } =
+            supabaseClient
                 .storage
                 .from("videos")
-                .getPublicUrl(filePath)
-                .data
-                .publicUrl;
+                .getPublicUrl(filePath);
 
 
-            if(!publicURL){
-
-                throw new Error(
-                    "Could not create video URL."
-                );
-
-            }
+            const publicURL =
+                publicData.publicUrl;
 
 
-            /* =================================
-               DATABASE INSERT
-               USER ID IS AUTOMATIC
-            ================================= */
+            // Insert database row
 
-            const databaseResult =
-                await supabaseClient
+            const {
+                error: dbError
+            } =
+            await supabaseClient
                 .from("Videos")
-                .insert({
+                .insert([{
 
                     title:title,
 
-                    platform:"Direct",
+                    description:description,
+
+                    platform:"Direct Upload",
 
                     videos_url:publicURL,
 
@@ -1264,12 +841,14 @@ async function submitVideo(){
 
                     user_id:currentUser.id
 
-                });
+                }]);
 
 
-            if(databaseResult.error){
+            if(dbError){
 
-                throw databaseResult.error;
+                throw new Error(
+                    dbError.message
+                );
 
             }
 
@@ -1279,161 +858,95 @@ async function submitVideo(){
 
 
             showMessage(
-                "✅ Video submitted successfully! Waiting for admin approval.",
+                "✅ Video submitted successfully! It is now pending admin approval.",
                 "success"
             );
 
-
-            document
-                .getElementById("title")
-                .value = "";
-
-
-            videoFile.value = "";
-
-
-            fileInfo.innerText =
-                "MP4 recommended • Maximum 50 MB";
-
-
         }
 
-        catch(error){
 
-            console.error(
-                "Video upload error:",
-                error
-            );
+        // =================================
+        // URL SUBMISSION
+        // =================================
+
+        else{
+
+            const url =
+            videoUrl.value.trim();
+
+
+            if(!url){
+
+                throw new Error(
+                    "Please enter the video URL."
+                );
+
+            }
+
+
+            if(
+                !validateVideoURL(
+                    url,
+                    platform
+                )
+            ){
+
+                throw new Error(
+                    "Please enter a valid " +
+                    platform +
+                    " video URL."
+                );
+
+            }
+
+
+            const {
+                error: dbError
+            } =
+            await supabaseClient
+                .from("Videos")
+                .insert([{
+
+                    title:title,
+
+                    description:description,
+
+                    platform:platform,
+
+                    videos_url:url,
+
+                    status:"pending",
+
+                    user_id:currentUser.id
+
+                }]);
+
+
+            if(dbError){
+
+                throw new Error(
+                    dbError.message
+                );
+
+            }
 
 
             showMessage(
-                "❌ Upload failed: " +
-                (
-                    error.message ||
-                    "Unknown error"
-                ),
-                "error"
+                "✅ Video submitted successfully! It is now pending admin approval.",
+                "success"
             );
 
         }
 
 
-        finally{
+        // Reset form
 
-            submitBtn.disabled = false;
+        form.reset();
 
-            submitBtn.innerText =
-                "⬆️ Upload & Submit Video";
-
-
-            setTimeout(
-                resetProgress,
-                1200
-            );
-
-        }
+        updatePlatform();
 
 
-        return;
-
-    }
-
-
-    /* =====================================
-       URL SUBMISSION
-    ===================================== */
-
-    const url =
-        videoURL.value.trim();
-
-
-    if(!url){
-
-        showMessage(
-            "❌ Please enter the video URL.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if(
-        !validateURL(
-            currentPlatform,
-            url
-        )
-    ){
-
-        showMessage(
-            "❌ Please enter a valid " +
-            currentPlatform +
-            " video URL.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    try{
-
-        submitBtn.disabled =
-            true;
-
-        submitBtn.innerText =
-            "⏳ Submitting...";
-
-
-        /* =================================
-           DATABASE INSERT
-           USER ID IS AUTOMATIC
-        ================================= */
-
-        const databaseResult =
-            await supabaseClient
-            .from("Videos")
-            .insert({
-
-                title:title,
-
-                platform:currentPlatform,
-
-                videos_url:url,
-
-                status:"pending",
-
-                user_id:currentUser.id
-
-            });
-
-
-        if(databaseResult.error){
-
-            throw databaseResult.error;
-
-        }
-
-
-        showMessage(
-            "✅ Video submitted successfully! Waiting for admin approval.",
-            "success"
-        );
-
-
-        document
-            .getElementById("title")
-            .value = "";
-
-
-        videoURL.value = "";
-
-
-    }
-
-    catch(error){
+    }catch(error){
 
         console.error(
             "Video submission error:",
@@ -1442,107 +955,47 @@ async function submitVideo(){
 
 
         showMessage(
-            "❌ Submission failed: " +
-            (
-                error.message ||
-                "Unknown error"
-            ),
+            "❌ Upload failed: " +
+            error.message,
             "error"
         );
 
     }
 
 
-    finally{
+    // ---------------------------
+    // RESET BUTTON
+    // ---------------------------
 
-        submitBtn.disabled =
-            false;
+    submitBtn.disabled = false;
 
-        submitBtn.innerText =
-            "📤 Submit Video";
+    submitBtn.textContent =
+        "⬆️ Upload & Submit Video";
 
-    }
-
-}
-
-
-/* =========================================
-   HTML ESCAPE
-========================================= */
-
-function escapeHTML(value){
-
-    return String(
-        value ?? ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
+});
 
 
-/* =========================================
-   INITIAL PLATFORM
-========================================= */
-
-changePlatform("YouTube");
-
-
-/* =========================================
-   INITIAL USER CHECK
-========================================= */
-
-checkUser();
-
-
-/* =========================================
-   AUTH STATE LISTENER
-========================================= */
+// ===============================
+// AUTH STATE CHANGE
+// ===============================
 
 supabaseClient.auth.onAuthStateChange(
-    function(event,session){
+    function(){
 
-        if(session && session.user){
-
-            currentUser =
-                session.user;
-
-            checkUser();
-
-        }
-        else{
-
-            currentUser = null;
-
-            checkUser();
-
-        }
+        setTimeout(
+            loadUser,
+            100
+        );
 
     }
 );
+
+
+// ===============================
+// INITIAL LOAD
+// ===============================
+
+loadUser();
 
 </script>
 
