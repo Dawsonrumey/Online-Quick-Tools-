@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>My Profile - Online Quick Tools</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#222;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:0 auto;
+    padding:20px;
+}
+
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+h1{
+    margin-top:0;
+    text-align:center;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+.user-box{
+    background:#eff6ff;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:25px;
+    color:#1e40af;
+}
+
+.user-email{
+    font-weight:bold;
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.btn{
+    display:inline-block;
+    padding:11px 15px;
+    border-radius:9px;
+    text-decoration:none;
+    border:0;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.submit-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.home-btn{
+    background:#e5e7eb;
+    color:#222;
+}
+
+.logout-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.section-title{
+    margin-top:30px;
+    margin-bottom:15px;
+}
+
+.video-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.video-card{
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    overflow:hidden;
+    background:#fff;
+}
+
+.video-content{
+    padding:15px;
+}
+
+.video-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:8px;
+    word-break:break-word;
+}
+
+.video-description{
+    color:#666;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:12px;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.video-meta{
+    font-size:13px;
+    color:#64748b;
+    margin-bottom:8px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status.pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status.approved{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status.rejected{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.watch-btn{
+    display:inline-block;
+    margin-top:12px;
+    padding:9px 13px;
+    background:#2563eb;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.empty{
+    text-align:center;
+    padding:35px 15px;
+    color:#64748b;
+    border:1px dashed #cbd5e1;
+    border-radius:12px;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:13px;
+    border-radius:9px;
+    text-align:center;
+}
+
+.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#64748b;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:25px;
+    color:#2563eb;
+    text-decoration:none;
+}
+
+@media(max-width:650px){
+
+    .container{
+        padding:12px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .video-list{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>My Profile</h1>
+
+<p class="subtitle">
+    Your submitted videos
+</p>
+
+
+<!-- USER INFORMATION -->
+
+<div id="userBox" class="user-box">
+
+    Checking login...
+
+</div>
+
+
+<!-- VIDEOS -->
+
+<h2 class="section-title">
+    My Videos
+</h2>
+
+<div id="videoList">
+
+    <div class="loading">
+        Loading your videos...
+    </div>
+
+</div>
+
+
+<div id="message"
+     class="message">
+</div>
+
+
+<a href="index.html"
+   class="back">
+
+    ← Back to Online Quick Tools
+
+</a>
+
+</div>
+
+</div>
+
+
+<script>
+
+// =====================================
+// SUPABASE CONFIG
+// =====================================
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// =====================================
+// ELEMENTS
+// =====================================
+
+const userBox =
+document.getElementById("userBox");
+
+const videoList =
+document.getElementById("videoList");
+
+const message =
+document.getElementById("message");
+
+
+// =====================================
+// ESCAPE HTML
+// =====================================
+
+function escapeHTML(text){
+
+    const div =
+    document.createElement("div");
+
+    div.textContent =
+    text == null ? "" : text;
+
+    return div.innerHTML;
+}
+
+
+// =====================================
+// SHOW ERROR
+// =====================================
+
+function showError(text){
+
+    message.textContent = text;
+
+    message.className =
+        "message error";
+
+}
+
+
+// =====================================
+// FORMAT DATE
+// =====================================
+
+function formatDate(date){
+
+    if(!date){
+        return "";
+    }
+
+    try{
+
+        return new Date(date)
+            .toLocaleString();
+
+    }catch(e){
+
+        return "";
+
+    }
+
+}
+
+
+// =====================================
+// LOAD PROFILE
+// =====================================
+
+async function loadProfile(){
+
+    // ---------------------------------
+    // GET CURRENT USER
+    // ---------------------------------
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getUser();
+
+
+    if(error || !data.user){
+
+        userBox.innerHTML = `
+
+            <strong>Login required</strong>
+
+            <br>
+
+            Please login to view your profile
+            and submitted videos.
+
+            <div class="actions">
+
+                <a
+                    href="login.html"
+                    class="btn submit-btn"
+                >
+                    Go to Login
+                </a>
+
+            </div>
+
+        `;
+
+        videoList.innerHTML = "";
+
+        return;
+
+    }
+
+
+    const currentUser =
+    data.user;
+
+
+    // ---------------------------------
+    // USER INFO
+    // ---------------------------------
+
+    userBox.innerHTML = `
+
+        <div>
+            <strong>Logged in as</strong>
+        </div>
+
+        <div class="user-email">
+            ${escapeHTML(currentUser.email || "User")}
+        </div>
+
+        <div class="actions">
+
+            <a
+                href="video-submit.html"
+                class="btn submit-btn"
+            >
+                ⬆️ Submit Video
+            </a>
+
+            <a
+                href="index.html"
+                class="btn home-btn"
+            >
+                🏠 Home
+            </a>
+
+            <button
+                id="logoutBtn"
+                class="btn logout-btn"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    `;
+
+
+    // ---------------------------------
+    // LOGOUT
+    // ---------------------------------
+
+    document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async function(){
+
+            const {
+                error
+            } =
+            await supabaseClient.auth.signOut();
+
+
+            if(error){
+
+                showError(
+                    "Logout failed: " +
+                    error.message
+                );
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+    // ---------------------------------
+    // LOAD USER VIDEOS
+    // ---------------------------------
+
+    await loadMyVideos(
+        currentUser.id
+    );
+
+}
+
+
+// =====================================
+// LOAD MY VIDEOS
+// =====================================
+
+async function loadMyVideos(userId){
+
+    videoList.innerHTML = `
+
+        <div class="loading">
+            Loading your videos...
+        </div>
+
+    `;
+
+
+    const {
+        data: videos,
+        error
+    } =
+    await supabaseClient
+
+        .from("Videos")
+
+        .select(`
+            id,
+            created_at,
+            title,
+            description,
+            platform,
+            videos_url,
+            status
+        `)
+
+        .eq(
+            "user_id",
+            userId
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Profile video error:",
+            error
+        );
+
+        videoList.innerHTML = "";
+
+        showError(
+            "Could not load your videos: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    // ---------------------------------
+    // NO VIDEOS
+    // ---------------------------------
+
+    if(!videos || videos.length === 0){
+
+        videoList.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No videos yet
+                </h3>
+
+                <p>
+                    You have not submitted
+                    any videos yet.
+                </p>
+
+                <a
+                    href="video-submit.html"
+                    class="btn submit-btn"
+                >
+                    Submit Your First Video
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // ---------------------------------
+    // CREATE VIDEO CARDS
+    // ---------------------------------
+
+    videoList.innerHTML = "";
+
+
+    videos.forEach(function(video){
+
+        const card =
+        document.createElement("div");
+
+        card.className =
+            "video-card";
+
+
+        const title =
+            escapeHTML(
+                video.title ||
+                "Untitled Video"
+            );
+
+
+        const description =
+            escapeHTML(
+                video.description ||
+                "No description"
+            );
+
+
+        const platform =
+            escapeHTML(
+                video.platform ||
+                "Unknown"
+            );
+
+
+        const status =
+            String(
+                video.status ||
+                "pending"
+            ).toLowerCase();
+
+
+        const safeStatus =
+            ["pending","approved","rejected"]
+            .includes(status)
+            ? status
+            : "pending";
+
+
+        const date =
+            formatDate(
+                video.created_at
+            );
+
+
+        const url =
+            video.videos_url || "";
+
+
+        let watchButton = "";
+
+
+        if(url){
+
+            watchButton = `
+
+                <a
+                    href="${escapeHTML(url)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="watch-btn"
+                >
+                    ▶️ View Video
+                </a>
+
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            <div class="video-content">
+
+                <div class="video-title">
+                    ${title}
+                </div>
+
+
+                <div class="video-description">
+                    ${description}
+                </div>
+
+
+                <div class="video-meta">
+                    Platform:
+                    <strong>
+                        ${platform}
+                    </strong>
+                </div>
+
+
+                <div class="video-meta">
+                    Submitted:
+                    ${escapeHTML(date)}
+                </div>
+
+
+                <div>
+
+                    <span
+                        class="status ${safeStatus}"
+                    >
+                        ${escapeHTML(
+                            video.status ||
+                            "pending"
+                        )}
+                    </span>
+
+                </div>
+
+
+                ${watchButton}
+
+            </div>
+
+        `;
+
+
+        videoList.appendChild(
+            card
+        );
+
+    });
+
+}
+
+
+// =====================================
+// AUTH STATE CHANGE
+// =====================================
+
+supabaseClient.auth.onAuthStateChange(
+    function(){
+
+        setTimeout(
+            loadProfile,
+            100
+        );
+
+    }
+);
+
+
+// =====================================
+// INITIAL LOAD
+// =====================================
+
+loadProfile();
+
+</script>
+
+</body>
+
+</html>
