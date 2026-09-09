@@ -1,18 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>My Profile - Online Quick Tools</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>My Profile - Online Quick Tools</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 
 *{
     box-sizing:border-box;
@@ -61,6 +50,14 @@ h1{
 .user-email{
     font-weight:bold;
     word-break:break-word;
+    margin-top:5px;
+}
+
+.user-id{
+    font-size:11px;
+    color:#64748b;
+    word-break:break-all;
+    margin-top:8px;
 }
 
 .actions{
@@ -189,12 +186,19 @@ h1{
     padding:13px;
     border-radius:9px;
     text-align:center;
+    word-break:break-word;
 }
 
 .error{
     display:block;
     background:#fee2e2;
     color:#991b1b;
+}
+
+.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
 }
 
 .loading{
@@ -227,66 +231,24 @@ h1{
 
 }
 
-</style>
-
-</head>
-
-
-<body>
-
-<div class="container">
-
-<div class="card">
-
-<h1>My Profile</h1>
-
-<p class="subtitle">
+</style></head><body><div class="container"><div class="card"><h1>My Profile</h1><p class="subtitle">
     Your submitted videos
-</p>
+</p><div id="userBox" class="user-box">Checking login...
 
-
-<!-- USER INFORMATION -->
-
-<div id="userBox" class="user-box">
-
-    Checking login...
-
-</div>
-
-
-<!-- VIDEOS -->
-
-<h2 class="section-title">
+</div><h2 class="section-title">
     My Videos
-</h2>
-
-<div id="videoList">
-
-    <div class="loading">
-        Loading your videos...
-    </div>
-
+</h2><div id="videoList"><div class="loading">
+    Loading your videos...
 </div>
 
-
-<div id="message"
+</div><div id="message"
      class="message">
-</div>
+</div><a href="index.html"
+class="back">
 
+← Back to Online Quick Tools
 
-<a href="index.html"
-   class="back">
-
-    ← Back to Online Quick Tools
-
-</a>
-
-</div>
-
-</div>
-
-
-<script>
+</a></div></div><script>
 
 // =====================================
 // SUPABASE CONFIG
@@ -296,7 +258,7 @@ const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+"sb_publishable_QLp5SKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const supabaseClient =
 supabase.createClient(
@@ -323,13 +285,13 @@ document.getElementById("message");
 // ESCAPE HTML
 // =====================================
 
-function escapeHTML(text){
+function escapeHTML(value){
 
     const div =
     document.createElement("div");
 
     div.textContent =
-    text == null ? "" : text;
+        value == null ? "" : String(value);
 
     return div.innerHTML;
 }
@@ -341,7 +303,8 @@ function escapeHTML(text){
 
 function showError(text){
 
-    message.textContent = text;
+    message.textContent =
+        text;
 
     message.className =
         "message error";
@@ -356,19 +319,17 @@ function showError(text){
 function formatDate(date){
 
     if(!date){
-        return "";
+        return "Unknown";
     }
 
-    try{
+    const d =
+        new Date(date);
 
-        return new Date(date)
-            .toLocaleString();
-
-    }catch(e){
-
-        return "";
-
+    if(isNaN(d.getTime())){
+        return "Unknown";
     }
+
+    return d.toLocaleString();
 
 }
 
@@ -379,27 +340,80 @@ function formatDate(date){
 
 async function loadProfile(){
 
-    // ---------------------------------
-    // GET CURRENT USER
-    // ---------------------------------
+    message.className =
+        "message";
+
+    message.textContent =
+        "";
+
+
+    userBox.innerHTML = `
+
+        <strong>
+            Checking login...
+        </strong>
+
+    `;
+
+
+    // =================================
+    // GET SESSION
+    // =================================
 
     const {
-        data,
-        error
+        data: sessionData,
+        error: sessionError
     } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient.auth.getSession();
 
 
-    if(error || !data.user){
+    if(sessionError){
+
+        console.error(
+            "Session error:",
+            sessionError
+        );
 
         userBox.innerHTML = `
 
-            <strong>Login required</strong>
+            <strong>
+                Login error
+            </strong>
 
-            <br>
+        `;
 
-            Please login to view your profile
-            and submitted videos.
+        showError(
+            "Could not check login: " +
+            sessionError.message
+        );
+
+        videoList.innerHTML = "";
+
+        return;
+
+    }
+
+
+    const session =
+        sessionData.session;
+
+
+    // =================================
+    // USER NOT LOGGED IN
+    // =================================
+
+    if(!session || !session.user){
+
+        userBox.innerHTML = `
+
+            <strong>
+                Login required
+            </strong>
+
+            <br><br>
+
+            Please login first to see
+            your submitted videos.
 
             <div class="actions">
 
@@ -407,7 +421,14 @@ async function loadProfile(){
                     href="login.html"
                     class="btn submit-btn"
                 >
-                    Go to Login
+                    🔐 Go to Login
+                </a>
+
+                <a
+                    href="index.html"
+                    class="btn home-btn"
+                >
+                    🏠 Home
                 </a>
 
             </div>
@@ -421,22 +442,45 @@ async function loadProfile(){
     }
 
 
+    // =================================
+    // CURRENT USER
+    // =================================
+
     const currentUser =
-    data.user;
+        session.user;
+
+    const userId =
+        currentUser.id;
 
 
-    // ---------------------------------
-    // USER INFO
-    // ---------------------------------
+    console.log(
+        "Logged in user:",
+        userId
+    );
+
+
+    // =================================
+    // SHOW USER
+    // =================================
 
     userBox.innerHTML = `
 
         <div>
-            <strong>Logged in as</strong>
+            <strong>
+                Logged in as
+            </strong>
         </div>
 
         <div class="user-email">
-            ${escapeHTML(currentUser.email || "User")}
+            ${escapeHTML(
+                currentUser.email ||
+                "User"
+            )}
+        </div>
+
+        <div class="user-id">
+            User ID:
+            ${escapeHTML(userId)}
         </div>
 
         <div class="actions">
@@ -467,54 +511,52 @@ async function loadProfile(){
     `;
 
 
-    // ---------------------------------
+    // =================================
     // LOGOUT
-    // ---------------------------------
+    // =================================
 
     document
     .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        async function(){
+    .onclick =
+    async function(){
 
-            const {
-                error
-            } =
-            await supabaseClient.auth.signOut();
-
-
-            if(error){
-
-                showError(
-                    "Logout failed: " +
-                    error.message
-                );
-
-                return;
-
-            }
+        const {
+            error
+        } =
+        await supabaseClient.auth.signOut();
 
 
-            window.location.href =
-                "login.html";
+        if(error){
+
+            showError(
+                "Logout failed: " +
+                error.message
+            );
+
+            return;
 
         }
-    );
 
 
-    // ---------------------------------
-    // LOAD USER VIDEOS
-    // ---------------------------------
+        window.location.href =
+            "login.html";
+
+    };
+
+
+    // =================================
+    // LOAD VIDEOS
+    // =================================
 
     await loadMyVideos(
-        currentUser.id
+        userId
     );
 
 }
 
 
 // =====================================
-// LOAD MY VIDEOS
+// LOAD USER VIDEOS
 // =====================================
 
 async function loadMyVideos(userId){
@@ -528,29 +570,29 @@ async function loadMyVideos(userId){
     `;
 
 
+    console.log(
+        "Loading videos for user:",
+        userId
+    );
+
+
+    // =================================
+    // QUERY
+    // =================================
+
     const {
         data: videos,
         error
     } =
     await supabaseClient
-
         .from("Videos")
-
-        .select(`
-            id,
-            created_at,
-            title,
-            description,
-            platform,
-            videos_url,
-            status
-        `)
-
+        .select(
+            "id, created_at, title, description, platform, videos_url, status, user_id"
+        )
         .eq(
             "user_id",
             userId
         )
-
         .order(
             "created_at",
             {
@@ -559,12 +601,23 @@ async function loadMyVideos(userId){
         );
 
 
-    if(error){
+    console.log(
+        "Videos:",
+        videos
+    );
 
-        console.error(
-            "Profile video error:",
-            error
-        );
+
+    console.log(
+        "Query error:",
+        error
+    );
+
+
+    // =================================
+    // ERROR
+    // =================================
+
+    if(error){
 
         videoList.innerHTML = "";
 
@@ -578,9 +631,9 @@ async function loadMyVideos(userId){
     }
 
 
-    // ---------------------------------
+    // =================================
     // NO VIDEOS
-    // ---------------------------------
+    // =================================
 
     if(!videos || videos.length === 0){
 
@@ -593,15 +646,15 @@ async function loadMyVideos(userId){
                 </h3>
 
                 <p>
-                    You have not submitted
-                    any videos yet.
+                    We could not find a video
+                    submitted by this account.
                 </p>
 
                 <a
                     href="video-submit.html"
                     class="btn submit-btn"
                 >
-                    Submit Your First Video
+                    ⬆️ Submit Video
                 </a>
 
             </div>
@@ -613,170 +666,196 @@ async function loadMyVideos(userId){
     }
 
 
-    // ---------------------------------
-    // CREATE VIDEO CARDS
-    // ---------------------------------
+    // =================================
+    // DISPLAY VIDEOS
+    // =================================
 
     videoList.innerHTML = "";
 
 
-    videos.forEach(function(video){
+    videos.forEach(
+        function(video){
 
-        const card =
-        document.createElement("div");
+            const card =
+                document.createElement("div");
 
-        card.className =
-            "video-card";
-
-
-        const title =
-            escapeHTML(
-                video.title ||
-                "Untitled Video"
-            );
+            card.className =
+                "video-card";
 
 
-        const description =
-            escapeHTML(
-                video.description ||
-                "No description"
-            );
+            const title =
+                escapeHTML(
+                    video.title ||
+                    "Untitled Video"
+                );
 
 
-        const platform =
-            escapeHTML(
-                video.platform ||
-                "Unknown"
-            );
+            const description =
+                escapeHTML(
+                    video.description ||
+                    "No description"
+                );
 
 
-        const status =
-            String(
-                video.status ||
-                "pending"
-            ).toLowerCase();
+            const platform =
+                escapeHTML(
+                    video.platform ||
+                    "Unknown"
+                );
 
 
-        const safeStatus =
-            ["pending","approved","rejected"]
-            .includes(status)
-            ? status
-            : "pending";
+            const status =
+                String(
+                    video.status ||
+                    "pending"
+                ).toLowerCase();
 
 
-        const date =
-            formatDate(
-                video.created_at
-            );
+            const safeStatus =
+                [
+                    "pending",
+                    "approved",
+                    "rejected"
+                ].includes(status)
+                ? status
+                : "pending";
 
 
-        const url =
-            video.videos_url || "";
+            const statusText =
+                escapeHTML(
+                    video.status ||
+                    "pending"
+                );
 
 
-        let watchButton = "";
+            const date =
+                escapeHTML(
+                    formatDate(
+                        video.created_at
+                    )
+                );
 
 
-        if(url){
+            const url =
+                video.videos_url || "";
 
-            watchButton = `
 
-                <a
-                    href="${escapeHTML(url)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="watch-btn"
-                >
-                    ▶️ View Video
-                </a>
+            let watchButton =
+                "";
+
+
+            if(url){
+
+                watchButton = `
+
+                    <a
+                        href="${escapeHTML(url)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="watch-btn"
+                    >
+                        ▶️ View Video
+                    </a>
+
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="video-content">
+
+                    <div class="video-title">
+                        ${title}
+                    </div>
+
+                    <div class="video-description">
+                        ${description}
+                    </div>
+
+                    <div class="video-meta">
+                        Platform:
+                        <strong>
+                            ${platform}
+                        </strong>
+                    </div>
+
+                    <div class="video-meta">
+                        Submitted:
+                        ${date}
+                    </div>
+
+                    <div>
+
+                        <span
+                            class="status ${safeStatus}"
+                        >
+                            ${statusText}
+                        </span>
+
+                    </div>
+
+                    ${watchButton}
+
+                </div>
 
             `;
 
+
+            videoList.appendChild(
+                card
+            );
+
         }
-
-
-        card.innerHTML = `
-
-            <div class="video-content">
-
-                <div class="video-title">
-                    ${title}
-                </div>
-
-
-                <div class="video-description">
-                    ${description}
-                </div>
-
-
-                <div class="video-meta">
-                    Platform:
-                    <strong>
-                        ${platform}
-                    </strong>
-                </div>
-
-
-                <div class="video-meta">
-                    Submitted:
-                    ${escapeHTML(date)}
-                </div>
-
-
-                <div>
-
-                    <span
-                        class="status ${safeStatus}"
-                    >
-                        ${escapeHTML(
-                            video.status ||
-                            "pending"
-                        )}
-                    </span>
-
-                </div>
-
-
-                ${watchButton}
-
-            </div>
-
-        `;
-
-
-        videoList.appendChild(
-            card
-        );
-
-    });
+    );
 
 }
 
 
 // =====================================
-// AUTH STATE CHANGE
+// AUTH STATE
 // =====================================
 
 supabaseClient.auth.onAuthStateChange(
-    function(){
+    function(event, session){
 
-        setTimeout(
-            loadProfile,
-            100
+        console.log(
+            "Auth event:",
+            event
         );
+
+
+        if(event === "SIGNED_OUT"){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+        if(session && session.user){
+
+            setTimeout(
+                function(){
+
+                    loadProfile();
+
+                },
+                200
+            );
+
+        }
 
     }
 );
 
 
 // =====================================
-// INITIAL LOAD
+// START
 // =====================================
 
 loadProfile();
 
-</script>
-
-</body>
-
-</html>
+</script></body></html>
