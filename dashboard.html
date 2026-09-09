@@ -3,13 +3,9 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Dashboard - Online Quick Tools</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
@@ -19,200 +15,179 @@
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f7fb;
-    color:#111827;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#222;
 }
 
 header{
     background:#2563eb;
     color:white;
-    padding:18px;
-    text-align:center;
+    padding:16px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-header h1{
-    margin:0 0 12px;
-    font-size:24px;
+header h2{
+    margin:0;
+    font-size:20px;
 }
 
-.logout{
+.logout-btn{
     background:white;
     color:#2563eb;
-    border:0;
-    padding:10px 18px;
-    border-radius:8px;
-    font-weight:bold;
+    border:none;
+    padding:9px 15px;
+    border-radius:7px;
     cursor:pointer;
+    font-weight:bold;
 }
 
 .container{
-    max-width:600px;
-    margin:30px auto;
-    padding:20px;
+    width:100%;
+    max-width:900px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.loading{
+    text-align:center;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.dashboard{
+    display:none;
 }
 
 .card{
     background:white;
-    border-radius:14px;
-    padding:22px;
-    margin-bottom:18px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
-.card h2{
+.card h3{
     margin-top:0;
+    margin-bottom:15px;
+}
+
+.username{
+    font-size:24px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.email{
+    color:#666;
+    margin-top:5px;
+}
+
+.points-card{
+    text-align:center;
 }
 
 .points{
-    font-size:38px;
+    font-size:42px;
     font-weight:bold;
-    color:#2563eb;
+    color:#16a34a;
     margin:10px 0;
 }
 
-.label{
-    color:#6b7280;
+.referral-box{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.referral-box input{
+    flex:1;
+    padding:11px;
+    border:1px solid #ddd;
+    border-radius:7px;
     font-size:14px;
 }
 
-.action{
-    width:100%;
-    border:0;
+.copy-btn,
+.reward-btn{
     background:#2563eb;
     color:white;
-    padding:15px;
-    border-radius:10px;
-    margin-top:10px;
-    font-size:16px;
-    font-weight:bold;
+    border:none;
+    padding:10px 15px;
+    border-radius:7px;
     cursor:pointer;
+    font-weight:bold;
 }
 
-.action:disabled{
-    opacity:.6;
-    cursor:not-allowed;
+.reward-btn{
+    background:#16a34a;
 }
 
-#rewardMessage{
-    display:none;
-    margin-top:12px;
-    padding:12px;
-    border-radius:10px;
-    background:#dcfce7;
-    color:#166534;
-}
-
-.referral-box{
-    background:#f8fafc;
-    border:1px solid #e2e8f0;
-    border-radius:12px;
-    padding:15px;
-    margin-top:12px;
-}
-
-.referral-link{
-    width:100%;
-    padding:12px;
-    border:1px solid #cbd5e1;
-    border-radius:8px;
-    background:white;
-    font-size:14px;
-    margin:8px 0 10px;
-}
-
-.referral-stats{
+.info-row{
     display:flex;
     justify-content:space-between;
-    gap:12px;
-    margin-top:15px;
+    padding:8px 0;
+    border-bottom:1px solid #eee;
 }
 
-.stat{
-    flex:1;
-    text-align:center;
-    background:#eff6ff;
-    padding:14px;
-    border-radius:10px;
+.info-row:last-child{
+    border-bottom:none;
 }
 
-.stat-number{
-    font-size:26px;
-    font-weight:bold;
-    color:#2563eb;
-}
-
-.stat-label{
-    font-size:13px;
-    color:#64748b;
-    margin-top:4px;
-}
-
-.referral-info{
-    color:#64748b;
-    font-size:14px;
-    line-height:1.5;
+.message{
     margin-top:12px;
+    padding:10px;
+    border-radius:7px;
+    text-align:center;
+    display:none;
 }
 
-.copy-success{
-    display:none;
-    margin-top:10px;
-    padding:10px;
-    border-radius:8px;
+.success{
     background:#dcfce7;
     color:#166534;
-    text-align:center;
-    font-size:14px;
 }
 
 .error{
     background:#fee2e2;
     color:#991b1b;
-    padding:15px;
-    border-radius:10px;
-    line-height:1.5;
 }
 
 .video-card{
-    border:1px solid #e2e8f0;
-    border-radius:12px;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
     padding:15px;
     margin-top:15px;
-    background:#f8fafc;
+    background:#fff;
 }
 
 .video-title{
     font-size:18px;
     font-weight:bold;
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
 
 .video-description{
-    color:#64748b;
+    color:#555;
     font-size:14px;
-    line-height:1.5;
     margin-bottom:10px;
 }
 
 .video-meta{
     font-size:13px;
-    color:#64748b;
-    margin-bottom:10px;
+    color:#777;
+    margin-bottom:8px;
 }
 
 .status{
     display:inline-block;
-    padding:6px 10px;
+    padding:5px 9px;
     border-radius:20px;
     font-size:12px;
     font-weight:bold;
-    margin-bottom:10px;
-}
-
-.status-pending{
-    background:#fef3c7;
-    color:#92400e;
 }
 
 .status-approved{
@@ -220,453 +195,361 @@ header h1{
     color:#166534;
 }
 
+.status-pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
 .status-rejected{
     background:#fee2e2;
     color:#991b1b;
 }
 
-.video-button{
+.video-player{
+    width:100%;
+    max-height:500px;
+    border-radius:10px;
+    margin-top:12px;
+    background:#000;
     display:block;
-    text-align:center;
-    text-decoration:none;
-    background:#2563eb;
-    color:white;
-    padding:11px;
+}
+
+.video-frame{
+    width:100%;
+    aspect-ratio:16/9;
+    border:0;
+    border-radius:10px;
+    margin-top:12px;
+    background:#000;
+}
+
+.video-message{
+    margin-top:12px;
+    padding:12px;
     border-radius:8px;
-    font-weight:bold;
-    margin-top:8px;
+    background:#f1f5f9;
+    color:#475569;
+    text-align:center;
+    font-size:14px;
 }
 
 .no-videos{
     text-align:center;
-    padding:20px 10px;
-    color:#64748b;
+    padding:20px;
+    color:#777;
 }
 
 .video-loading{
     text-align:center;
-    color:#64748b;
+    color:#777;
     padding:15px;
+}
+
+.quick-links a{
+    display:block;
+    text-decoration:none;
+    background:#f1f5f9;
+    color:#2563eb;
+    padding:12px;
+    margin-top:8px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.quick-links a:hover{
+    background:#e2e8f0;
+}
+
+@media(max-width:600px){
+
+    header{
+        padding:14px;
+    }
+
+    header h2{
+        font-size:17px;
+    }
+
+    .container{
+        margin-top:15px;
+    }
+
+    .card{
+        padding:16px;
+    }
+
+    .referral-box{
+        flex-direction:column;
+    }
+
+    .copy-btn{
+        width:100%;
+    }
+
+    .points{
+        font-size:36px;
+    }
+
 }
 
 </style>
 
-
-<!-- Google Analytics -->
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
-
-<script>
-
-window.dataLayer = window.dataLayer || [];
-
-function gtag(){
-    dataLayer.push(arguments);
-}
-
-gtag('js', new Date());
-
-gtag('config', 'G-MQS2RKPRF2');
-
-</script>
-
 </head>
-
 
 <body>
 
-
 <header>
 
-<h1>Online Quick Tools</h1>
+    <h2>Online Quick Tools</h2>
 
-<button
-    class="logout"
-    id="logoutButton"
-    type="button">
-    Logout
-</button>
+    <button class="logout-btn" id="logoutButton">
+        Logout
+    </button>
 
 </header>
 
 
 <div class="container">
 
-
-<!-- LOADING -->
-
-<div id="loading" class="card">
-
-    Loading your dashboard...
-
-</div>
-
-
-<!-- DASHBOARD -->
-
-<div id="dashboard"
-     style="display:none;">
-
-
-<!-- ACCOUNT CARD -->
-
-<div class="card">
-
-    <div class="label">
-        Welcome
-    </div>
-
-    <h2 id="username">
-        User
-    </h2>
-
-    <div class="label">
-        Available Points
-    </div>
-
-    <div class="points"
-         id="points">
-        0
-    </div>
-
-    <div class="label">
-        Account Email
-    </div>
-
-    <div id="email">
-        -
-    </div>
-
-</div>
-
-
-
-<!-- MY VIDEOS -->
-
-<div class="card">
-
-    <h2>🎬 My Videos</h2>
-
-    <div id="videosLoading"
-         class="video-loading">
-
-        Loading your videos...
-
-    </div>
-
-    <div id="videosList"></div>
-
-    <button
-        class="action"
-        type="button"
-        onclick="location.href='video-submit.html'">
-
-        ⬆️ Submit New Video
-
-    </button>
-
-</div>
-
-
-
-<!-- REFERRAL CARD -->
-
-<div class="card">
-
-    <h2>🎁 Refer & Earn</h2>
-
-    <div class="referral-info">
-
-        Invite your friends to join
-        Online Quick Tools.
-
-        <br><br>
-
-        You get <strong>10 points</strong>
-        for each successful referral.
-
-        Your friend gets
-        <strong>5 points</strong>.
-
+    <div class="loading" id="loading">
+        Loading your dashboard...
     </div>
 
 
-    <div class="referral-box">
+    <div class="dashboard" id="dashboard">
 
-        <div class="label">
-            Your Referral Link
+
+        <!-- ACCOUNT -->
+
+        <div class="card">
+
+            <h3>👤 My Account</h3>
+
+            <div class="username" id="username">
+                User
+            </div>
+
+            <div class="email">
+                <strong>Email:</strong>
+                <span id="email">-</span>
+            </div>
+
         </div>
 
-        <input
-            id="referralLink"
-            class="referral-link"
-            type="text"
-            readonly
-        >
+
+        <!-- POINTS -->
+
+        <div class="card points-card">
+
+            <h3>💰 Available Points</h3>
+
+            <div class="points" id="points">
+                0
+            </div>
+
+        </div>
 
 
-        <button
-            class="action"
-            id="copyReferralButton"
-            type="button">
+        <!-- REFERRAL -->
 
-            📋 Copy Referral Link
+        <div class="card">
 
-        </button>
+            <h3>🎁 Refer & Earn</h3>
+
+            <p>
+                Invite your friends and earn points when they join.
+            </p>
+
+            <strong>Your Referral Link</strong>
+
+            <div class="referral-box">
+
+                <input
+                    type="text"
+                    id="referralLink"
+                    readonly
+                >
+
+                <button
+                    class="copy-btn"
+                    id="copyReferralButton"
+                >
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div style="margin-top:15px;">
+
+                <div class="info-row">
+
+                    <span>
+                        Total Referrals
+                    </span>
+
+                    <strong id="referralCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span>
+                        Points / Referral
+                    </span>
+
+                    <strong>
+                        10
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DAILY REWARD -->
+
+        <div class="card">
+
+            <h3>🎁 Daily Reward</h3>
+
+            <p>
+                Claim your daily login reward.
+            </p>
+
+            <button
+                class="reward-btn"
+                id="dailyRewardButton"
+            >
+                Claim Daily Reward
+            </button>
+
+            <div
+                class="message"
+                id="rewardMessage"
+            ></div>
+
+        </div>
+
+
+        <!-- MY VIDEOS -->
+
+        <div class="card">
+
+            <h3>🎬 My Videos</h3>
+
+            <p>
+                Your submitted videos are shown below.
+            </p>
+
+            <div id="myVideos">
+
+                <div class="video-loading">
+                    Loading your videos...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK LINKS -->
+
+        <div class="card quick-links">
+
+            <h3>🔗 Quick Links</h3>
+
+            <a href="index.html">
+                🏠 Home
+            </a>
+
+            <a href="video-submit.html">
+                🎬 Submit Your Video
+            </a>
+
+        </div>
 
 
         <div
-            id="copySuccess"
-            class="copy-success">
+            class="message error"
+            id="dashboardError"
+        ></div>
 
-            ✅ Referral link copied!
-
-        </div>
-
-
-        <div class="referral-stats">
-
-            <div class="stat">
-
-                <div
-                    class="stat-number"
-                    id="referralCount">
-
-                    0
-
-                </div>
-
-                <div class="stat-label">
-                    Total Referrals
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-number">
-                    10
-                </div>
-
-                <div class="stat-label">
-                    Points / Referral
-                </div>
-
-            </div>
-
-        </div>
 
     </div>
 
 </div>
 
 
+<!-- SUPABASE -->
 
-<!-- DAILY REWARD -->
-
-<div class="card">
-
-    <h2>🎁 Daily Reward</h2>
-
-    <button
-        class="action"
-        id="dailyRewardButton"
-        type="button">
-
-        Claim Daily Reward
-
-        <span id="dailyRewardText">
-            Get 10 points once per day
-        </span>
-
-    </button>
-
-
-    <div
-        id="rewardMessage">
-    </div>
-
-</div>
-
-
-
-<!-- QUICK LINKS -->
-
-<div class="card">
-
-    <h2>Quick Links</h2>
-
-
-    <button
-        class="action"
-        type="button"
-        onclick="location.href='index.html'">
-
-        🏠 Home
-
-    </button>
-
-
-    <button
-        class="action"
-        type="button"
-        onclick="location.href='reward-history.html'">
-
-        📜 Reward History
-
-    </button>
-
-
-    <button
-        class="action"
-        type="button"
-        onclick="location.href='tasks.html'">
-
-        💰 Earn Points
-
-    </button>
-
-
-    <button
-        class="action"
-        type="button"
-        onclick="location.href='referral-history.html'">
-
-        👥 Referral History
-
-    </button>
-
-</div>
-
-
-</div>
-
-
-<!-- ERROR -->
-
-<div
-    id="errorBox"
-    style="display:none;"
-    class="error">
-
-</div>
-
-
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
-
 const SUPABASE_URL =
-    "https://etkqkptoxkfhxcysaadi.supabase.co";
-
+"https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-
-/* =========================================
-   ELEMENTS
-========================================= */
-
-const loading =
-    document.getElementById("loading");
-
-const dashboard =
-    document.getElementById("dashboard");
-
-const errorBox =
-    document.getElementById("errorBox");
-
-const usernameElement =
-    document.getElementById("username");
-
-const pointsElement =
-    document.getElementById("points");
-
-const emailElement =
-    document.getElementById("email");
-
-const logoutButton =
-    document.getElementById("logoutButton");
-
-const dailyRewardButton =
-    document.getElementById("dailyRewardButton");
-
-const dailyRewardText =
-    document.getElementById("dailyRewardText");
-
-const referralLinkElement =
-    document.getElementById("referralLink");
-
-const referralCountElement =
-    document.getElementById("referralCount");
-
-const copyReferralButton =
-    document.getElementById("copyReferralButton");
-
-const copySuccess =
-    document.getElementById("copySuccess");
-
-const videosLoading =
-    document.getElementById("videosLoading");
-
-const videosList =
-    document.getElementById("videosList");
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 
 let currentUser = null;
 
 
+/* ELEMENTS */
 
-/* =========================================
-   SHOW ERROR
-========================================= */
+const loading =
+document.getElementById("loading");
 
-function showError(message){
+const dashboard =
+document.getElementById("dashboard");
 
-    loading.style.display = "none";
+const usernameElement =
+document.getElementById("username");
 
-    dashboard.style.display = "none";
+const emailElement =
+document.getElementById("email");
 
-    errorBox.style.display = "block";
+const pointsElement =
+document.getElementById("points");
 
-    errorBox.innerHTML =
-        "<strong>Dashboard Error</strong><br><br>" +
-        escapeHtml(message) +
-        "<br><br>" +
-        "Please refresh the page and try again.";
+const referralLinkElement =
+document.getElementById("referralLink");
 
-}
+const referralCountElement =
+document.getElementById("referralCount");
+
+const myVideosElement =
+document.getElementById("myVideos");
+
+const dashboardError =
+document.getElementById("dashboardError");
+
+const rewardMessage =
+document.getElementById("rewardMessage");
 
 
 
-/* =========================================
-   HTML ESCAPE
-========================================= */
+/* ESCAPE HTML */
 
 function escapeHtml(value){
 
-    if(value === null ||
-       value === undefined){
-
+    if(value === null || value === undefined){
         return "";
-
     }
 
     return String(value)
@@ -675,74 +558,94 @@ function escapeHtml(value){
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
-
 }
 
 
 
-/* =========================================
-   PROCESS REFERRAL
-========================================= */
+/* YOUTUBE EMBED URL */
 
-async function processPendingReferral(user){
+function getYouTubeEmbedUrl(url){
+
+    if(!url){
+        return null;
+    }
 
     try{
 
-        let referralCode =
-            user.user_metadata?.referral_code ||
-            localStorage.getItem(
-                "pendingReferralCode"
-            ) ||
-            "";
+        const parsed =
+            new URL(url);
+
+        let videoId = null;
 
 
-        referralCode =
-            String(referralCode)
-            .trim()
-            .toUpperCase();
+        /* youtube.com/watch?v= */
 
+        if(
+            parsed.hostname.includes("youtube.com") &&
+            parsed.searchParams.get("v")
+        ){
 
-        if(!referralCode){
-
-            return;
+            videoId =
+                parsed.searchParams.get("v");
 
         }
 
 
-        const { error } =
-            await supabaseClient.rpc(
-                "process_referral",
-                {
-                    new_user_id: user.id,
-                    referral_code_input:
-                        referralCode
-                }
-            );
+        /* youtube.com/shorts/ */
 
+        else if(
+            parsed.hostname.includes("youtube.com") &&
+            parsed.pathname.startsWith("/shorts/")
+        ){
 
-        if(error){
-
-            console.error(
-                "Referral processing error:",
-                error
-            );
-
-            return;
+            videoId =
+                parsed.pathname.split("/shorts/")[1]
+                    .split("/")[0];
 
         }
 
 
-        localStorage.removeItem(
-            "pendingReferralCode"
-        );
+        /* youtube.com/embed/ */
+
+        else if(
+            parsed.hostname.includes("youtube.com") &&
+            parsed.pathname.startsWith("/embed/")
+        ){
+
+            videoId =
+                parsed.pathname.split("/embed/")[1]
+                    .split("/")[0];
+
+        }
 
 
-    }catch(error){
+        /* youtu.be */
 
-        console.error(
-            "Referral error:",
-            error
-        );
+        else if(
+            parsed.hostname === "youtu.be"
+        ){
+
+            videoId =
+                parsed.pathname.substring(1)
+                    .split("/")[0];
+
+        }
+
+
+        if(!videoId){
+            return null;
+        }
+
+
+        return
+            "https://www.youtube.com/embed/" +
+            encodeURIComponent(videoId);
+
+    }
+
+    catch(error){
+
+        return null;
 
     }
 
@@ -750,16 +653,15 @@ async function processPendingReferral(user){
 
 
 
-/* =========================================
-   LOAD MY VIDEOS
-========================================= */
+/* LOAD MY VIDEOS */
 
 async function loadMyVideos(userId){
 
-    videosLoading.style.display =
-        "block";
-
-    videosList.innerHTML = "";
+    myVideosElement.innerHTML = `
+        <div class="video-loading">
+            Loading your videos...
+        </div>
+    `;
 
 
     try{
@@ -767,75 +669,69 @@ async function loadMyVideos(userId){
         const {
             data,
             error
-        } =
-        await supabaseClient
+        } = await supabaseClient
             .from("Videos")
             .select(
                 "id,title,description,platform,videos_url,status,created_at,user_id"
             )
-            .eq(
-                "user_id",
-                userId
-            )
+            .eq("user_id", userId)
             .order(
                 "created_at",
-                {
-                    ascending:false
-                }
+                { ascending:false }
             );
 
 
         if(error){
-
             throw error;
-
         }
-
-
-        videosLoading.style.display =
-            "none";
 
 
         if(!data || data.length === 0){
 
-            videosList.innerHTML = `
+            myVideosElement.innerHTML = `
                 <div class="no-videos">
                     🎬 You have not submitted any videos yet.
                 </div>
             `;
 
             return;
-
         }
 
 
-        data.forEach(function(video){
+        myVideosElement.innerHTML = "";
+
+
+        data.forEach(video => {
+
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "video-card";
+
 
             const title =
                 escapeHtml(
-                    video.title ||
-                    "Untitled Video"
+                    video.title || "Untitled Video"
                 );
 
 
             const description =
                 escapeHtml(
-                    video.description ||
-                    ""
+                    video.description || ""
                 );
 
 
             const platform =
                 escapeHtml(
-                    video.platform ||
-                    "Unknown"
+                    video.platform || "Unknown"
                 );
 
 
             const status =
                 String(
-                    video.status ||
-                    "pending"
+                    video.status || "pending"
                 ).toLowerCase();
 
 
@@ -850,8 +746,7 @@ async function loadMyVideos(userId){
 
             }
 
-
-            if(status === "rejected"){
+            else if(status === "rejected"){
 
                 statusClass =
                     "status-rejected";
@@ -859,24 +754,168 @@ async function loadMyVideos(userId){
             }
 
 
-            const statusText =
-                status.charAt(0).toUpperCase() +
-                status.slice(1);
+            let content = "";
 
 
-            const date =
-                video.created_at
-                ? new Date(
-                    video.created_at
-                  ).toLocaleDateString()
-                : "";
+            /* APPROVED */
+
+            if(status === "approved"){
 
 
-            const card =
-                document.createElement("div");
+                const videoUrl =
+                    video.videos_url || "";
 
-            card.className =
-                "video-card";
+
+                /* DIRECT VIDEO */
+
+                if(
+                    videoUrl &&
+                    (
+                        String(video.platform)
+                            .toLowerCase()
+                            .includes("direct")
+                        ||
+                        String(video.platform)
+                            .toLowerCase()
+                            .includes("upload")
+                        ||
+                        /\.(mp4|webm|ogg)(\?.*)?$/i.test(videoUrl)
+                    )
+                ){
+
+                    content = `
+
+                        <video
+                            class="video-player"
+                            controls
+                            preload="metadata"
+                            playsinline
+                        >
+
+                            <source
+                                src="${escapeHtml(videoUrl)}"
+                                type="video/mp4"
+                            >
+
+                            Your browser does not support
+                            video playback.
+
+                        </video>
+
+                    `;
+
+                }
+
+
+                /* YOUTUBE */
+
+                else if(
+                    String(video.platform)
+                        .toLowerCase()
+                        .includes("youtube")
+                ){
+
+                    const embedUrl =
+                        getYouTubeEmbedUrl(videoUrl);
+
+
+                    if(embedUrl){
+
+                        content = `
+
+                            <iframe
+                                class="video-frame"
+                                src="${escapeHtml(embedUrl)}"
+                                title="${title}"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+
+                        `;
+
+                    }
+
+                    else{
+
+                        content = `
+
+                            <div class="video-message">
+                                ⚠️ YouTube video link could not
+                                be embedded.
+                            </div>
+
+                        `;
+
+                    }
+
+                }
+
+
+                /* OTHER PLATFORMS */
+
+                else{
+
+                    content = `
+
+                        <div class="video-message">
+                            ✅ Your video has been approved.
+                            <br>
+                            Embedded playback for this platform
+                            is not currently supported.
+                        </div>
+
+                    `;
+
+                }
+
+            }
+
+
+            /* PENDING */
+
+            else if(status === "pending"){
+
+                content = `
+
+                    <div class="video-message">
+                        ⏳ Your video is waiting for admin approval.
+                    </div>
+
+                `;
+
+            }
+
+
+            /* REJECTED */
+
+            else if(status === "rejected"){
+
+                content = `
+
+                    <div class="video-message">
+                        ❌ Your video was rejected by admin.
+                    </div>
+
+                `;
+
+            }
+
+
+            /* UNKNOWN STATUS */
+
+            else{
+
+                content = `
+
+                    <div class="video-message">
+                        ℹ️ Status:
+                        ${escapeHtml(status)}
+                    </div>
+
+                `;
+
+            }
 
 
             card.innerHTML = `
@@ -888,41 +927,41 @@ async function loadMyVideos(userId){
                 ${
                     description
                     ?
-                    `<div class="video-description">
+                    `
+                    <div class="video-description">
                         ${description}
-                    </div>`
+                    </div>
+                    `
                     :
                     ""
                 }
 
                 <div class="video-meta">
-                    Platform: ${platform}<br>
-                    Submitted: ${date}
+
+                    Platform:
+                    <strong>${platform}</strong>
+
+                    &nbsp; | &nbsp;
+
+                    <span class="status ${statusClass}">
+                        ${escapeHtml(status)}
+                    </span>
+
                 </div>
 
-                <div class="status ${statusClass}">
-                    ${statusText}
-                </div>
-
-                <a
-                    class="video-button"
-                    href="${escapeHtml(video.videos_url || "#")}"
-                    target="_blank"
-                    rel="noopener">
-
-                    ▶️ View Video
-
-                </a>
+                ${content}
 
             `;
 
 
-            videosList.appendChild(card);
+            myVideosElement.appendChild(card);
 
         });
 
 
-    }catch(error){
+    }
+
+    catch(error){
 
         console.error(
             "My videos error:",
@@ -930,19 +969,17 @@ async function loadMyVideos(userId){
         );
 
 
-        videosLoading.style.display =
-            "none";
+        myVideosElement.innerHTML = `
 
+            <div class="video-message"
+                 style="background:#fee2e2;color:#991b1b;">
 
-        videosList.innerHTML = `
+                ❌ Could not load your videos.
 
-            <div class="error">
-
-                Unable to load your videos.<br><br>
+                <br><br>
 
                 ${escapeHtml(
-                    error.message ||
-                    "Unknown error"
+                    error.message || "Unknown error"
                 )}
 
             </div>
@@ -955,32 +992,105 @@ async function loadMyVideos(userId){
 
 
 
-/* =========================================
-   LOAD DASHBOARD
-========================================= */
+/* PROCESS REFERRAL */
+
+async function processPendingReferral(user){
+
+    try{
+
+        let referralCode =
+            localStorage.getItem(
+                "referralCode"
+            );
+
+
+        if(
+            !referralCode &&
+            user.user_metadata
+        ){
+
+            referralCode =
+                user.user_metadata.referral_code ||
+                user.user_metadata.ref ||
+                "";
+
+        }
+
+
+        if(!referralCode){
+            return;
+        }
+
+
+        const {
+            error
+        } = await supabaseClient.rpc(
+            "process_referral",
+            {
+                referral_code:
+                    referralCode,
+                new_user_id:
+                    user.id
+            }
+        );
+
+
+        if(error){
+
+            console.log(
+                "Referral processing:",
+                error.message
+            );
+
+        }
+
+        else{
+
+            localStorage.removeItem(
+                "referralCode"
+            );
+
+        }
+
+    }
+
+    catch(error){
+
+        console.log(
+            "Referral error:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* LOAD DASHBOARD */
 
 async function loadDashboard(){
 
     try{
 
-        /*
-        Get logged-in user
-        */
+        dashboardError.style.display =
+            "none";
+
 
         const {
-            data: {
-                user
-            },
-            error: userError
+            data,
+            error:userError
         } =
         await supabaseClient.auth.getUser();
 
 
         if(userError){
-
             throw userError;
-
         }
+
+
+        const user =
+            data.user;
 
 
         if(!user){
@@ -997,30 +1107,18 @@ async function loadDashboard(){
             user;
 
 
-        /*
-        Email
-        */
-
         emailElement.textContent =
             user.email || "-";
 
-
-        /*
-        Referral
-        */
 
         await processPendingReferral(
             user
         );
 
 
-        /*
-        Profile
-        */
-
         const {
-            data: profile,
-            error: profileError
+            data:profile,
+            error:profileError
         } =
         await supabaseClient
             .from("profiles")
@@ -1035,9 +1133,7 @@ async function loadDashboard(){
 
 
         if(profileError){
-
             throw profileError;
-
         }
 
 
@@ -1056,21 +1152,21 @@ async function loadDashboard(){
             profile.points ?? 0;
 
 
-        /*
-        Referral link
-        */
-
         const referralCode =
             profile.referral_code || "";
 
 
-        const referralLink =
-            window.location.origin +
+        const basePath =
             window.location.pathname
                 .replace(
                     "dashboard.html",
                     "register.html"
-                ) +
+                );
+
+
+        const referralLink =
+            window.location.origin +
+            basePath +
             "?ref=" +
             encodeURIComponent(
                 referralCode
@@ -1085,27 +1181,21 @@ async function loadDashboard(){
             profile.referral_count ?? 0;
 
 
-        /*
-        Show dashboard
-        */
-
         loading.style.display =
             "none";
+
 
         dashboard.style.display =
             "block";
 
 
-        /*
-        Load user's videos
-        */
-
         await loadMyVideos(
             user.id
         );
 
+    }
 
-    }catch(error){
+    catch(error){
 
         console.error(
             "Dashboard error:",
@@ -1113,10 +1203,26 @@ async function loadDashboard(){
         );
 
 
-        showError(
-            error.message ||
-            "Unable to load dashboard."
-        );
+        loading.style.display =
+            "none";
+
+
+        dashboard.style.display =
+            "block";
+
+
+        dashboardError.innerHTML = `
+            ❌ Dashboard could not be loaded.
+            <br><br>
+            ${escapeHtml(
+                error.message ||
+                "Unknown error"
+            )}
+        `;
+
+
+        dashboardError.style.display =
+            "block";
 
     }
 
@@ -1124,73 +1230,45 @@ async function loadDashboard(){
 
 
 
-/* =========================================
-   COPY REFERRAL LINK
-========================================= */
+/* COPY REFERRAL LINK */
 
-copyReferralButton.addEventListener(
+document
+.getElementById("copyReferralButton")
+.addEventListener(
     "click",
     async function(){
-
-        const link =
-            referralLinkElement.value;
-
-
-        if(!link){
-
-            return;
-
-        }
-
 
         try{
 
             await navigator.clipboard.writeText(
-                link
+                referralLinkElement.value
             );
 
 
-            copySuccess.style.display =
-                "block";
+            this.textContent =
+                "Copied!";
 
 
-            setTimeout(
-                function(){
+            setTimeout(() => {
 
-                    copySuccess.style.display =
-                        "none";
+                this.textContent =
+                    "Copy";
 
-                },
-                2500
-            );
+            },2000);
 
+        }
 
-        }catch(error){
+        catch(error){
 
             referralLinkElement.select();
 
-            referralLinkElement.setSelectionRange(
-                0,
-                99999
+            document.execCommand(
+                "copy"
             );
 
 
-            document.execCommand("copy");
-
-
-            copySuccess.style.display =
-                "block";
-
-
-            setTimeout(
-                function(){
-
-                    copySuccess.style.display =
-                        "none";
-
-                },
-                2500
-            );
+            this.textContent =
+                "Copied!";
 
         }
 
@@ -1199,123 +1277,137 @@ copyReferralButton.addEventListener(
 
 
 
-/* =========================================
-   DAILY REWARD
-========================================= */
+/* DAILY REWARD */
 
-async function claimDailyReward(){
+document
+.getElementById("dailyRewardButton")
+.addEventListener(
+    "click",
+    async function(){
 
-    dailyRewardButton.disabled =
-        true;
-
-    dailyRewardText.textContent =
-        "Claiming...";
+        if(!currentUser){
+            return;
+        }
 
 
-    try{
+        const button =
+            this;
+
+
+        button.disabled =
+            true;
+
+
+        button.textContent =
+            "Claiming...";
+
+
+        rewardMessage.style.display =
+            "none";
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.rpc(
+                "claim_daily_login_reward",
+                {
+                    user_id:
+                        currentUser.id
+                }
+            );
+
+
+            if(error){
+                throw error;
+            }
+
+
+            rewardMessage.className =
+                "message success";
+
+
+            rewardMessage.innerHTML =
+                "🎉 " +
+                (
+                    data?.message ||
+                    "Daily reward claimed successfully!"
+                );
+
+
+            rewardMessage.style.display =
+                "block";
+
+
+            await loadDashboard();
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Daily reward error:",
+                error
+            );
+
+
+            rewardMessage.className =
+                "message error";
+
+
+            rewardMessage.innerHTML =
+                "❌ " +
+                (
+                    error.message ||
+                    "Could not claim daily reward."
+                );
+
+
+            rewardMessage.style.display =
+                "block";
+
+        }
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            "Claim Daily Reward";
+
+    }
+);
+
+
+
+/* LOGOUT */
+
+document
+.getElementById("logoutButton")
+.addEventListener(
+    "click",
+    async function(){
 
         const {
-            data,
             error
         } =
-        await supabaseClient.rpc(
-            "claim_daily_login_reward"
-        );
+        await supabaseClient.auth.signOut();
 
 
         if(error){
 
-            throw error;
-
-        }
-
-
-        if(data === 10){
-
-            showRewardMessage(
-                "🎉 You received 10 points today!"
+            alert(
+                "Logout failed: " +
+                error.message
             );
 
-        }else{
-
-            showRewardMessage(
-                "You already claimed today's reward."
-            );
+            return;
 
         }
-
-
-        await loadDashboard();
-
-
-        dailyRewardButton.disabled =
-            true;
-
-        dailyRewardText.textContent =
-            "Already claimed today";
-
-
-    }catch(error){
-
-        console.error(
-            "Reward error:",
-            error
-        );
-
-
-        showRewardMessage(
-            error.message ||
-            "Unable to claim reward."
-        );
-
-
-        dailyRewardButton.disabled =
-            false;
-
-        dailyRewardText.textContent =
-            "Get 10 points once per day";
-
-    }
-
-}
-
-
-
-function showRewardMessage(text){
-
-    const message =
-        document.getElementById(
-            "rewardMessage"
-        );
-
-
-    message.textContent =
-        text;
-
-
-    message.style.display =
-        "block";
-
-}
-
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-logoutButton.addEventListener(
-    "click",
-    async function(){
-
-        logoutButton.disabled =
-            true;
-
-        logoutButton.textContent =
-            "Logging out...";
-
-
-        await supabaseClient.auth.signOut();
 
 
         window.location.href =
@@ -1326,9 +1418,7 @@ logoutButton.addEventListener(
 
 
 
-/* =========================================
-   START
-========================================= */
+/* START */
 
 loadDashboard();
 
