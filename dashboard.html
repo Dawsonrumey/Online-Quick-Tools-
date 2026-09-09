@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Dashboard - Online Quick Tools</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>Dashboard - Online Quick Tools</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 
 *{
     box-sizing:border-box;
@@ -172,13 +164,94 @@ header h1{
     border-radius:10px;
 }
 
-</style>
 
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
+/* =====================================
+   MY VIDEOS
+===================================== */
 
-<script>
-window.dataLayer = window.dataLayer || [];
+.video-card{
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    padding:15px;
+    margin-top:12px;
+    background:#fff;
+}
+
+.video-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:8px;
+    word-break:break-word;
+}
+
+.video-description{
+    color:#64748b;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:10px;
+    white-space:pre-wrap;
+    word-break:break-word;
+}
+
+.video-meta{
+    color:#64748b;
+    font-size:13px;
+    margin-top:6px;
+}
+
+.video-status{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.status-approved{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.status-rejected{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.view-video{
+    display:inline-block;
+    margin-top:12px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:10px 14px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.no-videos{
+    text-align:center;
+    color:#64748b;
+    padding:20px 5px;
+}
+
+.loading-videos{
+    text-align:center;
+    color:#64748b;
+    padding:20px 5px;
+}
+
+</style><!-- Google Analytics --><script async
+src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script><script>
+
+window.dataLayer =
+window.dataLayer || [];
 
 function gtag(){
     dataLayer.push(arguments);
@@ -186,335 +259,283 @@ function gtag(){
 
 gtag('js', new Date());
 
-gtag('config', 'G-MQS2RKPRF2');
-</script>
+gtag('config','G-MQS2RKPRF2');
 
-</head>
+</script></head><body><header><h1>
+    Online Quick Tools
+</h1><button
+class="logout"
+id="logoutButton"
+type="button"
 
-<body>
+«»
 
-<header>
+Logout
 
-<h1>Online Quick Tools</h1>
+</button></header><div class="container"><div id="loading"
+     class="card">Loading your dashboard...
+
+</div><div id="dashboard"
+     style="display:none;"><!-- =====================================
+     ACCOUNT CARD
+===================================== --><div class="card"><div class="label">
+    Welcome
+</div><h2 id="username">
+    User
+</h2><div class="label">
+    Available Points
+</div><div class="points"
+     id="points">
+    0
+</div><div class="label">
+    Account Email
+</div><div id="email">
+    -
+</div></div><!-- =====================================
+     MY VIDEOS
+===================================== --><div class="card"><h2>
+    🎬 My Videos
+</h2><div
+    id="myVideos"
+    class="loading-videos"
+>
+    Loading your videos...
+</div><button
+class="action"
+type="button"
+onclick="location.href='video-submit.html'"
+
+«»
+
+⬆️ Submit New Video
+
+</button></div><!-- =====================================
+     REFERRAL CARD
+===================================== --><div class="card"><h2>
+    🎁 Refer & Earn
+</h2><div class="referral-info">Invite your friends to join
+Online Quick Tools.
+
+<br><br>
+
+You get <strong>10 points</strong>
+for each successful referral.
+
+Your friend gets
+<strong>5 points</strong>.
+
+</div><div class="referral-box"><div class="label">
+    Your Referral Link
+</div><input
+id="referralLink"
+class="referral-link"
+type="text"
+readonly
+
+«»
 
 <button
-    class="logout"
-    id="logoutButton"
-    type="button"
+class="action"
+id="copyReferralButton"
+type="button"
+
+«»
+
+📋 Copy Referral Link
+
+</button><div
+    id="copySuccess"
+    class="copy-success"
 >
-    Logout
-</button>
-
-</header>
-
-
-<div class="container">
-
-<div id="loading" class="card">
-    Loading your dashboard...
-</div>
-
-
-<div id="dashboard"
-     style="display:none;">
-
-    <!-- ACCOUNT CARD -->
-
-    <div class="card">
-
-        <div class="label">
-            Welcome
-        </div>
-
-        <h2 id="username">
-            User
-        </h2>
-
-        <div class="label">
-            Available Points
-        </div>
-
-        <div class="points"
-             id="points">
-            0
-        </div>
-
-        <div class="label">
-            Account Email
-        </div>
-
-        <div id="email">
-            -
-        </div>
-
-    </div>
-
-
-    <!-- REFERRAL CARD -->
-
-    <div class="card">
-
-        <h2>🎁 Refer & Earn</h2>
-
-        <div class="referral-info">
-
-            Invite your friends to join
-            Online Quick Tools.
-
-            <br><br>
-
-            You get <strong>10 points</strong>
-            for each successful referral.
-
-            Your friend gets
-            <strong>5 points</strong>.
-
-        </div>
-
-
-        <div class="referral-box">
-
-            <div class="label">
-                Your Referral Link
-            </div>
-
-            <input
-                id="referralLink"
-                class="referral-link"
-                type="text"
-                readonly
-            >
-
-            <button
-                class="action"
-                id="copyReferralButton"
-                type="button"
-            >
-                📋 Copy Referral Link
-            </button>
-
-            <div
-                id="copySuccess"
-                class="copy-success"
-            >
-                ✅ Referral link copied!
-            </div>
-
-
-            <div class="referral-stats">
-
-                <div class="stat">
-
-                    <div
-                        class="stat-number"
-                        id="referralCount"
-                    >
-                        0
-                    </div>
-
-                    <div class="stat-label">
-                        Total Referrals
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div
-                        class="stat-number"
-                    >
-                        10
-                    </div>
-
-                    <div class="stat-label">
-                        Points / Referral
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- DAILY REWARD -->
-
-    <div class="card">
-
-        <h2>🎁 Daily Reward</h2>
-
-        <button
-            class="action"
-            id="dailyRewardButton"
-            type="button"
-        >
-            Claim Daily Reward
-
-            <span id="dailyRewardText">
-                Get 10 points once per day
-            </span>
-
-        </button>
-
-
-        <div
-            id="rewardMessage"
-        ></div>
-
-    </div>
-
-
-    <!-- QUICK LINKS -->
-
-    <div class="card">
-
-        <h2>Quick Links</h2>
-
-        <button
-            class="action"
-            type="button"
-            onclick="location.href='index.html'"
-        >
-            🏠 Home
-        </button>
-
-
-        <button
-            class="action"
-            type="button"
-            onclick="location.href='reward-history.html'"
-        >
-            📜 Reward History
-        </button>
-
-
-        <button
-            class="action"
-            type="button"
-            onclick="location.href='tasks.html'"
-        >
-            💰 Earn Points
-        </button>
-
-
-        <button
-            class="action"
-            type="button"
-            onclick="location.href='referral-history.html'"
-        >
-            👥 Referral History
-        </button>
-
-    </div>
-
-</div>
-
-
-<div id="errorBox"
-     style="display:none;"
-     class="error">
-</div>
-
-</div>
-
-
-<script>
+    ✅ Referral link copied!
+</div><div class="referral-stats"><div class="stat"><div
+    class="stat-number"
+    id="referralCount"
+>
+    0
+</div><div class="stat-label">
+    Total Referrals
+</div></div><div class="stat"><div class="stat-number">
+    10
+</div><div class="stat-label">
+    Points / Referral
+</div></div></div></div></div><!-- =====================================
+     DAILY REWARD
+===================================== --><div class="card"><h2>
+    🎁 Daily Reward
+</h2><button
+class="action"
+id="dailyRewardButton"
+type="button"
+
+«»
+
+Claim Daily Reward
+
+<span id="dailyRewardText">
+    Get 10 points once per day
+</span>
+
+</button><div id="rewardMessage"></div></div><!-- =====================================
+     QUICK LINKS
+===================================== --><div class="card"><h2>
+    Quick Links
+</h2><button
+class="action"
+type="button"
+onclick="location.href='index.html'"
+
+«»
+
+🏠 Home
+
+</button><button
+class="action"
+type="button"
+onclick="location.href='reward-history.html'"
+
+«»
+
+📜 Reward History
+
+</button><button
+class="action"
+type="button"
+onclick="location.href='tasks.html'"
+
+«»
+
+💰 Earn Points
+
+</button><button
+class="action"
+type="button"
+onclick="location.href='referral-history.html'"
+
+«»
+
+👥 Referral History
+
+</button></div></div><div
+    id="errorBox"
+    style="display:none;"
+    class="error"
+>
+</div></div><script>
+
+// =====================================
+// SUPABASE
+// =====================================
 
 const SUPABASE_URL =
-    "https://etkqkptoxkfhxcysaadi.supabase.co";
+"https://etkqkptoxkfhxcysaadi.supabase.co";
 
-
-/*
-IMPORTANT:
-Keep your existing Supabase publishable key here.
-*/
 const SUPABASE_KEY =
-    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
-
+"sb_publishable_QLp5SKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
+
+// =====================================
+// ELEMENTS
+// =====================================
 
 const loading =
-    document.getElementById("loading");
+document.getElementById("loading");
 
 const dashboard =
-    document.getElementById("dashboard");
+document.getElementById("dashboard");
 
 const errorBox =
-    document.getElementById("errorBox");
+document.getElementById("errorBox");
 
 const usernameElement =
-    document.getElementById("username");
+document.getElementById("username");
 
 const pointsElement =
-    document.getElementById("points");
+document.getElementById("points");
 
 const emailElement =
-    document.getElementById("email");
+document.getElementById("email");
 
 const logoutButton =
-    document.getElementById("logoutButton");
+document.getElementById("logoutButton");
 
 const dailyRewardButton =
-    document.getElementById("dailyRewardButton");
+document.getElementById("dailyRewardButton");
 
 const dailyRewardText =
-    document.getElementById("dailyRewardText");
+document.getElementById("dailyRewardText");
 
 const referralLinkElement =
-    document.getElementById("referralLink");
+document.getElementById("referralLink");
 
 const referralCountElement =
-    document.getElementById("referralCount");
+document.getElementById("referralCount");
 
 const copyReferralButton =
-    document.getElementById("copyReferralButton");
+document.getElementById("copyReferralButton");
 
 const copySuccess =
-    document.getElementById("copySuccess");
+document.getElementById("copySuccess");
+
+const myVideos =
+document.getElementById("myVideos");
 
 
 let currentUser = null;
 
 
+// =====================================
+// ESCAPE HTML
+// =====================================
+
+function escapeHTML(value){
+
+    const div =
+    document.createElement("div");
+
+    div.textContent =
+        value == null
+        ? ""
+        : String(value);
+
+    return div.innerHTML;
+}
+
+
+// =====================================
+// SHOW ERROR
+// =====================================
+
 function showError(message){
 
-    loading.style.display = "none";
+    loading.style.display =
+        "none";
 
-    dashboard.style.display = "none";
+    dashboard.style.display =
+        "none";
 
-    errorBox.style.display = "block";
+    errorBox.style.display =
+        "block";
 
-    errorBox.textContent = message;
+    errorBox.textContent =
+        message;
 
 }
 
 
-/*
-=========================================
-PROCESS REFERRAL
-=========================================
-*/
+// =====================================
+// PROCESS REFERRAL
+// =====================================
 
 async function processPendingReferral(user){
 
     try{
-
-        /*
-        Get referral code saved during
-        registration.
-
-        First check user metadata.
-        Then localStorage as fallback.
-        */
 
         let referralCode =
             user.user_metadata?.referral_code ||
@@ -523,12 +544,10 @@ async function processPendingReferral(user){
             ) ||
             "";
 
-
         referralCode =
             String(referralCode)
             .trim()
             .toUpperCase();
-
 
         if(!referralCode){
 
@@ -536,26 +555,15 @@ async function processPendingReferral(user){
 
         }
 
-
-        /*
-        Call secure Supabase function.
-
-        The function itself prevents:
-        - self referral
-        - duplicate referral
-        - unauthorized processing
-        */
-
         const { error } =
             await supabaseClient.rpc(
                 "process_referral",
                 {
-                    new_user_id: user.id,
+                    new_user_id:user.id,
                     referral_code_input:
                         referralCode
                 }
             );
-
 
         if(error){
 
@@ -568,18 +576,9 @@ async function processPendingReferral(user){
 
         }
 
-
-        /*
-        Referral processing succeeded
-        or was already processed.
-
-        Remove local pending code.
-        */
-
         localStorage.removeItem(
             "pendingReferralCode"
         );
-
 
     }catch(error){
 
@@ -593,23 +592,270 @@ async function processPendingReferral(user){
 }
 
 
-/*
-=========================================
-LOAD DASHBOARD
-=========================================
-*/
+// =====================================
+// LOAD MY VIDEOS
+// =====================================
+
+async function loadMyVideos(userId){
+
+    myVideos.innerHTML = `
+
+        <div class="loading-videos">
+            Loading your videos...
+        </div>
+
+    `;
+
+
+    console.log(
+        "Loading videos for:",
+        userId
+    );
+
+
+    const {
+        data:videos,
+        error
+    } =
+    await supabaseClient
+        .from("Videos")
+        .select(
+            "id,title,description,platform,videos_url,status,created_at,user_id"
+        )
+        .eq(
+            "user_id",
+            userId
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    console.log(
+        "My videos:",
+        videos
+    );
+
+
+    if(error){
+
+        console.error(
+            "My videos error:",
+            error
+        );
+
+        myVideos.innerHTML = "";
+
+        showError(
+            "Could not load your videos: " +
+            error.message
+        );
+
+        return;
+
+    }
+
+
+    if(!videos || videos.length === 0){
+
+        myVideos.innerHTML = `
+
+            <div class="no-videos">
+
+                <div style="font-size:40px;">
+                    🎬
+                </div>
+
+                <p>
+                    You have not submitted
+                    any videos yet.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    myVideos.innerHTML = "";
+
+
+    videos.forEach(
+        function(video){
+
+            const status =
+                String(
+                    video.status ||
+                    "pending"
+                ).toLowerCase();
+
+
+            let statusClass =
+                "status-pending";
+
+
+            if(status === "approved"){
+
+                statusClass =
+                    "status-approved";
+
+            }
+
+            if(status === "rejected"){
+
+                statusClass =
+                    "status-rejected";
+
+            }
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "video-card";
+
+
+            const title =
+                escapeHTML(
+                    video.title ||
+                    "Untitled Video"
+                );
+
+
+            const description =
+                escapeHTML(
+                    video.description ||
+                    "No description"
+                );
+
+
+            const platform =
+                escapeHTML(
+                    video.platform ||
+                    "Unknown"
+                );
+
+
+            const statusText =
+                escapeHTML(
+                    video.status ||
+                    "pending"
+                );
+
+
+            const date =
+                video.created_at
+                ? new Date(
+                    video.created_at
+                  ).toLocaleString()
+                : "";
+
+
+            const safeDate =
+                escapeHTML(date);
+
+
+            let viewButton = "";
+
+
+            if(video.videos_url){
+
+                viewButton = `
+
+                    <a
+                        class="view-video"
+                        href="${escapeHTML(
+                            video.videos_url
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        ▶️ View Video
+                    </a>
+
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="video-title">
+                    ${title}
+                </div>
+
+
+                <div class="video-description">
+                    ${description}
+                </div>
+
+
+                <div class="video-meta">
+
+                    Platform:
+                    <strong>
+                        ${platform}
+                    </strong>
+
+                </div>
+
+
+                <div class="video-meta">
+
+                    Submitted:
+                    ${safeDate}
+
+                </div>
+
+
+                <span
+                    class="video-status ${statusClass}"
+                >
+                    ${statusText}
+                </span>
+
+
+                ${viewButton}
+
+            `;
+
+
+            myVideos.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+// =====================================
+// LOAD DASHBOARD
+// =====================================
 
 async function loadDashboard(){
 
     try{
 
         const {
-            data: {
+            data:{
                 user
             },
-            error: userError
+            error:userError
         } =
-        await supabaseClient.auth.getUser();
+        await supabaseClient
+            .auth
+            .getUser();
 
 
         if(userError){
@@ -629,36 +875,36 @@ async function loadDashboard(){
         }
 
 
-        currentUser = user;
+        currentUser =
+            user;
 
 
         emailElement.textContent =
             user.email || "-";
 
 
-        /*
-        Process referral before loading
-        points so the new user's points
-        are displayed correctly.
-        */
-
-        await processPendingReferral(user);
+        await processPendingReferral(
+            user
+        );
 
 
-        /*
-        Load profile
-        */
+        // =================================
+        // PROFILE
+        // =================================
 
         const {
-            data: profile,
-            error: profileError
+            data:profile,
+            error:profileError
         } =
         await supabaseClient
             .from("profiles")
             .select(
-                "username, points, referral_code, referral_count"
+                "username,points,referral_code,referral_count"
             )
-            .eq("id", user.id)
+            .eq(
+                "id",
+                user.id
+            )
             .single();
 
 
@@ -671,16 +917,16 @@ async function loadDashboard(){
 
         usernameElement.textContent =
             profile.username ||
-            user.email.split("@")[0];
+            (
+                user.email
+                ? user.email.split("@")[0]
+                : "User"
+            );
 
 
         pointsElement.textContent =
             profile.points ?? 0;
 
-
-        /*
-        Build referral link
-        */
 
         const referralCode =
             profile.referral_code || "";
@@ -707,11 +953,24 @@ async function loadDashboard(){
             profile.referral_count ?? 0;
 
 
+        // =================================
+        // SHOW DASHBOARD FIRST
+        // =================================
+
         loading.style.display =
             "none";
 
         dashboard.style.display =
             "block";
+
+
+        // =================================
+        // LOAD USER VIDEOS
+        // =================================
+
+        await loadMyVideos(
+            user.id
+        );
 
 
     }catch(error){
@@ -731,11 +990,9 @@ async function loadDashboard(){
 }
 
 
-/*
-=========================================
-COPY REFERRAL LINK
-=========================================
-*/
+// =====================================
+// COPY REFERRAL LINK
+// =====================================
 
 copyReferralButton.addEventListener(
     "click",
@@ -758,7 +1015,6 @@ copyReferralButton.addEventListener(
                 link
             );
 
-
             copySuccess.style.display =
                 "block";
 
@@ -776,11 +1032,6 @@ copyReferralButton.addEventListener(
 
         }catch(error){
 
-            /*
-            Fallback for browsers where
-            Clipboard API is unavailable.
-            */
-
             referralLinkElement.select();
 
             referralLinkElement.setSelectionRange(
@@ -788,9 +1039,9 @@ copyReferralButton.addEventListener(
                 99999
             );
 
-
-            document.execCommand("copy");
-
+            document.execCommand(
+                "copy"
+            );
 
             copySuccess.style.display =
                 "block";
@@ -812,11 +1063,9 @@ copyReferralButton.addEventListener(
 );
 
 
-/*
-=========================================
-DAILY REWARD
-=========================================
-*/
+// =====================================
+// DAILY REWARD
+// =====================================
 
 async function claimDailyReward(){
 
@@ -877,6 +1126,7 @@ async function claimDailyReward(){
             error
         );
 
+
         showRewardMessage(
             error.message ||
             "Unable to claim reward."
@@ -901,10 +1151,8 @@ function showRewardMessage(text){
             "rewardMessage"
         );
 
-
     message.textContent =
         text;
-
 
     message.style.display =
         "block";
@@ -912,17 +1160,17 @@ function showRewardMessage(text){
 }
 
 
-/*
-=========================================
-LOGOUT
-=========================================
-*/
+// =====================================
+// LOGOUT
+// =====================================
 
 logoutButton.addEventListener(
     "click",
     async function(){
 
-        await supabaseClient.auth.signOut();
+        await supabaseClient
+            .auth
+            .signOut();
 
         window.location.href =
             "login.html";
@@ -931,11 +1179,9 @@ logoutButton.addEventListener(
 );
 
 
-/*
-=========================================
-EVENTS
-=========================================
-*/
+// =====================================
+// DAILY REWARD EVENT
+// =====================================
 
 dailyRewardButton.addEventListener(
     "click",
@@ -943,15 +1189,11 @@ dailyRewardButton.addEventListener(
 );
 
 
-/*
-=========================================
-START
-=========================================
-*/
+// =====================================
+// START
+// =====================================
 
 loadDashboard();
 
-</script>
-
-</body>
+</script></body>
 </html>
