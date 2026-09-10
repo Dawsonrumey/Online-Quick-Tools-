@@ -123,16 +123,25 @@ button:disabled{
 }
 
 </style>
-    
+
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-MQS2RKPRF2');
+<script>
+
+window.dataLayer =
+window.dataLayer || [];
+
+function gtag(){
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+
+gtag('config', 'G-MQS2RKPRF2');
+
 </script>
+
 </head>
 
 <body>
@@ -248,6 +257,140 @@ function showMessage(text,type){
 }
 
 
+/*
+=========================================
+REFERRAL PROCESS
+=========================================
+
+Referral code is saved by register.html
+inside localStorage.
+
+Example:
+
+pendingReferralCode = ABC12345
+
+After successful login, this code
+will be sent to the secure Supabase RPC:
+
+process_referral(
+    new_user_id,
+    referral_code_input
+)
+
+The RPC handles:
+
+Referrer = +10 points
+New user = +5 points
+Referral count = +1
+
+=========================================
+*/
+
+
+async function processPendingReferral(userId){
+
+    try{
+
+        const referralCode =
+            (
+                localStorage.getItem(
+                    "pendingReferralCode"
+                ) || ""
+            )
+            .trim()
+            .toUpperCase();
+
+
+        /*
+        No referral code.
+        Nothing to process.
+        */
+
+        if(!referralCode){
+
+            return;
+
+        }
+
+
+        /*
+        Call secure Supabase RPC.
+        */
+
+        const { data, error } =
+            await supabaseClient.rpc(
+                "process_referral",
+                {
+                    new_user_id:
+                        userId,
+
+                    referral_code_input:
+                        referralCode
+                }
+            );
+
+
+        if(error){
+
+            console.error(
+                "Referral processing error:",
+                error
+            );
+
+            /*
+            Do not block login because
+            referral processing failed.
+            */
+
+            return;
+
+        }
+
+
+        /*
+        Referral processed successfully.
+        */
+
+        if(data === true){
+
+            console.log(
+                "Referral processed successfully."
+            );
+
+        }else{
+
+            console.log(
+                "Referral was not processed."
+            );
+
+        }
+
+
+        /*
+        Remove referral code after
+        processing attempt.
+
+        This prevents the same referral
+        from being repeatedly processed.
+        */
+
+        localStorage.removeItem(
+            "pendingReferralCode"
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Referral error:",
+            error
+        );
+
+    }
+
+}
+
+
 form.addEventListener(
 "submit",
 async function(e){
@@ -259,6 +402,7 @@ async function(e){
         document.getElementById("email")
         .value
         .trim();
+
 
     const password =
         document.getElementById("password")
@@ -272,6 +416,12 @@ async function(e){
 
 
     try{
+
+        /*
+        =================================
+        LOGIN
+        =================================
+        */
 
         const { data, error } =
             await supabaseClient.auth
@@ -291,25 +441,47 @@ async function(e){
         }
 
 
-        if(data.user){
+        if(!data.user){
 
-            showMessage(
-                "Login successful! Redirecting...",
-                "success"
-            );
-
-
-            setTimeout(
-            function(){
-
-                window.location.href =
-                    "index.html";
-
-            },
-            800
+            throw new Error(
+                "Login failed. User not found."
             );
 
         }
+
+
+        /*
+        =================================
+        PROCESS REFERRAL
+        =================================
+        */
+
+        await processPendingReferral(
+            data.user.id
+        );
+
+
+        /*
+        =================================
+        LOGIN SUCCESS
+        =================================
+        */
+
+        showMessage(
+            "Login successful! Redirecting...",
+            "success"
+        );
+
+
+        setTimeout(
+        function(){
+
+            window.location.href =
+                "index.html";
+
+        },
+        800
+        );
 
 
     }catch(error){
@@ -321,6 +493,7 @@ async function(e){
             "Login failed. Please check your email and password.",
             "error"
         );
+
 
     }finally{
 
