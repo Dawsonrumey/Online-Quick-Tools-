@@ -199,6 +199,12 @@ h1{
     font-weight:bold;
 }
 
+.history-btn{
+    margin-top:15px;
+    background:#16a34a;
+    color:white;
+}
+
 
 /* =====================================
    VIDEO SECTION
@@ -518,6 +524,16 @@ h1{
     >
     </div>
 
+
+    <!-- REFERRAL HISTORY BUTTON -->
+
+    <a
+        href="referral-history.html"
+        class="btn history-btn"
+    >
+        📋 Referral History
+    </a>
+
 </div>
 
 
@@ -723,11 +739,6 @@ async function loadReferralData(userId){
     // =================================
     // REFERRAL EARNED
     // =================================
-
-    /*
-    Each successful referral gives
-    the referrer 10 points.
-    */
 
     referralEarned.textContent =
         count * 10;
