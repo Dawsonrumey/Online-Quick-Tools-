@@ -1,7 +1,20 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
 
-<title>My Profile - Online Quick Tools</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>My Profile - Online Quick Tools</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
 
 *{
     box-sizing:border-box;
@@ -92,6 +105,57 @@ h1{
     background:#dc2626;
     color:white;
 }
+
+
+/* =====================================
+   REFERRAL BOX
+===================================== */
+
+.referral-box{
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:25px;
+}
+
+.referral-box h2{
+    margin-top:0;
+    margin-bottom:8px;
+}
+
+.referral-box p{
+    color:#475569;
+    line-height:1.5;
+}
+
+.referral-row{
+    display:flex;
+    gap:10px;
+    align-items:stretch;
+}
+
+#referralLink{
+    flex:1;
+    min-width:0;
+    padding:11px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    background:#fff;
+    font-size:14px;
+}
+
+.referral-message{
+    margin-top:10px;
+    color:#166534;
+    font-size:14px;
+    font-weight:bold;
+}
+
+
+/* =====================================
+   VIDEO SECTION
+===================================== */
 
 .section-title{
     margin-top:30px;
@@ -215,6 +279,11 @@ h1{
     text-decoration:none;
 }
 
+
+/* =====================================
+   MOBILE
+===================================== */
+
 @media(max-width:650px){
 
     .container{
@@ -229,26 +298,136 @@ h1{
         grid-template-columns:1fr;
     }
 
+    .referral-row{
+        flex-direction:column;
+    }
+
+    #referralLink{
+        width:100%;
+    }
+
 }
 
-</style></head><body><div class="container"><div class="card"><h1>My Profile</h1><p class="subtitle">
-    Your submitted videos
-</p><div id="userBox" class="user-box">Checking login...
+</style>
 
-</div><h2 class="section-title">
-    My Videos
-</h2><div id="videoList"><div class="loading">
-    Loading your videos...
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+<div class="card">
+
+
+<h1>
+    My Profile
+</h1>
+
+
+<p class="subtitle">
+    Your submitted videos
+</p>
+
+
+<!-- =====================================
+     USER BOX
+===================================== -->
+
+<div
+    id="userBox"
+    class="user-box">
+
+    Checking login...
+
 </div>
 
-</div><div id="message"
-     class="message">
-</div><a href="index.html"
-class="back">
+
+<!-- =====================================
+     REFERRAL BOX
+===================================== -->
+
+<div class="referral-box">
+
+    <h2>
+        🎁 Refer & Earn
+    </h2>
+
+    <p>
+        Invite your friends and earn reward points
+        when they join.
+    </p>
+
+    <div class="referral-row">
+
+        <input
+            id="referralLink"
+            type="text"
+            readonly
+            placeholder="Your referral link"
+        >
+
+        <button
+            id="copyReferralBtn"
+            class="btn submit-btn"
+            type="button"
+        >
+            📋 Copy Link
+        </button>
+
+    </div>
+
+    <div
+        id="referralMessage"
+        class="referral-message"
+    >
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     MY VIDEOS
+===================================== -->
+
+<h2 class="section-title">
+    My Videos
+</h2>
+
+
+<div id="videoList">
+
+    <div class="loading">
+        Loading your videos...
+    </div>
+
+</div>
+
+
+<div
+    id="message"
+    class="message">
+</div>
+
+
+<a
+    href="index.html"
+    class="back"
+>
 
 ← Back to Online Quick Tools
 
-</a></div></div><script>
+</a>
+
+
+</div>
+
+</div>
+
+
+<script>
+
 
 // =====================================
 // SUPABASE CONFIG
@@ -291,9 +470,12 @@ function escapeHTML(value){
     document.createElement("div");
 
     div.textContent =
-        value == null ? "" : String(value);
+        value == null
+        ? ""
+        : String(value);
 
     return div.innerHTML;
+
 }
 
 
@@ -332,6 +514,150 @@ function formatDate(date){
     return d.toLocaleString();
 
 }
+
+
+// =====================================
+// LOAD REFERRAL LINK
+// =====================================
+
+async function loadReferralLink(userId){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select("referral_code")
+        .eq("id", userId)
+        .single();
+
+
+    if(error){
+
+        console.error(
+            "Referral code error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if(
+        !data ||
+        !data.referral_code
+    ){
+
+        console.log(
+            "No referral code found."
+        );
+
+        return;
+
+    }
+
+
+    const referralUrl =
+        window.location.origin +
+        "/Online-Quick-Tools-/login.html?ref=" +
+        encodeURIComponent(
+            data.referral_code
+        );
+
+
+    const input =
+        document.getElementById(
+            "referralLink"
+        );
+
+
+    if(input){
+
+        input.value =
+            referralUrl;
+
+    }
+
+}
+
+
+// =====================================
+// COPY REFERRAL LINK
+// =====================================
+
+async function copyReferralLink(){
+
+    const input =
+        document.getElementById(
+            "referralLink"
+        );
+
+    const referralMessage =
+        document.getElementById(
+            "referralMessage"
+        );
+
+
+    if(
+        !input ||
+        !input.value
+    ){
+
+        referralMessage.textContent =
+            "Referral link is not available yet.";
+
+        return;
+
+    }
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            input.value
+        );
+
+        referralMessage.textContent =
+            "✅ Referral link copied!";
+
+    }catch(error){
+
+        input.select();
+
+        document.execCommand(
+            "copy"
+        );
+
+        referralMessage.textContent =
+            "✅ Referral link copied!";
+
+    }
+
+}
+
+
+// =====================================
+// COPY BUTTON
+// =====================================
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target &&
+            event.target.id ===
+            "copyReferralBtn"
+        ){
+
+            copyReferralLink();
+
+        }
+
+    }
+);
 
 
 // =====================================
@@ -374,6 +700,7 @@ async function loadProfile(){
             sessionError
         );
 
+
         userBox.innerHTML = `
 
             <strong>
@@ -382,12 +709,16 @@ async function loadProfile(){
 
         `;
 
+
         showError(
             "Could not check login: " +
             sessionError.message
         );
 
-        videoList.innerHTML = "";
+
+        videoList.innerHTML =
+            "";
+
 
         return;
 
@@ -402,7 +733,10 @@ async function loadProfile(){
     // USER NOT LOGGED IN
     // =================================
 
-    if(!session || !session.user){
+    if(
+        !session ||
+        !session.user
+    ){
 
         userBox.innerHTML = `
 
@@ -413,7 +747,7 @@ async function loadProfile(){
             <br><br>
 
             Please login first to see
-            your submitted videos.
+            your profile and referral link.
 
             <div class="actions">
 
@@ -435,7 +769,10 @@ async function loadProfile(){
 
         `;
 
-        videoList.innerHTML = "";
+
+        videoList.innerHTML =
+            "";
+
 
         return;
 
@@ -448,6 +785,7 @@ async function loadProfile(){
 
     const currentUser =
         session.user;
+
 
     const userId =
         currentUser.id;
@@ -466,22 +804,31 @@ async function loadProfile(){
     userBox.innerHTML = `
 
         <div>
+
             <strong>
                 Logged in as
             </strong>
+
         </div>
 
+
         <div class="user-email">
+
             ${escapeHTML(
                 currentUser.email ||
                 "User"
             )}
+
         </div>
 
+
         <div class="user-id">
+
             User ID:
             ${escapeHTML(userId)}
+
         </div>
+
 
         <div class="actions">
 
@@ -492,12 +839,14 @@ async function loadProfile(){
                 ⬆️ Submit Video
             </a>
 
+
             <a
                 href="index.html"
                 class="btn home-btn"
             >
                 🏠 Home
             </a>
+
 
             <button
                 id="logoutBtn"
@@ -509,6 +858,15 @@ async function loadProfile(){
         </div>
 
     `;
+
+
+    // =================================
+    // LOAD REFERRAL
+    // =================================
+
+    await loadReferralLink(
+        userId
+    );
 
 
     // =================================
@@ -619,12 +977,15 @@ async function loadMyVideos(userId){
 
     if(error){
 
-        videoList.innerHTML = "";
+        videoList.innerHTML =
+            "";
+
 
         showError(
             "Could not load your videos: " +
             error.message
         );
+
 
         return;
 
@@ -635,7 +996,10 @@ async function loadMyVideos(userId){
     // NO VIDEOS
     // =================================
 
-    if(!videos || videos.length === 0){
+    if(
+        !videos ||
+        videos.length === 0
+    ){
 
         videoList.innerHTML = `
 
@@ -661,6 +1025,7 @@ async function loadMyVideos(userId){
 
         `;
 
+
         return;
 
     }
@@ -670,14 +1035,18 @@ async function loadMyVideos(userId){
     // DISPLAY VIDEOS
     // =================================
 
-    videoList.innerHTML = "";
+    videoList.innerHTML =
+        "";
 
 
     videos.forEach(
         function(video){
 
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             card.className =
                 "video-card";
@@ -737,7 +1106,8 @@ async function loadMyVideos(userId){
 
 
             const url =
-                video.videos_url || "";
+                video.videos_url ||
+                "";
 
 
             let watchButton =
@@ -770,31 +1140,43 @@ async function loadMyVideos(userId){
                         ${title}
                     </div>
 
+
                     <div class="video-description">
                         ${description}
                     </div>
 
+
                     <div class="video-meta">
+
                         Platform:
+
                         <strong>
                             ${platform}
                         </strong>
+
                     </div>
 
+
                     <div class="video-meta">
+
                         Submitted:
                         ${date}
+
                     </div>
+
 
                     <div>
 
                         <span
                             class="status ${safeStatus}"
                         >
+
                             ${statusText}
+
                         </span>
 
                     </div>
+
 
                     ${watchButton}
 
@@ -826,7 +1208,9 @@ supabaseClient.auth.onAuthStateChange(
         );
 
 
-        if(event === "SIGNED_OUT"){
+        if(
+            event === "SIGNED_OUT"
+        ){
 
             window.location.href =
                 "login.html";
@@ -835,7 +1219,11 @@ supabaseClient.auth.onAuthStateChange(
 
         }
 
-        if(session && session.user){
+
+        if(
+            session &&
+            session.user
+        ){
 
             setTimeout(
                 function(){
@@ -858,4 +1246,7 @@ supabaseClient.auth.onAuthStateChange(
 
 loadProfile();
 
-</script></body></html>
+</script>
+
+</body>
+</html>
