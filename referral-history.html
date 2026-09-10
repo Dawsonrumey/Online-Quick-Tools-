@@ -1,390 +1,541 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Referral History - Online Quick Tools</title>
+<title>Referral History - Online Quick Tools</title>
 
-    <meta name="description"
-          content="View your referral history and referral rewards on Online Quick Tools.">
+<meta name="description"
+      content="View your referral history, successful referrals and earned reward points on Online Quick Tools.">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-MQS2RKPRF2');
-    </script>
+<style>
+*{
+    box-sizing:border-box;
+}
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#222;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #222;
-        }
+.header{
+    background:#4f46e5;
+    color:white;
+    padding:18px;
+    border-radius:16px;
+    margin-bottom:20px;
+    text-align:center;
+}
 
-        .container {
-            width: 100%;
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-        }
+.header h1{
+    margin:0 0 6px;
+    font-size:25px;
+}
 
-        .header {
-            background: #111827;
-            color: white;
-            padding: 18px;
-            text-align: center;
-        }
+.header p{
+    margin:0;
+    opacity:.9;
+}
 
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+.top-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
 
-        .back {
-            display: inline-block;
-            margin-top: 10px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-        }
+button,
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:11px 16px;
+    background:#4f46e5;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+}
 
-        .card {
-            background: white;
-            border-radius: 14px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+.btn.secondary{
+    background:#64748b;
+}
 
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 15px;
-        }
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-bottom:20px;
+}
 
-        .summary-box {
-            background: #f3f4f6;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-        }
+.stat-card{
+    background:white;
+    border-radius:15px;
+    padding:18px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
 
-        .summary-box strong {
-            display: block;
-            font-size: 25px;
-            margin-top: 5px;
-        }
+.stat-card .icon{
+    font-size:28px;
+}
 
-        .history-item {
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 12px;
-            background: #fff;
-        }
+.stat-card h2{
+    margin:8px 0 3px;
+    font-size:25px;
+}
 
-        .history-item .title {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+.stat-card p{
+    margin:0;
+    color:#666;
+    font-size:14px;
+}
 
-        .history-item div {
-            margin: 5px 0;
-            font-size: 14px;
-        }
+.history-box{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
 
-        .status {
-            display: inline-block;
-            padding: 4px 9px;
-            border-radius: 20px;
-            background: #dcfce7;
-            color: #166534;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.history-box h2{
+    margin-top:0;
+}
 
-        .loading,
-        .empty,
-        .error {
-            text-align: center;
-            padding: 25px 10px;
-        }
+.loading,
+.empty,
+.error{
+    text-align:center;
+    padding:25px 10px;
+    color:#666;
+}
 
-        .error {
-            color: #b91c1c;
-        }
+.error{
+    color:#dc2626;
+}
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 12px;
-            }
+.referral-card{
+    border:1px solid #e5e7eb;
+    border-radius:13px;
+    padding:15px;
+    margin-bottom:12px;
+}
 
-            .summary {
-                grid-template-columns: 1fr;
-            }
+.referral-row{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin:7px 0;
+    flex-wrap:wrap;
+}
 
-            .header h1 {
-                font-size: 21px;
-            }
-        }
-    </style>
+.label{
+    color:#64748b;
+}
+
+.value{
+    font-weight:bold;
+}
+
+.reward{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+.status{
+    color:#16a34a;
+    font-weight:bold;
+}
+
+@media(max-width:650px){
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+}
+
+/* Dark mode */
+body.dark{
+    background:#111827;
+    color:#f3f4f6;
+}
+
+body.dark .stat-card,
+body.dark .history-box{
+    background:#1f2937;
+}
+
+body.dark .referral-card{
+    border-color:#374151;
+}
+
+body.dark .stat-card p,
+body.dark .label,
+body.dark .loading,
+body.dark .empty{
+    color:#9ca3af;
+}
+</style>
 </head>
 
 <body>
 
-<header class="header">
-    <h1>👥 Referral History</h1>
-    <a class="back" href="dashboard.html">← Back to Dashboard</a>
-</header>
+<div class="container">
 
-<main class="container">
+    <div class="header">
+        <h1>🎁 Referral History</h1>
+        <p>Track your successful referrals and earned points</p>
+    </div>
 
-    <div class="card">
+    <div class="top-buttons">
+        <a class="btn secondary" href="profile.html">← Profile</a>
+        <a class="btn secondary" href="index.html">🏠 Home</a>
+        <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    </div>
 
-        <h2>Referral Summary</h2>
+    <div class="stats">
 
-        <div class="summary">
-            <div class="summary-box">
-                Referrals
-                <strong id="referralCount">0</strong>
-            </div>
+        <div class="stat-card">
+            <div class="icon">👥</div>
+            <h2 id="totalReferrals">0</h2>
+            <p>Total Referrals</p>
+        </div>
 
-            <div class="summary-box">
-                Referral Rewards
-                <strong id="rewardCount">0</strong>
-            </div>
+        <div class="stat-card">
+            <div class="icon">🎁</div>
+            <h2 id="earnedPoints">0</h2>
+            <p>Referral Points</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon">⭐</div>
+            <h2 id="currentPoints">0</h2>
+            <p>Current Points</p>
         </div>
 
     </div>
 
-    <div class="card">
+    <div class="history-box">
 
-        <h2>History</h2>
+        <h2>📋 Your Referral History</h2>
 
         <div id="history">
-            <div class="loading">
-                Loading referral history...
-            </div>
+            <div class="loading">Loading referral history...</div>
         </div>
 
     </div>
 
-</main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    const SUPABASE_URL =
-        "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-    /*
-      IMPORTANT:
-      Keep your existing Supabase publishable/anon key here.
-      Do not change it if your other pages already use it.
-    */
-    const SUPABASE_KEY = "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+const SUPABASE_URL =
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
+const SUPABASE_KEY =
+    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function formatDate(dateString){
+
+    if(!dateString) return "Unknown";
+
+    const date = new Date(dateString);
+
+    return date.toLocaleString();
+
+}
+
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains("dark")
+            ? "on"
+            : "off"
+    );
+
+}
+
+
+if(localStorage.getItem("darkMode") === "on"){
+    document.body.classList.add("dark");
+}
+
+
+async function loadReferralHistory(){
+
+    const history = document.getElementById("history");
+
+    try{
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } = await supabaseClient.auth.getSession();
+
+        if(sessionError){
+            throw sessionError;
+        }
+
+        const user = sessionData.session?.user;
+
+        if(!user){
+
+            history.innerHTML = `
+                <div class="empty">
+                    🔐 Please login first.
+                    <br><br>
+                    <a class="btn" href="login.html">
+                        Login
+                    </a>
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* Get current user's points */
+
+        const {
+            data: profile,
+            error: profileError
+        } = await supabaseClient
+            .from("profiles")
+            .select("points, referral_count")
+            .eq("id", user.id)
+            .single();
+
+        if(profileError){
+            throw profileError;
+        }
+
+
+        document.getElementById("currentPoints").textContent =
+            profile?.points ?? 0;
+
+
+        /* Get user's referrals */
+
+        const {
+            data: referrals,
+            error: referralError
+        } = await supabaseClient
+            .from("referrals")
+            .select(`
+                id,
+                referred_user_id,
+                referral_code,
+                reward_referrer,
+                status,
+                created_at
+            `)
+            .eq("referrer_id", user.id)
+            .order("created_at", {
+                ascending:false
+            });
+
+        if(referralError){
+            throw referralError;
+        }
+
+
+        const referralList = referrals || [];
+
+        document.getElementById("totalReferrals").textContent =
+            referralList.length;
+
+
+        let totalEarned = 0;
+
+        referralList.forEach(item => {
+
+            totalEarned += Number(
+                item.reward_referrer || 0
+            );
+
+        });
+
+
+        document.getElementById("earnedPoints").textContent =
+            totalEarned;
+
+
+        if(referralList.length === 0){
+
+            history.innerHTML = `
+                <div class="empty">
+                    📭 No referrals yet.
+                    <br><br>
+                    Share your referral link from your profile
+                    to earn referral points.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* Get referred users' usernames */
+
+        const userIds = referralList.map(
+            item => item.referred_user_id
         );
 
 
-    async function loadReferralHistory() {
+        let usernameMap = {};
 
-        const historyBox =
-            document.getElementById("history");
 
-        try {
+        if(userIds.length > 0){
 
-            // Get logged-in user
             const {
-                data: { user },
-                error: userError
-            } = await supabaseClient.auth.getUser();
-
-            if (userError || !user) {
-
-                window.location.href = "login.html";
-                return;
-            }
-
-
-            // Get referral records
-            const {
-                data: referrals,
-                error: referralError
-            } = await supabaseClient
-                .from("referrals")
-                .select(`
-                    id,
-                    referrer_id,
-                    referred_user_id,
-                    referral_code,
-                    reward_referrer,
-                    reward_referred,
-                    status,
-                    created_at
-                `)
-                .or(
-                    `referrer_id.eq.${user.id},referred_user_id.eq.${user.id}`
-                )
-                .order("created_at", {
-                    ascending: false
-                });
-
-
-            if (referralError) {
-                throw referralError;
-            }
-
-
-            if (!referrals || referrals.length === 0) {
-
-                document.getElementById("referralCount")
-                    .textContent = "0";
-
-                document.getElementById("rewardCount")
-                    .textContent = "0";
-
-                historyBox.innerHTML = `
-                    <div class="empty">
-                        No referral history yet.
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            let totalReferrals = 0;
-            let totalRewards = 0;
-
-            let html = "";
-
-
-            referrals.forEach(referral => {
-
-                const isReferrer =
-                    referral.referrer_id === user.id;
-
-                let role;
-                let reward;
-
-                if (isReferrer) {
-
-                    role = "You referred a user";
-                    reward = Number(
-                        referral.reward_referrer || 0
-                    );
-
-                    totalReferrals++;
-
-                } else {
-
-                    role = "You joined through a referral";
-                    reward = Number(
-                        referral.reward_referred || 0
-                    );
+                data: usernameData,
+                error: usernameError
+            } = await supabaseClient.rpc(
+                "get_public_usernames",
+                {
+                    user_ids: userIds
                 }
-
-                totalRewards += reward;
-
-
-                const date =
-                    new Date(
-                        referral.created_at
-                    ).toLocaleString();
-
-
-                html += `
-                    <div class="history-item">
-
-                        <div class="title">
-                            👥 ${role}
-                        </div>
-
-                        <div>
-                            <strong>Referral Code:</strong>
-                            ${escapeHtml(
-                                referral.referral_code || "-"
-                            )}
-                        </div>
-
-                        <div>
-                            <strong>Reward:</strong>
-                            +${reward} points
-                        </div>
-
-                        <div>
-                            <strong>Date:</strong>
-                            ${escapeHtml(date)}
-                        </div>
-
-                        <div>
-                            <strong>Status:</strong>
-                            <span class="status">
-                                ${escapeHtml(
-                                    referral.status || "completed"
-                                )}
-                            </span>
-                        </div>
-
-                    </div>
-                `;
-            });
-
-
-            document.getElementById("referralCount")
-                .textContent = totalReferrals;
-
-            document.getElementById("rewardCount")
-                .textContent = totalRewards;
-
-            historyBox.innerHTML = html;
-
-        } catch (error) {
-
-            console.error(
-                "Referral history error:",
-                error
             );
 
-            historyBox.innerHTML = `
-                <div class="error">
-                    Unable to load referral history.
-                    <br><br>
-                    Please refresh the page and try again.
-                </div>
-            `;
+
+            if(!usernameError && usernameData){
+
+                usernameData.forEach(item => {
+
+                    usernameMap[item.id] =
+                        item.username || "User";
+
+                });
+
+            }
+
         }
+
+
+        history.innerHTML = referralList.map(item => {
+
+            const username =
+                usernameMap[item.referred_user_id]
+                || "User";
+
+            const reward =
+                Number(item.reward_referrer || 0);
+
+            return `
+
+                <div class="referral-card">
+
+                    <div class="referral-row">
+                        <span class="label">
+                            👤 Referred User
+                        </span>
+
+                        <span class="value">
+                            ${escapeHTML(username)}
+                        </span>
+                    </div>
+
+
+                    <div class="referral-row">
+                        <span class="label">
+                            🎁 Reward
+                        </span>
+
+                        <span class="reward">
+                            +${reward} points
+                        </span>
+                    </div>
+
+
+                    <div class="referral-row">
+                        <span class="label">
+                            ✅ Status
+                        </span>
+
+                        <span class="status">
+                            ${escapeHTML(item.status)}
+                        </span>
+                    </div>
+
+
+                    <div class="referral-row">
+                        <span class="label">
+                            📅 Date
+                        </span>
+
+                        <span class="value">
+                            ${formatDate(item.created_at)}
+                        </span>
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    }catch(error){
+
+        console.error(error);
+
+        history.innerHTML = `
+            <div class="error">
+                ❌ Failed to load referral history.
+                <br><br>
+                ${escapeHTML(error.message)}
+            </div>
+        `;
+
     }
 
-
-    function escapeHtml(value) {
-
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
+}
 
 
-    loadReferralHistory();
+loadReferralHistory();
+
 </script>
 
 </body>
