@@ -56,7 +56,7 @@ h1{
     background:#eff6ff;
     border-radius:12px;
     padding:16px;
-    margin-bottom:25px;
+    margin-bottom:20px;
     color:#1e40af;
 }
 
@@ -108,6 +108,43 @@ h1{
 
 
 /* =====================================
+   POINTS DASHBOARD
+===================================== */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+    padding:18px 12px;
+    text-align:center;
+}
+
+.stat-icon{
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.stat-number{
+    font-size:24px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.stat-label{
+    margin-top:5px;
+    font-size:13px;
+    color:#64748b;
+}
+
+
+/* =====================================
    REFERRAL BOX
 ===================================== */
 
@@ -127,6 +164,16 @@ h1{
 .referral-box p{
     color:#475569;
     line-height:1.5;
+}
+
+.referral-info{
+    background:#dcfce7;
+    color:#166534;
+    padding:10px;
+    border-radius:9px;
+    margin:12px 0;
+    font-size:14px;
+    font-weight:bold;
 }
 
 .referral-row{
@@ -294,6 +341,10 @@ h1{
         padding:18px;
     }
 
+    .stats{
+        grid-template-columns:1fr;
+    }
+
     .video-list{
         grid-template-columns:1fr;
     }
@@ -327,7 +378,7 @@ h1{
 
 
 <p class="subtitle">
-    Your submitted videos
+    Your profile, points and submitted videos
 </p>
 
 
@@ -345,6 +396,74 @@ h1{
 
 
 <!-- =====================================
+     POINTS STATS
+===================================== -->
+
+<div class="stats">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            ⭐
+        </div>
+
+        <div
+            id="pointsValue"
+            class="stat-number"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Points Balance
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            👥
+        </div>
+
+        <div
+            id="referralCount"
+            class="stat-number"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Total Referrals
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">
+            🎁
+        </div>
+
+        <div
+            id="referralEarned"
+            class="stat-number"
+        >
+            0
+        </div>
+
+        <div class="stat-label">
+            Referral Points
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================
      REFERRAL BOX
 ===================================== -->
 
@@ -356,8 +475,22 @@ h1{
 
     <p>
         Invite your friends and earn reward points
-        when they join.
+        when they successfully join using your link.
     </p>
+
+
+    <div class="referral-info">
+
+        ⭐ You earn <strong>10 points</strong>
+        for each successful referral.
+
+        <br>
+
+        🎉 Your friend receives
+        <strong>5 points</strong>.
+
+    </div>
+
 
     <div class="referral-row">
 
@@ -377,6 +510,7 @@ h1{
         </button>
 
     </div>
+
 
     <div
         id="referralMessage"
@@ -415,9 +549,7 @@ h1{
     href="index.html"
     class="back"
 >
-
-← Back to Online Quick Tools
-
+    ← Back to Online Quick Tools
 </a>
 
 
@@ -437,7 +569,7 @@ const SUPABASE_URL =
 "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_QLp5SKz9XU5Uba4X_u_jA_DRfXO22T";
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const supabaseClient =
 supabase.createClient(
@@ -458,6 +590,15 @@ document.getElementById("videoList");
 
 const message =
 document.getElementById("message");
+
+const pointsValue =
+document.getElementById("pointsValue");
+
+const referralCount =
+document.getElementById("referralCount");
+
+const referralEarned =
+document.getElementById("referralEarned");
 
 
 // =====================================
@@ -517,10 +658,10 @@ function formatDate(date){
 
 
 // =====================================
-// LOAD REFERRAL LINK
+// LOAD REFERRAL DATA
 // =====================================
 
-async function loadReferralLink(userId){
+async function loadReferralData(userId){
 
     const {
         data,
@@ -528,15 +669,20 @@ async function loadReferralLink(userId){
     } =
     await supabaseClient
         .from("profiles")
-        .select("referral_code")
-        .eq("id", userId)
+        .select(
+            "points, referral_count, referral_code"
+        )
+        .eq(
+            "id",
+            userId
+        )
         .single();
 
 
     if(error){
 
         console.error(
-            "Referral code error:",
+            "Profile data error:",
             error
         );
 
@@ -545,38 +691,74 @@ async function loadReferralLink(userId){
     }
 
 
-    if(
-        !data ||
-        !data.referral_code
-    ){
-
-        console.log(
-            "No referral code found."
-        );
-
+    if(!data){
         return;
-
     }
 
 
-    const referralUrl =
-        window.location.origin +
-        "/Online-Quick-Tools-/login.html?ref=" +
-        encodeURIComponent(
-            data.referral_code
-        );
+    // =================================
+    // POINTS
+    // =================================
+
+    const points =
+        Number(data.points) || 0;
 
 
-    const input =
-        document.getElementById(
-            "referralLink"
-        );
+    pointsValue.textContent =
+        points;
 
 
-    if(input){
+    // =================================
+    // REFERRAL COUNT
+    // =================================
 
-        input.value =
-            referralUrl;
+    const count =
+        Number(data.referral_count) || 0;
+
+
+    referralCount.textContent =
+        count;
+
+
+    // =================================
+    // REFERRAL EARNED
+    // =================================
+
+    /*
+    Each successful referral gives
+    the referrer 10 points.
+    */
+
+    referralEarned.textContent =
+        count * 10;
+
+
+    // =================================
+    // REFERRAL LINK
+    // =================================
+
+    if(data.referral_code){
+
+        const referralUrl =
+            window.location.origin +
+            "/Online-Quick-Tools-/login.html?ref=" +
+            encodeURIComponent(
+                data.referral_code
+            );
+
+
+        const input =
+            document.getElementById(
+                "referralLink"
+            );
+
+
+        if(input){
+
+            input.value =
+                referralUrl;
+
+        }
 
     }
 
@@ -747,7 +929,7 @@ async function loadProfile(){
             <br><br>
 
             Please login first to see
-            your profile and referral link.
+            your profile and referral data.
 
             <div class="actions">
 
@@ -861,10 +1043,10 @@ async function loadProfile(){
 
 
     // =================================
-    // LOAD REFERRAL
+    // LOAD REFERRAL DATA
     // =================================
 
-    await loadReferralLink(
+    await loadReferralData(
         userId
     );
 
@@ -934,10 +1116,6 @@ async function loadMyVideos(userId){
     );
 
 
-    // =================================
-    // QUERY
-    // =================================
-
     const {
         data: videos,
         error
@@ -971,10 +1149,6 @@ async function loadMyVideos(userId){
     );
 
 
-    // =================================
-    // ERROR
-    // =================================
-
     if(error){
 
         videoList.innerHTML =
@@ -991,10 +1165,6 @@ async function loadMyVideos(userId){
 
     }
 
-
-    // =================================
-    // NO VIDEOS
-    // =================================
 
     if(
         !videos ||
@@ -1030,10 +1200,6 @@ async function loadMyVideos(userId){
 
     }
 
-
-    // =================================
-    // DISPLAY VIDEOS
-    // =================================
 
     videoList.innerHTML =
         "";
