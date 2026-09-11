@@ -7,9 +7,6 @@
 
 <title>Rewards History - Online Quick Tools</title>
 
-<meta name="description"
-      content="View your points, daily rewards, task rewards and referral history on Online Quick Tools.">
-
 <style>
 
 *{
@@ -21,7 +18,6 @@ body{
     font-family:Arial,Helvetica,sans-serif;
     background:#f4f7fb;
     color:#222;
-    transition:.3s;
 }
 
 body.dark{
@@ -32,13 +28,12 @@ body.dark{
 header{
     background:#4f46e5;
     color:white;
-    padding:18px 15px;
     text-align:center;
+    padding:18px 12px;
 }
 
 header h1{
     margin:0 0 12px;
-    font-size:24px;
 }
 
 .nav{
@@ -51,17 +46,16 @@ header h1{
 .nav a,
 .nav button{
     border:0;
-    text-decoration:none;
     background:white;
     color:#4f46e5;
     padding:9px 13px;
     border-radius:8px;
+    text-decoration:none;
     font-weight:bold;
     cursor:pointer;
 }
 
 .container{
-    width:100%;
     max-width:900px;
     margin:20px auto;
     padding:0 14px;
@@ -72,27 +66,11 @@ header h1{
     border-radius:14px;
     padding:18px;
     margin-bottom:18px;
-    box-shadow:0 4px 15px rgba(0,0,0,.07);
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
 }
 
 .dark .card{
     background:#1f2937;
-    box-shadow:0 4px 15px rgba(0,0,0,.25);
-}
-
-.login-box{
-    text-align:center;
-    padding:25px;
-}
-
-.login-box a{
-    display:inline-block;
-    background:#4f46e5;
-    color:white;
-    text-decoration:none;
-    padding:11px 18px;
-    border-radius:8px;
-    margin-top:10px;
 }
 
 .stats{
@@ -102,10 +80,10 @@ header h1{
 }
 
 .stat{
-    text-align:center;
-    padding:16px 10px;
-    border-radius:12px;
     background:#eef2ff;
+    padding:16px 8px;
+    border-radius:12px;
+    text-align:center;
 }
 
 .dark .stat{
@@ -122,45 +100,28 @@ header h1{
     color:#a5b4fc;
 }
 
-.stat span{
-    font-size:13px;
-}
-
-.section-title{
-    margin-top:0;
-    font-size:20px;
-}
-
 .transaction{
     display:flex;
     align-items:center;
     gap:12px;
     padding:13px 0;
-    border-bottom:1px solid #e5e7eb;
+    border-bottom:1px solid #ddd;
 }
 
 .dark .transaction{
-    border-bottom-color:#374151;
-}
-
-.transaction:last-child{
-    border-bottom:0;
+    border-color:#374151;
 }
 
 .icon{
     width:45px;
     height:45px;
-    border-radius:50%;
-    background:#eef2ff;
     display:flex;
     align-items:center;
     justify-content:center;
+    background:#eef2ff;
+    border-radius:50%;
     font-size:22px;
     flex-shrink:0;
-}
-
-.dark .icon{
-    background:#374151;
 }
 
 .transaction-info{
@@ -176,20 +137,47 @@ header h1{
     color:#6b7280;
 }
 
-.dark .transaction-info small{
-    color:#cbd5e1;
+.amount{
+    color:#16a34a;
+    font-weight:bold;
 }
 
-.amount{
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#6b7280;
+}
+
+.error{
+    background:#fee2e2;
+    color:#991b1b;
+    padding:15px;
+    border-radius:10px;
+    word-break:break-word;
+}
+
+.debug{
+    background:#111827;
+    color:#d1fae5;
+    border-radius:12px;
+    padding:15px;
+    font-family:monospace;
+    font-size:13px;
+    line-height:1.6;
+    overflow-wrap:anywhere;
+}
+
+.debug-title{
+    color:#facc15;
     font-size:18px;
     font-weight:bold;
-    color:#16a34a;
+    margin-bottom:10px;
 }
 
 .referral{
-    padding:14px;
-    border:1px solid #e5e7eb;
+    border:1px solid #ddd;
     border-radius:10px;
+    padding:14px;
     margin-bottom:10px;
 }
 
@@ -197,41 +185,23 @@ header h1{
     border-color:#374151;
 }
 
-.referral strong{
-    display:block;
-    margin-bottom:6px;
-}
-
-.empty{
+.login-box{
     text-align:center;
-    padding:25px 10px;
-    color:#6b7280;
 }
 
-.error{
-    background:#fee2e2;
-    color:#991b1b;
-    padding:14px;
-    border-radius:10px;
-    margin-top:12px;
-    word-break:break-word;
-}
-
-.dark .error{
-    background:#451a1a;
-    color:#fecaca;
-}
-
-.loading{
-    text-align:center;
-    padding:25px;
+.login-box a{
+    display:inline-block;
+    background:#4f46e5;
+    color:white;
+    text-decoration:none;
+    padding:11px 18px;
+    border-radius:8px;
 }
 
 footer{
     text-align:center;
-    padding:25px 15px;
+    padding:25px;
     color:#6b7280;
-    font-size:13px;
 }
 
 @media(max-width:600px){
@@ -244,10 +214,6 @@ footer{
         align-items:flex-start;
     }
 
-    .amount{
-        font-size:16px;
-    }
-
 }
 
 </style>
@@ -258,106 +224,145 @@ footer{
 
 <header>
 
-    <h1>🎁 Rewards History</h1>
+<h1>🎁 Rewards History</h1>
 
-    <div class="nav">
-        <a href="profile.html">👤 Profile</a>
-        <a href="index.html">🏠 Home</a>
-        <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
-    </div>
+<div class="nav">
+
+<a href="profile.html">👤 Profile</a>
+
+<a href="index.html">🏠 Home</a>
+
+<button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
+</div>
 
 </header>
 
 
 <div class="container">
 
-    <!-- LOGIN -->
-    <div id="loginBox" class="card login-box" style="display:none;">
 
-        <h2>🔐 Login Required</h2>
+<!-- LOGIN -->
 
-        <p>Please login to view your rewards history.</p>
+<div id="loginBox" class="card login-box" style="display:none;">
 
-        <a href="login.html">Login</a>
+<h2>🔐 Login Required</h2>
 
-    </div>
+<p>Please login to view your rewards history.</p>
 
+<a href="login.html">Login</a>
 
-    <!-- MAIN -->
-    <div id="mainContent" style="display:none;">
-
-        <!-- STATS -->
-        <div class="card">
-
-            <div class="stats">
-
-                <div class="stat">
-                    <strong id="totalReferrals">0</strong>
-                    <span>Total Referrals</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="referralPoints">0</strong>
-                    <span>Referral Points</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="currentPoints">0</strong>
-                    <span>Current Points</span>
-                </div>
-
-            </div>
-
-        </div>
+</div>
 
 
-        <!-- TRANSACTIONS -->
-        <div class="card">
+<!-- MAIN -->
 
-            <h2 class="section-title">💰 Points & Reward History</h2>
-
-            <div id="transactions">
-
-                <div class="loading">
-                    Loading rewards...
-                </div>
-
-            </div>
-
-        </div>
+<div id="mainContent" style="display:none;">
 
 
-        <!-- REFERRALS -->
-        <div class="card">
+<!-- DEBUG -->
 
-            <h2 class="section-title">👥 Referral History</h2>
+<div class="card">
 
-            <div id="history">
+<div class="debug">
 
-                <div class="loading">
-                    Loading referrals...
-                </div>
+<div class="debug-title">
+🔧 Rewards Debug Information
+</div>
 
-            </div>
+<div id="debugInfo">
+Starting...
+</div>
 
-        </div>
+</div>
 
-    </div>
+</div>
+
+
+<!-- STATS -->
+
+<div class="card">
+
+<div class="stats">
+
+<div class="stat">
+
+<strong id="totalReferrals">0</strong>
+
+<span>Total Referrals</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="referralPoints">0</strong>
+
+<span>Referral Points</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong id="currentPoints">0</strong>
+
+<span>Current Points</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- TRANSACTIONS -->
+
+<div class="card">
+
+<h2>💰 Points & Reward History</h2>
+
+<div id="transactions">
+
+Loading...
+
+</div>
+
+</div>
+
+
+<!-- REFERRALS -->
+
+<div class="card">
+
+<h2>👥 Referral History</h2>
+
+<div id="history">
+
+Loading...
+
+</div>
+
+</div>
+
+
+</div>
 
 </div>
 
 
 <footer>
-    © 2026 Online Quick Tools
+© 2026 Online Quick Tools
 </footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
 
 /* =========================
-   SUPABASE
+SUPABASE
 ========================= */
 
 const SUPABASE_URL =
@@ -374,29 +379,19 @@ window.supabase.createClient(
 
 
 /* =========================
-   DARK MODE
+EXPECTED DATABASE USER
 ========================= */
 
-function toggleDarkMode(){
-
-    document.body.classList.toggle("dark");
-
-    localStorage.setItem(
-        "darkMode",
-        document.body.classList.contains("dark")
-            ? "on"
-            : "off"
-    );
-}
-
-if(localStorage.getItem("darkMode") === "on"){
-    document.body.classList.add("dark");
-}
+const EXPECTED_USER_ID =
+"3da82c0d-d0fd-4530-a6e7-9ec366de5aa7";
 
 
 /* =========================
-   ELEMENTS
+ELEMENTS
 ========================= */
+
+const debugInfo =
+document.getElementById("debugInfo");
 
 const loginBox =
 document.getElementById("loginBox");
@@ -412,186 +407,286 @@ document.getElementById("history");
 
 
 /* =========================
-   ICON
+DEBUG
 ========================= */
 
-function getRewardIcon(type){
+function debug(text){
 
-    type = String(type || "").toLowerCase();
+    debugInfo.innerHTML +=
+        "<div>" + escapeHtml(text) + "</div>";
 
-    if(type.includes("daily")){
-        return "🎁";
-    }
-
-    if(type.includes("login")){
-        return "🎁";
-    }
-
-    if(type.includes("task")){
-        return "✅";
-    }
-
-    if(type.includes("referral") ||
-       type.includes("refer")){
-        return "👥";
-    }
-
-    return "⭐";
 }
 
 
 /* =========================
-   DATE
+ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+DARK MODE
+========================= */
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains("dark")
+        ? "on"
+        : "off"
+    );
+
+}
+
+
+if(localStorage.getItem("darkMode")==="on"){
+
+    document.body.classList.add("dark");
+
+}
+
+
+/* =========================
+DATE
 ========================= */
 
 function formatDate(date){
 
-    if(!date) return "Unknown date";
-
     const d = new Date(date);
 
     if(isNaN(d.getTime())){
-        return date;
+
+        return String(date);
+
     }
 
-    return d.toLocaleString(
-        "en-BD",
-        {
-            year:"numeric",
-            month:"short",
-            day:"numeric",
-            hour:"numeric",
-            minute:"2-digit"
-        }
-    );
+    return d.toLocaleString("en-BD",{
+
+        year:"numeric",
+        month:"short",
+        day:"numeric",
+        hour:"numeric",
+        minute:"2-digit"
+
+    });
+
 }
 
 
 /* =========================
-   LOAD PROFILE
+ICON
+========================= */
+
+function getIcon(type){
+
+    type =
+        String(type || "").toLowerCase();
+
+    if(type.includes("daily"))
+        return "🎁";
+
+    if(type.includes("login"))
+        return "🎁";
+
+    if(type.includes("task"))
+        return "✅";
+
+    if(type.includes("referral"))
+        return "👥";
+
+    return "⭐";
+
+}
+
+
+/* =========================
+PROFILE
 ========================= */
 
 async function loadProfile(userId){
 
-    const {data,error} =
+    debug(
+        "Loading profiles for user: " +
+        userId
+    );
+
+    const result =
         await supabaseClient
         .from("profiles")
-        .select("points, referral_count")
-        .eq("id", userId)
+        .select(
+            "id,username,points,referral_count"
+        )
+        .eq("id",userId)
         .single();
 
-    if(error){
-        throw new Error(
-            "Profile error: " + error.message
+    if(result.error){
+
+        debug(
+            "PROFILE ERROR: " +
+            result.error.message
         );
+
+        throw result.error;
+
     }
+
+    debug(
+        "Profile found: " +
+        result.data.username
+    );
+
+    debug(
+        "Profile points: " +
+        result.data.points
+    );
 
     document.getElementById(
         "currentPoints"
-    ).textContent = data?.points ?? 0;
+    ).textContent =
+        result.data.points ?? 0;
 
     document.getElementById(
         "totalReferrals"
-    ).textContent = data?.referral_count ?? 0;
+    ).textContent =
+        result.data.referral_count ?? 0;
 
     document.getElementById(
         "referralPoints"
     ).textContent =
-        (data?.referral_count ?? 0) * 10;
+        (result.data.referral_count ?? 0) * 10;
+
 }
 
 
 /* =========================
-   LOAD TRANSACTIONS
+TRANSACTIONS
 ========================= */
 
 async function loadTransactions(userId){
 
-    transactions.innerHTML =
-        `<div class="loading">
-            Loading reward transactions...
-        </div>`;
+    debug(
+        "Querying reward_transactions..."
+    );
 
-    const {data,error} =
+    debug(
+        "Query user_id = " +
+        userId
+    );
+
+    const result =
         await supabaseClient
         .from("reward_transactions")
         .select(
-            "id, amount, type, description, created_at"
+            "id,user_id,amount,type,description,created_at"
         )
-        .eq("user_id", userId)
+        .eq("user_id",userId)
         .order(
             "created_at",
             {ascending:false}
         );
 
-    console.log(
-        "Reward transactions:",
-        data,
-        error
-    );
+    if(result.error){
 
-    if(error){
+        debug(
+            "TRANSACTION ERROR: " +
+            result.error.message
+        );
 
         transactions.innerHTML =
             `<div class="error">
-                ❌ Could not load reward history.<br><br>
-                <strong>Supabase error:</strong><br>
-                ${escapeHtml(error.message)}
+            ❌ ${escapeHtml(result.error.message)}
             </div>`;
 
         return;
+
     }
 
-    if(!data || data.length === 0){
+    debug(
+        "Transaction rows returned: " +
+        (result.data?.length || 0)
+    );
+
+
+    if(result.data){
+
+        result.data.forEach(row => {
+
+            debug(
+                "Transaction #" +
+                row.id +
+                " | +" +
+                row.amount +
+                " | " +
+                row.type
+            );
+
+        });
+
+    }
+
+
+    if(!result.data ||
+       result.data.length === 0){
 
         transactions.innerHTML =
             `<div class="empty">
-                🎁 No reward transactions yet.
+            🎁 No reward transactions found.
             </div>`;
 
         return;
+
     }
+
 
     transactions.innerHTML = "";
 
-    data.forEach(row => {
+
+    result.data.forEach(row => {
 
         const div =
-        document.createElement("div");
+            document.createElement("div");
 
-        div.className = "transaction";
-
-        const icon =
-            getRewardIcon(row.type);
-
-        const amount =
-            Number(row.amount || 0);
+        div.className =
+            "transaction";
 
         div.innerHTML = `
 
-            <div class="icon">
-                ${icon}
-            </div>
+        <div class="icon">
+            ${getIcon(row.type)}
+        </div>
 
-            <div class="transaction-info">
+        <div class="transaction-info">
 
-                <strong>
-                    ${escapeHtml(
-                        row.description ||
-                        row.type ||
-                        "Reward"
-                    )}
-                </strong>
+            <strong>
+                ${escapeHtml(
+                    row.description ||
+                    row.type ||
+                    "Reward"
+                )}
+            </strong>
 
-                <small>
-                    ${formatDate(row.created_at)}
-                </small>
+            <small>
+                ${formatDate(row.created_at)}
+            </small>
 
-            </div>
+        </div>
 
-            <div class="amount">
-                +${amount}
-            </div>
+        <div class="amount">
+            +${Number(row.amount || 0)}
+        </div>
 
         `;
 
@@ -603,17 +698,16 @@ async function loadTransactions(userId){
 
 
 /* =========================
-   LOAD REFERRALS
+REFERRALS
 ========================= */
 
 async function loadReferrals(userId){
 
-    history.innerHTML =
-        `<div class="loading">
-            Loading referral history...
-        </div>`;
+    debug(
+        "Loading referrals..."
+    );
 
-    const {data,error} =
+    const result =
         await supabaseClient
         .from("referrals")
         .select(`
@@ -624,129 +718,85 @@ async function loadReferrals(userId){
             status,
             created_at
         `)
-        .eq("referrer_id", userId)
+        .eq("referrer_id",userId)
         .order(
             "created_at",
             {ascending:false}
         );
 
-    console.log(
-        "Referral history:",
-        data,
-        error
-    );
+    if(result.error){
 
-    if(error){
+        debug(
+            "REFERRAL ERROR: " +
+            result.error.message
+        );
 
         history.innerHTML =
             `<div class="error">
-                ❌ Could not load referral history.<br><br>
-                <strong>Supabase error:</strong><br>
-                ${escapeHtml(error.message)}
+            ❌ ${escapeHtml(result.error.message)}
             </div>`;
 
         return;
+
     }
 
-    if(!data || data.length === 0){
+    debug(
+        "Referral rows returned: " +
+        (result.data?.length || 0)
+    );
+
+
+    if(!result.data ||
+       result.data.length === 0){
 
         history.innerHTML =
             `<div class="empty">
-                👥 No referral history yet.
+            👥 No referral history yet.
             </div>`;
 
         return;
-    }
-
-    /*
-       Try to get public usernames.
-       If RPC is unavailable, we still show
-       the referral record.
-    */
-
-    const userIds =
-        data
-        .map(x => x.referred_user_id)
-        .filter(Boolean);
-
-    let usernameMap = {};
-
-    if(userIds.length > 0){
-
-        try{
-
-            const {data:names,error:nameError} =
-                await supabaseClient.rpc(
-                    "get_public_usernames",
-                    {
-                        user_ids:userIds
-                    }
-                );
-
-            if(!nameError && names){
-
-                names.forEach(item => {
-
-                    usernameMap[
-                        item.id ||
-                        item.user_id
-                    ] =
-                        item.username ||
-                        "User";
-
-                });
-
-            }
-
-        }catch(e){
-
-            console.log(
-                "Username lookup skipped:",
-                e
-            );
-
-        }
 
     }
+
 
     history.innerHTML = "";
 
-    data.forEach(row => {
+
+    result.data.forEach(row => {
 
         const div =
             document.createElement("div");
 
-        div.className = "referral";
-
-        const username =
-            usernameMap[row.referred_user_id] ||
-            "Referred User";
-
-        const reward =
-            Number(row.reward_referrer || 0);
-
-        const status =
-            row.status || "pending";
+        div.className =
+            "referral";
 
         div.innerHTML = `
 
-            <strong>
-                👤 ${escapeHtml(username)}
-            </strong>
+        <strong>
+            👤 Referred User
+        </strong>
 
-            <div>
-                Status:
-                <b>${escapeHtml(status)}</b>
-            </div>
+        <div>
+            Status:
+            <b>
+                ${escapeHtml(
+                    row.status || "pending"
+                )}
+            </b>
+        </div>
 
-            <div>
-                Reward:
-                <b>+${reward || 10} points</b>
-            </div>
+        <div>
+            Reward:
+            <b>
+                +${Number(
+                    row.reward_referrer || 10
+                )} points
+            </b>
+        </div>
 
-            <small>
-                ${formatDate(row.created_at)}
-            </small>
+        <small>
+            ${formatDate(row.created_at)}
+        </small>
 
         `;
 
@@ -758,89 +808,141 @@ async function loadReferrals(userId){
 
 
 /* =========================
-   HTML ESCAPE
+MAIN LOAD
 ========================= */
 
-function escapeHtml(value){
+async function loadPage(session){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-}
+    debug("Session found: YES");
+
+    debug(
+        "Logged-in user ID: " +
+        session.user.id
+    );
+
+    debug(
+        "Expected database user ID: " +
+        EXPECTED_USER_ID
+    );
 
 
-/* =========================
-   LOAD EVERYTHING
-========================= */
+    if(
+        session.user.id === EXPECTED_USER_ID
+    ){
 
-async function loadPage(user){
+        debug(
+            "USER ID MATCH: YES ✅"
+        );
 
-    if(!user){
+    }else{
 
-        loginBox.style.display = "block";
-        mainContent.style.display = "none";
+        debug(
+            "USER ID MATCH: NO ❌"
+        );
 
-        return;
+        debug(
+            "This is likely the problem."
+        );
+
     }
 
-    loginBox.style.display = "none";
-    mainContent.style.display = "block";
+
+    loginBox.style.display =
+        "none";
+
+    mainContent.style.display =
+        "block";
+
 
     try{
 
-        await Promise.all([
-
-            loadProfile(user.id),
-
-            loadTransactions(user.id),
-
-            loadReferrals(user.id)
-
-        ]);
+        await loadProfile(
+            session.user.id
+        );
 
     }catch(error){
 
-        console.error(error);
-
-        transactions.innerHTML =
-            `<div class="error">
-                ❌ ${escapeHtml(error.message)}
-            </div>`;
+        debug(
+            "Profile loading failed."
+        );
 
     }
+
+
+    await loadTransactions(
+        session.user.id
+    );
+
+
+    await loadReferrals(
+        session.user.id
+    );
+
+
+    debug(
+        "Page loading finished."
+    );
 
 }
 
 
 /* =========================
-   AUTH
+INIT
 ========================= */
 
 async function init(){
 
-    const {
-        data:{
-            session
+    debug(
+        "Starting Rewards History V5..."
+    );
+
+    try{
+
+        const result =
+            await supabaseClient.auth.getSession();
+
+        if(result.error){
+
+            debug(
+                "SESSION ERROR: " +
+                result.error.message
+            );
+
+            loginBox.style.display =
+                "block";
+
+            return;
+
         }
-    } =
-        await supabaseClient.auth.getSession();
 
-    if(session?.user){
 
-        console.log(
-            "Logged in user:",
-            session.user.id
+        const session =
+            result.data.session;
+
+
+        if(!session){
+
+            debug(
+                "Session found: NO ❌"
+            );
+
+            loginBox.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        await loadPage(session);
+
+    }
+    catch(error){
+
+        debug(
+            "FATAL ERROR: " +
+            error.message
         );
-
-        await loadPage(session.user);
-
-    }else{
-
-        loginBox.style.display = "block";
-        mainContent.style.display = "none";
 
     }
 
@@ -848,20 +950,23 @@ async function init(){
 
 
 /* =========================
-   AUTH STATE
+AUTH CHANGE
 ========================= */
 
 supabaseClient.auth.onAuthStateChange(
-    async(event,session)=>{
+    function(event,session){
 
-        if(session?.user){
+        if(session){
 
-            await loadPage(session.user);
+            loadPage(session);
 
         }else{
 
-            loginBox.style.display = "block";
-            mainContent.style.display = "none";
+            loginBox.style.display =
+                "block";
+
+            mainContent.style.display =
+                "none";
 
         }
 
@@ -869,9 +974,7 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
-/* =========================
-   START
-========================= */
+/* START */
 
 init();
 
