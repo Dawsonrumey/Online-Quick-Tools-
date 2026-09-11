@@ -1312,8 +1312,12 @@ document
                 data,
                 error
             } =
-            await supabaseClient.rpc(
-    "claim_daily_login_reward"
+await supabaseClient.rpc(
+    "claim_daily_login_reward",
+    {
+        user_id:
+            currentUser.id
+    }
 );
 
 
