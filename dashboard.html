@@ -1313,12 +1313,8 @@ document
                 error
             } =
             await supabaseClient.rpc(
-                "claim_daily_login_reward",
-                {
-                    user_id:
-                        currentUser.id
-                }
-            );
+    "claim_daily_login_reward"
+);
 
 
             if(error){
