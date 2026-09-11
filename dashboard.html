@@ -127,6 +127,11 @@ header h2{
     background:#16a34a;
 }
 
+.reward-btn:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+}
+
 .info-row{
     display:flex;
     justify-content:space-between;
@@ -578,8 +583,6 @@ function getYouTubeEmbedUrl(url){
         let videoId = null;
 
 
-        /* youtube.com/watch?v= */
-
         if(
             parsed.hostname.includes("youtube.com") &&
             parsed.searchParams.get("v")
@@ -589,9 +592,6 @@ function getYouTubeEmbedUrl(url){
                 parsed.searchParams.get("v");
 
         }
-
-
-        /* youtube.com/shorts/ */
 
         else if(
             parsed.hostname.includes("youtube.com") &&
@@ -604,9 +604,6 @@ function getYouTubeEmbedUrl(url){
 
         }
 
-
-        /* youtube.com/embed/ */
-
         else if(
             parsed.hostname.includes("youtube.com") &&
             parsed.pathname.startsWith("/embed/")
@@ -617,9 +614,6 @@ function getYouTubeEmbedUrl(url){
                     .split("/")[0];
 
         }
-
-
-        /* youtu.be */
 
         else if(
             parsed.hostname === "youtu.be"
@@ -1027,7 +1021,7 @@ async function processPendingReferral(user){
         } = await supabaseClient.rpc(
             "process_referral",
             {
-                referral_code:
+                referral_code_input:
                     referralCode,
                 new_user_id:
                     user.id
@@ -1308,17 +1302,19 @@ document
 
         try{
 
+            /*
+             * Secure RPC:
+             * No user_id is sent from the browser.
+             * Supabase uses auth.uid().
+             */
+
             const {
                 data,
                 error
             } =
-await supabaseClient.rpc(
-    "claim_daily_login_reward",
-    {
-        user_id:
-            currentUser.id
-    }
-);
+            await supabaseClient.rpc(
+                "claim_daily_login_reward"
+            );
 
 
             if(error){
@@ -1326,15 +1322,31 @@ await supabaseClient.rpc(
             }
 
 
+            const success =
+                data?.success === true;
+
+
             rewardMessage.className =
-                "message success";
+                success
+                ?
+                "message success"
+                :
+                "message error";
 
 
             rewardMessage.innerHTML =
+                success
+                ?
                 "🎉 " +
                 (
                     data?.message ||
                     "Daily reward claimed successfully!"
+                )
+                :
+                "ℹ️ " +
+                (
+                    data?.message ||
+                    "Daily reward already claimed."
                 );
 
 
@@ -1342,7 +1354,16 @@ await supabaseClient.rpc(
                 "block";
 
 
-            await loadDashboard();
+            /*
+             * Reload dashboard only after
+             * successful reward claim.
+             */
+
+            if(success){
+
+                await loadDashboard();
+
+            }
 
         }
 
