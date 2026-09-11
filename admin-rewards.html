@@ -9,6 +9,9 @@
 
 <title>Admin Rewards - Online Quick Tools</title>
 
+<meta name="description"
+      content="Admin reward redemption management for Online Quick Tools.">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
@@ -31,25 +34,25 @@ body{
     padding:20px;
 }
 
-.header{
+header{
     background:#4f46e5;
     color:white;
-    padding:20px;
-    border-radius:16px;
+    padding:18px 20px;
+    border-radius:0 0 18px 18px;
     margin-bottom:20px;
 }
 
-.header h1{
-    margin:0 0 6px;
-    font-size:25px;
+header h1{
+    margin:0;
+    font-size:24px;
 }
 
-.header p{
-    margin:0;
+header p{
+    margin:6px 0 0;
     opacity:.9;
 }
 
-.topbar{
+.top-buttons{
     display:flex;
     gap:10px;
     flex-wrap:wrap;
@@ -61,12 +64,13 @@ button{
     border-radius:10px;
     padding:11px 16px;
     font-size:14px;
+    font-weight:bold;
     cursor:pointer;
 }
 
 .home-btn{
-    background:#e5e7eb;
-    color:#111827;
+    background:#111827;
+    color:white;
 }
 
 .refresh-btn{
@@ -79,170 +83,210 @@ button{
     color:white;
 }
 
-.message{
-    padding:14px;
-    border-radius:10px;
-    margin-bottom:15px;
-    display:none;
-}
-
-.success{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.error{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-.info{
-    background:#dbeafe;
-    color:#1e40af;
-}
-
 .stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    margin-bottom:20px;
+    gap:14px;
+    margin-bottom:22px;
 }
 
 .stat{
     background:white;
-    border-radius:14px;
     padding:18px;
+    border-radius:14px;
     box-shadow:0 3px 12px rgba(0,0,0,.07);
 }
 
 .stat-title{
-    font-size:13px;
-    color:#6b7280;
-    margin-bottom:7px;
+    color:#666;
+    font-size:14px;
 }
 
-.stat-value{
-    font-size:25px;
+.stat-number{
+    font-size:28px;
     font-weight:bold;
+    margin-top:6px;
 }
 
-.request{
+.card{
     background:white;
     border-radius:16px;
     padding:18px;
-    margin-bottom:15px;
-    box-shadow:0 3px 12px rgba(0,0,0,.07);
+    margin-bottom:18px;
+    box-shadow:0 3px 14px rgba(0,0,0,.07);
 }
 
-.request-head{
+.card-header{
     display:flex;
     justify-content:space-between;
+    align-items:center;
     gap:10px;
     flex-wrap:wrap;
-    margin-bottom:14px;
+    margin-bottom:15px;
 }
 
-.user{
-    font-size:18px;
-    font-weight:bold;
+.card-header h2{
+    margin:0;
+    font-size:19px;
 }
 
 .status{
     display:inline-block;
-    padding:6px 10px;
+    padding:5px 10px;
     border-radius:20px;
     font-size:12px;
     font-weight:bold;
-    text-transform:uppercase;
 }
 
-.status.pending{
-    background:#fef3c7;
-    color:#92400e;
+.status-pending{
+    background:#fff7ed;
+    color:#c2410c;
 }
 
-.status.approved{
-    background:#dcfce7;
-    color:#166534;
+.status-approved{
+    background:#ecfdf5;
+    color:#047857;
 }
 
-.status.rejected{
-    background:#fee2e2;
-    color:#991b1b;
+.status-paid{
+    background:#eff6ff;
+    color:#1d4ed8;
 }
 
-.details{
+.status-rejected{
+    background:#fef2f2;
+    color:#b91c1c;
+}
+
+.info-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:10px;
-    margin-bottom:15px;
+    margin-top:12px;
 }
 
-.detail{
+.info{
     background:#f8fafc;
-    border-radius:10px;
     padding:11px;
+    border-radius:9px;
 }
 
-.detail-label{
+.info strong{
     display:block;
-    color:#6b7280;
     font-size:12px;
+    color:#64748b;
     margin-bottom:4px;
 }
 
-.detail-value{
-    font-weight:bold;
+.info span{
     word-break:break-word;
 }
 
-.payout{
-    color:#15803d;
-    font-size:18px;
-}
-
-.fee{
-    color:#dc2626;
-}
-
-.actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
+.payment-box{
     margin-top:15px;
+    padding:15px;
+    background:#f8fafc;
+    border-radius:12px;
 }
 
-.approve{
-    background:#16a34a;
-    color:white;
+.payment-box h3{
+    margin:0 0 10px;
+    font-size:16px;
 }
 
-.reject{
-    background:#dc2626;
-    color:white;
-}
-
-.note-input{
+input,
+textarea{
     width:100%;
     padding:11px;
     border:1px solid #d1d5db;
     border-radius:9px;
     font-size:14px;
-    margin-top:10px;
+    outline:none;
+}
+
+textarea{
+    min-height:70px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#4f46e5;
+}
+
+.action-buttons{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px;
+}
+
+.approve-btn{
+    background:#16a34a;
+    color:white;
+}
+
+.reject-btn{
+    background:#dc2626;
+    color:white;
+}
+
+.paid-btn{
+    background:#2563eb;
+    color:white;
+}
+
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    padding:13px;
+    border-radius:10px;
+    margin-bottom:18px;
+    display:none;
+}
+
+.message.success{
+    display:block;
+    background:#ecfdf5;
+    color:#047857;
+}
+
+.message.error{
+    display:block;
+    background:#fef2f2;
+    color:#b91c1c;
 }
 
 .empty{
-    background:white;
-    padding:30px;
     text-align:center;
-    border-radius:15px;
-    color:#6b7280;
+    padding:35px 15px;
+    color:#777;
 }
 
-.loading{
-    text-align:center;
-    padding:30px;
-    color:#6b7280;
+.small{
+    font-size:12px;
+    color:#64748b;
+}
+
+.warning{
+    margin-top:10px;
+    padding:10px;
+    border-radius:9px;
+    background:#fff7ed;
+    color:#9a3412;
+    font-size:13px;
+}
+
+.success-box{
+    margin-top:10px;
+    padding:10px;
+    border-radius:9px;
+    background:#eff6ff;
+    color:#1e40af;
+    font-size:13px;
 }
 
 @media(max-width:700px){
@@ -255,19 +299,19 @@ button{
         grid-template-columns:1fr;
     }
 
-    .details{
+    .info-grid{
         grid-template-columns:1fr;
     }
 
-    .header h1{
-        font-size:22px;
+    header h1{
+        font-size:21px;
     }
 
     button{
         width:100%;
     }
 
-    .topbar button{
+    .action-buttons button{
         width:100%;
     }
 }
@@ -278,20 +322,22 @@ button{
 
 <body>
 
-<div class="container">
+<header>
 
-    <div class="header">
+    <div class="container">
 
         <h1>💰 Admin Rewards</h1>
 
-        <p>
-            Manage user reward redemption requests
-        </p>
+        <p>Manage reward redemption and payment tracking</p>
 
     </div>
 
+</header>
 
-    <div class="topbar">
+
+<div class="container">
+
+    <div class="top-buttons">
 
         <button
             class="home-btn"
@@ -301,22 +347,20 @@ button{
 
         <button
             class="refresh-btn"
-            onclick="loadRequests()">
+            onclick="loadRedemptions()">
             🔄 Refresh
         </button>
 
         <button
             class="logout-btn"
-            onclick="logout()">
+            onclick="logoutAdmin()">
             🚪 Logout
         </button>
 
     </div>
 
 
-    <div id="message"
-         class="message">
-    </div>
+    <div id="message" class="message"></div>
 
 
     <div class="stats">
@@ -328,8 +372,8 @@ button{
             </div>
 
             <div
-                id="totalRequests"
-                class="stat-value">
+                id="totalCount"
+                class="stat-number">
                 0
             </div>
 
@@ -343,8 +387,8 @@ button{
             </div>
 
             <div
-                id="pendingRequests"
-                class="stat-value">
+                id="pendingCount"
+                class="stat-number">
                 0
             </div>
 
@@ -354,12 +398,12 @@ button{
         <div class="stat">
 
             <div class="stat-title">
-                Approved
+                Paid
             </div>
 
             <div
-                id="approvedRequests"
-                class="stat-value">
+                id="paidCount"
+                class="stat-number">
                 0
             </div>
 
@@ -368,35 +412,45 @@ button{
     </div>
 
 
-    <div id="requests">
+    <div id="loading"
+         class="card"
+         style="text-align:center;">
 
-        <div class="loading">
-            Loading redemption requests...
-        </div>
+        Loading redemption requests...
 
     </div>
+
+
+    <div id="requests"></div>
 
 </div>
 
 
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
-"https://etkqkptoxkfhxcysaadi.supabase.co";
+    "https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
+    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const ADMIN_ID =
-"0f61afb6-b139-45d8-ac9e-83f1fd7265a9";
-
+    "0f61afb6-b139-45d8-ac9e-83f1fd7265a9";
 
 const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
+
+/* =========================
+   MESSAGE
+========================= */
 
 function showMessage(text,type){
 
@@ -408,63 +462,57 @@ function showMessage(text,type){
     box.className =
         "message " + type;
 
-    box.style.display = "block";
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
 }
 
 
-function hideMessage(){
-
-    const box =
-        document.getElementById("message");
-
-    box.style.display = "none";
-
-}
-
+/* =========================
+   ADMIN CHECK
+========================= */
 
 async function checkAdmin(){
 
     const {
-        data,
-        error
-    } = await supabaseClient.auth.getUser();
+        data:{
+            session
+        }
+    } =
+    await supabaseClient.auth.getSession();
 
 
-    if(error || !data.user){
+    if(!session){
 
         location.href = "index.html";
 
         return false;
-
     }
 
 
-    if(data.user.id !== ADMIN_ID){
+    if(session.user.id !== ADMIN_ID){
 
-        showMessage(
-            "❌ Admin access required.",
-            "error"
-        );
+        alert("Admin access required.");
 
-        document.getElementById("requests")
-            .innerHTML =
-            '<div class="empty">You are not authorized to view this page.</div>';
+        await supabaseClient.auth.signOut();
+
+        location.href = "index.html";
 
         return false;
-
     }
 
 
     return true;
-
 }
 
 
-async function loadRequests(){
+/* =========================
+   LOAD REDEMPTIONS
+========================= */
 
-    hideMessage();
-
+async function loadRedemptions(){
 
     const allowed =
         await checkAdmin();
@@ -472,12 +520,14 @@ async function loadRequests(){
     if(!allowed) return;
 
 
-    const box =
+    document.getElementById("loading")
+        .style.display = "block";
+
+
+    const container =
         document.getElementById("requests");
 
-
-    box.innerHTML =
-        '<div class="loading">Loading redemption requests...</div>';
+    container.innerHTML = "";
 
 
     const {
@@ -489,137 +539,190 @@ async function loadRequests(){
     );
 
 
+    document.getElementById("loading")
+        .style.display = "none";
+
+
     if(error){
 
         console.error(error);
 
         showMessage(
-            "❌ Failed to load redemption requests: " +
-            error.message,
+            "Failed to load redemption requests: "
+            + error.message,
             "error"
         );
 
-        box.innerHTML =
-            '<div class="empty">Unable to load requests.</div>';
-
         return;
-
     }
 
 
-    updateStats(data || []);
+    const requests =
+        data || [];
 
 
-    if(!data || data.length === 0){
+    updateStats(requests);
 
-        box.innerHTML =
-            '<div class="empty">' +
-            '🎉 No redemption requests found.' +
-            '</div>';
+
+    if(requests.length === 0){
+
+        container.innerHTML = `
+            <div class="card empty">
+                No redemption requests found.
+            </div>
+        `;
 
         return;
-
     }
 
 
-    box.innerHTML =
-        data.map(renderRequest).join("");
+    requests.forEach(request => {
+
+        container.appendChild(
+            createRequestCard(request)
+        );
+
+    });
 
 }
 
+
+/* =========================
+   STATS
+========================= */
 
 function updateStats(data){
 
     const total =
         data.length;
 
-
     const pending =
         data.filter(
-            r => r.status === "pending"
+            x => x.status === "pending"
         ).length;
 
-
-    const approved =
+    const paid =
         data.filter(
-            r => r.status === "approved"
+            x => x.status === "paid"
         ).length;
 
 
     document.getElementById(
-        "totalRequests"
+        "totalCount"
     ).textContent = total;
 
 
     document.getElementById(
-        "pendingRequests"
+        "pendingCount"
     ).textContent = pending;
 
 
     document.getElementById(
-        "approvedRequests"
-    ).textContent = approved;
+        "paidCount"
+    ).textContent = paid;
 
 }
 
 
-function renderRequest(r){
+/* =========================
+   STATUS
+========================= */
 
-    const date =
-        r.created_at
-        ? new Date(r.created_at)
-            .toLocaleString()
-        : "-";
+function getStatusClass(status){
 
+    if(status === "pending")
+        return "status-pending";
 
-    const processed =
-        r.processed_at
-        ? new Date(r.processed_at)
-            .toLocaleString()
-        : "-";
+    if(status === "approved")
+        return "status-approved";
 
+    if(status === "paid")
+        return "status-paid";
 
-    const method =
-        r.reward_method
-        ? r.reward_method.toUpperCase()
-        : "-";
+    if(status === "rejected")
+        return "status-rejected";
 
-
-    const statusClass =
-        r.status || "pending";
+    return "";
+}
 
 
-    let actions = "";
+/* =========================
+   DATE FORMAT
+========================= */
+
+function formatDate(date){
+
+    if(!date)
+        return "-";
 
 
-    if(r.status === "pending"){
+    return new Date(date)
+        .toLocaleString();
+}
 
-        actions = `
 
-            <input
-                id="note-${r.id}"
-                class="note-input"
-                placeholder="Optional admin note">
+/* =========================
+   REQUEST CARD
+========================= */
 
-            <div class="actions">
+function createRequestCard(request){
 
-                <button
-                    class="approve"
-                    onclick="processRequest(
-                        ${r.id},
-                        'approved'
-                    )">
-                    ✅ Approve
-                </button>
+    const card =
+        document.createElement("div");
 
-                <button
-                    class="reject"
-                    onclick="processRequest(
-                        ${r.id},
-                        'rejected'
-                    )">
-                    ❌ Reject
-                </button>
+    card.className = "card";
+
+
+    const status =
+        String(request.status || "")
+        .toLowerCase();
+
+
+    let actionHTML = "";
+
+
+    /* =========================
+       PENDING
+    ========================= */
+
+    if(status === "pending"){
+
+        actionHTML = `
+
+            <div class="payment-box">
+
+                <h3>⚙️ Admin Action</h3>
+
+                <label class="small">
+                    Admin note
+                </label>
+
+                <textarea
+                    id="note-${request.id}"
+                    placeholder="Optional note...">
+                </textarea>
+
+                <div class="action-buttons">
+
+                    <button
+                        class="approve-btn"
+                        onclick="processRequest(
+                            ${request.id},
+                            'approved'
+                        )">
+                        ✅ Approve
+                    </button>
+
+                    <button
+                        class="reject-btn"
+                        onclick="processRequest(
+                            ${request.id},
+                            'rejected'
+                        )">
+                        ❌ Reject
+                    </button>
+
+                </div>
 
             </div>
 
@@ -628,180 +731,360 @@ function renderRequest(r){
     }
 
 
-    return `
+    /* =========================
+       APPROVED
+    ========================= */
 
-        <div class="request">
+    else if(status === "approved"){
 
-            <div class="request-head">
+        actionHTML = `
 
-                <div class="user">
-                    👤 ${escapeHtml(
-                        r.username || "User"
-                    )}
+            <div class="payment-box">
+
+                <h3>💸 Send Payment</h3>
+
+                <div class="warning">
+
+                    ⚠️ First send the payout amount
+                    to the user's bKash/Nagad account.
+
+                    Then enter the payment
+                    transaction/reference ID below.
+
                 </div>
 
-                <span
-                    class="status ${statusClass}">
-                    ${escapeHtml(
-                        r.status
+                <br>
+
+                <label class="small">
+                    Payment Reference / Transaction ID
+                </label>
+
+                <input
+                    id="payment-${request.id}"
+                    type="text"
+                    placeholder="Example: TXN123456789">
+
+                <div class="action-buttons">
+
+                    <button
+                        class="paid-btn"
+                        onclick="markAsPaid(${request.id})">
+                        💳 Mark as Paid
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =========================
+       PAID
+    ========================= */
+
+    else if(status === "paid"){
+
+        actionHTML = `
+
+            <div class="success-box">
+
+                ✅ Payment completed.
+
+                <br><br>
+
+                <strong>
+                    Payment Reference:
+                </strong>
+
+                ${escapeHTML(
+                    request.payment_reference ||
+                    "-"
+                )}
+
+                <br>
+
+                <strong>
+                    Paid Date:
+                </strong>
+
+                ${formatDate(
+                    request.paid_at
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =========================
+       REJECTED
+    ========================= */
+
+    else if(status === "rejected"){
+
+        actionHTML = `
+
+            <div class="warning">
+
+                ❌ This redemption request
+                was rejected.
+
+                ${
+                    request.admin_note
+                    ?
+                    "<br><br><strong>Admin Note:</strong> "
+                    + escapeHTML(
+                        request.admin_note
+                    )
+                    :
+                    ""
+                }
+
+            </div>
+
+        `;
+
+    }
+
+
+    card.innerHTML = `
+
+        <div class="card-header">
+
+            <h2>
+                👤 ${escapeHTML(
+                    request.username || "User"
+                )}
+            </h2>
+
+            <span
+                class="status ${getStatusClass(status)}">
+
+                ${status.toUpperCase()}
+
+            </span>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info">
+
+                <strong>Request ID</strong>
+
+                <span>
+                    #${request.id}
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <strong>User ID</strong>
+
+                <span>
+                    ${escapeHTML(
+                        request.user_id || "-"
                     )}
                 </span>
 
             </div>
 
 
-            <div class="details">
+            <div class="info">
 
-                <div class="detail">
+                <strong>Points</strong>
 
-                    <span class="detail-label">
-                        Points
-                    </span>
+                <span>
+                    ${Number(
+                        request.points || 0
+                    ).toLocaleString()}
+                </span>
 
-                    <span class="detail-value">
-                        ${r.points}
-                    </span>
-
-                </div>
+            </div>
 
 
-                <div class="detail">
+            <div class="info">
 
-                    <span class="detail-label">
-                        Processing Fee
-                    </span>
+                <strong>Processing Fee</strong>
 
-                    <span class="detail-value fee">
-                        ৳${r.fee_amount}
-                    </span>
+                <span>
+                    ৳${Number(
+                        request.fee_amount || 0
+                    ).toLocaleString()}
+                </span>
 
-                </div>
-
-
-                <div class="detail">
-
-                    <span class="detail-label">
-                        User Payout
-                    </span>
-
-                    <span class="detail-value payout">
-                        ৳${r.payout_amount}
-                    </span>
-
-                </div>
+            </div>
 
 
-                <div class="detail">
+            <div class="info">
 
-                    <span class="detail-label">
-                        Payment Method
-                    </span>
+                <strong>Payout Amount</strong>
 
-                    <span class="detail-value">
-                        ${escapeHtml(method)}
-                    </span>
+                <span>
+                    ৳${Number(
+                        request.payout_amount || 0
+                    ).toLocaleString()}
+                </span>
 
-                </div>
-
-
-                <div class="detail">
-
-                    <span class="detail-label">
-                        Payment Number
-                    </span>
-
-                    <span class="detail-value">
-                        ${escapeHtml(
-                            r.reward_details || "-"
-                        )}
-                    </span>
-
-                </div>
+            </div>
 
 
-                <div class="detail">
+            <div class="info">
 
-                    <span class="detail-label">
-                        Request Date
-                    </span>
+                <strong>Payment Method</strong>
 
-                    <span class="detail-value">
-                        ${escapeHtml(date)}
-                    </span>
+                <span>
+                    ${escapeHTML(
+                        request.reward_method || "-"
+                    ).toUpperCase()}
+                </span>
 
-                </div>
+            </div>
+
+
+            <div class="info">
+
+                <strong>Payment Number</strong>
+
+                <span>
+                    ${escapeHTML(
+                        request.reward_details || "-"
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <strong>Request Date</strong>
+
+                <span>
+                    ${formatDate(
+                        request.created_at
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                <strong>Processed Date</strong>
+
+                <span>
+                    ${formatDate(
+                        request.processed_at
+                    )}
+                </span>
 
             </div>
 
 
             ${
-                r.admin_note
+                request.admin_note
                 ?
-                `<div class="detail">
-                    <span class="detail-label">
-                        Admin Note
-                    </span>
+                `
+                <div class="info">
 
-                    <span class="detail-value">
-                        ${escapeHtml(
-                            r.admin_note
+                    <strong>Admin Note</strong>
+
+                    <span>
+                        ${escapeHTML(
+                            request.admin_note
                         )}
                     </span>
-                </div>`
+
+                </div>
+                `
                 :
                 ""
             }
 
 
             ${
-                r.status !== "pending"
+                request.payment_reference
                 ?
-                `<div class="detail"
-                      style="margin-top:10px;">
+                `
+                <div class="info">
 
-                    <span class="detail-label">
-                        Processed
+                    <strong>Payment Reference</strong>
+
+                    <span>
+                        ${escapeHTML(
+                            request.payment_reference
+                        )}
                     </span>
 
-                    <span class="detail-value">
-                        ${escapeHtml(processed)}
-                    </span>
-
-                </div>`
+                </div>
+                `
                 :
                 ""
             }
 
 
-            ${actions}
+            ${
+                request.paid_at
+                ?
+                `
+                <div class="info">
+
+                    <strong>Paid Date</strong>
+
+                    <span>
+                        ${formatDate(
+                            request.paid_at
+                        )}
+                    </span>
+
+                </div>
+                `
+                :
+                ""
+            }
 
         </div>
 
+
+        ${actionHTML}
+
     `;
+
+
+    return card;
 
 }
 
 
+/* =========================
+   APPROVE / REJECT
+========================= */
+
 async function processRequest(
-    redemptionId,
+    id,
     decision
 ){
 
-    let note = "";
-
-
-    const input =
+    const noteElement =
         document.getElementById(
-            "note-" + redemptionId
+            "note-" + id
         );
 
 
-    if(input){
-
-        note =
-            input.value.trim();
-
-    }
+    const note =
+        noteElement
+        ?
+        noteElement.value.trim()
+        :
+        "";
 
 
     const actionText =
@@ -812,20 +1095,14 @@ async function processRequest(
 
     const confirmed =
         confirm(
-            "Are you sure you want to " +
-            actionText +
-            " this redemption request?"
+            "Are you sure you want to "
+            + actionText
+            + " this redemption request?"
         );
 
 
-    if(!confirmed){
-
+    if(!confirmed)
         return;
-
-    }
-
-
-    hideMessage();
 
 
     const {
@@ -835,14 +1112,9 @@ async function processRequest(
     await supabaseClient.rpc(
         "process_reward_redemption",
         {
-            redemption_id:
-                redemptionId,
-
-            decision:
-                decision,
-
-            note:
-                note || null
+            redemption_id: id,
+            decision: decision,
+            note: note || null
         }
     );
 
@@ -852,56 +1124,145 @@ async function processRequest(
         console.error(error);
 
         showMessage(
-            "❌ " + error.message,
+            "Error: " + error.message,
             "error"
         );
 
         return;
-
     }
 
 
     if(!data || !data.success){
 
         showMessage(
-            "❌ " +
-            (
-                data?.message ||
-                "Request failed."
-            ),
+            data?.message ||
+            "Request could not be processed.",
             "error"
         );
 
         return;
-
     }
 
 
     showMessage(
-        decision === "approved"
-        ? "✅ Redemption approved successfully."
-        : "✅ Redemption rejected successfully.",
+        data.message ||
+        "Request processed successfully.",
         "success"
     );
 
 
-    await loadRequests();
+    await loadRedemptions();
 
 }
 
 
-async function logout(){
+/* =========================
+   MARK AS PAID
+========================= */
 
-    await supabaseClient.auth.signOut();
+async function markAsPaid(id){
 
-    location.href = "index.html";
+    const input =
+        document.getElementById(
+            "payment-" + id
+        );
+
+
+    if(!input)
+        return;
+
+
+    const reference =
+        input.value.trim();
+
+
+    if(reference.length < 3){
+
+        showMessage(
+            "Please enter the payment Transaction ID / Reference.",
+            "error"
+        );
+
+        input.focus();
+
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Confirm that you have already sent the payout to the user?"
+        );
+
+
+    if(!confirmed)
+        return;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.rpc(
+        "mark_reward_redemption_paid",
+        {
+            redemption_id: id,
+            payment_reference_input: reference
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        showMessage(
+            "Payment update failed: "
+            + error.message,
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!data || !data.success){
+
+        showMessage(
+            data?.message ||
+            "Payment could not be marked as paid.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    showMessage(
+        "✅ Payment marked as PAID successfully.",
+        "success"
+    );
+
+
+    await loadRedemptions();
 
 }
 
 
-function escapeHtml(value){
+/* =========================
+   ESCAPE HTML
+========================= */
 
-    return String(value ?? "")
+function escapeHTML(value){
+
+    if(value === null ||
+       value === undefined){
+
+        return "";
+    }
+
+
+    return String(value)
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
@@ -911,7 +1272,35 @@ function escapeHtml(value){
 }
 
 
-loadRequests();
+/* =========================
+   LOGOUT
+========================= */
+
+async function logoutAdmin(){
+
+    await supabaseClient.auth.signOut();
+
+    location.href = "index.html";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+(async function(){
+
+    const allowed =
+        await checkAdmin();
+
+    if(allowed){
+
+        await loadRedemptions();
+
+    }
+
+})();
 
 </script>
 
