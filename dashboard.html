@@ -113,7 +113,8 @@ header h2{
 }
 
 .copy-btn,
-.reward-btn{
+.reward-btn,
+.redeem-btn{
     background:#2563eb;
     color:white;
     border:none;
@@ -127,9 +128,21 @@ header h2{
     background:#16a34a;
 }
 
-.reward-btn:disabled{
+.reward-btn:disabled,
+.redeem-btn:disabled{
     opacity:.7;
     cursor:not-allowed;
+}
+
+.redeem-btn{
+    width:100%;
+    background:#7c3aed;
+    padding:13px;
+    margin-top:5px;
+}
+
+.redeem-btn:hover{
+    background:#6d28d9;
 }
 
 .info-row{
@@ -157,6 +170,65 @@ header h2{
 }
 
 .error{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.redeem-input,
+.redeem-select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:7px;
+    margin-top:6px;
+    margin-bottom:12px;
+    font-size:15px;
+    background:white;
+}
+
+.redeem-label{
+    display:block;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.redeem-note{
+    background:#f5f3ff;
+    color:#5b21b6;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+.redeem-request{
+    border:1px solid #e5e7eb;
+    border-radius:9px;
+    padding:13px;
+    margin-top:10px;
+    background:#fafafa;
+}
+
+.redeem-status{
+    display:inline-block;
+    padding:4px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.redeem-pending{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.redeem-approved{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.redeem-rejected{
     background:#fee2e2;
     color:#991b1b;
 }
@@ -265,6 +337,23 @@ header h2{
     background:#e2e8f0;
 }
 
+.rewards-history-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    background:#7c3aed;
+    color:white;
+    padding:13px 16px;
+    border-radius:8px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.rewards-history-btn:hover{
+    background:#6d28d9;
+}
+
 @media(max-width:600px){
 
     header{
@@ -362,7 +451,8 @@ header h2{
             <h3>🎁 Refer & Earn</h3>
 
             <p>
-                Invite your friends and earn points when they join.
+                Invite your friends and earn <strong>৳5</strong>
+                for every successful referral.
             </p>
 
             <strong>Your Referral Link</strong>
@@ -403,13 +493,105 @@ header h2{
                 <div class="info-row">
 
                     <span>
-                        Points / Referral
+                        Reward / Referral
                     </span>
 
                     <strong>
-                        10
+                        ৳5
                     </strong>
 
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REDEEM -->
+
+        <div class="card">
+
+            <h3>🎁 Redeem Points</h3>
+
+            <div class="redeem-note">
+                Minimum redeem amount is
+                <strong>1000 points</strong>.<br>
+                Redeem through <strong>bKash</strong> or
+                <strong>Nagad</strong>.<br>
+                Your request will be reviewed by admin.
+            </div>
+
+
+            <label class="redeem-label">
+                Points to Redeem
+            </label>
+
+            <input
+                type="number"
+                id="redeemPoints"
+                class="redeem-input"
+                min="1000"
+                step="1"
+                placeholder="Minimum 1000 points"
+            >
+
+
+            <label class="redeem-label">
+                Payment Method
+            </label>
+
+            <select
+                id="redeemMethod"
+                class="redeem-select"
+            >
+
+                <option value="bKash">
+                    bKash
+                </option>
+
+                <option value="Nagad">
+                    Nagad
+                </option>
+
+            </select>
+
+
+            <label class="redeem-label">
+                bKash / Nagad Number
+            </label>
+
+            <input
+                type="text"
+                id="redeemDetails"
+                class="redeem-input"
+                placeholder="Enter your payment number"
+                maxlength="30"
+            >
+
+
+            <button
+                class="redeem-btn"
+                id="redeemButton"
+            >
+                🎁 Submit Redeem Request
+            </button>
+
+
+            <div
+                class="message"
+                id="redeemMessage"
+            ></div>
+
+
+            <h4 style="margin-top:22px;">
+                📋 My Redeem Requests
+            </h4>
+
+
+            <div id="redeemRequests">
+
+                <div class="video-loading">
+                    Loading redeem requests...
                 </div>
 
             </div>
@@ -441,24 +623,25 @@ header h2{
 
         </div>
 
-       <!-- REWARDS HISTORY -->
 
-<div class="card">
+        <!-- REWARDS HISTORY -->
 
-    <h3>📜 Rewards History</h3>
+        <div class="card">
 
-    <p>
-        View your daily rewards, referral rewards and other earnings.
-    </p>
+            <h3>📜 Rewards History</h3>
 
-    <a
-        href="rewards-history.html"
-        class="rewards-history-btn"
-    >
-        🏆 View Rewards History
-    </a>
+            <p>
+                View your daily rewards, referral rewards and other earnings.
+            </p>
 
-</div>
+            <a
+                href="rewards-history.html"
+                class="rewards-history-btn"
+            >
+                🏆 View Rewards History
+            </a>
+
+        </div>
 
 
         <!-- MY VIDEOS -->
@@ -566,6 +749,24 @@ document.getElementById("dashboardError");
 const rewardMessage =
 document.getElementById("rewardMessage");
 
+const redeemPointsElement =
+document.getElementById("redeemPoints");
+
+const redeemMethodElement =
+document.getElementById("redeemMethod");
+
+const redeemDetailsElement =
+document.getElementById("redeemDetails");
+
+const redeemButton =
+document.getElementById("redeemButton");
+
+const redeemMessage =
+document.getElementById("redeemMessage");
+
+const redeemRequestsElement =
+document.getElementById("redeemRequests");
+
 
 
 /* ESCAPE HTML */
@@ -582,6 +783,7 @@ function escapeHtml(value){
         .replace(/>/g,"&gt;")
         .replace(/"/g,"&quot;")
         .replace(/'/g,"&#039;");
+
 }
 
 
@@ -716,7 +918,6 @@ async function loadMyVideos(userId){
 
         data.forEach(video => {
 
-
             const card =
                 document.createElement("div");
 
@@ -770,16 +971,11 @@ async function loadMyVideos(userId){
             let content = "";
 
 
-            /* APPROVED */
-
             if(status === "approved"){
-
 
                 const videoUrl =
                     video.videos_url || "";
 
-
-                /* DIRECT VIDEO */
 
                 if(
                     videoUrl &&
@@ -818,9 +1014,6 @@ async function loadMyVideos(userId){
                     `;
 
                 }
-
-
-                /* YOUTUBE */
 
                 else if(
                     String(video.platform)
@@ -864,9 +1057,6 @@ async function loadMyVideos(userId){
 
                 }
 
-
-                /* OTHER PLATFORMS */
-
                 else{
 
                     content = `
@@ -884,9 +1074,6 @@ async function loadMyVideos(userId){
 
             }
 
-
-            /* PENDING */
-
             else if(status === "pending"){
 
                 content = `
@@ -899,9 +1086,6 @@ async function loadMyVideos(userId){
 
             }
 
-
-            /* REJECTED */
-
             else if(status === "rejected"){
 
                 content = `
@@ -913,9 +1097,6 @@ async function loadMyVideos(userId){
                 `;
 
             }
-
-
-            /* UNKNOWN STATUS */
 
             else{
 
@@ -988,6 +1169,191 @@ async function loadMyVideos(userId){
                  style="background:#fee2e2;color:#991b1b;">
 
                 ❌ Could not load your videos.
+
+                <br><br>
+
+                ${escapeHtml(
+                    error.message || "Unknown error"
+                )}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+/* LOAD REDEEM REQUESTS */
+
+async function loadRedeemRequests(userId){
+
+    redeemRequestsElement.innerHTML = `
+        <div class="video-loading">
+            Loading redeem requests...
+        </div>
+    `;
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient
+            .from("reward_redemptions")
+            .select(
+                "id,points,status,reward_method,created_at,processed_at,admin_note"
+            )
+            .eq(
+                "user_id",
+                userId
+            )
+            .order(
+                "created_at",
+                {
+                    ascending:false
+                }
+            );
+
+
+        if(error){
+            throw error;
+        }
+
+
+        if(!data || data.length === 0){
+
+            redeemRequestsElement.innerHTML = `
+                <div class="no-videos">
+                    No redeem requests yet.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        redeemRequestsElement.innerHTML = "";
+
+
+        data.forEach(request => {
+
+            const status =
+                String(
+                    request.status || "pending"
+                ).toLowerCase();
+
+
+            let statusClass =
+                "redeem-pending";
+
+
+            if(status === "approved"){
+                statusClass =
+                    "redeem-approved";
+            }
+
+            else if(status === "rejected"){
+                statusClass =
+                    "redeem-rejected";
+            }
+
+
+            const date =
+                request.created_at
+                ?
+                new Date(
+                    request.created_at
+                ).toLocaleString()
+                :
+                "-";
+
+
+            const method =
+                escapeHtml(
+                    request.reward_method || "-"
+                );
+
+
+            const note =
+                escapeHtml(
+                    request.admin_note || ""
+                );
+
+
+            const card =
+                document.createElement("div");
+
+
+            card.className =
+                "redeem-request";
+
+
+            card.innerHTML = `
+
+                <div>
+                    <strong>
+                        ${escapeHtml(request.points)}
+                        Points
+                    </strong>
+
+                    &nbsp;
+
+                    <span class="redeem-status ${statusClass}">
+                        ${escapeHtml(status)}
+                    </span>
+                </div>
+
+                <div style="font-size:13px;color:#666;margin-top:7px;">
+                    Method:
+                    <strong>${method}</strong>
+                </div>
+
+                <div style="font-size:13px;color:#666;margin-top:4px;">
+                    Requested:
+                    ${escapeHtml(date)}
+                </div>
+
+                ${
+                    note
+                    ?
+                    `
+                    <div style="font-size:13px;margin-top:7px;">
+                        Admin note:
+                        ${note}
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+            `;
+
+
+            redeemRequestsElement.appendChild(card);
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Redeem requests error:",
+            error
+        );
+
+
+        redeemRequestsElement.innerHTML = `
+
+            <div class="video-message"
+                 style="background:#fee2e2;color:#991b1b;">
+
+                ❌ Could not load redeem requests.
 
                 <br><br>
 
@@ -1202,6 +1568,11 @@ async function loadDashboard(){
             "block";
 
 
+        await loadRedeemRequests(
+            user.id
+        );
+
+
         await loadMyVideos(
             user.id
         );
@@ -1290,6 +1661,213 @@ document
 
 
 
+/* REDEEM */
+
+redeemButton.addEventListener(
+    "click",
+    async function(){
+
+        if(!currentUser){
+            return;
+        }
+
+
+        const points =
+            parseInt(
+                redeemPointsElement.value,
+                10
+            );
+
+
+        const method =
+            redeemMethodElement.value;
+
+
+        const details =
+            redeemDetailsElement.value.trim();
+
+
+        redeemMessage.style.display =
+            "none";
+
+
+        if(!points || points < 1000){
+
+            redeemMessage.className =
+                "message error";
+
+            redeemMessage.innerHTML =
+                "❌ Minimum redeem amount is 1000 points.";
+
+            redeemMessage.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        if(points % 1 !== 0){
+
+            redeemMessage.className =
+                "message error";
+
+            redeemMessage.innerHTML =
+                "❌ Points must be a whole number.";
+
+            redeemMessage.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        if(!details){
+
+            redeemMessage.className =
+                "message error";
+
+            redeemMessage.innerHTML =
+                "❌ Please enter your bKash or Nagad number.";
+
+            redeemMessage.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        if(!/^[0-9+\-\s]{8,30}$/.test(details)){
+
+            redeemMessage.className =
+                "message error";
+
+            redeemMessage.innerHTML =
+                "❌ Please enter a valid payment number.";
+
+            redeemMessage.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        redeemButton.disabled =
+            true;
+
+
+        redeemButton.textContent =
+            "Submitting...";
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.rpc(
+                "request_reward_redemption",
+                {
+                    requested_points:
+                        points,
+
+                    method:
+                        method,
+
+                    details:
+                        details
+                }
+            );
+
+
+            if(error){
+                throw error;
+            }
+
+
+            if(!data?.success){
+
+                throw new Error(
+                    data?.message ||
+                    "Redeem request failed."
+                );
+
+            }
+
+
+            redeemMessage.className =
+                "message success";
+
+
+            redeemMessage.innerHTML =
+                "✅ " +
+                (
+                    data.message ||
+                    "Redeem request submitted successfully."
+                );
+
+
+            redeemMessage.style.display =
+                "block";
+
+
+            redeemPointsElement.value =
+                "";
+
+
+            redeemDetailsElement.value =
+                "";
+
+
+            await loadRedeemRequests(
+                currentUser.id
+            );
+
+
+        }
+
+        catch(error){
+
+            console.error(
+                "Redeem error:",
+                error
+            );
+
+
+            redeemMessage.className =
+                "message error";
+
+
+            redeemMessage.innerHTML =
+                "❌ " +
+                (
+                    error.message ||
+                    "Could not submit redeem request."
+                );
+
+
+            redeemMessage.style.display =
+                "block";
+
+        }
+
+
+        redeemButton.disabled =
+            false;
+
+
+        redeemButton.textContent =
+            "🎁 Submit Redeem Request";
+
+    }
+);
+
+
+
 /* DAILY REWARD */
 
 document
@@ -1320,12 +1898,6 @@ document
 
 
         try{
-
-            /*
-             * Secure RPC:
-             * No user_id is sent from the browser.
-             * Supabase uses auth.uid().
-             */
 
             const {
                 data,
@@ -1372,11 +1944,6 @@ document
             rewardMessage.style.display =
                 "block";
 
-
-            /*
-             * Reload dashboard only after
-             * successful reward claim.
-             */
 
             if(success){
 
