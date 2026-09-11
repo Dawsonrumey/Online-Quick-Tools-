@@ -202,6 +202,18 @@ header h2{
     line-height:1.5;
 }
 
+.redeem-preview{
+    background:#f0fdf4;
+    color:#166534;
+    padding:12px;
+    border-radius:8px;
+    margin-top:-4px;
+    margin-bottom:12px;
+    font-size:14px;
+    line-height:1.6;
+    display:none;
+}
+
 .redeem-request{
     border:1px solid #e5e7eb;
     border-radius:9px;
@@ -514,11 +526,22 @@ header h2{
             <h3>🎁 Redeem Points</h3>
 
             <div class="redeem-note">
-                Minimum redeem amount is
+
+                Minimum redeem amount:
                 <strong>1000 points</strong>.<br>
-                Redeem through <strong>bKash</strong> or
+
+                Processing fee:
+                <strong>5%</strong>.<br>
+
+                Example:
+                <strong>1000 points → ৳50 fee → ৳950 payout</strong>.<br>
+
+                Redeem through
+                <strong>bKash</strong> or
                 <strong>Nagad</strong>.<br>
+
                 Your request will be reviewed by admin.
+
             </div>
 
 
@@ -534,6 +557,14 @@ header h2{
                 step="1"
                 placeholder="Minimum 1000 points"
             >
+
+
+            <!-- LIVE PAYOUT PREVIEW -->
+
+            <div
+                id="redeemPreview"
+                class="redeem-preview"
+            ></div>
 
 
             <label class="redeem-label">
@@ -767,6 +798,8 @@ document.getElementById("redeemMessage");
 const redeemRequestsElement =
 document.getElementById("redeemRequests");
 
+const redeemPreview =
+document.getElementById("redeemPreview");
 
 
 /* ESCAPE HTML */
@@ -785,7 +818,6 @@ function escapeHtml(value){
         .replace(/'/g,"&#039;");
 
 }
-
 
 
 /* YOUTUBE EMBED URL */
@@ -865,7 +897,6 @@ function getYouTubeEmbedUrl(url){
     }
 
 }
-
 
 
 /* LOAD MY VIDEOS */
@@ -1185,7 +1216,6 @@ async function loadMyVideos(userId){
 }
 
 
-
 /* LOAD REDEEM REQUESTS */
 
 async function loadRedeemRequests(userId){
@@ -1206,7 +1236,7 @@ async function loadRedeemRequests(userId){
         await supabaseClient
             .from("reward_redemptions")
             .select(
-                "id,points,status,reward_method,created_at,processed_at,admin_note"
+                "id,points,status,reward_method,fee_amount,payout_amount,created_at,processed_at,admin_note"
             )
             .eq(
                 "user_id",
@@ -1285,6 +1315,18 @@ async function loadRedeemRequests(userId){
                 );
 
 
+            const fee =
+                Number(
+                    request.fee_amount ?? 0
+                );
+
+
+            const payout =
+                Number(
+                    request.payout_amount ?? 0
+                );
+
+
             const card =
                 document.createElement("div");
 
@@ -1308,23 +1350,45 @@ async function loadRedeemRequests(userId){
                     </span>
                 </div>
 
-                <div style="font-size:13px;color:#666;margin-top:7px;">
-                    Method:
-                    <strong>${method}</strong>
+
+                <div style="font-size:13px;color:#166534;margin-top:7px;">
+
+                    Processing Fee:
+                    <strong>৳${escapeHtml(fee)}</strong>
+
+                    &nbsp; | &nbsp;
+
+                    Payout:
+                    <strong>৳${escapeHtml(payout)}</strong>
+
                 </div>
 
+
+                <div style="font-size:13px;color:#666;margin-top:7px;">
+
+                    Method:
+                    <strong>${method}</strong>
+
+                </div>
+
+
                 <div style="font-size:13px;color:#666;margin-top:4px;">
+
                     Requested:
                     ${escapeHtml(date)}
+
                 </div>
+
 
                 ${
                     note
                     ?
                     `
                     <div style="font-size:13px;margin-top:7px;">
+
                         Admin note:
                         ${note}
+
                     </div>
                     `
                     :
@@ -1368,7 +1432,6 @@ async function loadRedeemRequests(userId){
     }
 
 }
-
 
 
 /* PROCESS REFERRAL */
@@ -1443,7 +1506,6 @@ async function processPendingReferral(user){
     }
 
 }
-
 
 
 /* LOAD DASHBOARD */
@@ -1613,7 +1675,6 @@ async function loadDashboard(){
 }
 
 
-
 /* COPY REFERRAL LINK */
 
 document
@@ -1659,6 +1720,60 @@ document
     }
 );
 
+
+/* LIVE REDEEM CALCULATION */
+
+redeemPointsElement.addEventListener(
+    "input",
+    function(){
+
+        const points =
+            parseInt(
+                this.value,
+                10
+            );
+
+
+        if(!points || points < 1000){
+
+            redeemPreview.style.display =
+                "none";
+
+            return;
+
+        }
+
+
+        const fee =
+            Math.floor(
+                points * 5 / 100
+            );
+
+
+        const payout =
+            points - fee;
+
+
+        redeemPreview.innerHTML =
+
+            "💰 Redeem: <strong>" +
+            points +
+            " points</strong><br>" +
+
+            "Processing fee: <strong>৳" +
+            fee +
+            "</strong><br>" +
+
+            "You will receive: <strong>৳" +
+            payout +
+            "</strong>";
+
+
+        redeemPreview.style.display =
+            "block";
+
+    }
+);
 
 
 /* REDEEM */
@@ -1808,7 +1923,19 @@ redeemButton.addEventListener(
                 (
                     data.message ||
                     "Redeem request submitted successfully."
-                );
+                ) +
+                "<br><br>" +
+                "Points: <strong>" +
+                escapeHtml(data.points) +
+                "</strong>" +
+                " &nbsp; | &nbsp; " +
+                "Fee: <strong>৳" +
+                escapeHtml(data.fee) +
+                "</strong>" +
+                " &nbsp; | &nbsp; " +
+                "Payout: <strong>৳" +
+                escapeHtml(data.payout) +
+                "</strong>";
 
 
             redeemMessage.style.display =
@@ -1821,6 +1948,10 @@ redeemButton.addEventListener(
 
             redeemDetailsElement.value =
                 "";
+
+
+            redeemPreview.style.display =
+                "none";
 
 
             await loadRedeemRequests(
@@ -1865,7 +1996,6 @@ redeemButton.addEventListener(
 
     }
 );
-
 
 
 /* DAILY REWARD */
@@ -1990,7 +2120,6 @@ document
 );
 
 
-
 /* LOGOUT */
 
 document
@@ -2022,7 +2151,6 @@ document
 
     }
 );
-
 
 
 /* START */
