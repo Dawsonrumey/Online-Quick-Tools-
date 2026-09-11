@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<title>Rewards History - Online Quick Tools</title>
 
-<title>Reward History - Online Quick Tools</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta name="description"
+      content="View your points, daily rewards, task rewards and referral history on Online Quick Tools.">
 
 <style>
 
@@ -18,411 +18,862 @@
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
+    font-family:Arial,Helvetica,sans-serif;
     background:#f4f7fb;
-    color:#111827;
+    color:#222;
+    transition:.3s;
+}
+
+body.dark{
+    background:#111827;
+    color:#f3f4f6;
 }
 
 header{
-    background:#2563eb;
+    background:#4f46e5;
     color:white;
-    padding:18px;
+    padding:18px 15px;
     text-align:center;
 }
 
 header h1{
-    margin:0;
-    font-size:23px;
+    margin:0 0 12px;
+    font-size:24px;
+}
+
+.nav{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.nav a,
+.nav button{
+    border:0;
+    text-decoration:none;
+    background:white;
+    color:#4f46e5;
+    padding:9px 13px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .container{
-    max-width:650px;
-    margin:25px auto;
-    padding:15px;
+    width:100%;
+    max-width:900px;
+    margin:20px auto;
+    padding:0 14px;
 }
 
 .card{
     background:white;
-    padding:20px;
     border-radius:14px;
-    margin-bottom:15px;
-    box-shadow:0 4px 15px rgba(0,0,0,.08);
-}
-
-.back{
-    display:block;
-    text-decoration:none;
-    text-align:center;
-    background:#2563eb;
-    color:white;
-    padding:13px;
-    border-radius:10px;
-    font-weight:bold;
+    padding:18px;
     margin-bottom:18px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
 }
 
-.summary{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.dark .card{
+    background:#1f2937;
+    box-shadow:0 4px 15px rgba(0,0,0,.25);
 }
 
-.total{
-    font-size:30px;
-    font-weight:bold;
-    color:#2563eb;
+.login-box{
+    text-align:center;
+    padding:25px;
+}
+
+.login-box a{
+    display:inline-block;
+    background:#4f46e5;
+    color:white;
+    text-decoration:none;
+    padding:11px 18px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.stat{
+    text-align:center;
+    padding:16px 10px;
+    border-radius:12px;
+    background:#eef2ff;
+}
+
+.dark .stat{
+    background:#374151;
+}
+
+.stat strong{
+    display:block;
+    font-size:26px;
+    color:#4f46e5;
+}
+
+.dark .stat strong{
+    color:#a5b4fc;
+}
+
+.stat span{
+    font-size:13px;
+}
+
+.section-title{
+    margin-top:0;
+    font-size:20px;
 }
 
 .transaction{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 0;
     border-bottom:1px solid #e5e7eb;
-    padding:15px 0;
+}
+
+.dark .transaction{
+    border-bottom-color:#374151;
 }
 
 .transaction:last-child{
-    border-bottom:none;
+    border-bottom:0;
 }
 
-.transaction-top{
+.icon{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#eef2ff;
     display:flex;
-    justify-content:space-between;
-    gap:10px;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    flex-shrink:0;
 }
 
-.type{
-    font-weight:bold;
+.dark .icon{
+    background:#374151;
+}
+
+.transaction-info{
+    flex:1;
+}
+
+.transaction-info strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.transaction-info small{
+    color:#6b7280;
+}
+
+.dark .transaction-info small{
+    color:#cbd5e1;
 }
 
 .amount{
+    font-size:18px;
     font-weight:bold;
     color:#16a34a;
 }
 
-.description{
-    color:#6b7280;
-    font-size:14px;
-    margin-top:6px;
+.referral{
+    padding:14px;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    margin-bottom:10px;
 }
 
-.date{
-    color:#9ca3af;
-    font-size:12px;
-    margin-top:5px;
+.dark .referral{
+    border-color:#374151;
 }
 
-.message{
+.referral strong{
+    display:block;
+    margin-bottom:6px;
+}
+
+.empty{
     text-align:center;
+    padding:25px 10px;
     color:#6b7280;
-    padding:20px;
 }
 
 .error{
     background:#fee2e2;
     color:#991b1b;
-    padding:15px;
+    padding:14px;
     border-radius:10px;
+    margin-top:12px;
+    word-break:break-word;
+}
+
+.dark .error{
+    background:#451a1a;
+    color:#fecaca;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+}
+
+footer{
+    text-align:center;
+    padding:25px 15px;
+    color:#6b7280;
+    font-size:13px;
+}
+
+@media(max-width:600px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .transaction{
+        align-items:flex-start;
+    }
+
+    .amount{
+        font-size:16px;
+    }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
 
-<h1>🎁 Reward History</h1>
+    <h1>🎁 Rewards History</h1>
+
+    <div class="nav">
+        <a href="profile.html">👤 Profile</a>
+        <a href="index.html">🏠 Home</a>
+        <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    </div>
 
 </header>
 
 
 <div class="container">
 
-<a
-    href="dashboard.html"
-    class="back"
->
-    ← Back to Dashboard
-</a>
+    <!-- LOGIN -->
+    <div id="loginBox" class="card login-box" style="display:none;">
+
+        <h2>🔐 Login Required</h2>
+
+        <p>Please login to view your rewards history.</p>
+
+        <a href="login.html">Login</a>
+
+    </div>
 
 
-<div
-    id="loading"
-    class="card message"
->
-    Loading reward history...
-</div>
+    <!-- MAIN -->
+    <div id="mainContent" style="display:none;">
 
+        <!-- STATS -->
+        <div class="card">
 
-<div
-    id="content"
-    style="display:none;"
->
+            <div class="stats">
 
-
-    <div class="card">
-
-        <div class="summary">
-
-            <div>
-                <div>
-                    Total Rewards
+                <div class="stat">
+                    <strong id="totalReferrals">0</strong>
+                    <span>Total Referrals</span>
                 </div>
 
-                <div
-                    class="total"
-                    id="totalPoints"
-                >
-                    0
+                <div class="stat">
+                    <strong id="referralPoints">0</strong>
+                    <span>Referral Points</span>
                 </div>
+
+                <div class="stat">
+                    <strong id="currentPoints">0</strong>
+                    <span>Current Points</span>
+                </div>
+
             </div>
 
-            <div>
-                Transactions:
-                <strong id="transactionCount">
-                    0
-                </strong>
+        </div>
+
+
+        <!-- TRANSACTIONS -->
+        <div class="card">
+
+            <h2 class="section-title">💰 Points & Reward History</h2>
+
+            <div id="transactions">
+
+                <div class="loading">
+                    Loading rewards...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- REFERRALS -->
+        <div class="card">
+
+            <h2 class="section-title">👥 Referral History</h2>
+
+            <div id="history">
+
+                <div class="loading">
+                    Loading referrals...
+                </div>
+
             </div>
 
         </div>
 
     </div>
 
-
-    <div class="card">
-
-        <h2>Reward Transactions</h2>
-
-        <div id="historyList"></div>
-
-    </div>
-
-
 </div>
 
 
-<div
-    id="errorBox"
-    style="display:none;"
-    class="error"
-></div>
+<footer>
+    © 2026 Online Quick Tools
+</footer>
 
-</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-const SUPABASE_URL =
-    "https://etkqkptoxkfhxcysaadi.supabase.co";
+/* =========================
+   SUPABASE
+========================= */
 
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
-
+"sb_publishable_QLp5kSKz9XU5Uba4X_u_jA_DRfXO22T";
 
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains("dark")
+            ? "on"
+            : "off"
+    );
+}
+
+if(localStorage.getItem("darkMode") === "on"){
+    document.body.classList.add("dark");
+}
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const loginBox =
+document.getElementById("loginBox");
+
+const mainContent =
+document.getElementById("mainContent");
+
+const transactions =
+document.getElementById("transactions");
+
+const history =
+document.getElementById("history");
+
+
+/* =========================
+   ICON
+========================= */
+
+function getRewardIcon(type){
+
+    type = String(type || "").toLowerCase();
+
+    if(type.includes("daily")){
+        return "🎁";
+    }
+
+    if(type.includes("login")){
+        return "🎁";
+    }
+
+    if(type.includes("task")){
+        return "✅";
+    }
+
+    if(type.includes("referral") ||
+       type.includes("refer")){
+        return "👥";
+    }
+
+    return "⭐";
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(date){
+
+    if(!date) return "Unknown date";
+
+    const d = new Date(date);
+
+    if(isNaN(d.getTime())){
+        return date;
+    }
+
+    return d.toLocaleString(
+        "en-BD",
+        {
+            year:"numeric",
+            month:"short",
+            day:"numeric",
+            hour:"numeric",
+            minute:"2-digit"
+        }
+    );
+}
+
+
+/* =========================
+   LOAD PROFILE
+========================= */
+
+async function loadProfile(userId){
+
+    const {data,error} =
+        await supabaseClient
+        .from("profiles")
+        .select("points, referral_count")
+        .eq("id", userId)
+        .single();
+
+    if(error){
+        throw new Error(
+            "Profile error: " + error.message
+        );
+    }
+
+    document.getElementById(
+        "currentPoints"
+    ).textContent = data?.points ?? 0;
+
+    document.getElementById(
+        "totalReferrals"
+    ).textContent = data?.referral_count ?? 0;
+
+    document.getElementById(
+        "referralPoints"
+    ).textContent =
+        (data?.referral_count ?? 0) * 10;
+}
+
+
+/* =========================
+   LOAD TRANSACTIONS
+========================= */
+
+async function loadTransactions(userId){
+
+    transactions.innerHTML =
+        `<div class="loading">
+            Loading reward transactions...
+        </div>`;
+
+    const {data,error} =
+        await supabaseClient
+        .from("reward_transactions")
+        .select(
+            "id, amount, type, description, created_at"
+        )
+        .eq("user_id", userId)
+        .order(
+            "created_at",
+            {ascending:false}
+        );
+
+    console.log(
+        "Reward transactions:",
+        data,
+        error
     );
 
+    if(error){
 
-async function loadHistory(){
+        transactions.innerHTML =
+            `<div class="error">
+                ❌ Could not load reward history.<br><br>
+                <strong>Supabase error:</strong><br>
+                ${escapeHtml(error.message)}
+            </div>`;
 
-    const loading =
-        document.getElementById("loading");
+        return;
+    }
 
-    const content =
-        document.getElementById("content");
+    if(!data || data.length === 0){
 
-    const errorBox =
-        document.getElementById("errorBox");
+        transactions.innerHTML =
+            `<div class="empty">
+                🎁 No reward transactions yet.
+            </div>`;
 
+        return;
+    }
+
+    transactions.innerHTML = "";
+
+    data.forEach(row => {
+
+        const div =
+        document.createElement("div");
+
+        div.className = "transaction";
+
+        const icon =
+            getRewardIcon(row.type);
+
+        const amount =
+            Number(row.amount || 0);
+
+        div.innerHTML = `
+
+            <div class="icon">
+                ${icon}
+            </div>
+
+            <div class="transaction-info">
+
+                <strong>
+                    ${escapeHtml(
+                        row.description ||
+                        row.type ||
+                        "Reward"
+                    )}
+                </strong>
+
+                <small>
+                    ${formatDate(row.created_at)}
+                </small>
+
+            </div>
+
+            <div class="amount">
+                +${amount}
+            </div>
+
+        `;
+
+        transactions.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================
+   LOAD REFERRALS
+========================= */
+
+async function loadReferrals(userId){
+
+    history.innerHTML =
+        `<div class="loading">
+            Loading referral history...
+        </div>`;
+
+    const {data,error} =
+        await supabaseClient
+        .from("referrals")
+        .select(`
+            id,
+            referred_user_id,
+            referral_code,
+            reward_referrer,
+            status,
+            created_at
+        `)
+        .eq("referrer_id", userId)
+        .order(
+            "created_at",
+            {ascending:false}
+        );
+
+    console.log(
+        "Referral history:",
+        data,
+        error
+    );
+
+    if(error){
+
+        history.innerHTML =
+            `<div class="error">
+                ❌ Could not load referral history.<br><br>
+                <strong>Supabase error:</strong><br>
+                ${escapeHtml(error.message)}
+            </div>`;
+
+        return;
+    }
+
+    if(!data || data.length === 0){
+
+        history.innerHTML =
+            `<div class="empty">
+                👥 No referral history yet.
+            </div>`;
+
+        return;
+    }
+
+    /*
+       Try to get public usernames.
+       If RPC is unavailable, we still show
+       the referral record.
+    */
+
+    const userIds =
+        data
+        .map(x => x.referred_user_id)
+        .filter(Boolean);
+
+    let usernameMap = {};
+
+    if(userIds.length > 0){
+
+        try{
+
+            const {data:names,error:nameError} =
+                await supabaseClient.rpc(
+                    "get_public_usernames",
+                    {
+                        user_ids:userIds
+                    }
+                );
+
+            if(!nameError && names){
+
+                names.forEach(item => {
+
+                    usernameMap[
+                        item.id ||
+                        item.user_id
+                    ] =
+                        item.username ||
+                        "User";
+
+                });
+
+            }
+
+        }catch(e){
+
+            console.log(
+                "Username lookup skipped:",
+                e
+            );
+
+        }
+
+    }
+
+    history.innerHTML = "";
+
+    data.forEach(row => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "referral";
+
+        const username =
+            usernameMap[row.referred_user_id] ||
+            "Referred User";
+
+        const reward =
+            Number(row.reward_referrer || 0);
+
+        const status =
+            row.status || "pending";
+
+        div.innerHTML = `
+
+            <strong>
+                👤 ${escapeHtml(username)}
+            </strong>
+
+            <div>
+                Status:
+                <b>${escapeHtml(status)}</b>
+            </div>
+
+            <div>
+                Reward:
+                <b>+${reward || 10} points</b>
+            </div>
+
+            <small>
+                ${formatDate(row.created_at)}
+            </small>
+
+        `;
+
+        history.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================
+   HTML ESCAPE
+========================= */
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   LOAD EVERYTHING
+========================= */
+
+async function loadPage(user){
+
+    if(!user){
+
+        loginBox.style.display = "block";
+        mainContent.style.display = "none";
+
+        return;
+    }
+
+    loginBox.style.display = "none";
+    mainContent.style.display = "block";
 
     try{
 
-        const {
-            data: {
-                user
-            },
-            error: userError
-        } =
-        await supabaseClient.auth.getUser();
+        await Promise.all([
 
+            loadProfile(user.id),
 
-        if(userError){
+            loadTransactions(user.id),
 
-            throw userError;
+            loadReferrals(user.id)
 
-        }
-
-
-        if(!user){
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-            .from("reward_transactions")
-            .select(
-                "amount,type,description,created_at"
-            )
-            .eq(
-                "user_id",
-                user.id
-            )
-            .order(
-                "created_at",
-                {
-                    ascending:false
-                }
-            );
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        const transactions =
-            data || [];
-
-
-        let total = 0;
-
-
-        transactions.forEach(
-            transaction => {
-
-                total +=
-                    Number(
-                        transaction.amount
-                    );
-
-            }
-        );
-
-
-        document.getElementById(
-            "totalPoints"
-        ).textContent = total;
-
-
-        document.getElementById(
-            "transactionCount"
-        ).textContent =
-            transactions.length;
-
-
-        const list =
-            document.getElementById(
-                "historyList"
-            );
-
-
-        if(transactions.length === 0){
-
-            list.innerHTML =
-                '<div class="message">' +
-                'No reward transactions yet.' +
-                '</div>';
-
-        }else{
-
-            list.innerHTML =
-                transactions.map(
-                    transaction => {
-
-                        const date =
-                            new Date(
-                                transaction.created_at
-                            ).toLocaleString();
-
-
-                        return `
-
-                        <div class="transaction">
-
-                            <div class="transaction-top">
-
-                                <div class="type">
-                                    🎁 ${
-                                        transaction.type ||
-                                        "Reward"
-                                    }
-                                </div>
-
-                                <div class="amount">
-                                    +${
-                                        transaction.amount
-                                    } points
-                                </div>
-
-                            </div>
-
-                            <div class="description">
-                                ${
-                                    transaction.description ||
-                                    "Reward received"
-                                }
-                            </div>
-
-                            <div class="date">
-                                ${date}
-                            </div>
-
-                        </div>
-
-                        `;
-
-                    }
-                ).join("");
-
-        }
-
-
-        loading.style.display =
-            "none";
-
-        content.style.display =
-            "block";
-
+        ]);
 
     }catch(error){
 
-        console.error(
-            "History error:",
-            error
-        );
+        console.error(error);
 
-
-        loading.style.display =
-            "none";
-
-
-        errorBox.style.display =
-            "block";
-
-
-        errorBox.textContent =
-            error.message ||
-            "Unable to load reward history.";
+        transactions.innerHTML =
+            `<div class="error">
+                ❌ ${escapeHtml(error.message)}
+            </div>`;
 
     }
 
 }
 
 
-loadHistory();
+/* =========================
+   AUTH
+========================= */
+
+async function init(){
+
+    const {
+        data:{
+            session
+        }
+    } =
+        await supabaseClient.auth.getSession();
+
+    if(session?.user){
+
+        console.log(
+            "Logged in user:",
+            session.user.id
+        );
+
+        await loadPage(session.user);
+
+    }else{
+
+        loginBox.style.display = "block";
+        mainContent.style.display = "none";
+
+    }
+
+}
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+    async(event,session)=>{
+
+        if(session?.user){
+
+            await loadPage(session.user);
+
+        }else{
+
+            loginBox.style.display = "block";
+            mainContent.style.display = "none";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   START
+========================= */
+
+init();
 
 </script>
 
