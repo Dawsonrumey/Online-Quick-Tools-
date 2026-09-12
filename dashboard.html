@@ -228,6 +228,7 @@ header h2{
     border-radius:20px;
     font-size:12px;
     font-weight:bold;
+    text-transform:uppercase;
 }
 
 .redeem-pending{
@@ -240,9 +241,54 @@ header h2{
     color:#166534;
 }
 
+.redeem-paid{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
 .redeem-rejected{
     background:#fee2e2;
     color:#991b1b;
+}
+
+.payment-complete{
+    margin-top:10px;
+    padding:11px;
+    border-radius:8px;
+    background:#eff6ff;
+    color:#1e40af;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.pending-note{
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    background:#fffbeb;
+    color:#92400e;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.approved-note{
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    background:#f0fdf4;
+    color:#166534;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.rejected-note{
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    background:#fef2f2;
+    color:#991b1b;
+    font-size:13px;
+    line-height:1.5;
 }
 
 .video-card{
@@ -723,8 +769,6 @@ header h2{
 
 </div>
 
-
-<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1216,7 +1260,9 @@ async function loadMyVideos(userId){
 }
 
 
-/* LOAD REDEEM REQUESTS */
+/* =========================
+   LOAD REDEEM REQUESTS
+========================= */
 
 async function loadRedeemRequests(userId){
 
@@ -1236,7 +1282,7 @@ async function loadRedeemRequests(userId){
         await supabaseClient
             .from("reward_redemptions")
             .select(
-                "id,points,status,reward_method,fee_amount,payout_amount,created_at,processed_at,admin_note"
+                "id,points,status,reward_method,fee_amount,payout_amount,created_at,processed_at,admin_note,payment_reference,paid_at"
             )
             .eq(
                 "user_id",
@@ -1283,13 +1329,24 @@ async function loadRedeemRequests(userId){
 
 
             if(status === "approved"){
+
                 statusClass =
                     "redeem-approved";
+
+            }
+
+            else if(status === "paid"){
+
+                statusClass =
+                    "redeem-paid";
+
             }
 
             else if(status === "rejected"){
+
                 statusClass =
                     "redeem-rejected";
+
             }
 
 
@@ -1298,6 +1355,26 @@ async function loadRedeemRequests(userId){
                 ?
                 new Date(
                     request.created_at
+                ).toLocaleString()
+                :
+                "-";
+
+
+            const processedDate =
+                request.processed_at
+                ?
+                new Date(
+                    request.processed_at
+                ).toLocaleString()
+                :
+                "-";
+
+
+            const paidDate =
+                request.paid_at
+                ?
+                new Date(
+                    request.paid_at
                 ).toLocaleString()
                 :
                 "-";
@@ -1315,6 +1392,12 @@ async function loadRedeemRequests(userId){
                 );
 
 
+            const paymentReference =
+                escapeHtml(
+                    request.payment_reference || ""
+                );
+
+
             const fee =
                 Number(
                     request.fee_amount ?? 0
@@ -1327,6 +1410,12 @@ async function loadRedeemRequests(userId){
                 );
 
 
+            const points =
+                Number(
+                    request.points ?? 0
+                );
+
+
             const card =
                 document.createElement("div");
 
@@ -1335,44 +1424,192 @@ async function loadRedeemRequests(userId){
                 "redeem-request";
 
 
+            let statusMessage = "";
+
+
+            if(status === "pending"){
+
+                statusMessage = `
+
+                    <div class="pending-note">
+
+                        ⏳ Your redemption request is
+                        waiting for admin approval.
+
+                        <br>
+
+                        After approval, payment will be
+                        sent to your selected bKash/Nagad account.
+
+                    </div>
+
+                `;
+
+            }
+
+
+            else if(status === "approved"){
+
+                statusMessage = `
+
+                    <div class="approved-note">
+
+                        ✅ Your redemption has been approved.
+
+                        <br>
+
+                        Payout:
+                        <strong>৳${payout.toLocaleString()}</strong>
+
+                        <br>
+
+                        Payment is being processed manually.
+
+                    </div>
+
+                `;
+
+            }
+
+
+            else if(status === "paid"){
+
+                statusMessage = `
+
+                    <div class="payment-complete">
+
+                        💳 <strong>Payment Completed</strong>
+
+                        <br>
+
+                        You have been paid:
+                        <strong>
+                            ৳${payout.toLocaleString()}
+                        </strong>
+
+                        <br>
+
+                        Payment Method:
+                        <strong>
+                            ${method}
+                        </strong>
+
+                        <br>
+
+                        Payment Reference:
+                        <strong>
+                            ${paymentReference || "-"}
+                        </strong>
+
+                        <br>
+
+                        Paid Date:
+                        <strong>
+                            ${paidDate}
+                        </strong>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            else if(status === "rejected"){
+
+                statusMessage = `
+
+                    <div class="rejected-note">
+
+                        ❌ Your redemption request was rejected.
+
+                        ${
+                            note
+                            ?
+                            `
+                            <br><br>
+
+                            <strong>
+                                Admin Note:
+                            </strong>
+
+                            ${note}
+                            `
+                            :
+                            ""
+                        }
+
+                    </div>
+
+                `;
+
+            }
+
+
             card.innerHTML = `
 
                 <div>
+
                     <strong>
-                        ${escapeHtml(request.points)}
+                        ${points.toLocaleString()}
                         Points
                     </strong>
 
                     &nbsp;
 
-                    <span class="redeem-status ${statusClass}">
+                    <span
+                        class="redeem-status ${statusClass}">
+
                         ${escapeHtml(status)}
+
                     </span>
+
                 </div>
 
 
-                <div style="font-size:13px;color:#166534;margin-top:7px;">
+                <div
+                    style="
+                        font-size:13px;
+                        color:#166534;
+                        margin-top:7px;
+                    ">
 
                     Processing Fee:
-                    <strong>৳${escapeHtml(fee)}</strong>
+                    <strong>
+                        ৳${fee.toLocaleString()}
+                    </strong>
 
                     &nbsp; | &nbsp;
 
                     Payout:
-                    <strong>৳${escapeHtml(payout)}</strong>
+                    <strong>
+                        ৳${payout.toLocaleString()}
+                    </strong>
 
                 </div>
 
 
-                <div style="font-size:13px;color:#666;margin-top:7px;">
+                <div
+                    style="
+                        font-size:13px;
+                        color:#666;
+                        margin-top:7px;
+                    ">
 
                     Method:
-                    <strong>${method}</strong>
+                    <strong>
+                        ${method}
+                    </strong>
 
                 </div>
 
 
-                <div style="font-size:13px;color:#666;margin-top:4px;">
+                <div
+                    style="
+                        font-size:13px;
+                        color:#666;
+                        margin-top:4px;
+                    ">
 
                     Requested:
                     ${escapeHtml(date)}
@@ -1381,19 +1618,27 @@ async function loadRedeemRequests(userId){
 
 
                 ${
-                    note
+                    status === "approved"
                     ?
                     `
-                    <div style="font-size:13px;margin-top:7px;">
+                    <div
+                        style="
+                            font-size:13px;
+                            color:#666;
+                            margin-top:4px;
+                        ">
 
-                        Admin note:
-                        ${note}
+                        Approved:
+                        ${escapeHtml(processedDate)}
 
                     </div>
                     `
                     :
                     ""
                 }
+
+
+                ${statusMessage}
 
             `;
 
@@ -1471,6 +1716,7 @@ async function processPendingReferral(user){
             {
                 referral_code_input:
                     referralCode,
+
                 new_user_id:
                     user.id
             }
