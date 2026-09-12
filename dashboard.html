@@ -98,6 +98,18 @@ header h2{
     margin:10px 0;
 }
 
+.referral-points{
+    font-size:25px;
+    font-weight:bold;
+    color:#7c3aed;
+    margin:8px 0;
+}
+
+.referral-points-note{
+    color:#666;
+    font-size:13px;
+}
+
 .referral-box{
     display:flex;
     gap:8px;
@@ -199,7 +211,7 @@ header h2{
     border-radius:8px;
     margin-bottom:15px;
     font-size:14px;
-    line-height:1.5;
+    line-height:1.6;
 }
 
 .redeem-preview{
@@ -499,6 +511,15 @@ header h2{
                 0
             </div>
 
+            <div class="referral-points">
+                🎁 Referral Points:
+                <span id="referralPoints">0</span>
+            </div>
+
+            <div class="referral-points-note">
+                Only Referral Points can be withdrawn.
+            </div>
+
         </div>
 
 
@@ -509,7 +530,8 @@ header h2{
             <h3>🎁 Refer & Earn</h3>
 
             <p>
-                Invite your friends and earn <strong>৳5</strong>
+                Invite your friends and earn
+                <strong>৳5</strong>
                 for every successful referral.
             </p>
 
@@ -569,30 +591,49 @@ header h2{
 
         <div class="card">
 
-            <h3>🎁 Redeem Points</h3>
+            <h3>💳 Redeem Referral Rewards</h3>
 
             <div class="redeem-note">
 
+                <strong>Only Referral Points can be withdrawn.</strong>
+                <br><br>
+
                 Minimum redeem amount:
-                <strong>1000 points</strong>.<br>
+                <strong>1000 Referral Points</strong>.<br>
 
                 Processing fee:
                 <strong>5%</strong>.<br>
 
                 Example:
-                <strong>1000 points → ৳50 fee → ৳950 payout</strong>.<br>
+                <strong>1000 Referral Points → ৳50 fee → ৳950 payout</strong>.<br>
 
                 Redeem through
                 <strong>bKash</strong> or
                 <strong>Nagad</strong>.<br>
+
+                Daily, task and other non-referral points
+                <strong>cannot be withdrawn</strong>.<br>
 
                 Your request will be reviewed by admin.
 
             </div>
 
 
+            <div class="info-row">
+
+                <span>
+                    Withdrawable Referral Points
+                </span>
+
+                <strong id="redeemableReferralPoints">
+                    0
+                </strong>
+
+            </div>
+
+
             <label class="redeem-label">
-                Points to Redeem
+                Referral Points to Redeem
             </label>
 
             <input
@@ -601,7 +642,7 @@ header h2{
                 class="redeem-input"
                 min="1000"
                 step="1"
-                placeholder="Minimum 1000 points"
+                placeholder="Minimum 1000 referral points"
             >
 
 
@@ -649,6 +690,7 @@ header h2{
             <button
                 class="redeem-btn"
                 id="redeemButton"
+                disabled
             >
                 🎁 Submit Redeem Request
             </button>
@@ -791,6 +833,8 @@ window.supabase.createClient(
 
 let currentUser = null;
 
+let currentReferralPoints = 0;
+
 
 /* ELEMENTS */
 
@@ -808,6 +852,12 @@ document.getElementById("email");
 
 const pointsElement =
 document.getElementById("points");
+
+const referralPointsElement =
+document.getElementById("referralPoints");
+
+const redeemableReferralPointsElement =
+document.getElementById("redeemableReferralPoints");
 
 const referralLinkElement =
 document.getElementById("referralLink");
@@ -928,8 +978,7 @@ function getYouTubeEmbedUrl(url){
         }
 
 
-        return
-            "https://www.youtube.com/embed/" +
+        return "https://www.youtube.com/embed/" +
             encodeURIComponent(videoId);
 
     }
@@ -1260,9 +1309,7 @@ async function loadMyVideos(userId){
 }
 
 
-/* =========================
-   LOAD REDEEM REQUESTS
-========================= */
+/* LOAD REDEEM REQUESTS */
 
 async function loadRedeemRequests(userId){
 
@@ -1433,7 +1480,7 @@ async function loadRedeemRequests(userId){
 
                     <div class="pending-note">
 
-                        ⏳ Your redemption request is
+                        ⏳ Your referral reward redemption request is
                         waiting for admin approval.
 
                         <br>
@@ -1454,7 +1501,7 @@ async function loadRedeemRequests(userId){
 
                     <div class="approved-note">
 
-                        ✅ Your redemption has been approved.
+                        ✅ Your referral reward redemption has been approved.
 
                         <br>
 
@@ -1552,7 +1599,7 @@ async function loadRedeemRequests(userId){
 
                     <strong>
                         ${points.toLocaleString()}
-                        Points
+                        Referral Points
                     </strong>
 
                     &nbsp;
@@ -1754,6 +1801,27 @@ async function processPendingReferral(user){
 }
 
 
+/* UPDATE REDEEM BUTTON */
+
+function updateRedeemButton(){
+
+    const points =
+        parseInt(
+            redeemPointsElement.value,
+            10
+        );
+
+
+    redeemButton.disabled =
+        !currentUser ||
+        currentReferralPoints < 1000 ||
+        !points ||
+        points < 1000 ||
+        points > currentReferralPoints;
+
+}
+
+
 /* LOAD DASHBOARD */
 
 async function loadDashboard(){
@@ -1810,7 +1878,7 @@ async function loadDashboard(){
         await supabaseClient
             .from("profiles")
             .select(
-                "username,points,referral_code,referral_count"
+                "username,points,referral_points,referral_code,referral_count"
             )
             .eq(
                 "id",
@@ -1837,6 +1905,20 @@ async function loadDashboard(){
 
         pointsElement.textContent =
             profile.points ?? 0;
+
+
+        currentReferralPoints =
+            Number(
+                profile.referral_points ?? 0
+            );
+
+
+        referralPointsElement.textContent =
+            currentReferralPoints.toLocaleString();
+
+
+        redeemableReferralPointsElement.textContent =
+            currentReferralPoints.toLocaleString();
 
 
         const referralCode =
@@ -1874,6 +1956,9 @@ async function loadDashboard(){
 
         dashboard.style.display =
             "block";
+
+
+        updateRedeemButton();
 
 
         await loadRedeemRequests(
@@ -1985,6 +2070,26 @@ redeemPointsElement.addEventListener(
             redeemPreview.style.display =
                 "none";
 
+            updateRedeemButton();
+
+            return;
+
+        }
+
+
+        if(points > currentReferralPoints){
+
+            redeemPreview.innerHTML =
+
+                "❌ You only have <strong>" +
+                currentReferralPoints.toLocaleString() +
+                " referral points</strong> available.";
+
+            redeemPreview.style.display =
+                "block";
+
+            updateRedeemButton();
+
             return;
 
         }
@@ -2003,20 +2108,23 @@ redeemPointsElement.addEventListener(
         redeemPreview.innerHTML =
 
             "💰 Redeem: <strong>" +
-            points +
-            " points</strong><br>" +
+            points.toLocaleString() +
+            " referral points</strong><br>" +
 
             "Processing fee: <strong>৳" +
-            fee +
+            fee.toLocaleString() +
             "</strong><br>" +
 
             "You will receive: <strong>৳" +
-            payout +
+            payout.toLocaleString() +
             "</strong>";
 
 
         redeemPreview.style.display =
             "block";
+
+
+        updateRedeemButton();
 
     }
 );
@@ -2058,7 +2166,23 @@ redeemButton.addEventListener(
                 "message error";
 
             redeemMessage.innerHTML =
-                "❌ Minimum redeem amount is 1000 points.";
+                "❌ Minimum redeem amount is 1000 referral points.";
+
+            redeemMessage.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        if(points > currentReferralPoints){
+
+            redeemMessage.className =
+                "message error";
+
+            redeemMessage.innerHTML =
+                "❌ You do not have enough referral points.";
 
             redeemMessage.style.display =
                 "block";
@@ -2171,7 +2295,7 @@ redeemButton.addEventListener(
                     "Redeem request submitted successfully."
                 ) +
                 "<br><br>" +
-                "Points: <strong>" +
+                "Referral Points: <strong>" +
                 escapeHtml(data.points) +
                 "</strong>" +
                 " &nbsp; | &nbsp; " +
@@ -2191,19 +2315,14 @@ redeemButton.addEventListener(
             redeemPointsElement.value =
                 "";
 
-
             redeemDetailsElement.value =
                 "";
-
 
             redeemPreview.style.display =
                 "none";
 
 
-            await loadRedeemRequests(
-                currentUser.id
-            );
-
+            await loadDashboard();
 
         }
 
@@ -2236,6 +2355,8 @@ redeemButton.addEventListener(
         redeemButton.disabled =
             false;
 
+
+        updateRedeemButton();
 
         redeemButton.textContent =
             "🎁 Submit Redeem Request";
