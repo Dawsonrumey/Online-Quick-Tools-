@@ -4349,6 +4349,67 @@ document.addEventListener(
 );
 
 </script>
+<!-- 💬 Chat Support Button -->
+<a href="support-chat.html" class="chat-support-btn" aria-label="Chat Support">
+  💬
+  <span>Chat Support</span>
+</a>
 
+<style>
+.chat-support-btn{
+  position:fixed;
+  right:18px;
+  bottom:20px;
+  z-index:9999;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:12px 17px;
+
+  background:#e11d48;
+  color:#fff;
+
+  text-decoration:none;
+  font-weight:bold;
+  font-size:14px;
+
+  border-radius:30px;
+
+  box-shadow:0 5px 18px rgba(0,0,0,.25);
+
+  transition:.2s;
+}
+
+.chat-support-btn:hover{
+  transform:translateY(-2px);
+}
+
+@media(max-width:600px){
+
+  .chat-support-btn{
+    right:14px;
+    bottom:15px;
+
+    width:52px;
+    height:52px;
+
+    justify-content:center;
+
+    padding:0;
+
+    border-radius:50%;
+
+    font-size:23px;
+  }
+
+  .chat-support-btn span{
+    display:none;
+  }
+
+}
+</style>
+      
 </body>
 </html>
