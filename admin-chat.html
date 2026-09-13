@@ -38,6 +38,55 @@ header h1{
   padding:0 12px;
 }
 
+/* LOGIN */
+
+.login-box{
+  max-width:420px;
+  margin:60px auto;
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.login-box h2{
+  text-align:center;
+  margin-top:0;
+}
+
+.login-box input{
+  width:100%;
+  padding:13px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:9px;
+  font-size:15px;
+}
+
+.login-box button{
+  width:100%;
+  padding:13px;
+  margin-top:10px;
+  border:0;
+  border-radius:9px;
+  background:#e11d48;
+  color:white;
+  font-weight:bold;
+  font-size:15px;
+}
+
+.login-error{
+  color:#dc2626;
+  text-align:center;
+  margin-top:12px;
+}
+
+/* ADMIN */
+
+.admin-panel{
+  display:none;
+}
+
 .panel{
   background:white;
   border-radius:14px;
@@ -45,10 +94,20 @@ header h1{
   box-shadow:0 4px 18px rgba(0,0,0,.08);
 }
 
-.top{
+.panel-top{
   padding:15px;
   border-bottom:1px solid #eee;
-  font-weight:bold;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logout{
+  border:0;
+  background:#ef4444;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
 }
 
 .users{
@@ -74,7 +133,7 @@ header h1{
 }
 
 .user-id{
-  font-size:12px;
+  font-size:11px;
   color:#777;
   word-break:break-all;
 }
@@ -96,7 +155,6 @@ header h1{
   max-height:470px;
   overflow-y:auto;
   padding:15px;
-
   display:flex;
   flex-direction:column;
   gap:10px;
@@ -107,6 +165,7 @@ header h1{
   padding:10px 13px;
   border-radius:14px;
   line-height:1.4;
+  word-break:break-word;
 }
 
 .message.user{
@@ -176,6 +235,10 @@ header h1{
     max-height:400px;
   }
 
+  .message{
+    max-width:88%;
+  }
+
 }
 
 </style>
@@ -188,29 +251,82 @@ header h1{
   <h1>👨‍💻 Admin Chat Support</h1>
 </header>
 
-<div class="container">
+
+<!-- LOGIN -->
+
+<div id="loginBox" class="login-box">
+
+  <h2>🔐 Admin Login</h2>
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Admin Email"
+    autocomplete="email"
+  >
+
+  <input
+    type="password"
+    id="password"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
+
+  <button id="loginBtn">
+    Login
+  </button>
+
+  <div id="loginError" class="login-error"></div>
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div id="adminPanel" class="container admin-panel">
 
   <div class="panel">
 
-    <div class="top">
-      💬 User Support Messages
+    <div class="panel-top">
+
+      <strong>
+        💬 User Support Messages
+      </strong>
+
+      <button
+        class="logout"
+        id="logoutBtn"
+      >
+        Logout
+      </button>
+
     </div>
 
     <div class="users">
 
-      <div id="userList" class="user-list">
+      <div
+        id="userList"
+        class="user-list"
+      >
         <div class="status">
           Loading users...
         </div>
       </div>
 
+
       <div class="chat">
 
-        <div id="chatHeader" class="chat-header">
+        <div
+          id="chatHeader"
+          class="chat-header"
+        >
           Select a user
         </div>
 
-        <div id="messages" class="messages">
+        <div
+          id="messages"
+          class="messages"
+        >
           <div class="status">
             Select a user to view messages.
           </div>
@@ -241,77 +357,197 @@ header h1{
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-const SUPABASE_URL = "https://etkqkptoxkfhxcysaadi.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGtmaHhjeXNhYWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTAzMjIsImV4cCI6MjEwMzY2NjMyMn0.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
+/* =====================================
+   SUPABASE
+   ===================================== */
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGtmaHhjeXNhYWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgwOTAzMjIsImV4cCI6MjEwMzY2NjMyMn0.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
 
 const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
-
-const userList =
-  document.getElementById("userList");
-
-const messagesBox =
-  document.getElementById("messages");
-
-const chatHeader =
-  document.getElementById("chatHeader");
-
-const replyInput =
-  document.getElementById("replyInput");
-
-const replyBtn =
-  document.getElementById("replyBtn");
-
-let selectedUser = null;
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
 
 /* =====================================
    ADMIN EMAIL
    ===================================== */
 
-const ADMIN_EMAIL = "hossain.islam1996@gmail.com";
+const ADMIN_EMAIL =
+"dawson.rumey1996@gmail.com";
 
 
 /* =====================================
-   CHECK ADMIN
+   ELEMENTS
    ===================================== */
 
-async function checkAdmin(){
+const loginBox =
+document.getElementById("loginBox");
+
+const adminPanel =
+document.getElementById("adminPanel");
+
+const emailInput =
+document.getElementById("email");
+
+const passwordInput =
+document.getElementById("password");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+const loginError =
+document.getElementById("loginError");
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+const userList =
+document.getElementById("userList");
+
+const messagesBox =
+document.getElementById("messages");
+
+const chatHeader =
+document.getElementById("chatHeader");
+
+const replyInput =
+document.getElementById("replyInput");
+
+const replyBtn =
+document.getElementById("replyBtn");
+
+
+let selectedUser = null;
+
+
+/* =====================================
+   LOGIN
+   ===================================== */
+
+async function login(){
+
+  const email =
+  emailInput.value.trim();
+
+  const password =
+  passwordInput.value;
+
+  loginError.textContent = "";
+
+  if(!email || !password){
+
+    loginError.textContent =
+    "Please enter email and password.";
+
+    return;
+  }
+
+  if(email.toLowerCase() !==
+     ADMIN_EMAIL.toLowerCase()){
+
+    loginError.textContent =
+    "Access denied.";
+
+    return;
+  }
+
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Logging in...";
+
+
+  const {data,error} =
+  await supabaseClient.auth.signInWithPassword({
+
+    email:email,
+    password:password
+
+  });
+
+
+  if(error){
+
+    loginError.textContent =
+    "❌ " + error.message;
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Login";
+
+    return;
+  }
+
+
+  if(
+    !data.user ||
+    data.user.email.toLowerCase() !==
+    ADMIN_EMAIL.toLowerCase()
+  ){
+
+    await supabaseClient.auth.signOut();
+
+    loginError.textContent =
+    "Access denied.";
+
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Login";
+
+    return;
+  }
+
+
+  showAdminPanel();
+
+}
+
+
+/* =====================================
+   SHOW ADMIN
+   ===================================== */
+
+async function showAdminPanel(){
+
+  loginBox.style.display = "none";
+
+  adminPanel.style.display = "block";
+
+  await loadUsers();
+
+}
+
+
+/* =====================================
+   CHECK EXISTING SESSION
+   ===================================== */
+
+async function checkSession(){
 
   const {
     data:{session}
-  } = await supabaseClient.auth.getSession();
+  } =
+  await supabaseClient.auth.getSession();
 
-  if(!session){
 
-    document.body.innerHTML = `
-      <div class="status">
-        🔐 Please login first.
-      </div>
-    `;
+  if(
+    session &&
+    session.user &&
+    session.user.email.toLowerCase() ===
+    ADMIN_EMAIL.toLowerCase()
+  ){
 
-    return false;
+    showAdminPanel();
+
   }
 
-  if(session.user.email !== ADMIN_EMAIL){
-
-    document.body.innerHTML = `
-      <div class="status">
-        🚫 Access denied.
-      </div>
-    `;
-
-    return false;
-  }
-
-  return true;
 }
 
 
@@ -321,11 +557,19 @@ async function checkAdmin(){
 
 async function loadUsers(){
 
+  userList.innerHTML = `
+    <div class="status">
+      Loading users...
+    </div>
+  `;
+
+
   const {data,error} =
-    await supabaseClient
-      .from("support_messages")
-      .select("user_id")
-      .order("created_at",{ascending:false});
+  await supabaseClient
+  .from("support_messages")
+  .select("user_id")
+  .order("created_at",{ascending:false});
+
 
   if(error){
 
@@ -340,10 +584,15 @@ async function loadUsers(){
     return;
   }
 
+
   const uniqueUsers =
-    [...new Set(data.map(x => x.user_id))];
+  [...new Set(
+    data.map(x => x.user_id)
+  )];
+
 
   userList.innerHTML = "";
+
 
   if(uniqueUsers.length === 0){
 
@@ -356,32 +605,51 @@ async function loadUsers(){
     return;
   }
 
+
   uniqueUsers.forEach(userId => {
 
     const div =
-      document.createElement("div");
+    document.createElement("div");
 
-    div.className = "user-item";
+    div.className =
+    "user-item";
 
-    div.innerHTML = `
-      <strong>👤 User</strong>
-      <div class="user-id">
-        ${userId}
-      </div>
-    `;
+
+    const title =
+    document.createElement("strong");
+
+    title.textContent =
+    "👤 User";
+
+
+    const id =
+    document.createElement("div");
+
+    id.className =
+    "user-id";
+
+    id.textContent =
+    userId;
+
+
+    div.appendChild(title);
+    div.appendChild(id);
+
 
     div.onclick = () => {
 
       document
-        .querySelectorAll(".user-item")
-        .forEach(x =>
-          x.classList.remove("active")
-        );
+      .querySelectorAll(".user-item")
+      .forEach(x =>
+        x.classList.remove("active")
+      );
 
       div.classList.add("active");
 
       selectUser(userId);
+
     };
+
 
     userList.appendChild(div);
 
@@ -396,13 +664,17 @@ async function loadUsers(){
 
 async function selectUser(userId){
 
-  selectedUser = userId;
+  selectedUser =
+  userId;
 
   chatHeader.textContent =
-    "💬 User: " + userId;
+  "💬 User: " + userId;
 
-  replyInput.disabled = false;
-  replyBtn.disabled = false;
+  replyInput.disabled =
+  false;
+
+  replyBtn.disabled =
+  false;
 
   await loadMessages();
 
@@ -415,14 +687,17 @@ async function selectUser(userId){
 
 async function loadMessages(){
 
-  if(!selectedUser) return;
+  if(!selectedUser)
+  return;
+
 
   const {data,error} =
-    await supabaseClient
-      .from("support_messages")
-      .select("*")
-      .eq("user_id",selectedUser)
-      .order("created_at",{ascending:true});
+  await supabaseClient
+  .from("support_messages")
+  .select("*")
+  .eq("user_id",selectedUser)
+  .order("created_at",{ascending:true});
+
 
   if(error){
 
@@ -437,80 +712,118 @@ async function loadMessages(){
     return;
   }
 
+
   messagesBox.innerHTML = "";
 
-  data.forEach(msg => {
 
-    const div =
-      document.createElement("div");
+  if(!data || data.length === 0){
 
-    div.className =
-      "message " +
-      (msg.sender === "admin"
-        ? "admin"
-        : "user");
+    messagesBox.innerHTML = `
+      <div class="status">
+        No messages.
+      </div>
+    `;
 
-    const text =
-      document.createElement("div");
+    return;
+  }
 
-    text.textContent =
-      msg.message;
 
-    const time =
-      document.createElement("span");
+  data.forEach(addMessage);
 
-    time.className = "time";
-
-    time.textContent =
-      new Date(
-        msg.created_at
-      ).toLocaleString();
-
-    div.appendChild(text);
-    div.appendChild(time);
-
-    messagesBox.appendChild(div);
-
-  });
 
   messagesBox.scrollTop =
-    messagesBox.scrollHeight;
+  messagesBox.scrollHeight;
 
 }
 
 
 /* =====================================
-   SEND REPLY
+   ADD MESSAGE
+   ===================================== */
+
+function addMessage(msg){
+
+  const div =
+  document.createElement("div");
+
+  div.className =
+  "message " +
+  (
+    msg.sender === "admin"
+    ? "admin"
+    : "user"
+  );
+
+
+  const text =
+  document.createElement("div");
+
+  text.textContent =
+  msg.message;
+
+
+  const time =
+  document.createElement("span");
+
+  time.className =
+  "time";
+
+  time.textContent =
+  new Date(
+    msg.created_at
+  ).toLocaleString();
+
+
+  div.appendChild(text);
+
+  div.appendChild(time);
+
+  messagesBox.appendChild(div);
+
+}
+
+
+/* =====================================
+   ADMIN REPLY
    ===================================== */
 
 async function sendReply(){
 
-  if(!selectedUser) return;
+  if(!selectedUser)
+  return;
+
 
   const message =
-    replyInput.value.trim();
+  replyInput.value.trim();
 
-  if(!message) return;
 
-  replyBtn.disabled = true;
+  if(!message)
+  return;
+
+
+  replyBtn.disabled =
+  true;
+
 
   const {error} =
-    await supabaseClient
-      .from("support_messages")
-      .insert({
+  await supabaseClient
+  .from("support_messages")
+  .insert({
 
-        user_id:selectedUser,
+    user_id:selectedUser,
 
-        message:message,
+    message:message,
 
-        sender:"admin"
+    sender:"admin"
 
-      });
+  });
+
 
   if(error){
 
     alert(
-      "❌ Reply failed."
+      "❌ Reply failed: " +
+      error.message
     );
 
     console.error(error);
@@ -523,9 +836,52 @@ async function sendReply(){
 
   }
 
-  replyBtn.disabled = false;
+
+  replyBtn.disabled =
+  false;
 
 }
+
+
+/* =====================================
+   LOGOUT
+   ===================================== */
+
+async function logout(){
+
+  await supabaseClient.auth.signOut();
+
+  location.reload();
+
+}
+
+
+/* =====================================
+   EVENTS
+   ===================================== */
+
+loginBtn.addEventListener(
+  "click",
+  login
+);
+
+
+logoutBtn.addEventListener(
+  "click",
+  logout
+);
+
+
+passwordInput.addEventListener(
+  "keydown",
+  function(e){
+
+    if(e.key === "Enter"){
+      login();
+    }
+
+  }
+);
 
 
 replyBtn.addEventListener(
@@ -557,18 +913,7 @@ replyInput.addEventListener(
    START
    ===================================== */
 
-async function start(){
-
-  const allowed =
-    await checkAdmin();
-
-  if(!allowed) return;
-
-  await loadUsers();
-
-}
-
-start();
+checkSession();
 
 </script>
 
