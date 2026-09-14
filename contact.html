@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Contact Us - Online Quick Tools</title>
+
+<meta name="description"
+      content="Contact Online Quick Tools for questions, support, feedback, bug reports and other website-related inquiries.">
+
+<meta name="robots"
+      content="index, follow">
+
+<link rel="canonical"
+      href="https://dawsonrumey.github.io/Online-Quick-Tools-/contact.html">
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f7fb;
+  color:#222;
+  line-height:1.6;
+}
+
+header{
+  background:#e11d48;
+  color:white;
+  padding:24px 15px;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:28px;
+}
+
+header p{
+  margin:6px 0 0;
+  font-size:14px;
+}
+
+.container{
+  width:94%;
+  max-width:850px;
+  margin:25px auto;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  border-radius:14px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+  margin-bottom:20px;
+}
+
+h2{
+  color:#e11d48;
+  margin-top:0;
+}
+
+.info{
+  background:#fff4f6;
+  border-left:4px solid #e11d48;
+  padding:14px 16px;
+  border-radius:7px;
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:6px;
+  font-weight:bold;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font-family:inherit;
+  font-size:15px;
+  outline:none;
+}
+
+textarea{
+  min-height:150px;
+  resize:vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#e11d48;
+}
+
+button{
+  width:100%;
+  margin-top:18px;
+  padding:13px;
+  border:0;
+  border-radius:9px;
+  background:#e11d48;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
+.status{
+  margin-top:15px;
+  padding:12px;
+  border-radius:8px;
+  display:none;
+}
+
+.success{
+  display:block;
+  background:#ecfdf5;
+  color:#166534;
+}
+
+.error{
+  display:block;
+  background:#fef2f2;
+  color:#991b1b;
+}
+
+.links{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:20px;
+}
+
+.links a{
+  display:block;
+  text-align:center;
+  padding:12px;
+  border-radius:9px;
+  background:#fce7f3;
+  color:#be123c;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.links a:hover{
+  background:#fbcfe8;
+}
+
+footer{
+  text-align:center;
+  padding:28px 15px;
+  color:#666;
+  font-size:14px;
+}
+
+footer a{
+  color:#e11d48;
+  text-decoration:none;
+}
+
+.dark-btn{
+  position:fixed;
+  right:15px;
+  top:15px;
+  border:0;
+  background:white;
+  color:#222;
+  width:auto;
+  margin:0;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  z-index:10;
+}
+
+body.dark{
+  background:#111827;
+  color:#e5e7eb;
+}
+
+body.dark .card{
+  background:#1f2937;
+}
+
+body.dark input,
+body.dark textarea,
+body.dark select{
+  background:#111827;
+  color:white;
+  border-color:#4b5563;
+}
+
+body.dark .info{
+  background:#3b1f27;
+}
+
+body.dark .links a{
+  background:#3b1f27;
+  color:#fb7185;
+}
+
+body.dark footer{
+  color:#9ca3af;
+}
+
+body.dark footer a{
+  color:#fb7185;
+}
+
+@media(max-width:600px){
+
+  header h1{
+    font-size:23px;
+  }
+
+  .card{
+    padding:18px;
+  }
+
+  .links{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<button
+  class="dark-btn"
+  onclick="toggleDark()">
+  🌙
+</button>
+
+
+<header>
+
+<h1>📩 Contact Us</h1>
+
+<p>Online Quick Tools</p>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<h2>Contact Online Quick Tools</h2>
+
+<div class="info">
+
+Have a question, found a problem, or want to send feedback?
+Use the form below to contact us.
+
+</div>
+
+
+<form id="contactForm">
+
+<label for="name">
+Your Name
+</label>
+
+<input
+  type="text"
+  id="name"
+  maxlength="100"
+  placeholder="Enter your name"
+  required
+>
+
+
+<label for="email">
+Email Address
+</label>
+
+<input
+  type="email"
+  id="email"
+  maxlength="150"
+  placeholder="Enter your email"
+  required
+>
+
+
+<label for="subject">
+Subject
+</label>
+
+<select id="subject" required>
+
+<option value="">
+Select a subject
+</option>
+
+<option value="General Question">
+General Question
+</option>
+
+<option value="Technical Support">
+Technical Support
+</option>
+
+<option value="Bug Report">
+Bug Report
+</option>
+
+<option value="Feedback">
+Feedback
+</option>
+
+<option value="Account">
+Account
+</option>
+
+<option value="Rewards">
+Rewards
+</option>
+
+<option value="Video">
+Video
+</option>
+
+<option value="Image">
+Image
+</option>
+
+<option value="Other">
+Other
+</option>
+
+</select>
+
+
+<label for="message">
+Message
+</label>
+
+<textarea
+  id="message"
+  maxlength="3000"
+  placeholder="Write your message..."
+  required
+></textarea>
+
+
+<button
+  type="submit"
+  id="sendBtn">
+  Send Message
+</button>
+
+
+<div
+  id="status"
+  class="status">
+</div>
+
+</form>
+
+</div>
+
+
+<div class="card">
+
+<h2>💬 Other Support Options</h2>
+
+<p>
+For account-related support, you can also use our Chat Support
+feature.
+</p>
+
+<div class="links">
+
+<a href="support-chat.html">
+💬 Chat Support
+</a>
+
+<a href="index.html">
+🏠 Back to Home
+</a>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>📄 Important Pages</h2>
+
+<div class="links">
+
+<a href="privacy-policy.html">
+Privacy Policy
+</a>
+
+<a href="terms.html">
+Terms & Conditions
+</a>
+
+<a href="content-policy.html">
+Content Policy
+</a>
+
+<a href="index.html">
+Home
+</a>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+© 2026 Online Quick Tools
+
+<br><br>
+
+<a href="index.html">
+Home
+</a>
+
+&nbsp; | &nbsp;
+
+<a href="privacy-policy.html">
+Privacy Policy
+</a>
+
+&nbsp; | &nbsp;
+
+<a href="terms.html">
+Terms & Conditions
+</a>
+
+&nbsp; | &nbsp;
+
+<a href="content-policy.html">
+Content Policy
+</a>
+
+&nbsp; | &nbsp;
+
+<a href="contact.html">
+Contact
+</a>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+/* =====================================
+   SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+"https://etkqkptoxkfhxcysaadi.supabase.co";
+
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0a3FrcHRveGh4cXNhYWRpIiwiaWF0IjoxNzg4MDkwMzIyLCJleHAiOjIxMDM2NjYzMjJ9.HXBJkxIvbELW4XmJB4bsve5u_XpD21B8XNX5ODIsufA";
+
+const supabaseClient =
+supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+
+/* =====================================
+   ELEMENTS
+===================================== */
+
+const form =
+document.getElementById("contactForm");
+
+const sendBtn =
+document.getElementById("sendBtn");
+
+const statusBox =
+document.getElementById("status");
+
+
+/* =====================================
+   SEND CONTACT MESSAGE
+===================================== */
+
+form.addEventListener(
+  "submit",
+  async function(e){
+
+    e.preventDefault();
+
+    const name =
+      document.getElementById("name")
+      .value.trim();
+
+    const email =
+      document.getElementById("email")
+      .value.trim();
+
+    const subject =
+      document.getElementById("subject")
+      .value;
+
+    const message =
+      document.getElementById("message")
+      .value.trim();
+
+
+    if(
+      !name ||
+      !email ||
+      !subject ||
+      !message
+    ){
+
+      showStatus(
+        "Please complete all fields.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    if(message.length < 5){
+
+      showStatus(
+        "Please enter a little more detail.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    sendBtn.disabled = true;
+
+    sendBtn.textContent =
+      "Sending...";
+
+
+    const {
+      data: { session }
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    const userId =
+      session && session.user
+        ? session.user.id
+        : null;
+
+
+    const { error } =
+      await supabaseClient
+        .from("contact_messages")
+        .insert({
+
+          name:name,
+
+          email:email,
+
+          subject:subject,
+
+          message:message,
+
+          user_id:userId
+
+        });
+
+
+    if(error){
+
+      console.error(error);
+
+      showStatus(
+        "❌ Message could not be sent. Please try again or use Chat Support.",
+        "error"
+      );
+
+    }else{
+
+      showStatus(
+        "✅ Your message has been sent successfully. Thank you!",
+        "success"
+      );
+
+      form.reset();
+
+    }
+
+
+    sendBtn.disabled = false;
+
+    sendBtn.textContent =
+      "Send Message";
+
+  }
+);
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function showStatus(
+  message,
+  type
+){
+
+  statusBox.textContent =
+    message;
+
+  statusBox.className =
+    "status " + type;
+
+}
+
+
+/* =====================================
+   DARK MODE
+===================================== */
+
+function toggleDark(){
+
+  document.body.classList.toggle(
+    "dark"
+  );
+
+
+  if(
+    document.body.classList.contains(
+      "dark"
+    )
+  ){
+
+    localStorage.setItem(
+      "contactDarkMode",
+      "on"
+    );
+
+  }else{
+
+    localStorage.setItem(
+      "contactDarkMode",
+      "off"
+    );
+
+  }
+
+}
+
+
+if(
+  localStorage.getItem(
+    "contactDarkMode"
+  ) === "on"
+){
+
+  document.body.classList.add(
+    "dark"
+  );
+
+}
+
+</script>
+
+</body>
+</html>
