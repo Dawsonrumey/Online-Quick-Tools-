@@ -834,6 +834,7 @@ atOptions={
 'params':{}
 };
 </script>
+  
 <script src="https://www.highrevenueformat.com/e1f24adc903ad1de654a7b1cd0c270ca/invoke.js"></script>
 </div>
 
@@ -953,7 +954,22 @@ simple and mobile-friendly.
 <button onclick="randomNumber()">Generate</button>
 <div id="randomResult" class="result"></div>
 </div>
+  
+<div class="tool" data-cat="generator">
+  <h3>🎂 Age Calculator</h3>
+  <p>Calculate your exact age in years, months and days.</p>
+  <p class="tool-seo-text">
+    Calculate human age from your date of birth. Get your age in years, months and days quickly.
+  </p>
 
+  <input id="birthDate" type="date">
+
+  <button onclick="calculateAge()">Calculate Age</button>
+
+  <div id="ageResult" class="result"></div>
+</div>
+  
+  
 <div class="tool" data-cat="converter">
 <h3>📏 CM → Inch</h3>
 <p class="tool-seo-text">Convert centimeters to inches quickly. Enter a centimeter value to get the equivalent measurement in inches.</p>
@@ -1425,6 +1441,52 @@ Math.floor(Math.random()*(max-min+1))+min;
 document.getElementById("randomResult").textContent=result;
 
 }
+function calculateAge(){
+
+  const birthInput = document.getElementById("birthDate").value;
+  const result = document.getElementById("ageResult");
+
+  if(!birthInput){
+    result.textContent = "Please select your date of birth.";
+    return;
+  }
+
+  const birthDate = new Date(birthInput + "T00:00:00");
+  const today = new Date();
+
+  if(birthDate > today){
+    result.textContent = "Birth date cannot be in the future.";
+    return;
+  }
+
+  let years = today.getFullYear() - birthDate.getFullYear();
+  let months = today.getMonth() - birthDate.getMonth();
+  let days = today.getDate() - birthDate.getDate();
+
+  if(days < 0){
+    months--;
+
+    const previousMonthDays = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      0
+    ).getDate();
+
+    days += previousMonthDays;
+  }
+
+  if(months < 0){
+    years--;
+    months += 12;
+  }
+
+  result.textContent =
+    "Your age is " +
+    years + " years, " +
+    months + " months, and " +
+    days + " days.";
+}
+  
 
 function cmToInch(){
 
