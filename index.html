@@ -1441,6 +1441,7 @@ Math.floor(Math.random()*(max-min+1))+min;
 document.getElementById("randomResult").textContent=result;
 
 }
+  
 function calculateAge(){
 
   const birthInput = document.getElementById("birthDate").value;
@@ -1480,11 +1481,31 @@ function calculateAge(){
     months += 12;
   }
 
-  result.textContent =
+  // Total completed days
+  const start = new Date(
+    birthDate.getFullYear(),
+    birthDate.getMonth(),
+    birthDate.getDate()
+  );
+
+  const end = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+
+  const totalDays = Math.floor(
+    (end - start) / (1000 * 60 * 60 * 24)
+  );
+
+  result.innerHTML =
     "Your age is " +
     years + " years, " +
     months + " months, and " +
-    days + " days.";
+    days + " days." +
+    "<br><strong>Total Days: " +
+    totalDays.toLocaleString() +
+    "</strong>";
 }
   
 
