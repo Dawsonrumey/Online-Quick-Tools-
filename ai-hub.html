@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Online Quick Tools AI Hub - AI Chat, Writer, Image, Voice, Study, Ideas, SEO, Translator, Summarizer and Code Helper.">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://dawsonrumey.github.io/Online-Quick-Tools-/ai-hub.html">
+
+  <title>AI Hub - Online Quick Tools</title>
+
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-6840440843052472">
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6840440843052472"
+    crossorigin="anonymous"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MQS2RKPRF2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-MQS2RKPRF2');
+  </script>
+
+  <style>
+    :root {
+      --primary: #e11d48;
+      --primary-dark: #be123c;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --input: #ffffff;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --shadow: 0 10px 30px rgba(15,23,42,.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    body.dark {
+      --bg: #020617;
+      --card: #0f172a;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #1e293b;
+      --input: #020617;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      min-height: 68px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a,
+    .theme-btn {
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover,
+    .theme-btn:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .ai-nav {
+      background: var(--primary) !important;
+      color: white !important;
+      border-color: var(--primary) !important;
+    }
+
+    /* HERO */
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 55px 16px 30px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(225,29,72,.1);
+      color: var(--primary);
+      border: 1px solid rgba(225,29,72,.2);
+      padding: 7px 13px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    /* AI GRID */
+    .ai-grid {
+      max-width: 1150px;
+      margin: 20px auto 35px;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 13px;
+    }
+
+    .ai-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 17px;
+      padding: 18px 12px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: .2s;
+    }
+
+    .ai-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+    }
+
+    .ai-card.active {
+      border: 2px solid var(--primary);
+      background: rgba(225,29,72,.05);
+    }
+
+    .ai-icon {
+      font-size: 31px;
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .ai-card h3 {
+      font-size: 14px;
+    }
+
+    .ai-card p {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    /* WORKSPACE */
+    .workspace {
+      max-width: 1000px;
+      margin: 0 auto 50px;
+      padding: 0 16px;
+    }
+
+    .panel {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .panel-title .big-icon {
+      font-size: 35px;
+    }
+
+    .panel-title h2 {
+      font-size: 25px;
+    }
+
+    .panel-description {
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      margin: 15px 0 7px;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--input);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(225,29,72,.1);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 11px;
+      padding: 11px 17px;
+      font-weight: 700;
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn.success {
+      background: var(--success);
+    }
+
+    .output {
+      margin-top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 17px;
+      min-height: 120px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: rgba(148,163,184,.05);
+    }
+
+    .output.empty {
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .loading {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* CHAT */
+    .chat-box {
+      height: 430px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: rgba(148,163,184,.04);
+    }
+
+    .chat-message {
+      margin-bottom: 13px;
+      display: flex;
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+    }
+
+    .bubble {
+      max-width: 85%;
+      padding: 11px 14px;
+      border-radius: 14px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .chat-message.user .bubble {
+      background: var(--primary);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-message.ai .bubble {
+      background: rgba(148,163,184,.12);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 9px;
+    }
+
+    .chat-input-row input {
+      flex: 1;
+    }
+
+    /* IMAGE */
+    .image-result {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .image-result img {
+      max-width: 100%;
+      border-radius: 15px;
+      border: 1px solid var(--border);
+    }
+
+    /* VOICE */
+    .voice-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* SEO */
+    .seo-result {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .seo-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px;
+    }
+
+    .seo-item strong {
+      color: var(--primary);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    /* INFO */
+    .secure-note {
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 12px;
+      background: rgba(22,163,74,.08);
+      border: 1px solid rgba(22,163,74,.2);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .api-status {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 16px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .ai-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        padding-bottom: 4px;
+      }
+
+      .nav-links a,
+      .theme-btn {
+        white-space: nowrap;
+      }
+
+      .hero {
+        padding-top: 35px;
+      }
+
+      .ai-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .panel {
+        padding: 17px;
+      }
+
+      .row,
+      .voice-controls {
+        grid-template-columns: 1fr;
+      }
+
+      .chat-input-row {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .ai-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .ai-card {
+        padding: 13px 7px;
+      }
+
+      .ai-icon {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="nav">
+
+    <a class="logo" href="index.html">
+      ⚡ Online Quick Tools
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="index.html#tools">🛠️ Tools</a>
+      <a href="image.html">🖼️ Images</a>
+      <a href="video-feed.html">🎬 Videos</a>
+      <a class="ai-nav" href="ai-hub.html">🤖 AI Hub</a>
+      <a href="dashboard.html">👤 Account</a>
+      <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+    </div>
+
+  </nav>
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-badge">
+    ⚡ Online Quick Tools AI Hub
+  </div>
+
+  <h1>
+    Your <span>AI Hub</span>
+  </h1>
+
+  <p>
+    Chat, write, study, translate, summarize, generate ideas,
+    improve SEO and get coding help from one place.
+  </p>
+
+</section>
+
+
+<!-- AI TOOLS -->
+<section class="ai-grid">
+
+  <button class="ai-card active" onclick="openTool('chat', this)">
+    <span class="ai-icon">🤖</span>
+    <h3>AI Chat</h3>
+    <p>Ask anything</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('writer', this)">
+    <span class="ai-icon">✍️</span>
+    <h3>AI Writer</h3>
+    <p>Write content</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('image', this)">
+    <span class="ai-icon">🖼️</span>
+    <h3>AI Image</h3>
+    <p>Create images</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('voice', this)">
+    <span class="ai-icon">🎙️</span>
+    <h3>AI Voice</h3>
+    <p>Read text aloud</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('study', this)">
+    <span class="ai-icon">📚</span>
+    <h3>AI Study</h3>
+    <p>Learn easier</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('ideas', this)">
+    <span class="ai-icon">💡</span>
+    <h3>AI Ideas</h3>
+    <p>Generate ideas</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('seo', this)">
+    <span class="ai-icon">📈</span>
+    <h3>AI SEO</h3>
+    <p>Improve SEO</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('translator', this)">
+    <span class="ai-icon">🌐</span>
+    <h3>AI Translator</h3>
+    <p>Translate text</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('summarizer', this)">
+    <span class="ai-icon">📝</span>
+    <h3>AI Summarizer</h3>
+    <p>Shorten text</p>
+  </button>
+
+  <button class="ai-card" onclick="openTool('code', this)">
+    <span class="ai-icon">💻</span>
+    <h3>AI Code Helper</h3>
+    <p>Fix & explain code</p>
+  </button>
+
+</section>
+
+
+<main class="workspace">
+
+  <!-- AI CHAT -->
+  <section class="panel active" id="panel-chat">
+
+    <div class="panel-title">
+      <span class="big-icon">🤖</span>
+      <h2>AI Chat</h2>
+    </div>
+
+    <p class="panel-description">
+      Ask questions and chat with your AI assistant.
+    </p>
+
+    <div class="chat-box" id="chatBox">
+      <div class="chat-message ai">
+        <div class="bubble">
+          👋 Hello! I'm your AI assistant. Ask me anything.
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-row">
+      <input
+        id="chatInput"
+        type="text"
+        placeholder="Type your message..."
+        onkeydown="if(event.key==='Enter') sendChat()"
+      >
+
+      <button class="btn" onclick="sendChat()">
+        Send
+      </button>
+    </div>
+
+    <div class="button-row">
+      <button class="btn secondary" onclick="clearChat()">
+        🗑️ Clear Chat
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- AI WRITER -->
+  <section class="panel" id="panel-writer">
+
+    <div class="panel-title">
+      <span class="big-icon">✍️</span>
+      <h2>AI Writer</h2>
+    </div>
+
+    <p class="panel-description">
+      Create posts, articles, captions, emails and other content.
+    </p>
+
+    <div class="row">
+
+      <div>
+        <label>Content Type</label>
+        <select id="writerType">
+          <option>Blog Post</option>
+          <option>Facebook Post</option>
+          <option>YouTube Description</option>
+          <option>Instagram Caption</option>
+          <option>Email</option>
+          <option>Product Description</option>
+          <option>Website Content</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Writing Style</label>
+        <select id="writerStyle">
+          <option>Professional</option>
+          <option>Friendly</option>
+          <option>Simple</option>
+          <option>Creative</option>
+          <option>SEO Friendly</option>
+        </select>
+      </div>
+
+    </div>
+
+    <label>Topic</label>
+
+    <textarea
+      id="writerInput"
+      placeholder="Example: Write a Facebook post about Online Quick Tools..."
+    ></textarea>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('writer')">
+        ✨ Generate
+      </button>
+      <button class="btn secondary" onclick="copyOutput('writerOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="writerOutput">
+      Your generated content will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- AI IMAGE -->
+  <section class="panel" id="panel-image">
+
+    <div class="panel-title">
+      <span class="big-icon">🖼️</span>
+      <h2>AI Image</h2>
+    </div>
+
+    <p class="panel-description">
+      Create an image from a text prompt when an image-generation backend is connected.
+    </p>
+
+    <label>Image Prompt</label>
+
+    <textarea
+      id="imagePrompt"
+      placeholder="Example: A futuristic AI workspace with neon lights..."
+    ></textarea>
+
+    <label>Image Style</label>
+
+    <select id="imageStyle">
+      <option>Realistic</option>
+      <option>3D</option>
+      <option>Cartoon</option>
+      <option>Anime</option>
+      <option>Cinematic</option>
+      <option>Minimal</option>
+    </select>
+
+    <div class="button-row">
+      <button class="btn" onclick="generateImage()">
+        🖼️ Generate Image
+      </button>
+    </div>
+
+    <div class="output empty" id="imageOutput">
+      Generated image will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- AI VOICE -->
+  <section class="panel" id="panel-voice">
+
+    <div class="panel-title">
+      <span class="big-icon">🎙️</span>
+      <h2>AI Voice</h2>
+    </div>
+
+    <p class="panel-description">
+      Convert text into speech using your device's available voice engine.
+    </p>
+
+    <label>Text</label>
+
+    <textarea
+      id="voiceText"
+      placeholder="Type something you want to hear..."
+    ></textarea>
+
+    <div class="voice-controls">
+
+      <div>
+        <label>Language / Voice</label>
+        <select id="voiceSelect">
+          <option value="">Default Voice</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Speed</label>
+        <select id="voiceRate">
+          <option value="0.7">Slow</option>
+          <option value="1" selected>Normal</option>
+          <option value="1.25">Fast</option>
+          <option value="1.5">Very Fast</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="button-row">
+      <button class="btn" onclick="speakText()">
+        🔊 Speak
+      </button>
+
+      <button class="btn secondary" onclick="stopSpeaking()">
+        ⏹️ Stop
+      </button>
+    </div>
+
+  </section>
+
+
+  <!-- AI STUDY -->
+  <section class="panel" id="panel-study">
+
+    <div class="panel-title">
+      <span class="big-icon">📚</span>
+      <h2>AI Study</h2>
+    </div>
+
+    <p class="panel-description">
+      Get explanations, study notes, questions and learning help.
+    </p>
+
+    <div class="row">
+
+      <div>
+        <label>Study Mode</label>
+
+        <select id="studyMode">
+          <option>Explain Simply</option>
+          <option>Make Notes</option>
+          <option>Make Quiz</option>
+          <option>Make Flashcards</option>
+          <option>Step-by-Step Solution</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Subject</label>
+
+        <input
+          id="studySubject"
+          placeholder="Example: Mathematics"
+        >
+      </div>
+
+    </div>
+
+    <label>Question / Topic</label>
+
+    <textarea
+      id="studyInput"
+      placeholder="Enter your question or topic..."
+    ></textarea>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('study')">
+        📚 Study with AI
+      </button>
+
+      <button class="btn secondary" onclick="copyOutput('studyOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="studyOutput">
+      Your study answer will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- AI IDEAS -->
+  <section class="panel" id="panel-ideas">
+
+    <div class="panel-title">
+      <span class="big-icon">💡</span>
+      <h2>AI Ideas</h2>
+    </div>
+
+    <p class="panel-description">
+      Generate creative ideas for content, business, websites and social media.
+    </p>
+
+    <label>What do you need ideas for?</label>
+
+    <textarea
+      id="ideasInput"
+      placeholder="Example: Give me 20 ideas for Online Quick Tools Facebook posts..."
+    ></textarea>
+
+    <div class="row">
+
+      <div>
+        <label>Number of Ideas</label>
+        <select id="ideasCount">
+          <option>5</option>
+          <option selected>10</option>
+          <option>20</option>
+          <option>30</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Style</label>
+        <select id="ideasStyle">
+          <option>Creative</option>
+          <option>Viral Content</option>
+          <option>Professional</option>
+          <option>Simple</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('ideas')">
+        💡 Generate Ideas
+      </button>
+
+      <button class="btn secondary" onclick="copyOutput('ideasOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="ideasOutput">
+      Your ideas will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- AI SEO -->
+  <section class="panel" id="panel-seo">
+
+    <div class="panel-title">
+      <span class="big-icon">📈</span>
+      <h2>AI SEO</h2>
+    </div>
+
+    <p class="panel-description">
+      Generate SEO titles, descriptions, keywords and content suggestions.
+    </p>
+
+    <label>Page / Product / Topic</label>
+
+    <textarea
+      id="seoInput"
+      placeholder="Example: Free Online Word Counter Tool"
+    ></textarea>
+
+    <div class="row">
+
+      <div>
+        <label>Target Keyword</label>
+
+        <input
+          id="seoKeyword"
+          placeholder="Example: online word counter"
+        >
+      </div>
+
+      <div>
+        <label>Language</label>
+
+        <select id="seoLanguage">
+          <option>English</option>
+          <option>Bangla</option>
+          <option>Banglish</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('seo')">
+        📈 Generate SEO
+      </button>
+
+      <button class="btn secondary" onclick="copyOutput('seoOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="seoOutput">
+      SEO suggestions will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- TRANSLATOR -->
+  <section class="panel" id="panel-translator">
+
+    <div class="panel-title">
+      <span class="big-icon">🌐</span>
+      <h2>AI Translator</h2>
+    </div>
+
+    <p class="panel-description">
+      Translate text between languages.
+    </p>
+
+    <div class="row">
+
+      <div>
+        <label>From</label>
+
+        <select id="fromLanguage">
+          <option>Auto Detect</option>
+          <option>English</option>
+          <option>Bangla</option>
+          <option>Hindi</option>
+          <option>Arabic</option>
+          <option>Spanish</option>
+          <option>French</option>
+          <option>German</option>
+          <option>Chinese</option>
+        </select>
+      </div>
+
+      <div>
+        <label>To</label>
+
+        <select id="toLanguage">
+          <option>Bangla</option>
+          <option>English</option>
+          <option>Hindi</option>
+          <option>Arabic</option>
+          <option>Spanish</option>
+          <option>French</option>
+          <option>German</option>
+          <option>Chinese</option>
+        </select>
+      </div>
+
+    </div>
+
+    <label>Text</label>
+
+    <textarea
+      id="translatorInput"
+      placeholder="Enter text to translate..."
+    ></textarea>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('translator')">
+        🌐 Translate
+      </button>
+
+      <button class="btn secondary" onclick="copyOutput('translatorOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="translatorOutput">
+      Translation will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- SUMMARIZER -->
+  <section class="panel" id="panel-summarizer">
+
+    <div class="panel-title">
+      <span class="big-icon">📝</span>
+      <h2>AI Summarizer</h2>
+    </div>
+
+    <p class="panel-description">
+      Turn long text into short and easy-to-understand summaries.
+    </p>
+
+    <label>Text to Summarize</label>
+
+    <textarea
+      id="summarizerInput"
+      placeholder="Paste your article, notes or long text here..."
+    ></textarea>
+
+    <div class="row">
+
+      <div>
+        <label>Summary Length</label>
+
+        <select id="summaryLength">
+          <option>Short</option>
+          <option selected>Medium</option>
+          <option>Detailed</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Format</label>
+
+        <select id="summaryFormat">
+          <option>Paragraph</option>
+          <option>Bullet Points</option>
+          <option>Key Points</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('summarizer')">
+        📝 Summarize
+      </button>
+
+      <button class="btn secondary" onclick="copyOutput('summarizerOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="summarizerOutput">
+      Summary will appear here.
+    </div>
+
+  </section>
+
+
+  <!-- CODE HELPER -->
+  <section class="panel" id="panel-code">
+
+    <div class="panel-title">
+      <span class="big-icon">💻</span>
+      <h2>AI Code Helper</h2>
+    </div>
+
+    <p class="panel-description">
+      Explain, debug, improve and generate code.
+    </p>
+
+    <div class="row">
+
+      <div>
+        <label>Programming Language</label>
+
+        <select id="codeLanguage">
+          <option>HTML</option>
+          <option>CSS</option>
+          <option>JavaScript</option>
+          <option>Python</option>
+          <option>PHP</option>
+          <option>SQL</option>
+          <option>Java</option>
+          <option>C++</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Task</label>
+
+        <select id="codeTask">
+          <option>Explain Code</option>
+          <option>Fix Bug</option>
+          <option>Generate Code</option>
+          <option>Improve Code</option>
+          <option>Optimize Code</option>
+        </select>
+      </div>
+
+    </div>
+
+    <label>Code / Question</label>
+
+    <textarea
+      id="codeInput"
+      placeholder="Paste your code or describe what you want..."
+    ></textarea>
+
+    <div class="button-row">
+      <button class="btn" onclick="runAI('code')">
+        💻 Get Code Help
+      </button>
+
+      <button class="btn secondary" onclick="copyOutput('codeOutput')">
+        📋 Copy
+      </button>
+    </div>
+
+    <div class="output empty" id="codeOutput">
+      Code help will appear here.
+    </div>
+
+  </section>
+
+
+  <div class="secure-note">
+    🔐 <strong>Security:</strong>
+    Never put an AI provider's secret API key directly inside this HTML file.
+    Connect this page to a secure backend/API endpoint instead.
+  </div>
+
+  <div class="api-status" id="apiStatus"></div>
+
+</main>
+
+
+<footer>
+
+  <p>
+    © 2026
+    <a href="index.html">Online Quick Tools</a>
+    · AI Hub
+  </p>
+
+</footer>
+
+
+<script>
+
+  /*
+   * =========================================================
+   * AI HUB CONFIGURATION
+   * =========================================================
+   *
+   * Put your secure backend endpoint here.
+   *
+   * Example:
+   *
+   * const AI_API_URL = "https://your-domain.com/api/ai";
+   *
+   * DO NOT put a secret API key here.
+   *
+   * GitHub Pages is a static hosting service, so secret
+   * API keys should be kept on your server/backend.
+   */
+
+  const AI_API_URL = "";
+
+
+  /* =========================================================
+     THEME
+  ========================================================= */
+
+  function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+    const isDark = document.body.classList.contains("dark");
+
+    localStorage.setItem("aiHubTheme", isDark ? "dark" : "light");
+
+    document.getElementById("themeBtn").textContent =
+      isDark ? "☀️" : "🌙";
+  }
+
+
+  function loadTheme() {
+
+    const saved = localStorage.getItem("aiHubTheme");
+
+    if (saved === "dark") {
+      document.body.classList.add("dark");
+      document.getElementById("themeBtn").textContent = "☀️";
+    }
+
+  }
+
+
+  /* =========================================================
+     TOOL SWITCHER
+  ========================================================= */
+
+  function openTool(tool, element) {
+
+    document.querySelectorAll(".panel").forEach(panel => {
+      panel.classList.remove("active");
+    });
+
+    document.querySelectorAll(".ai-card").forEach(card => {
+      card.classList.remove("active");
+    });
+
+    const panel = document.getElementById("panel-" + tool);
+
+    if (panel) {
+      panel.classList.add("active");
+    }
+
+    if (element) {
+      element.classList.add("active");
+    }
+
+    window.scrollTo({
+      top: document.querySelector(".workspace").offsetTop - 80,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  /* =========================================================
+     API REQUEST
+  ========================================================= */
+
+  async function askAI(message, mode = "general") {
+
+    if (!AI_API_URL) {
+
+      return demoResponse(message, mode);
+
+    }
+
+    const response = await fetch(AI_API_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+
+        message: message,
+        mode: mode,
+        history: getChatHistory()
+
+      })
+
+    });
+
+    if (!response.ok) {
+
+      throw new Error(
+        "AI server returned HTTP " + response.status
+      );
+
+    }
+
+    const data = await response.json();
+
+    /*
+      Accept several common response formats.
+    */
+
+    return (
+      data.reply ||
+      data.response ||
+      data.text ||
+      data.message ||
+      data.output ||
+      (
+        data.choices &&
+        data.choices[0] &&
+        data.choices[0].message &&
+        data.choices[0].message.content
+      ) ||
+      "No response received from the AI server."
+    );
+
+  }
+
+
+  /* =========================================================
+     DEMO RESPONSE
+  ========================================================= */
+
+  function demoResponse(message, mode) {
+
+    return `
+AI Hub Demo Mode
+
+Your request:
+${message}
+
+The AI interface is ready.
+
+To receive real AI-generated answers, connect a secure AI backend by setting:
+
+AI_API_URL
+
+inside this file.
+
+Important:
+Do not place a private API key directly in GitHub Pages HTML.
+
+Selected AI mode:
+${mode}
+`.trim();
+
+  }
+
+
+  /* =========================================================
+     CHAT
+  ========================================================= */
+
+  function getChatHistory() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem("aiHubChatHistory") || "[]"
+      );
+
+    } catch {
+
+      return [];
+
+    }
+
+  }
+
+
+  function saveChatHistory(history) {
+
+    localStorage.setItem(
+      "aiHubChatHistory",
+      JSON.stringify(history.slice(-30))
+    );
+
+  }
+
+
+  function addChatMessage(type, text) {
+
+    const chatBox = document.getElementById("chatBox");
+
+    const message = document.createElement("div");
+
+    message.className =
+      "chat-message " + type;
+
+    const bubble = document.createElement("div");
+
+    bubble.className = "bubble";
+
+    bubble.textContent = text;
+
+    message.appendChild(bubble);
+
+    chatBox.appendChild(message);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+  }
+
+
+  async function sendChat() {
+
+    const input = document.getElementById("chatInput");
+
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    input.value = "";
+
+    addChatMessage("user", text);
+
+    const history = getChatHistory();
+
+    history.push({
+      role: "user",
+      content: text
+    });
+
+    saveChatHistory(history);
+
+    addChatMessage(
+      "ai",
+      "Thinking..."
+    );
+
+    const chatMessages =
+      document.querySelectorAll("#chatBox .chat-message.ai");
+
+    const loadingBubble =
+      chatMessages[chatMessages.length - 1]
+      ?.querySelector(".bubble");
+
+    try {
+
+      const answer = await askAI(
+        text,
+        "chat"
+      );
+
+      if (loadingBubble) {
+        loadingBubble.textContent = answer;
+      }
+
+      history.push({
+        role: "assistant",
+        content: answer
+      });
+
+      saveChatHistory(history);
+
+    } catch (error) {
+
+      if (loadingBubble) {
+        loadingBubble.textContent =
+          "Sorry, something went wrong. Please check your AI backend.";
+      }
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  function clearChat() {
+
+    localStorage.removeItem(
+      "aiHubChatHistory"
+    );
+
+    document.getElementById("chatBox").innerHTML = `
+
+      <div class="chat-message ai">
+
+        <div class="bubble">
+          👋 Chat cleared. How can I help you?
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =========================================================
+     GENERIC AI TOOLS
+  ========================================================= */
+
+  async function runAI(tool) {
+
+    let prompt = "";
+    let outputId = "";
+
+    if (tool === "writer") {
+
+      prompt = `
+Create ${document.getElementById("writerType").value}.
+
+Topic:
+${document.getElementById("writerInput").value}
+
+Writing style:
+${document.getElementById("writerStyle").value}
+
+Write useful, natural and original content.
+`;
+
+      outputId = "writerOutput";
+
+    }
+
+
+    if (tool === "study") {
+
+      prompt = `
+Help me study this topic.
+
+Subject:
+${document.getElementById("studySubject").value}
+
+Study mode:
+${document.getElementById("studyMode").value}
+
+Question/topic:
+${document.getElementById("studyInput").value}
+
+Explain clearly and make the answer easy to understand.
+`;
+
+      outputId = "studyOutput";
+
+    }
+
+
+    if (tool === "ideas") {
+
+      prompt = `
+Generate ${document.getElementById("ideasCount").value}
+ideas about:
+
+${document.getElementById("ideasInput").value}
+
+Style:
+${document.getElementById("ideasStyle").value}
+
+Make the ideas practical and different from each other.
+`;
+
+      outputId = "ideasOutput";
+
+    }
+
+
+    if (tool === "seo") {
+
+      prompt = `
+Create an SEO package for:
+
+${document.getElementById("seoInput").value}
+
+Target keyword:
+${document.getElementById("seoKeyword").value}
+
+Language:
+${document.getElementById("seoLanguage").value}
+
+Provide:
+1. SEO title
+2. Meta description
+3. Keywords
+4. H1
+5. Short SEO content
+6. Suggested URL slug
+`;
+
+      outputId = "seoOutput";
+
+    }
+
+
+    if (tool === "translator") {
+
+      prompt = `
+Translate the following text.
+
+From:
+${document.getElementById("fromLanguage").value}
+
+To:
+${document.getElementById("toLanguage").value}
+
+Text:
+${document.getElementById("translatorInput").value}
+
+Return the translation naturally.
+`;
+
+      outputId = "translatorOutput";
+
+    }
+
+
+    if (tool === "summarizer") {
+
+      prompt = `
+Summarize this text.
+
+Length:
+${document.getElementById("summaryLength").value}
+
+Format:
+${document.getElementById("summaryFormat").value}
+
+Text:
+${document.getElementById("summarizerInput").value}
+`;
+
+      outputId = "summarizerOutput";
+
+    }
+
+
+    if (tool === "code") {
+
+      prompt = `
+You are a coding assistant.
+
+Programming language:
+${document.getElementById("codeLanguage").value}
+
+Task:
+${document.getElementById("codeTask").value}
+
+Code/question:
+${document.getElementById("codeInput").value}
+
+Give a clear answer and code when appropriate.
+`;
+
+      outputId = "codeOutput";
+
+    }
+
+
+    if (!prompt.trim()) return;
+
+    const output =
+      document.getElementById(outputId);
+
+    output.classList.remove("empty");
+
+    output.innerHTML =
+      '<span class="loading">✨ AI is working...</span>';
+
+    try {
+
+      const answer =
+        await askAI(prompt, tool);
+
+      output.textContent = answer;
+
+    } catch (error) {
+
+      output.textContent =
+        "Error: Could not connect to the AI server.";
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  /* =========================================================
+     AI IMAGE
+  ========================================================= */
+
+  async function generateImage() {
+
+    const prompt =
+      document.getElementById("imagePrompt")
+      .value.trim();
+
+    const style =
+      document.getElementById("imageStyle")
+      .value;
+
+    const output =
+      document.getElementById("imageOutput");
+
+    if (!prompt) {
+
+      output.classList.remove("empty");
+
+      output.textContent =
+        "Please enter an image prompt.";
+
+      return;
+
+    }
+
+    output.classList.remove("empty");
+
+    output.innerHTML =
+      '<span class="loading">🖼️ Preparing image request...</span>';
+
+    /*
+      The same secure backend can return:
+
+      {
+        "image_url": "https://example.com/image.png"
+      }
+
+      for image generation.
+    */
+
+    if (!AI_API_URL) {
+
+      output.textContent =
+        `AI Image Demo Mode
+
+Prompt:
+${prompt}
+
+Style:
+${style}
+
+Connect an image-generation backend to generate the actual image.`;
+
+      return;
+
+    }
+
+    try {
+
+      const response = await fetch(
+        AI_API_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            message: prompt,
+            mode: "image",
+            style: style
+          })
+        }
+      );
+
+      const data =
+        await response.json();
+
+      const imageUrl =
+        data.image_url ||
+        data.imageUrl ||
+        data.url;
+
+      if (!imageUrl) {
+
+        output.textContent =
+          data.message ||
+          "The server did not return an image URL.";
+
+        return;
+
+      }
+
+      output.innerHTML = `
+
+        <div class="image-result">
+
+          <img
+            src="${escapeAttribute(imageUrl)}"
+            alt="AI generated image"
+            loading="lazy"
+          >
+
+          <div class="button-row"
+               style="justify-content:center">
+
+            <a
+              class="btn"
+              href="${escapeAttribute(imageUrl)}"
+              target="_blank"
+              rel="noopener"
+            >
+              🔗 Open Image
+            </a>
+
+          </div>
+
+        </div>
+
+      `;
+
+    } catch (error) {
+
+      output.textContent =
+        "Image generation failed. Check your AI backend.";
+
+      console.error(error);
+
+    }
+
+  }
+
+
+  /* =========================================================
+     VOICE
+  ========================================================= */
+
+  let voices = [];
+
+  function loadVoices() {
+
+    if (!("speechSynthesis" in window)) {
+      return;
+    }
+
+    voices =
+      window.speechSynthesis.getVoices();
+
+    const select =
+      document.getElementById("voiceSelect");
+
+    if (!select) return;
+
+    select.innerHTML =
+      '<option value="">Default Voice</option>';
+
+    voices.forEach((voice, index) => {
+
+      const option =
+        document.createElement("option");
+
+      option.value = index;
+
+      option.textContent =
+        `${voice.name} (${voice.lang})`;
+
+      select.appendChild(option);
+
+    });
+
+  }
+
+
+  function speakText() {
+
+    const text =
+      document.getElementById("voiceText")
+      .value.trim();
+
+    if (!text) {
+
+      alert("Please enter some text.");
+
+      return;
+
+    }
+
+    if (!("speechSynthesis" in window)) {
+
+      alert(
+        "Voice speech is not supported by this browser."
+      );
+
+      return;
+
+    }
+
+    window.speechSynthesis.cancel();
+
+    const utterance =
+      new SpeechSynthesisUtterance(text);
+
+    const voiceIndex =
+      document.getElementById("voiceSelect")
+      .value;
+
+    if (voiceIndex !== "") {
+
+      utterance.voice =
+        voices[Number(voiceIndex)];
+
+    }
+
+    utterance.rate =
+      Number(
+        document.getElementById("voiceRate").value
+      );
+
+    window.speechSynthesis.speak(
+      utterance
+    );
+
+  }
+
+
+  function stopSpeaking() {
+
+    if ("speechSynthesis" in window) {
+
+      window.speechSynthesis.cancel();
+
+    }
+
+  }
+
+
+  /* =========================================================
+     COPY
+  ========================================================= */
+
+  async function copyOutput(id) {
+
+    const element =
+      document.getElementById(id);
+
+    const text =
+      element.innerText.trim();
+
+    if (!text) return;
+
+    try {
+
+      await navigator.clipboard.writeText(text);
+
+      alert("Copied successfully!");
+
+    } catch {
+
+      const range =
+        document.createRange();
+
+      range.selectNodeContents(element);
+
+      const selection =
+        window.getSelection();
+
+      selection.removeAllRanges();
+
+      selection.addRange(range);
+
+      document.execCommand("copy");
+
+      selection.removeAllRanges();
+
+      alert("Copied successfully!");
+
+    }
+
+  }
+
+
+  /* =========================================================
+     SAFE ATTRIBUTE
+  ========================================================= */
+
+  function escapeAttribute(value) {
+
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+  }
+
+
+  /* =========================================================
+     API STATUS
+  ========================================================= */
+
+  function updateAPIStatus() {
+
+    const status =
+      document.getElementById("apiStatus");
+
+    if (!status) return;
+
+    if (AI_API_URL) {
+
+      status.textContent =
+        "🟢 AI backend configured.";
+
+    } else {
+
+      status.textContent =
+        "🟡 AI Hub is currently in interface/demo mode. Connect a secure backend for real AI responses.";
+
+    }
+
+  }
+
+
+  /* =========================================================
+     INIT
+  ========================================================= */
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+      loadTheme();
+
+      updateAPIStatus();
+
+      loadVoices();
+
+      if (
+        "speechSynthesis" in window
+      ) {
+
+        window.speechSynthesis
+          .onvoiceschanged =
+          loadVoices;
+
+      }
+
+    }
+  );
+
+</script>
+
+</body>
+</html>
